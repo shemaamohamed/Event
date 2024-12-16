@@ -15,6 +15,7 @@ import DialogMessage from "../../components/DialogMessage";
 import { Container, FormControl, FormHelperText, Grid, InputLabel, Menu, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import PhoneInput from "react-phone-input-2";
+import { Button } from "react-bootstrap";
 
 
 const RegisterPage = () => {
@@ -250,7 +251,7 @@ const RegisterPage = () => {
                     onChange={(e) => setName(e.target.value)}
                     helperText={error.name}
                     fullWidth
-                    placeholder="Enter your name"
+                    placeholder="e.g. John Doe"
                     type="text"
                   />
                   </Grid>
@@ -262,7 +263,7 @@ const RegisterPage = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     helperText={error.email}
                     fullWidth
-                    placeholder="Enter your email"
+                    placeholder="e.g. example@example.com"
                     type="email"
 
                   />
@@ -283,6 +284,10 @@ const RegisterPage = () => {
                   </Grid >
 
                   <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <FormControl fullWidth>
+                      <InputLabel shrink style={{ marginBottom: "8px" }}>
+                      WhatsApp Number
+                      </InputLabel>
                     <PhoneInput
                       country={"jo"} // Jordan كدولة افتراضية
                       value={phone}
@@ -298,6 +303,7 @@ const RegisterPage = () => {
                     {error.phone && (
                       <FormHelperText style={{ color: "red" }}>{error.phone}</FormHelperText>
                     )}
+                    </FormControl>
 
                   </Grid>
                   <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -410,6 +416,55 @@ const RegisterPage = () => {
                   </FormControl>
 
                   </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <ImageUpload
+                    errorMsg={error.image}
+                    required={true}
+                    label="Profile Picture"
+                    allowedExtensions={["jpg", "jpeg", "png", "gif"]}
+                    inputValue={image}
+                    setInputValue={setImage}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
+                    <TextField
+                    error={error.resume ? true : false}
+                    value={resumeText}
+                    onChange={(e)=>setResumeText(e.target.value)}
+                    helperText={error.resume}
+                    fullWidth
+                    label="Resume"
+                    placeholder="Write your resume here..."
+                    type="text"
+                    rows={8}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "right",
+                    alignItems: "center",
+                  }}
+                  >
+                    <Button
+                    sx={{
+                      backgroundColor: " #c62828",
+                      color: "#ffffff",
+                      width:{
+                        xs:'100%',
+                        sm:'100%',
+                        md:'50%',
+                        lg:'50%',
+                        xl:'50%'
+
+
+                      }
+                    }}
+                    type="submit"
+                    >Register</Button>
+
+                  </Grid>
+                  
 
 
 
