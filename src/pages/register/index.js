@@ -12,10 +12,9 @@ import ImageUpload from "../../CoreComponent/ImageUpload";
 import TextArea from "../../CoreComponent/TextArea";
 import axios from "axios";
 import DialogMessage from "../../components/DialogMessage";
-import { Container, FormControl, FormHelperText, Grid, InputLabel, Menu, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Button, Container, FormControl, FormHelperText, Grid, InputLabel, Menu, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import PhoneInput from "react-phone-input-2";
-import { Button } from "react-bootstrap";
 
 
 const RegisterPage = () => {
@@ -285,36 +284,43 @@ const RegisterPage = () => {
 
                   <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <FormControl fullWidth>
-                      <InputLabel shrink style={{ marginBottom: "8px" }}>
+                      <InputLabel 
+                      id="whatsapp"
+
+                      shrink style={{ marginBottom: "8px" }}>
                       WhatsApp Number
                       </InputLabel>
                     <PhoneInput
+                    labelId='whatsapp'
                       country={"jo"} // Jordan كدولة افتراضية
-                      value={phone}
-                      onChange={(e)=>setPhone}
+                      value={whatsApp}
+                      onChange={setWhatsApp}
                       inputStyle={{
                         width: "100%", // توسيع حقل الإدخال
                         height: "56px", // توافق مع ارتفاع TextField
-                        borderColor: error.phone ? "red" : "#c4c4c4", // إطار أحمر في حالة الخطأ
+                        borderColor: error.whatsApp ? "red" : "#c4c4c4", // إطار أحمر في حالة الخطأ
                         borderRadius: "4px", // تدوير الحواف
                       }}
-                      placeholder="Enter your phone number"
+                      placeholder="Enter your  WhatsApp number"
                     />
-                    {error.phone && (
-                      <FormHelperText style={{ color: "red" }}>{error.phone}</FormHelperText>
+                    {error.whatsApp && (
+                      <FormHelperText style={{ color: "red" }}>{error.whatsApp}</FormHelperText>
                     )}
                     </FormControl>
 
                   </Grid>
                   <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <FormControl fullWidth>
-                      <InputLabel shrink style={{ marginBottom: "8px" }}>
-                      WhatsApp Number
+                      <InputLabel 
+                      id='phone'
+                      shrink style={{ marginBottom: "8px" }}>
+                      Phone Number
                       </InputLabel>
                     <PhoneInput
+                    labelId='phone'
                     country={"jo"} 
-                    value={whatsApp}
-                    onChange={(e)=>setWhatsApp}
+                    value={phone}
+                    onChange={setPhone}
                     inputStyle={{
                       width: "100%", 
                       height: "56px", 
@@ -348,6 +354,7 @@ const RegisterPage = () => {
                     </InputLabel>
                     <Select
                     labelId="nationality"
+
 
                     value={selectedNationality}
                     onChange={(e) => setSelectedNationality(e.target.value)}
@@ -451,11 +458,11 @@ const RegisterPage = () => {
                       backgroundColor: " #c62828",
                       color: "#ffffff",
                       width:{
-                        xs:'100%',
-                        sm:'100%',
-                        md:'50%',
-                        lg:'50%',
-                        xl:'50%'
+                        xs: '100%',  
+                        sm: '100%',  
+                        md: '100%', 
+                        lg: '50%',   
+                        xl: '50%' 
 
 
                       }
