@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "./style.scss";
-import Input from "../../CoreComponent/Input";
 import { useNavigate } from "react-router-dom";
+import { Button, Container, Grid, TextField, Typography } from "@mui/material";
+import { darken } from '@mui/system';
+
 
 const RegisterOther = () => {
   const navigate = useNavigate();
@@ -83,57 +85,152 @@ const RegisterOther = () => {
   };
 
   return (
-    <div>
-      <div className="register-page-container3">
-        <form onSubmit={handleRegister} className="register-form">
-          <div className="title">
-            <span>Register</span>
-            <span
-            className="login-span"
-              onClick={() => {
-                navigate("/login");
-              }}
-            >
-              login
-            </span>
-          </div>
+    <Container
+    sx={{ display: "flex", justifyContent: "center", alignItems: "center" ,marginTop: '32px'}}
 
-          <div className="fields-container">
-            <Input
-              label="Name"
-              placeholder="Enter your name"
-              inputValue={name}
-              setInputValue={setName}
-              required={true}
-              errorMsg={error.name}
-            />
-            <Input
-              label="Email"
-              placeholder="Enter your email"
-              inputValue={email}
-              setInputValue={setEmail}
-              required={true}
-              errorMsg={error.email}
-            />
-            <Input
-              label="Password"
-              placeholder="Enter your password"
-              inputValue={password}
-              setInputValue={setPassword}
-              type="password"
-              required={true}
-              errorMsg={error.password}
-            />
-          </div>
+    >
+      
+      
+        <Grid container 
+        sx={{
+          display:'flex',
+          justifyContent:'center',
+          alignItems:'center'
+        }}
+         >
+          <Grid xs={12} sm={12} md={6} lg={6} xl={6}>
+            <form onSubmit={handleRegister} >
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+                >
+                  <Typography
+                  sx={{
+                   
+                    padding:'10px',
+                    color: " #c62828",
+                  }} 
+                  variant="h4"
+                  >
+                    Register
+                  </Typography>
+                  <Typography variant="body1" sx={{
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  marginTop: "10px",
+                                  textDecoration: "none",
+                                  
+                                }}>
+                                  <Button
+                                  sx={{
+                                  color: "white",
+                                  cursor: "pointer",
+                                  backgroundColor:'#c62828',
+                                  '&:hover': {
+                                    backgroundColor: darken('#dc143c', 0.2), // Darken color by 10%
+                                  },
+                  
+                                  }}
+                                onClick={() => {
+                                  navigate("/login");
+                                }}
+                              >
+                                login
+                              </Button>
+                              </Typography>
+                </Grid>
+                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <TextField
+                    label="Name"
+                    error={error.name ? true : false}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    helperText={error.name}
+                    fullWidth
+                    placeholder="e.g. John Doe"
+                    type="text"
+                  />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                  <TextField
+                    label="Email"
+                    error={error.email ? true : false}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    helperText={error.email}
+                    fullWidth
+                    placeholder="e.g. example@example.com"
+                    type="email"
 
-          <div className="register-btn-container">
-            <button className="register-btn" type="submit">
-              Register
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+                  />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <TextField
+                     error={error.password ? true : false}
+                     value={password}
+                     onChange={(e)=>setPassword(e.target.value)}
+                     helperText={error.password}
+                     fullWidth
+                     label="Password"
+                     placeholder="Enter your password "
+                     type="password"
+                    
+
+                    />
+                  </Grid >
+
+
+                  
+                  
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "right",
+                    alignItems: "center",
+                  }}
+                  >
+                    <Button
+                    sx={{
+                      backgroundColor:'#c62828',
+                      '&:hover': {
+          backgroundColor: darken('#dc143c', 0.2), // Darken color by 10%
+        },
+                      color: "#ffffff",
+                      width:{
+                        xs: '100%',  
+                        sm: '100%',  
+                        md: '100%', 
+                        lg: '50%',   
+                        xl: '50%' 
+
+
+                      }
+                      
+                    }}
+                    type="submit"
+                    >Register</Button>
+
+                  </Grid>
+                  
+
+
+
+
+
+              </Grid>
+            </form>
+
+
+          </Grid>
+          
+        </Grid>
+    </Container>
+    
   );
 };
 

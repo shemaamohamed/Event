@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-import Input from "../../CoreComponent/Input";
-import axiosInstance from "../../common/http";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import PhoneNumberInput from "../../CoreComponent/PhoneNumber";
 import { countriesOptions, nationalitiesOptions } from "../../constant";
-import SVG from "react-inlinesvg";
 import registerImg from "../../icons/registerImg.svg";
 import "./style.scss";
 import ImageUpload from "../../CoreComponent/ImageUpload";
-import TextArea from "../../CoreComponent/TextArea";
 import axios from "axios";
 import DialogMessage from "../../components/DialogMessage";
 import { Button, Container, FormControl, FormHelperText, Grid, InputLabel, Menu, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import PhoneInput from "react-phone-input-2";
+import { darken } from '@mui/system';
+
 
 
 const RegisterPage = () => {
@@ -59,11 +56,10 @@ const RegisterPage = () => {
     formData.append("phone_number", phone);
     formData.append("whatsapp_number", whatsApp);
     formData.append("specialization", specialization);
-    formData.append("nationality", selectedNationality.value);
-    formData.append("country_of_residence", country.value);
+    formData.append("nationality", selectedNationality);
+    formData.append("country_of_residence", country);
     formData.append("conference_id", id);
-    console.log(formData)
-
+    
     try {
       const response = await axios.post(`${BaseUrl}/users/${id}`, formData, {
         headers: {
@@ -228,12 +224,16 @@ const RegisterPage = () => {
           <Grid xs={12} sm={6} md={6} lg={6} xl={6}>
             <form onSubmit={handleRegister} >
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+                >
                   <Typography
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                   
                     padding:'10px',
                     color: " #c62828",
                   }} 
@@ -241,6 +241,31 @@ const RegisterPage = () => {
                   >
                     Register
                   </Typography>
+                  <Typography variant="body1" sx={{
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  marginTop: "10px",
+                                  textDecoration: "none",
+                                  
+                                }}>
+                                  <Button
+                                  sx={{
+                                  color: "white",
+                                  cursor: "pointer",
+                                  backgroundColor:'#c62828',
+                                  '&:hover': {
+                                    backgroundColor: darken('#dc143c', 0.2), // Darken color by 10%
+                                  },
+                  
+                                  }}
+                                onClick={() => {
+                                  navigate("/login");
+                                }}
+                              >
+                                login
+                              </Button>
+                              </Typography>
                 </Grid>
                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <TextField
@@ -354,8 +379,6 @@ const RegisterPage = () => {
                     </InputLabel>
                     <Select
                     labelId="nationality"
-
-
                     value={selectedNationality}
                     onChange={(e) => setSelectedNationality(e.target.value)}
                     label="Nationality"
@@ -443,7 +466,8 @@ const RegisterPage = () => {
                     label="Resume"
                     placeholder="Write your resume here..."
                     type="text"
-                    rows={8}
+                    multiline
+                    rows={5}
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12} xl={12}
@@ -455,7 +479,10 @@ const RegisterPage = () => {
                   >
                     <Button
                     sx={{
-                      backgroundColor: " #c62828",
+                      backgroundColor:'#c62828',
+                      '&:hover': {
+          backgroundColor: darken('#dc143c', 0.2), // Darken color by 10%
+        },
                       color: "#ffffff",
                       width:{
                         xs: '100%',  
@@ -466,6 +493,7 @@ const RegisterPage = () => {
 
 
                       }
+                      
                     }}
                     type="submit"
                     >Register</Button>
