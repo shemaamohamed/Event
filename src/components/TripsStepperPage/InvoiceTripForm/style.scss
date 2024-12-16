@@ -1,0 +1,66 @@
+.participant-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: 20px;
+  grid-column-gap: 30px;
+  margin-bottom: 20px;
+}
+
+.invoice-trips-container-stepper {
+  .accommodation-data-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: 20px;
+    grid-column-gap: 30px;
+  }
+
+  .header-invoice-trips {
+    font-size: 17px;
+    color: red;
+    font-weight: 600;
+    margin-bottom: 20px;
+
+    &.Participants {
+      margin-top: 20px;
+    }
+  }
+}
+
+.participant-list4 {
+  display: flex;
+  // height: 400px;
+  overflow: overlay;
+  .participant-item {
+    padding: 20px;
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 1.5rem;
+      color: #333;
+      border-bottom: 2px solid #007bff;
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+
+    h4 {
+      margin: 20px 0 10px;
+      font-size: 1.3rem;
+      color: #007bff;
+    }
+
+    p {
+      margin: 8px 0;
+      line-height: 1.6;
+
+      strong {
+        color: #555;
+      }
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 20px 0;
+    }
+  }
+}

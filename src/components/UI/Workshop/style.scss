@@ -1,0 +1,113 @@
+.workshops-container {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+
+  .headline-section {
+    background: url("./workshops.jpg") no-repeat center center;
+    background-size: cover;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.4);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+
+      .title {
+        color: #fff;
+        font-size: 4vw;
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 1px;
+        animation: fadeIn 0.8s ease-in-out;
+      }
+    }
+  }
+
+  .content-section {
+    padding: 20px 5%;
+    display: flex;
+    flex-direction: column;
+    border-top: 5px solid #d32f2f;
+
+    .subtitle {
+      color: #d32f2f;
+      font-size: 2vw;
+      margin-bottom: 15px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .description {
+      margin-top: 20px;
+      color: #444;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: normal;
+      font-family: "Arial";
+      list-style: 20px;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .headline-section {
+      height: 30vh;
+      .title {
+        font-size: 6vw;
+      }
+    }
+
+    .content-section {
+      padding: 20px 10%;
+    }
+
+    .subtitle {
+      font-size: 4vw;
+    }
+
+    .description {
+      font-size: 2.5vw;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .headline-section {
+      height: 25vh;
+      .title {
+        font-size: 8vw;
+      }
+    }
+
+    .content-section {
+      padding: 20px 5%;
+    }
+
+    .subtitle {
+      font-size: 5vw;
+    }
+
+    .description {
+      font-size: 3vw;
+    }
+  }
+}

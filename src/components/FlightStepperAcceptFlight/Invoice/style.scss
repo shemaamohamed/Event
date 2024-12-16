@@ -1,0 +1,88 @@
+.invoice {
+  font-family: "Arial", sans-serif;
+  max-width: 800px;
+  // margin: 20px auto;
+  // padding: 20px;
+  // background-color: #f9f9f9;
+  border-radius: 8px;
+  // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .invoice__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .invoice__list {
+    // margin-bottom: 20px;
+  }
+
+  .invoice__item {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .invoice__item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .invoice__flight-id {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #007bff;
+  }
+
+  .invoice__status {
+    font-size: 1rem;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  .invoice__status.pending {
+    background-color: #ffcc00;
+    color: #fff;
+  }
+
+  .invoice__status.paid {
+    background-color: #28a745;
+    color: #fff;
+  }
+
+  .invoice__details {
+    font-size: 1rem;
+    color: #555;
+  }
+
+  .invoice__total-price {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .invoice__date {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #777;
+  }
+
+  .invoice__no-data {
+    font-size: 1rem;
+    text-align: center;
+    color: #888;
+  }
+
+  .invoice__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
+

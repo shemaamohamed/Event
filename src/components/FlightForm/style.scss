@@ -1,0 +1,168 @@
+$primary-color: #c82333; // Updated to red
+$secondary-color: #c82333; // Retaining this color for now; adjust if needed
+$accent-color: #fd7e14; // Keep as is
+$background-color: #f0f4f8; // Keep as is
+$text-color: #212529; // Keep as is
+$light-color: #ffffff; // Keep as is
+$border-color: #dee2e6; // Keep as is
+$font-family: "Helvetica Neue", Arial, sans-serif;
+$border-radius: 12px;
+$shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+.flight-form-page-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 30px;
+  background-color: $light-color;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  transition: transform 0.3s;
+  margin-top: 20px;
+}
+
+.flight-form-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+
+  .title-container {
+  
+
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #c82333;
+    white-space: nowrap;
+    margin-top: 11px;
+  }
+
+  .flight-actions {
+    display: flex;
+    gap: 15px;
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.2s;
+
+      &.disabled-btn {
+        background-color: $border-color;
+        cursor: not-allowed;
+      }
+
+      &:not(.disabled-btn) {
+        background-color: $secondary-color; // This can remain or change as needed
+        color: $light-color;
+      }
+    }
+  }
+}
+
+.view-flight-details {
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  padding: 25px;
+  margin-bottom: 30px;
+  background: linear-gradient(white, $light-color);
+  box-shadow: $shadow;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: 20px;
+
+  h3 {
+    margin-bottom: 20px;
+    color: $primary-color; // Updated to red
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .simple-label-value {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 5px 0;
+
+    label {
+      font-weight: bold;
+      color: $text-color;
+    }
+
+    span {
+      color: $text-color;
+    }
+  }
+}
+
+.no-flight-data {
+  text-align: center;
+  padding: 30px;
+  border: 1px dashed $border-color;
+  border-radius: $border-radius;
+  color: $text-color;
+  box-shadow: $shadow;
+
+  p {
+    margin: 0 0 15px;
+    font-size: 1.1rem;
+  }
+
+  .open-form-btn {
+    padding: 12px 20px;
+    background-color: $primary-color; // Updated to red
+    color: $light-color;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+}
+
+.actions-section-container {
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px; // Replace with your desired border radius
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    background-color: #c82333; // Darker red for submit button
+    color: #ffffff; // Light text color
+
+    &.cancel-btn {
+      background-color: #dc3545; // Red color
+      color: #ffffff; // Light text color
+
+      &:hover {
+        background-color: #c82333; // Darker red on hover
+        transform: scale(1.05);
+      }
+
+      &:disabled {
+        background-color: #f8d7da; // Light red for disabled state
+        color: #6c757d; // Dark gray text color
+        cursor: not-allowed;
+      }
+    }
+
+    &.submit-btn {
+      background-color: #c82333; // Darker red for submit button
+      color: #ffffff; // Light text color
+
+      &:hover {
+        background-color: #dc3545; // Lighter red on hover
+        transform: scale(1.05);
+      }
+
+      &:disabled {
+        background-color: #f8d7da; // Light red for disabled state
+        color: #6c757d; // Dark gray text color
+        cursor: not-allowed;
+      }
+    }
+  }
+}

@@ -1,0 +1,87 @@
+$primary-color: #1e88e5; // الأزرق الأساسي
+$secondary-color: #f5f7fa; // لون الخلفية الفاتح
+$text-color: #333; // لون النص
+$highlight-color: #ff9800; // لون مميز (برتقالي)
+$border-color: #e0e0e0; // لون الحدود
+$shadow-color: rgba(0, 0, 0, 0.1); // لون الظل
+
+.invoiceContainerS {
+  max-width:800px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px $shadow-color;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px $shadow-color;
+  }
+}
+
+.invoiceTitle {
+  font-size: 2rem;
+  color: $primary-color;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: bold;
+  border-bottom: 2px solid red;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding: 20px;
+  background: $secondary-color;
+  border-radius: 8px;
+  border: 1px solid $border-color;
+
+  h2 {
+    font-size: 1.6rem;
+    color: $primary-color;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid $border-color;
+
+    .label {
+      font-weight: bold;
+      color: $text-color;
+      font-size: 1.1rem;
+    }
+
+    .value {
+      color: $primary-color;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+  }
+
+  .row:last-child {
+    border-bottom: none;
+  }
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.6rem;
+  color: red;
+  font-weight: bold;
+  margin-top: 50px;
+}
+
+.no-data {
+  text-align: center;
+  font-size: 1.4rem;
+  color: $text-color;
+  margin-top: 30px;
+}

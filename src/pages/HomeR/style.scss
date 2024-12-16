@@ -1,0 +1,209 @@
+.home-page-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: overlay;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-color);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: 50px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-color);
+  }
+}
+
+.upcoming-conferences {
+  padding: 20px;
+  text-align: center;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #c82333;
+  }
+
+  .conference-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .conference-image {
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .conference-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .conference-image:hover {
+    transform: scale(1.05);
+  }
+}
+
+.slider {
+  padding: 10px;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  img {
+    height: 300px;
+    margin: auto;
+  }
+}
+
+.slide-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.welcome-section {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f4f4f4;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 5px;
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #c82333 !important;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #555;
+  }
+}
+.contact-us-section{
+  padding: 40px 20px;
+  background-color: #f4f4f4;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 40px;
+  height: auto;
+
+
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #c82333;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #555;
+  }
+
+}
+
+.featured-section {
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #c82333;
+  }
+
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+  }
+
+  .feature {
+    flex: 1 1 22%;
+    min-width: 230px;
+    max-width: 230px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    .feature-icon {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #c82333;
+    }
+
+    .desc {
+      font-size: 1rem;
+      color: #777;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-section {
+    .features {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .feature {
+      flex: 1 1 90%;
+      max-width: 90%;
+    }
+  }
+
+  .welcome-section {
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .slider {
+    width: 100%;
+  }
+
+  .home-page-section {
+    padding: 10px;
+  }
+
+  .feature {
+    padding: 15px;
+  }
+}

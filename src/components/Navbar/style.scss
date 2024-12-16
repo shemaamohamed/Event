@@ -1,0 +1,198 @@
+.new-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff; /* White background */
+  color: #c82333; /* Red text */
+  font-family: "Arial", sans-serif;
+  border-bottom: 1px solid #ebecf2;
+
+  .menuu {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .menu-title {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #c82333; /* Red text for menu title */
+    &:hover {
+      color: #d90429; /* Darker red on hover */
+    }
+  }
+
+  .new-logo {
+    height: 50px;
+    padding: 0px 20px;
+  }
+
+  .navbar-logo {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    .logo {
+      color: #c82333; /* Red color for logo */
+    }
+  }
+
+  .navbar-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 25px;
+
+    .menu-section {
+      position: relative;
+
+      .menu-title {
+        font-size: 16px;
+        font-weight: 500;
+        padding: 8px 12px;
+        cursor: pointer;
+        color: #c82333; /* Red text for menu title */
+        &:hover {
+          color: #d90429; /* Darker red on hover */
+        }
+      }
+
+      .menu-links {
+        max-height: 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #ffffff; /* White background for submenu */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: 0;
+        z-index: 1000;
+        transition: max-height 0.5s ease-in-out;
+        width: 210px;
+        
+        overflow: overlay;
+        &::-webkit-scrollbar {
+          width: 3px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: var(--scrollbar-track-color);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: var(--scrollbar-thumb-color);
+          border-radius: 50px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+          background: var(--scrollbar-thumb-hover-color);
+        }
+      }
+
+      &:hover .menu-links {
+        max-height: 400px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .menu-item {
+        padding: 5px 10px;
+        cursor: pointer;
+        color: #c82333; /* Red text for menu items */
+
+        .option-btn {
+          text-decoration: none;
+          padding: 8px 12px;
+          display: block;
+          &:hover {
+            background-color: #c82333; /* Red on hover */
+            color: #fff;
+          }
+        }
+
+        .has-submenu {
+          &:hover .submenu {
+            max-height: 300px;
+          }
+        }
+
+        .submenu {
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.5s ease-in-out;
+          background-color: #ffffff; /* White background for submenu */
+          list-style: none;
+          padding: 0;
+          position: relative;
+          margin-top: 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          
+          .submenu-item {
+            padding: 5px 10px;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #c82333; /* Red background on hover */
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .navbar-auth {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    svg {
+      fill: #c82333; /* Red color for icons */
+    }
+
+    .auth-btn {
+      background-color: #c82333; /* Red button background */
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #d90429; /* Darker red on hover */
+      }
+    }
+
+    .register-btn {
+      background-color: transparent;
+      color: #c82333; /* Red text for register button */
+      border: 1px solid #c82333; /* Red border */
+
+      &:hover {
+        background-color: #c82333; /* Red background on hover */
+        color: #fff; /* White text on hover */
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    .navbar-links {
+      flex-direction: column;
+      gap: 10px;
+
+      .menu-section {
+        .menu-title {
+          padding: 12px 0;
+        }
+      }
+    }
+  }
+}

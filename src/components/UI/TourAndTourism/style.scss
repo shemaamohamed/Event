@@ -1,0 +1,120 @@
+/* General Styles */
+.tour-slider {
+  padding: 40px 10%;
+  background-color: #f9f9f9;
+  text-align: center;
+  box-sizing: border-box;
+
+  height: calc(100vh - 58px);
+  overflow: overlay;
+  padding-bottom: 20px;
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-color);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: 50px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-color);
+  }
+
+  .tour-slider-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+    text-transform: uppercase;
+  }
+
+  /* Destination Card */
+  .destination-card {
+    position: relative;
+    margin-bottom: 40px;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .slider-container {
+    position: relative;
+  }
+
+  .slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Slide Image */
+  .slide-img {
+    width: 100%;
+    height: 400px; /* Fixed height */
+    object-fit: cover; /* Ensures images fill the container while maintaining aspect ratio */
+    border-radius: 12px;
+  }
+
+  /* Destination Info */
+  .destination-info {
+    padding: 20px;
+    // position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.377);
+    color: rgb(24, 24, 24);
+    border-radius: 0 0 12px 12px;
+    // text-align: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .destination-title {
+    font-size: 2rem;
+    margin: 10px 0;
+  }
+
+  .destination-description {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  /* Button Container */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .book-now-button {
+    background-color: #00bcd4;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .book-now-button:hover {
+    background-color: #0097a7;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .tour-slider {
+      padding: 40px 5%;
+    }
+
+    .tour-slider-heading {
+      font-size: 2rem;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+$conferences-bg: #f8f9fa;
+$primary-color: #ef233c;
+
+.conferences {
+  padding: 20px;
+  border-radius: 8px;
+
+  .titlee {
+    text-align: center;
+    color: $primary-color;
+    margin-bottom: 20px;
+  }
+
+  .conference-list {
+    list-style: none;
+    padding: 0;
+
+    .conference-item {
+      background-color: white;
+      padding: 15px;
+      margin: 10px 0;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $primary-color;
+        color: white;
+      }
+    }
+  }
+}
+body::-webkit-scrollbar {
+  width: 3px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: 50px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color);
+}
