@@ -255,7 +255,7 @@ const RegisterPage = () => {
                                   cursor: "pointer",
                                   backgroundColor:'#c62828',
                                   '&:hover': {
-                                    backgroundColor: darken('#dc143c', 0.2), // Darken color by 10%
+                                    backgroundColor: darken('#dc143c', 0.2), 
                                   },
                   
                                   }}
@@ -317,14 +317,14 @@ const RegisterPage = () => {
                       </InputLabel>
                     <PhoneInput
                     labelId='whatsapp'
-                      country={"jo"} // Jordan كدولة افتراضية
+                      country={"jo"} 
                       value={whatsApp}
                       onChange={setWhatsApp}
                       inputStyle={{
-                        width: "100%", // توسيع حقل الإدخال
-                        height: "56px", // توافق مع ارتفاع TextField
-                        borderColor: error.whatsApp ? "red" : "#c4c4c4", // إطار أحمر في حالة الخطأ
-                        borderRadius: "4px", // تدوير الحواف
+                        width: "100%", 
+                        height: "56px", 
+                        borderColor: error.whatsApp ? "red" : "#c4c4c4", 
+                        borderRadius: "4px", 
                       }}
                       placeholder="Enter your  WhatsApp number"
                     />
