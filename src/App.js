@@ -163,28 +163,32 @@ const App = () => {
           )}
 
         <div
-          className="contentt"
           style={{
-            width:
-              !noNavRoute.includes(location.pathname) &&
-              !location.pathname.includes("/registerPage") &&
-              !location.pathname.includes("/conference/details") &&
-              !location.pathname.includes("/other") &&
-              isLoggedIn &&
-              !isSponsor &&
-              !location.pathname.includes("/register/")
-                ? "calc(100%)"
-                : "100%",
+            width:'100%'
           }}
+          // style={{
+          //   width:
+          //     !noNavRoute.includes(location.pathname) &&
+          //     !location.pathname.includes("/registerPage") &&
+          //     !location.pathname.includes("/conference/details") &&
+          //     !location.pathname.includes("/other") &&
+          //     isLoggedIn &&
+          //     !isSponsor &&
+          //     !location.pathname.includes("/register/")
+          //       ? "calc(100%)"
+          //       : "100%",
+          // }}
         >
-          {!noNavRoute.includes(location.pathname) &&
+          {/* {!noNavRoute.includes(location.pathname) &&
             !location.pathname.includes("/registerPage") &&
             !location.pathname.includes("/other") &&
             !location.pathname.includes("/register/") && (
               <div className="layout-navbar">
                 <NavBar />
               </div>
-            )}
+            )} */}
+            <NavBar />
+
           <div className="layout-content">
             <Routes className="main">
               <Route path="/exhibitions" element={<Exhibitions />} />

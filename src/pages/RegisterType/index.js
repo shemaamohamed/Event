@@ -1,76 +1,126 @@
 import React from "react";
-import SVG from "react-inlinesvg";
-import speaker from "../../icons/speaker.svg";
-import attendance from "../../icons/attendance.svg";
-import sponsor from "../../icons/sponsor.svg";
-import group from "../../icons/group.svg";
-import conferencesImg from "../../icons/conferencesImg.svg";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
+import { Container, Grid, Typography } from "@mui/material";
+import CardType from "../../components/CardType";
 
 const RegisterType = () => {
+  const types =[
+    {
+      type:'Speaker',
+      img:'speaker.svg',
+      link:'speaker'
+    },{
+      type:'Attendance',
+      img:'attendance.svg',
+      link:'attendance'
+
+    },{
+      type:'Sponsor/Exhibitor',
+      img:'sponsor.svg',
+      link:'sponsor'
+    },
+    {
+      type:'Group',
+      img:'group.svg',
+      link:'group'
+    },{
+      type:'Other',
+      img:'conferencesImg.svg',
+      link:'other'
+    }
+  ]
   const navigate = useNavigate();
   const handleNavigate = (type) => {
     navigate(`/registerPage/${type}`);
   };
   return (
-    <div className="register-type-page">
-      <div className="about-container">
-        <SVG src={conferencesImg} />
-        <div className="new-about-us-container">
-          <div className="titlee">About Us</div>
-          <div className="description">
-            Our event brings together a diverse group of professionals,
-            innovators, and thought leaders from various industries. Whether
-            you're a speaker looking to share insights, an attendee eager to
-            learn and network, a sponsor wanting to showcase your brand, or a
-            group registering together, we provide tailored registration options
-            to meet your needs. Choose the role that best fits your
-            participation, and we look forward to having you with us.
-          </div>
-        </div>
-      </div>
-      <div className="register-type-section">
-        <div className="welcome-titlee">Welcome to the Registration Page</div>
+    <Container
+    sx={{
+      
+      alignItems:'center',
+      justifyContent:'center',
+      display:'flex',
+      height: {
+        xs: 'auto',  
+        sm: 'auto', 
+        md: 'auto', 
+        lg: '80vh', 
+        xl: '80vh', 
+      },
+      padding:'20px'
+      
 
-        <div className="register-note">
-          Please select the appropriate option below to proceed with your
-          registration. Whether you're a speaker, attendee, sponsor/exhibitor,
-          or part of a group, we have tailored options to fit your needs.
-        </div>
-        <div className="register-types">
-          <div className="type" onClick={() => handleNavigate("speaker")}>
-            <SVG src={speaker} height={150} width={150} />
-            <span className="titlee">Login As Speaker</span>
-          </div>{" "}
-          <div className="type" onClick={() => handleNavigate("attendance")}>
-            <SVG src={attendance} height={150} width={150} />
-            <span className="titlee">Login As Attendance</span>
-          </div>{" "}
-          <div
-            className="type"
-            onClick={() => handleNavigate("sponsor")}
-          
+    }}
+    >
+      <Grid container
+      sx={
+        {
+          display:'flex',
+          justifyContent:'center',
+          alignItems:'center',
+
+        }
+      }
+      >
+        <Grid item xs={12} sm={12} md={12} lg={10} xl={10} >
+          <Typography 
+          sx={{
+                   
+            color: " gray",
+            textAlign:'center'
+
+          }} 
+          variant="h6"
           >
-            <SVG src={sponsor} height={150} width={150} />
-            <span className="titlee">Login As Sponsor/Exhibitor</span>
-          </div>
-          <div className="type" onClick={() => handleNavigate("group")}>
-            <SVG src={group} height={150} width={150} />
-            <span className="titlee">Login As Group Registration</span>
-          </div>
-          <div
-            className="type"
-            onClick={() => {
-              navigate("/other");
-            }}
+            Please select the appropriate option below to proceed with your
+          registration.
+          </Typography>
+
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={10} xl={10} >
+          <Typography 
+          sx={{
+                   
+            color: " #c62828",
+            textAlign:'center'
+          }} 
+          variant="h6"
           >
-            <SVG src={group} height={150} width={150} />
-            <span className="titlee">Other</span>
-          </div>
-        </div>
-      </div>
-    </div>
+            ( we have tailored options to fit your needs )
+          </Typography>
+
+        </Grid>
+        
+        <Grid container
+        spacing={2}
+      sx={
+        {
+          display:'flex',
+          justifyContent:'center',
+          alignItems:'center'
+
+        }
+      }
+      >
+      {
+          types.map((value, index) => {
+            return (
+              <Grid item xs={12} sm={4} md={4} lg={2} xl={2} key={index}>
+                <CardType value={value} handleNavigate={handleNavigate} />
+              </Grid>
+            );
+          })
+      }
+        
+        
+        
+      </Grid>
+        
+        
+      </Grid>
+    </Container>
+   
   );
 };
 
