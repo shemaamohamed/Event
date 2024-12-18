@@ -1,5 +1,3 @@
-"use client";
-import "aos/dist/aos.css";
 import { Box, Container, Grid, Typography} from "@mui/material";
 
 function HeaderContact() {
