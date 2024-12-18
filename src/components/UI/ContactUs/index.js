@@ -5,6 +5,7 @@ import { Container, Grid, InputAdornment, TextField, Typography, Button } from '
 import { Call, Email, Language, Person } from '@mui/icons-material';
 import { Box, darken } from '@mui/system';
 import Info from '../../Info';
+import HeaderContact from '../../HeaderContact';
 
 
 const ContactUs = () => {
@@ -46,6 +47,7 @@ const ContactUs = () => {
 
   return (
     <div>
+      <HeaderContact/>
       <Container
        sx={{
       
