@@ -111,7 +111,8 @@ const OurTeams = () => {
       sx={{
         justifyContent:'center',
         alignItems:'center',
-        display:'flex'
+        display:'flex',
+        marginTop:'10PX'
       }}
        spacing={3}>
         {

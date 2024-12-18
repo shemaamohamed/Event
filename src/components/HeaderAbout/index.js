@@ -19,18 +19,28 @@ function HeaderAbout() {
           md: "url('/image/aboutus.png')",
         },
         height: {
-          xs: "120vh",
-          sm: "80vh",
-          md: "80vh",
-          lg: "70vh",
-          xl: "70vh",
+          xs: "50vh",
+          sm: "50vh",
+          md: "50vh",
+          lg: "50vh",
+          xl: "50vh",
         },
         padding: { xs: 2, md: 5 },
+        justifyContent:'center',
+        alignItems:'center',
+        display:'flex'
+        
       }}
     >
          <Container>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
+      <Grid container
+      sx={{
+        justifyContent:'center',
+        alignItems:'center',
+        display:'flex'
+      }}
+       spacing={2}>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -45,15 +55,13 @@ function HeaderAbout() {
                 textAlign: 'center',
               }}
             >
-              Who we are
             </Typography>
           </motion.div>
         </Grid>
 
-        {[ // Map through the repetitive content for cleaner code
-          'Event Consultant is a company that prepares, organizes, and markets scientific conferences, exhibitions, workshops, and seminars in Jordan.',
-          'Consists of professional staff who are highly characterized by their vast experience; that is in supervision and management for different conferences and exhibitions held in Jordan.',
-          'Due to the rapid change in market, more and more companies are looking for external expertise from efficient providers; who organizes and manages prestigious meetings, in addition to providing marketing solutions with minimal fees and time.'
+        {/* {[ // Map through the repetitive content for cleaner code
+        '  In response to the rapidly changing market, more companies are seeking external expertise from efficient providers who can organize and manage prestigious events while offering marketing solutions at minimal cost and time.'
+
         ].map((text, index) => (
           <Grid item xs={12} sm={7} md={7} lg={7} xl={7} key={index}>
             <motion.div
@@ -77,7 +85,7 @@ function HeaderAbout() {
               </Typography>
             </motion.div>
           </Grid>
-        ))}
+        ))} */}
       </Grid>
     </Container>
     </Box>
