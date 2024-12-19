@@ -20,6 +20,7 @@ const SponsorshipTable2 = () => {
 
   const [allConference, setAllConference] = useState([]);
   const [conferenceId, setConferenceId] = useState("");
+  const [videoShow, setVideoShow] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -84,6 +85,7 @@ const SponsorshipTable2 = () => {
       non_residential_reg: formData.nonResidentialReg, // Required: Number of non-residential registrations
       residential_reg: formData.residentialReg, // Required: Number of residential registrations
       conference_id: con, // Required: The selected conference ID
+      video_show_between_sessions :videoShow.value || null
     };
 
     axios
@@ -122,7 +124,11 @@ const SponsorshipTable2 = () => {
   return (
     <div className="container-sponsorship-list">
       <div className="container-sponsorship-packages">
-        {!isFormEmpty && <div  className="header-sponsorship-opportunities">Sponsorship Packages</div>}
+        {!isFormEmpty && (
+          <div className="header-sponsorship-opportunities">
+            Sponsorship Packages
+          </div>
+        )}
 
         {error && <p className="error">{error}</p>}
 
@@ -138,7 +144,16 @@ const SponsorshipTable2 = () => {
                 placeholder="Select..."
               />
             </div>
-
+            <Select
+              options={[
+                { label: "Yes", value: "yes" },
+                { label: "No", value: "no" },
+              ]}
+              value={videoShow}
+              setValue={setVideoShow}
+              label="Video Show Between the Sessions"
+              placeholder="Select..."
+            />
             {/* Sponsorship Form Inputs */}
             {Object.keys(formData).map((key) => (
               <div key={key} className="input-group">

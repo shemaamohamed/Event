@@ -11,6 +11,7 @@ import Welcome from "../../components/UI/Welcome";
 // ** styles
 import "./style.scss";
 import TemporaryDrawer from "./Drawer";
+import OurClients from "../../components/UI/OurClients";
 
 const ConferenceDetails = () => {
   const { conferenceId } = useParams();
@@ -46,6 +47,7 @@ const ConferenceDetails = () => {
     secondAnnouncement: "Second Announcement Document",
     brochure: "Conference Brochure",
     scientificProgram: "Scientific Program Document",
+    sponsor:"Sponsor"
   };
 
   const renderContent = () => {
@@ -90,6 +92,12 @@ const ConferenceDetails = () => {
             <Home />
           </div>
         );
+        case "sponsor":
+          return (
+            <div className="content">
+              <OurClients />
+            </div>
+          );
       case "Welcome":
         return (
           <div className="content">
@@ -142,7 +150,7 @@ const ConferenceDetails = () => {
             {scientific_topics?.map((topic) => (
               <div key={topic.id} className="card">
                 <h3>{topic?.title}</h3>
-                <p>{topic?.description || "No description available."}</p>
+             {   topic?.description &&   <p>{topic?.description }</p>}
               </div>
             ))}
           </div>

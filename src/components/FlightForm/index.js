@@ -35,19 +35,19 @@ const MainFlightForm = ({ setOpenForm, getFlightData }) => {
     e.preventDefault();
     const formData = new FormData();
 
-    formData.append("arrival_date", arrivalDate);
-    formData.append("departure_date", departureDate);
-    formData.append("passport_image", passportImage);
-    formData.append("departure_airport", departureAirport);
-    formData.append("arrival_airport", returnAirport);
-    formData.append("specific_flight_time", flightTime);
-    formData.append("flight_number", flightNumber || 0);
-    formData.append("additional_requests", otherRequests || "none");
-    formData.append("seat_preference", seatNumber || 0);
-    formData.append("upgrade_class", upgradeClass ? 1 : 0);
-    formData.append("ticket_count", ticketCount);
-    formData.append("is_companion", 0);
-    formData.append("user_id", userId);
+    formData?.append("arrival_date", arrivalDate);
+    formData?.append("departure_date", departureDate);
+    formData?.append("passport_image", passportImage);
+    formData?.append("departure_airport", departureAirport);
+    formData?.append("arrival_airport", returnAirport);
+    formData?.append("specific_flight_time", flightTime);
+    formData?.append("flight_number", flightNumber || 0);
+    formData?.append("additional_requests", otherRequests || "none");
+    formData?.append("seat_preference", seatNumber || 0);
+    formData?.append("upgrade_class", upgradeClass ? 1 : 0);
+    formData?.append("ticket_count", ticketCount);
+    formData?.append("is_companion", 0);
+    formData?.append("user_id", userId);
 
     axios
       .post(`${BaseUrl}/flights`, formData, {
@@ -195,14 +195,10 @@ const FlightForm = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        setData(response.data[0]);
-        console.log(response);
-
-        setFlight_id(response.data?.[0]?.flight_id);
+        setData(response.data?.[0]?.flight);
+        setFlight_id(response.data?.[0]?.flight?.flight_id);
       })
-      .catch((error) => {
-        console.error("Error fetching flight data:", error);
-      });
+      .catch((error) => {});
   };
 
   useEffect(() => {
@@ -217,7 +213,7 @@ const FlightForm = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        setAvailableFlights(response.data.available_flights);
+        setAvailableFlights(response.data?.available_flights);
       })
       .catch((error) => {
         console.error("Error fetching flight data:", error);
@@ -247,53 +243,67 @@ const FlightForm = () => {
           >
             Add Flight Information
           </button>
+          <button
+            className={`${!Object.keys(data).length ? "disabled-btn" : ""}`}
+            type="button"
+            onClick={() => navigate(`/flights/users/edit`)}
+            disabled={!Object.keys(data).length}
+          >
+            Edit Flight Information
+          </button>{" "}
+          <button type="button" onClick={() => {}}>
+            Emargency
+          </button>
+          <button type="button" onClick={() => {}}>
+            Delete
+          </button>
         </div>
       </div>
       {Object.keys(data).length ? (
         <div className="view-flight-details">
           <SimpleLabelValue
             label="Arrival Date"
-            value={data.arrival_date || "-"}
+            value={data?.arrival_date || "-"}
           />
           <SimpleLabelValue
             label="Departure Date"
-            value={data.departure_date || "-"}
+            value={data?.departure_date || "-"}
           />
           <SimpleLabelValue
             label="Departure Airport"
-            value={data.departure_airport || "-"}
+            value={data?.departure_airport || "-"}
           />
           <SimpleLabelValue
             label="Arrival Airport"
-            value={data.arrival_airport || "-"}
+            value={data?.arrival_airport || "-"}
           />
           <SimpleLabelValue
             label="Specific Flight Time"
-            value={data.specific_flight_time ? "Yes" : "No"}
+            value={data?.specific_flight_time ? "Yes" : "No"}
           />
           <SimpleLabelValue
             label="Flight Time"
-            value={data.specific_flight_time || "-"}
+            value={data?.specific_flight_time || "-"}
           />
           <SimpleLabelValue
             label="Flight Number"
-            value={data.flight_number || "-"}
+            value={data?.flight_number || "-"}
           />
           <SimpleLabelValue
             label="Seat Number"
-            value={data.seat_preference || "-"}
+            value={data?.seat_preference || "-"}
           />
           <SimpleLabelValue
             label="Upgrade Class"
-            value={data.upgrade_class ? "Yes" : "No"}
+            value={data?.upgrade_class ? "Yes" : "No"}
           />
           <SimpleLabelValue
             label="Ticket Count"
-            value={data.ticket_count || "-"}
+            value={data?.ticket_count || "-"}
           />
           <SimpleLabelValue
             label="Other Requests"
-            value={data.additional_requests || "-"}
+            value={data?.additional_requests || "-"}
           />
         </div>
       ) : (

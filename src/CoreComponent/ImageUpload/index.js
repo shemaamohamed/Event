@@ -7,7 +7,7 @@ import defaultFileImage from "../../icons/fileIcon.svg";
 
 const ImageUpload = ({
   errorMsg,
-  required = true,
+  required = false,
   label = "Upload File",
   allowedExtensions = [],
   inputValue,

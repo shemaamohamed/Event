@@ -67,17 +67,11 @@ const RoomPriceForm = () => {
   const isFormValid =
     singleBasePrice &&
     singleCompanionPrice &&
-    singleEarlyCheckInPrice &&
-    singleLateCheckOutPrice &&
     doubleBasePrice &&
     doubleCompanionPrice &&
-    doubleEarlyCheckInPrice &&
-    doubleLateCheckOutPrice &&
     tripleBasePrice &&
     tripleCompanionPrice &&
-    tripleEarlyCheckInPrice &&
-    conferenceId?.value &&
-    tripleLateCheckOutPrice;
+    conferenceId?.value 
 
   const getConference = () => {
     const url = `${BaseUrl}/conferences/all`;
@@ -136,20 +130,7 @@ const RoomPriceForm = () => {
               setInputValue={setSingleCompanionPrice}
               required={true}
             />
-            <Input
-              label="Single Early Check-in Price"
-              placeholder="Enter early check-in price"
-              inputValue={singleEarlyCheckInPrice}
-              setInputValue={setSingleEarlyCheckInPrice}
-              required={true}
-            />
-            <Input
-              label="Single Late Check-out Price"
-              placeholder="Enter late check-out price"
-              inputValue={singleLateCheckOutPrice}
-              setInputValue={setSingleLateCheckOutPrice}
-              required={true}
-            />
+
             <Input
               label="Double Base Price"
               placeholder="Enter double base price"
@@ -164,20 +145,7 @@ const RoomPriceForm = () => {
               setInputValue={setDoubleCompanionPrice}
               required={true}
             />
-            <Input
-              label="Double Early Check-in Price"
-              placeholder="Enter early check-in price"
-              inputValue={doubleEarlyCheckInPrice}
-              setInputValue={setDoubleEarlyCheckInPrice}
-              required={true}
-            />
-            <Input
-              label="Double Late Check-out Price"
-              placeholder="Enter late check-out price"
-              inputValue={doubleLateCheckOutPrice}
-              setInputValue={setDoubleLateCheckOutPrice}
-              required={true}
-            />
+
             <Input
               label="Triple Base Price"
               placeholder="Enter triple base price"
@@ -190,20 +158,6 @@ const RoomPriceForm = () => {
               placeholder="Enter triple companion price"
               inputValue={tripleCompanionPrice}
               setInputValue={setTripleCompanionPrice}
-              required={true}
-            />
-            <Input
-              label="Triple Early Check-in Price"
-              placeholder="Enter early check-in price"
-              inputValue={tripleEarlyCheckInPrice}
-              setInputValue={setTripleEarlyCheckInPrice}
-              required={true}
-            />
-            <Input
-              label="Triple Late Check-out Price"
-              placeholder="Enter late check-out price"
-              inputValue={tripleLateCheckOutPrice}
-              setInputValue={setTripleLateCheckOutPrice}
               required={true}
             />
           </div>

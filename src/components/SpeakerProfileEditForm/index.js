@@ -46,9 +46,9 @@ const SpeakerProfileForm = () => {
   const initializeProfileDetails = useCallback(() => {
     if (registrationType === "speaker") {
       setProfileDetails({
-        userName: speakerData.speaker.name,
-        userImage: speakerData.speaker.image,
-        userBio: speakerData.speaker.biography,
+        userName: speakerData?.speaker?.name,
+        userImage: speakerData?.speaker?.image,
+        userBio: speakerData?.speaker?.biography,
       });
     }
   }, [registrationType, speakerData]);

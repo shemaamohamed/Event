@@ -7,12 +7,22 @@ import "./style.scss";
 import ImageUpload from "../../CoreComponent/ImageUpload";
 import axios from "axios";
 import DialogMessage from "../../components/DialogMessage";
-import { Button, Container, FormControl, FormHelperText, Grid, InputLabel, Menu, MenuItem, Select, TextField, Typography } from "@mui/material";
-import { styled } from '@mui/material/styles';
+import {
+  Button,
+  Container,
+  FormControl,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  Menu,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 import PhoneInput from "react-phone-input-2";
-import { darken } from '@mui/system';
-
-
+import { darken } from "@mui/system";
 
 const RegisterPage = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -59,7 +69,7 @@ const RegisterPage = () => {
     formData.append("nationality", selectedNationality);
     formData.append("country_of_residence", country);
     formData.append("conference_id", id);
-    
+
     try {
       const response = await axios.post(`${BaseUrl}/users/${id}`, formData, {
         headers: {
@@ -194,190 +204,191 @@ const RegisterPage = () => {
     }
   };
   const CustomMenu = styled(Menu)({
-    '& .MuiPaper-root': {
+    "& .MuiPaper-root": {
       maxHeight: 200,
-      overflowY: 'auto',
-      '&::-webkit-scrollbar': {
+      overflowY: "auto",
+      "&::-webkit-scrollbar": {
         width: 8,
       },
-      '&::-webkit-scrollbar-thumb': {
-        backgroundColor: '#888',
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "#888",
         borderRadius: 10,
       },
-      '&::-webkit-scrollbar-thumb:hover': {
-        backgroundColor: '#555',
+      "&::-webkit-scrollbar-thumb:hover": {
+        backgroundColor: "#555",
       },
     },
   });
 
   return (
     <Container
-    sx={{ display: "flex", justifyContent: "center", alignItems: "center" ,marginTop: '32px'}}
-
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "32px",
+      }}
     >
       <DialogMessage
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}
       />
-      
-        <Grid container >
-          <Grid xs={12} sm={6} md={6} lg={6} xl={6}>
-            <form onSubmit={handleRegister} >
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}
+
+      <Grid container>
+        <Grid xs={12} sm={6} md={6} lg={6} xl={6}>
+          <form onSubmit={handleRegister}>
+            <Grid container spacing={2}>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={12}
+                xl={12}
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                 }}
-                >
-                  <Typography
+              >
+                <Typography
                   sx={{
-                   
-                    padding:'10px',
+                    padding: "10px",
                     color: " #c62828",
-                  }} 
+                  }}
                   variant="h4"
+                >
+                  Register
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "10px",
+                    textDecoration: "none",
+                  }}
+                >
+                  <Button
+                    sx={{
+                      color: "white",
+                      cursor: "pointer",
+                      backgroundColor: "#c62828",
+                      "&:hover": {
+                        backgroundColor: darken("#dc143c", 0.2),
+                      },
+                    }}
+                    onClick={() => {
+                      navigate("/login");
+                    }}
                   >
-                    Register
-                  </Typography>
-                  <Typography variant="body1" sx={{
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                  marginTop: "10px",
-                                  textDecoration: "none",
-                                  
-                                }}>
-                                  <Button
-                                  sx={{
-                                  color: "white",
-                                  cursor: "pointer",
-                                  backgroundColor:'#c62828',
-                                  '&:hover': {
-                                    backgroundColor: darken('#dc143c', 0.2), 
-                                  },
-                  
-                                  }}
-                                onClick={() => {
-                                  navigate("/login");
-                                }}
-                              >
-                                login
-                              </Button>
-                              </Typography>
-                </Grid>
-                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <TextField
-                    label="Name"
-                    error={error.name ? true : false}
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    helperText={error.name}
-                    fullWidth
-                    placeholder="e.g. John Doe"
-                    type="text"
+                    login
+                  </Button>
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <TextField
+                  label="Name"
+                  error={error.name ? true : false}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  helperText={error.name}
+                  fullWidth
+                  placeholder="e.g. John Doe"
+                  type="text"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <TextField
+                  label="Email"
+                  error={error.email ? true : false}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  helperText={error.email}
+                  fullWidth
+                  placeholder="e.g. example@example.com"
+                  type="email"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <TextField
+                  error={error.password ? true : false}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  helperText={error.password}
+                  fullWidth
+                  label="Password"
+                  placeholder="Enter your password "
+                  type="password"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <FormControl fullWidth>
+                  <InputLabel
+                    id="whatsapp"
+                    shrink
+                    style={{ marginBottom: "8px" }}
+                  >
+                    WhatsApp Number
+                  </InputLabel>
+                  <PhoneInput
+                    labelId="whatsapp"
+                    country={"jo"}
+                    value={whatsApp}
+                    onChange={setWhatsApp}
+                    inputStyle={{
+                      width: "100%",
+                      height: "56px",
+                      borderColor: error.whatsApp ? "red" : "#c4c4c4",
+                      borderRadius: "4px",
+                    }}
+                    placeholder="Enter your  WhatsApp number"
                   />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <TextField
-                    label="Email"
-                    error={error.email ? true : false}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    helperText={error.email}
-                    fullWidth
-                    placeholder="e.g. example@example.com"
-                    type="email"
-
-                  />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                    <TextField
-                     error={error.password ? true : false}
-                     value={password}
-                     onChange={(e)=>setPassword(e.target.value)}
-                     helperText={error.password}
-                     fullWidth
-                     label="Password"
-                     placeholder="Enter your password "
-                     type="password"
-                    
-
-                    />
-                  </Grid >
-
-                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <FormControl fullWidth>
-                      <InputLabel 
-                      id="whatsapp"
-
-                      shrink style={{ marginBottom: "8px" }}>
-                      WhatsApp Number
-                      </InputLabel>
-                    <PhoneInput
-                    labelId='whatsapp'
-                      country={"jo"} 
-                      value={whatsApp}
-                      onChange={setWhatsApp}
-                      inputStyle={{
-                        width: "100%", 
-                        height: "56px", 
-                        borderColor: error.whatsApp ? "red" : "#c4c4c4", 
-                        borderRadius: "4px", 
-                      }}
-                      placeholder="Enter your  WhatsApp number"
-                    />
-                    {error.whatsApp && (
-                      <FormHelperText style={{ color: "red" }}>{error.whatsApp}</FormHelperText>
-                    )}
-                    </FormControl>
-
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <FormControl fullWidth>
-                      <InputLabel 
-                      id='phone'
-                      shrink style={{ marginBottom: "8px" }}>
-                      Phone Number
-                      </InputLabel>
-                    <PhoneInput
-                    labelId='phone'
-                    country={"jo"} 
+                  {error.whatsApp && (
+                    <FormHelperText style={{ color: "red" }}>
+                      {error.whatsApp}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="phone" shrink style={{ marginBottom: "8px" }}>
+                    Phone Number
+                  </InputLabel>
+                  <PhoneInput
+                    labelId="phone"
+                    country={"jo"}
                     value={phone}
                     onChange={setPhone}
                     inputStyle={{
-                      width: "100%", 
-                      height: "56px", 
-                      borderColor: error.phone ? "red" : "#c4c4c4", 
-                      borderRadius: "4px", 
+                      width: "100%",
+                      height: "56px",
+                      borderColor: error.phone ? "red" : "#c4c4c4",
+                      borderRadius: "4px",
                     }}
                     placeholder="Enter your phone number"
-
-                    />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                    <TextField
-                    label="Specialization"
-                    error={error.specialization ? true : false}
-                    value={specialization}
-                    onChange={(e) => setSpecialization(e.target.value)}
-                    helperText={error.specialization}
-                    fullWidth
-                    placeholder="e.g. Software Engineer"
-                    type="text"
                   />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <FormControl fullWidth>
-                    <InputLabel
-                    id="nationality"
-
-                    >
-                    Nationality
-                    </InputLabel>
-                    <Select
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <TextField
+                  label="Specialization"
+                  error={error.specialization ? true : false}
+                  value={specialization}
+                  onChange={(e) => setSpecialization(e.target.value)}
+                  helperText={error.specialization}
+                  fullWidth
+                  placeholder="e.g. Software Engineer"
+                  type="text"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="nationality">Nationality</InputLabel>
+                  <Select
                     labelId="nationality"
                     value={selectedNationality}
                     onChange={(e) => setSelectedNationality(e.target.value)}
@@ -386,38 +397,25 @@ const RegisterPage = () => {
                     MenuProps={{
                       PaperProps: {
                         style: {
-                          maxHeight: 200, 
-                          overflowY: 'auto',
-                          
-
+                          maxHeight: 200,
+                          overflowY: "auto",
                         },
                       },
                     }}
-                   
                   >
-                  {nationalitiesOptions.map((option) => (
-                            <MenuItem
-                            
-
-                             key={option.value} value={option.value}>
-                              {option.label}
-                            </MenuItem>
-                          ))}
+                    {nationalitiesOptions.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
                   </Select>
-                  </FormControl>
-                    
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <FormControl fullWidth>
-                    <InputLabel
-                    id="label"
-
-                    >
-                      Country
-                    </InputLabel>
-                    <Select
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="label">Country</InputLabel>
+                  <Select
                     labelId="label"
-
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     label="Country"
@@ -425,97 +423,84 @@ const RegisterPage = () => {
                     MenuProps={{
                       PaperProps: {
                         style: {
-                          maxHeight: 200, 
-                          overflowY: 'auto',
-                          
-
+                          maxHeight: 200,
+                          overflowY: "auto",
                         },
                       },
                     }}
-                   
                   >
-                  {countriesOptions.map((option) => (
-                            <MenuItem
-                            
-
-                             key={option.value} value={option.value}>
-                              {option.label}
-                            </MenuItem>
-                          ))}
+                    {countriesOptions.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
                   </Select>
-                  </FormControl>
-
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <ImageUpload
-                    errorMsg={error.image}
-                    required={true}
-                    label="Profile Picture"
-                    allowedExtensions={["jpg", "jpeg", "png", "gif"]}
-                    inputValue={image}
-                    setInputValue={setImage}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
-                    <TextField
-                    error={error.resume ? true : false}
-                    value={resumeText}
-                    onChange={(e)=>setResumeText(e.target.value)}
-                    helperText={error.resume}
-                    fullWidth
-                    label="Resume"
-                    placeholder="Write your resume here..."
-                    type="text"
-                    multiline
-                    rows={5}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "right",
-                    alignItems: "center",
-                  }}
-                  >
-                    <Button
-                    sx={{
-                      backgroundColor:'#c62828',
-                      '&:hover': {
-          backgroundColor: darken('#dc143c', 0.2), // Darken color by 10%
-        },
-                      color: "#ffffff",
-                      width:{
-                        xs: '100%',  
-                        sm: '100%',  
-                        md: '100%', 
-                        lg: '50%',   
-                        xl: '50%' 
-
-
-                      }
-                      
-                    }}
-                    type="submit"
-                    >Register</Button>
-
-                  </Grid>
-                  
-
-
-
-
-
+                </FormControl>
               </Grid>
-            </form>
-
-
-          </Grid>
-          <Grid xs={12} sm={6} md={6} lg={6} xl={6}>
-            <img src={registerImg} alt="register" className="register-img" />
-
-
-          </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <ImageUpload
+                  errorMsg={error.image}
+                  required={true}
+                  label="Profile Picture"
+                  allowedExtensions={["jpg", "jpeg", "png", "gif"]}
+                  inputValue={image}
+                  setInputValue={setImage}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <TextField
+                  error={error.resume ? true : false}
+                  value={resumeText}
+                  onChange={(e) => setResumeText(e.target.value)}
+                  helperText={error.resume}
+                  fullWidth
+                  label="Resume"
+                  placeholder="Write your resume here..."
+                  type="text"
+                  multiline
+                  rows={5}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={12}
+                xl={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "right",
+                  alignItems: "center",
+                }}
+              >
+                <Button
+                  sx={{
+                    backgroundColor: "#c62828",
+                    "&:hover": {
+                      backgroundColor: darken("#dc143c", 0.2), // Darken color by 10%
+                    },
+                    color: "#ffffff",
+                    width: {
+                      xs: "100%",
+                      sm: "100%",
+                      md: "100%",
+                      lg: "50%",
+                      xl: "50%",
+                    },
+                  }}
+                  type="submit"
+                >
+                  Register
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
         </Grid>
+        <Grid xs={12} sm={6} md={6} lg={6} xl={6}>
+          <img src={registerImg} alt="register" className="register-img" />
+        </Grid>
+      </Grid>
     </Container>
   );
 };

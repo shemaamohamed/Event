@@ -7,12 +7,12 @@ import SVG from "react-inlinesvg";
 import deleteIcon from "../../../icons/deleteIcon.svg";
 import { useFlightStepper } from "../StepperContext";
 import { toast } from "react-toastify";
-import { getFromLocalStorage } from "../../../common/localStorage";
 import httpService from "../../../common/httpService";
 import "./style.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import DialogMessage from "../../DialogMessage";
 
-const FlightInformation = () => {
+const CompanionInformation = () => {
   const navigate = useNavigate();
   const initialValue = {
     name: "",
@@ -28,10 +28,29 @@ const FlightInformation = () => {
     otherRequests: "",
     upgradeClass: false,
   };
+  const { mode } = useParams();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
-  const { passportImage } = useFlightStepper();
-  const [companions, setCompanions] = useState([initialValue]);
+  const {
+    arrivalDate,
+    departureDate,
+    passportImage,
+    departureAirport,
+    returnAirport,
+    specificFlightTime,
+    flightTime,
+    flightNumber,
+    otherRequests,
+    seatNumber,
+    upgradeClass,
+    ticketCount,
+    companions,
+    setCompanions,
+    flight_id,
+    setFlight_id,
+  } = useFlightStepper();
 
   const handleCompanionChange = (index, field, value) => {
     setCompanions((prevCompanions) => {
@@ -50,8 +69,16 @@ const FlightInformation = () => {
   };
 
   const formatFlightData = (flights) => {
-    return flights.map((flight) => {
+    return flights.map((flight, index) => {
+      let main_user_id;
+      if (index !== 0) {
+        main_user_id = flight_id;
+      } else {
+        main_user_id = null;
+      }
       return {
+        main_user_id: main_user_id,
+        flight_id: flight?.flight_id || null,
         departureAirport: flight.departureAirport,
         returnAirport: flight.returnAirport,
         departureDate: flight.departureDate,
@@ -71,51 +98,6 @@ const FlightInformation = () => {
   };
 
   const getAuthToken = () => localStorage.getItem("token");
-  // function formatFlightDataToFormData(flights) {
-  //   const formData = new FormData();
-
-  //   flights.forEach((flight, index) => {
-  //     formData.append(`flights[${index}][flightTime]`, flight.flightTime || "");
-  //     formData.append(
-  //       `flights[${index}][departureAirport]`,
-  //       flight.departureAirport
-  //     );
-  //     formData.append(`flights[${index}][returnAirport]`, flight.returnAirport);
-  //     formData.append(`flights[${index}][departureDate]`, flight.departureDate);
-  //     formData.append(`flights[${index}][arrivalDate]`, flight.arrivalDate);
-  //     formData.append(
-  //       `flights[${index}][specificFlightTime]`,
-  //       flight.specificFlightTime ? 1 : 0
-  //     );
-  //     formData.append(
-  //       `flights[${index}][flightNumber]`,
-  //       flight.flightNumber || "0"
-  //     );
-  //     formData.append(`flights[${index}][seatNumber]`, flight.seatNumber || "");
-  //     formData.append(
-  //       `flights[${index}][upgradeClass]`,
-  //       flight.upgradeClass ? 1 : 0
-  //     );
-  //     formData.append(
-  //       `flights[${index}][otherRequests]`,
-  //       flight.otherRequests || ""
-  //     );
-  //     formData.append(
-  //       `flights[${index}][ticket_count]`,
-  //       flight.ticketCount || 1
-  //     );
-  //     formData.append(`flights[${index}][name]`, flight.name || "");
-
-  //     if (flight.passportImage) {
-  //       formData.append(
-  //         `flights[${index}][passportImage]`,
-  //         flights[index].passportImage
-  //       );
-  //     }
-  //   });
-
-  //   return formData;
-  // }
 
   const formatFlightDataToFormData = (flights) => {
     const formData = new FormData();
@@ -131,26 +113,38 @@ const FlightInformation = () => {
     const formattedData = formatFlightData(flightDataArray);
     const formData = formatFlightDataToFormData(formattedData);
 
-    await httpService({
+    const res = await httpService({
       method: "POST",
-      url: `${BaseUrl}/flights`,
+      url: mode === "edit" ? `${BaseUrl}/edit/flight` : `${BaseUrl}/flights`,
       headers: { Authorization: `Bearer ${getAuthToken()}` },
-
       data: formData,
-      onSuccess: () => {
-        // toast.success("Flights created successfully!");
-        navigate("/reservation/form");
-      },
-      onError: () => {
-        toast.error("Failed to create flights");
-      },
-      withToast: true,
-      showLoader: true,
+      // onSuccess: () => {
+      //   setIsDialogOpen(true);
+      // },
+      // onError: () => {},
+      // withToast: false,
+      // showLoader: true,
     });
+
+    setIsDialogOpen(true);
   };
 
   const handleSubmit = () => {
-    const flightDetails = getFromLocalStorage("flightDetails");
+    const flightDetails = {
+      flight_id,
+      arrivalDate,
+      departureDate,
+      passportImage,
+      departureAirport,
+      returnAirport,
+      specificFlightTime,
+      flightTime,
+      flightNumber,
+      otherRequests,
+      seatNumber,
+      upgradeClass,
+      ticketCount,
+    };
     const data = [
       { ...flightDetails, passportImage: passportImage },
       ...companions,
@@ -173,7 +167,20 @@ const FlightInformation = () => {
   );
 
   return (
-    <div>
+    <div className="flight-test">
+      <DialogMessage
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+        message={`Thank You, the admin will soon enter available trip options for you. Once the trips are added, you will be notified to choose your preferred flight. Thank you for your patience!`}
+        onOk={() => {
+          setIsDialogOpen(false);
+          navigate("/flight/form");
+        }}
+        onClose={() => {
+          setIsDialogOpen(false);
+          navigate("/flight/form");
+        }}
+      />
       <div className="add-flight-btn-container">
         <button type="button" onClick={addNewCompanion}>
           Add Companion
@@ -327,4 +334,4 @@ const FlightInformation = () => {
   );
 };
 
-export default FlightInformation;
+export default CompanionInformation;

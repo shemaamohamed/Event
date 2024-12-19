@@ -4,17 +4,19 @@ import Input from "../../CoreComponent/Input";
 import ImageUpload from "../../CoreComponent/ImageUpload";
 import DateInput from "../../CoreComponent/Date";
 import "./style.scss";
-import Select from "../../CoreComponent/Select";
+// import Select from "../../CoreComponent/Select";
 import TextArea from "../../CoreComponent/TextArea";
 import SVG from "react-inlinesvg";
 import deleteIcon from "../../icons/deleteIcon.svg";
 import { toast } from "react-toastify";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { countriesOptions } from "../../constant";
 
 const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
   const addCommitteeMember = () => {
     setCommitteeMembers([
       ...committeeMembers,
-      { id: Date.now(), name: "", image: null },
+      { id: Date.now(), name: "", image: null, country: "" },
     ]);
   };
 
@@ -36,9 +38,16 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
     setCommitteeMembers(updatedMembers);
   };
 
+  const handleCountryChange = (id, value) => {
+    const updatedMembers = committeeMembers.map((member) =>
+      member.id === id ? { ...member, country: value } : member
+    );
+    setCommitteeMembers(updatedMembers);
+  };
+
   return (
     <div className="committee-form-container">
-      <div className="title-committee"> Committee Members</div>
+      <div className="title-committee">Committee Members</div>
       <div className="button-section-container">
         <button className="add-button-committee" onClick={addCommitteeMember}>
           Add Member
@@ -62,7 +71,32 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
               inputValue={member.image}
               setInputValue={(file) => handleImageChange(member.id, file)}
               allowedExtensions={["jpg", "jpeg", "png"]}
+              required={false}
             />
+            
+            <FormControl fullWidth>
+              <InputLabel id={`country-label-${member.id}`}>Country</InputLabel>
+              <Select
+                labelId={`country-label-${member.id}`}
+                value={member.country}
+                onChange={(e) => handleCountryChange(member.id, e.target.value)}
+                label="Country"
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: 200,
+                      overflowY: "auto",
+                    },
+                  },
+                }}
+              >
+                {countriesOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
 
           <button
@@ -76,6 +110,73 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
     </div>
   );
 };
+
+// const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
+//   const addCommitteeMember = () => {
+//     setCommitteeMembers([
+//       ...committeeMembers,
+//       { id: Date.now(), name: "", image: null },
+//     ]);
+//   };
+
+//   const deleteCommitteeMember = (id) => {
+//     setCommitteeMembers(committeeMembers.filter((member) => member.id !== id));
+//   };
+
+//   const handleNameChange = (id, value) => {
+//     const updatedMembers = committeeMembers.map((member) =>
+//       member.id === id ? { ...member, name: value } : member
+//     );
+//     setCommitteeMembers(updatedMembers);
+//   };
+
+//   const handleImageChange = (id, file) => {
+//     const updatedMembers = committeeMembers.map((member) =>
+//       member.id === id ? { ...member, image: file } : member
+//     );
+//     setCommitteeMembers(updatedMembers);
+//   };
+
+//   return (
+//     <div className="committee-form-container">
+//       <div className="title-committee"> Committee Members</div>
+//       <div className="button-section-container">
+//         <button className="add-button-committee" onClick={addCommitteeMember}>
+//           Add Member
+//         </button>
+//       </div>
+
+//       {committeeMembers.map((member) => (
+//         <div key={member.id} className="committee-member">
+//           <div className="member-info">
+//             <Input
+//               type="text"
+//               label="Name"
+//               placeholder="Enter name"
+//               inputValue={member.name}
+//               setInputValue={(value) => handleNameChange(member.id, value)}
+//               className="name-input"
+//             />
+
+//             <ImageUpload
+//               label="Upload Image"
+//               inputValue={member.image}
+//               setInputValue={(file) => handleImageChange(member.id, file)}
+//               allowedExtensions={["jpg", "jpeg", "png"]}
+//             />
+//           </div>
+
+//           <button
+//             className="delete-button-committee"
+//             onClick={() => deleteCommitteeMember(member.id)}
+//           >
+//             Delete
+//           </button>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
 
 const PriceForm = ({ entries, setEntries }) => {
   const addEntry = () => {
@@ -148,7 +249,7 @@ const PriceForm = ({ entries, setEntries }) => {
 };
 
 const ConferencesAdmin = ({ setIsOpen, getConference }) => {
-  const BaseUrl = process.env.REACT_APP_BASE_URL;;
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   const [committeeMembers, setCommitteeMembers] = useState([
     { id: Date.now(), name: "", image: null },
@@ -203,28 +304,27 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
   };
 
   async function addCommitteeMembers(mainId, members) {
-    const BaseUrl = process.env.REACT_APP_BASE_URL;;
+    const BaseUrl = process.env.REACT_APP_BASE_URL;
 
     const formData = new FormData();
     const token = localStorage.getItem("token");
+    console.log({ members });
+
     members.forEach((member, index) => {
       formData.append(`members[${index}][name]`, member.name);
       if (member.image) {
         formData.append(`members[${index}][committee_image]`, member.image);
       }
       formData.append(`members[${index}][conference_id]`, mainId);
+      formData.append(`members[${index}][country]`, member.country);
     });
 
     try {
-      const response = await axios.post(
-        `${BaseUrl}/con/committee`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post(`${BaseUrl}/con/committee`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setIsOpen(false);
       getConference();
@@ -374,15 +474,15 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
           placeholder="Enter visa cost"
           inputValue={visaCost}
           setInputValue={setVisaCost}
-          type="number" 
+          type="number"
           required
         />
-             <Input
+        <Input
           label="Companion Dinner Cost (USD)"
           placeholder="Enter companion Dinner Price Cost"
           inputValue={companionDinnerPrice}
           setInputValue={setCompanionDinnerPrice}
-          type="number" 
+          type="number"
           required
         />
         <div className="topics-container">

@@ -289,6 +289,7 @@ const App = () => {
                 element={<AdminGroupComponent />}
               />
               <Route path="/flights/users" element={<FlightStepperPage />} />
+              <Route path="/flights/users/:mode" element={<FlightStepperPage />} />
               <Route
                 path="/flights/admins/:flight_id"
                 element={<FlightStepperPageAdmin />}

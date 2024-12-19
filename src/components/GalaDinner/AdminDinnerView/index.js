@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import MySideDrawer from "../../../CoreComponent/SideDrawer";
 import { useParams } from "react-router-dom";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
+
 const SpeakerTable = () => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -15,6 +16,7 @@ const SpeakerTable = () => {
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
   const { conferenceId } = useParams();
+
   useEffect(() => {
     const fetchSpeakers = async () => {
       try {
@@ -29,19 +31,18 @@ const SpeakerTable = () => {
         setSpeakers(response.data.data);
         console.log(response.data.data);
       } catch (error) {
-        toast.error("Error fetching speakers data");
+        // toast.success("no speakers data");
       } finally {
         setLoading(false);
       }
     };
 
     fetchSpeakers();
-  }, [token]);
+  }, [token, conferenceId]);
 
   const openModal = (speaker) => {
     setSelectedSpeaker(speaker);
     console.log(speaker);
-
     setModalIsOpen(true);
   };
 
@@ -53,8 +54,11 @@ const SpeakerTable = () => {
   return (
     <div className="speaker-table">
       <h2>Dinner Speakers List</h2>
+
       {loading ? (
-        <div></div>
+        <div>Loading...</div>
+      ) : speakers.length === 0 ? (
+        <div>No speakers available</div> // Show this when there are no speakers
       ) : (
         <table>
           <thead>
@@ -65,7 +69,7 @@ const SpeakerTable = () => {
             </tr>
           </thead>
           <tbody>
-            {speakers.map((speakerData) => (
+            {speakers?.map((speakerData) => (
               <tr key={speakerData.id}>
                 <td>{speakerData.companion_name || "N/A"}</td>
                 <td>{speakerData.companion_price || "N/A"}</td>
@@ -122,7 +126,6 @@ const SpeakerTable = () => {
                 <strong>Free Trip:</strong>{" "}
                 {selectedSpeaker.free_trip ? "Yes" : "No"}
               </p>
-
             </div>
           )}
         </CustomFormWrapper>

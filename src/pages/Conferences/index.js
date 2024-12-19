@@ -1,11 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import MySideDrawer from "../../CoreComponent/SideDrawer";
 import SimpleLabelValue from "../../components/SimpleLabelValue";
-import EditConferenceForm from "../../components/EditConferenceForm";
-import "./style.scss";
 import Input from "../../CoreComponent/Input";
 import ConferencesAdmin from "../../components/ConferencesAdmin";
-import axios from "axios";
 import { backendUrlImages } from "../../constant/config";
 import SVG from "react-inlinesvg";
 import downloadIcon from "../../icons/downloadIcon.svg";
@@ -15,10 +12,13 @@ import EditConferencesAdmin from "../../components/ConferencesAdmin/editForm";
 import httpService from "../../common/httpService";
 import AirportTransferPrice from "../../components/last_pages/AirportTransfer/AirpotPrice";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
+
+import "./style.scss";
+
 const ConferencesPage = () => {
   const navigate = useNavigate();
   const [selectedConferenceId, setSelectedConferenceId] = useState(null);
-  let conferenceId = 0;
   const [isViewDrawerOpen, setIsViewDrawerOpen] = useState(false);
   const [conferenceData, setConferenceData] = useState({});
   const [conferenceName, setConferenceName] = useState("");
@@ -206,11 +206,15 @@ const ConferencesPage = () => {
             <div className="info-details">
               <SimpleLabelValue
                 label="Start Date"
-                value={selectedConference?.start_date}
+                value={moment(selectedConference?.start_date).format(
+                  "DD-MM-YYYY"
+                )}
               />
               <SimpleLabelValue
                 label="End Date"
-                value={selectedConference?.end_date}
+                value={moment(selectedConference?.end_date).format(
+                  "DD-MM-YYYY"
+                )}
               />
               <SimpleLabelValue
                 label="Location"

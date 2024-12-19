@@ -33,12 +33,14 @@ const Speakers4 = ({ conferenceId }) => {
             )}
           </div>
           <div className="speaker-details">
-            <h3>{speaker.name}</h3>
+            <h3 className="speaker-name">{speaker.name}</h3>
+            <p className="speaker-bio">{speaker.biography}</p>
           </div>
         </div>
       ))}
     </div>
   );
+  
 };
 
 export default Speakers4;

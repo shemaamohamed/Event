@@ -32,14 +32,14 @@ const PayForm = () => {
                 label="Base Price"
                 value={`$${room.base_price}`}
               />
-              <SimpleLabelValue
+              {/* <SimpleLabelValue
                 label="Early Check-In Price"
                 value={`$${room.early_check_in_price}`}
               />
               <SimpleLabelValue
                 label="Late Check-Out Price"
                 value={`$${room.late_check_out_price}`}
-              />
+              /> */}
               <SimpleLabelValue label="Room ID" value={room.room_id} />
               <SimpleLabelValue
                 label="Total Cost"

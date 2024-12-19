@@ -25,22 +25,26 @@ const StepperAcceptFlightPageContent = () => {
 
   // Dynamically generate steps based on the number of flight members
   const stepperInfo =
-    [
-      ...flightMembers?.map((member, index) => ({
-        title: `${member?.passenger_name} Flight Information `,
-      })),
-      {
-        title: `Invoice `,
-      },
-    ] || [];
+    flightMembers && flightMembers.length
+      ? [
+          ...flightMembers?.map((member, index) => ({
+            title: `${member?.passenger_name} Flight Information `,
+          })),
+          {
+            title: `Invoice `,
+          },
+        ]
+      : [];
 
   const componentsMap =
-    [
-      ...flightMembers?.map((member, index) => (
-        <AcceptFlight key={index} member={member} index={index} />
-      )),
-      <Invoice />,
-    ] || [];
+    flightMembers && flightMembers.length
+      ? [
+          ...flightMembers?.map((member, index) => (
+            <AcceptFlight key={index} member={member} index={index} />
+          )),
+          <Invoice />,
+        ]
+      : [];
   const handleBackClick = () => {
     navigate(-1); // Navigates to the previous page
   };

@@ -5,14 +5,33 @@ import DateInput from "../../../CoreComponent/Date/index";
 import { toast } from "react-toastify";
 import ImageUpload from "../../../CoreComponent/ImageUpload";
 import { useFlightStepper } from "../StepperContext";
-import {
-  getFromLocalStorage,
-  saveToLocalStorage,
-} from "../../../common/localStorage";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
 
-const FlightInformation = () => {
+const FlightInformation = ({
+  arrivalDate,
+  setArrivalDate,
+  departureDate,
+  setDepartureDate,
+  departureAirport,
+  setDepartureAirport,
+  returnAirport,
+  setReturnAirport,
+  specificFlightTime,
+  setSpecificFlightTime,
+  flightTime,
+  setFlightTime,
+  flightNumber,
+  setFlightNumber,
+  otherRequests,
+  setOtherRequests,
+  seatNumber,
+  setSeatNumber,
+  upgradeClass,
+  setUpgradeClass,
+  ticketCount,
+  setTicketCount,
+}) => {
   const navigate = useNavigate();
   const {
     currentStep,
@@ -22,56 +41,28 @@ const FlightInformation = () => {
     passportImage,
     setPassportImage,
   } = useFlightStepper();
-  const [arrivalDate, setArrivalDate] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [departureAirport, setDepartureAirport] = useState("");
-  const [returnAirport, setReturnAirport] = useState("");
-  const [specificFlightTime, setSpecificFlightTime] = useState(false);
-  const [flightTime, setFlightTime] = useState("");
-  const [flightNumber, setFlightNumber] = useState("");
-  const [otherRequests, setOtherRequests] = useState("");
-  const [seatNumber, setSeatNumber] = useState("");
-  const [upgradeClass, setUpgradeClass] = useState(false);
-  const [ticketCount, setTicketCount] = useState(1);
 
   const handleSubmit = () => {
     toast.success("The data was updated successfully!");
-
-    const formData = {
-      arrivalDate,
-      departureDate,
-      passportImage,
-      departureAirport,
-      returnAirport,
-      specificFlightTime,
-      flightTime,
-      flightNumber,
-      otherRequests,
-      seatNumber,
-      upgradeClass,
-      ticketCount,
-    };
     completeStep(currentStep);
-    console.log({ passportImage });
 
-    saveToLocalStorage("flightDetails", formData);
   };
 
   useEffect(() => {
-    const data = getFromLocalStorage("flightDetails");
-    if (data) {
-      setArrivalDate(data?.arrivalDate);
-      setDepartureDate(data?.departureDate);
-      setDepartureAirport(data?.departureAirport);
-      setReturnAirport(data?.returnAirport);
-      setSpecificFlightTime(data?.specificFlightTime);
-      setFlightTime(data?.flightTime);
-      setFlightNumber(data?.flightNumber);
-      setOtherRequests(data?.otherRequests);
-      setSeatNumber(data?.seatNumber);
-      setUpgradeClass(data?.upgradeClass);
-      setTicketCount(data?.ticketCount);
-    }
+    // const data = getFromLocalStorage("flightDetails");
+    // if (data) {
+    //   setArrivalDate(data?.arrivalDate);
+    //   setDepartureDate(data?.departureDate);
+    //   setDepartureAirport(data?.departureAirport);
+    //   setReturnAirport(data?.returnAirport);
+    //   setSpecificFlightTime(data?.specificFlightTime);
+    //   setFlightTime(data?.flightTime);
+    //   setFlightNumber(data?.flightNumber);
+    //   setOtherRequests(data?.otherRequests);
+    //   setSeatNumber(data?.seatNumber);
+    //   setUpgradeClass(data?.upgradeClass);
+    //   setTicketCount(data?.ticketCount);
+    // }
   }, []);
 
   // Disable button logic: check if any required field is empty

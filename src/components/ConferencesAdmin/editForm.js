@@ -62,6 +62,7 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
               inputValue={member.image}
               setInputValue={(file) => handleImageChange(member.id, file)}
               allowedExtensions={["jpg", "jpeg", "png"]}
+              required={false}
             />
           </div>
 
@@ -150,11 +151,10 @@ const PriceForm = ({ entries, setEntries }) => {
 const EditConferencesAdmin = ({
   setIsOpen,
   getConference,
-  conferenceId,
   setConference,
   conferenceData,
 }) => {
-  const BaseUrl = process.env.REACT_APP_BASE_URL;;
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   const [committeeMembers, setCommitteeMembers] = useState([
     { id: Date.now(), name: "", image: null },
@@ -191,8 +191,6 @@ const EditConferencesAdmin = ({
     return result;
   }
   useEffect(() => {
-    console.log({ conferenceData });
-
     return () => {
       setConference(null);
     };
@@ -321,15 +319,11 @@ const EditConferencesAdmin = ({
       formData.append("timestamps", new Date().toISOString());
       const token = localStorage.getItem("token");
       axios
-        .post(
-          `${BaseUrl}/conferences/${conferenceData?.id}`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
+        .post(`${BaseUrl}/conferences/${conferenceData?.id}`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           const id = response.data.id;
           toast.success("Conference Edited successfully!");
@@ -344,22 +338,23 @@ const EditConferencesAdmin = ({
   const validateForm = () => {
     let validationErrors = {};
 
-    if (!title) validationErrors.title = "Title is required";
-    if (!description) validationErrors.description = "Description is required";
-    if (!startDate) validationErrors.startDate = "Start date is required";
-    if (!endDate) validationErrors.endDate = "End date is required";
-    if (!location) validationErrors.location = "Location is required";
-    // if (!status) validationErrors.status = "Status is required";
-    if (!image) validationErrors.image = "Image is required";
-    if (!firstAnnouncement)
-      validationErrors.firstAnnouncement = "First announcement PDF is required";
-    if (!secondAnnouncement)
-      validationErrors.secondAnnouncement =
-        "Second announcement PDF is required";
-    if (!brochure) validationErrors.brochure = "Brochure PDF is required";
-    if (!scientificProgram)
-      validationErrors.scientificProgram = "Scientific program PDF is required";
-    setErrors(validationErrors);
+    // if (!title) validationErrors.title = "Title is required";
+    // if (!description) validationErrors.description = "Description is required";
+    // if (!startDate) validationErrors.startDate = "Start date is required";
+    // if (!endDate) validationErrors.endDate = "End date is required";
+    // if (!location) validationErrors.location = "Location is required";
+    // if (!image || !conferenceData.image)
+    //   validationErrors.image = "Image is required";
+    // if (!firstAnnouncement || !conferenceData.first_announcement_pdf)
+    //   validationErrors.firstAnnouncement = "First announcement PDF is required";
+    // if (!secondAnnouncement || !conferenceData.second_announcement_pdf)
+    //   validationErrors.secondAnnouncement =
+    //     "Second announcement PDF is required";
+    // if (!brochure || !conferenceData.conference_brochure_pdf)
+    //   validationErrors.brochure = "Brochure PDF is required";
+    // if (!scientificProgram || !conferenceData.conference_scientific_program_pdf)
+    //   validationErrors.scientificProgram = "Scientific program PDF is required";
+    // setErrors(validationErrors);
     return Object.keys(validationErrors).length === 0;
   };
   return (
@@ -417,24 +412,12 @@ const EditConferencesAdmin = ({
           type="number"
           required
         />
-        {/* <Select
-          options={[
-            { value: "upcoming", label: "upcoming" },
-            { value: "past", label: "past" },
-          ]}
-          value={[
-            { value: "upcoming", label: "upcoming" },
-            { value: "past", label: "past" },
-          ].find((item) => item.value === status)}
-          setValue={setStatus}
-          label="Status"
-          errorMsg={errors.status}
-        /> */}
 
         <ImageUpload
           label="Upload Image"
           inputValue={image}
           setInputValue={setImage}
+          existingFile={conferenceData.image}
           allowedExtensions={["jpg", "jpeg", "png"]}
           errorMsg={errors.image}
         />
@@ -443,6 +426,7 @@ const EditConferencesAdmin = ({
           label="First Announcement PDF"
           inputValue={firstAnnouncement}
           setInputValue={setFirstAnnouncement}
+          existingFile={conferenceData.first_announcement_pdf}
           allowedExtensions={["pdf"]}
           errorMsg={errors.firstAnnouncement}
         />
@@ -451,6 +435,7 @@ const EditConferencesAdmin = ({
           label="Second Announcement PDF"
           inputValue={secondAnnouncement}
           setInputValue={setSecondAnnouncement}
+          existingFile={conferenceData.second_announcement_pdf}
           allowedExtensions={["pdf"]}
           errorMsg={errors.secondAnnouncement}
         />
@@ -460,6 +445,7 @@ const EditConferencesAdmin = ({
           inputValue={brochure}
           setInputValue={setBrochure}
           allowedExtensions={["pdf"]}
+          existingFile={conferenceData.conference_brochure_pdf}
           errorMsg={errors.brochure}
         />
 
@@ -468,6 +454,7 @@ const EditConferencesAdmin = ({
           inputValue={scientificProgram}
           setInputValue={setScientificProgram}
           allowedExtensions={["pdf"]}
+          existingFile={conferenceData.conference_scientific_program_pdf}
           errorMsg={errors.scientificProgram}
         />
 

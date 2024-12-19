@@ -15,12 +15,12 @@ const SelectConferences = () => {
     const searchQuery = conferenceName
       ? `?search=${encodeURIComponent(conferenceName)}`
       : "";
-    const url = `${BaseUrl}/conferences/all`;
+    const url = `${BaseUrl}/con/upcoming`;
     console.log(BaseUrl);
     axios
       .get(url)
       .then((response) => {
-        setAllConference(response.data.data);
+        setAllConference(response.data.upcoming_conferences);
       })
       .catch((error) => {});
   };
@@ -50,7 +50,7 @@ const SelectConferences = () => {
     <div className="conferences">
       <h1 className="titlee">Available Conferences</h1>
       <ul className="conference-list">
-        {allConference.map((conference) => (
+        {allConference?.map((conference) => (
           <li
             key={conference.id}
             className="conference-item"

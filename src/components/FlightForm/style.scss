@@ -10,7 +10,7 @@ $border-radius: 12px;
 $shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
 .flight-form-page-container {
-  max-width: 800px;
+  // max-width: 1000px;
   margin: auto;
   padding: 30px;
   background-color: $light-color;
@@ -27,8 +27,6 @@ $shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
 
   .title-container {
-  
-
     font-size: 1.6rem;
     font-weight: bold;
     color: #c82333;
@@ -46,8 +44,8 @@ $shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       border-radius: $border-radius;
       cursor: pointer;
       font-weight: bold;
-      transition: background-color 0.3s, transform 0.2s;
-
+      // transition: background-color 0.3s, transform 0.2s;
+      font-size: 14px;
       &.disabled-btn {
         background-color: $border-color;
         cursor: not-allowed;

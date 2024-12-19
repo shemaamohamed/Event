@@ -97,7 +97,6 @@ function SideMenu() {
         { label: "Reservation Room Prices", icon: "🏠", path: "/room/prices" },
         { label: "Enter new flights", icon: "🛩️", path: "/enter/new/flights" },
         { label: "Group Registration Table", icon: "📊", path: "/admin/excel/table" },
-        { label: "Dinner Table Speaker static", icon: "🍽️", path: "/table/dinner/speaker/1" },
         { label: "Add Clients", icon: "➕", path: "/add/client" },
         { label: "Sponsorship Packages", icon: "📦", path: "/sponsor/admin/add/table" },
         { label: "Sponsorship Option", icon: "⚙️", path: "/sponsor/option/form" },

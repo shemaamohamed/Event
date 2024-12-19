@@ -4,20 +4,26 @@ import { useParams } from "react-router-dom";
 import httpService from "../../../../src/common/httpService";
 import { toast } from "react-toastify";
 import "./style.scss";
+import Input from "../../../CoreComponent/Input";
+import Select from "../../../CoreComponent/Select";
 
 const EditSpeakerData = () => {
-  const BaseUrl = process.env.REACT_APP_BASE_URL;;
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   const { conferenceId, userId } = useParams();
-  const [specificFlightTime, setSpecificFlightTime] = useState(false);
   const [isOnlineApproved, setIsOnlineApproved] = useState(true);
   const [ticketStatus, setTicketStatus] = useState("1");
   const [dinnerInvitation, setDinnerInvitation] = useState(true);
   const [airportPickup, setAirportPickup] = useState(true);
   const [freeTrip, setFreeTrip] = useState(true);
-  const [isCertificateActive, setIsCertificateActive] = useState(true);
   const [isVisaPaymentRequired, setIsVisaPaymentRequired] = useState(false);
-
+  const [numberOfNights, setNumberOfNights] = useState(0);
+  const [roomType, setRoomType] = useState("");
+  const options = [
+    { value: "single", label: "Single" },
+    { value: "double", label: "Double" },
+    { value: "triple", label: "Triple" },
+  ];
   const handleSubmit = async (e) => {
     e.preventDefault();
     const getAuthToken = () => localStorage.getItem("token");
@@ -29,13 +35,15 @@ const EditSpeakerData = () => {
         headers: { Authorization: `Bearer ${getAuthToken()}` },
         showLoader: true,
         data: {
+          nights_covered: numberOfNights,
+          room_type: roomType?.value,
           is_online_approved: isOnlineApproved ? 1 : 0,
           ticket_status: ticketStatus,
           dinner_invitation: dinnerInvitation ? 1 : 0,
           airport_pickup: airportPickup ? 1 : 0,
           free_trip: freeTrip ? 1 : 0,
-          is_certificate_active: isCertificateActive ? 1 : 0,
-          is_visa_payment_required: isVisaPaymentRequired ? 1 : 0, 
+          is_certificate_active: 0,
+          is_visa_payment_required: isVisaPaymentRequired ? 1 : 0,
         },
         withToast: true,
         onError: (error) => {
@@ -51,11 +59,19 @@ const EditSpeakerData = () => {
     <form onSubmit={handleSubmit} className="edit-speaker-form">
       <h2 className="form-title">Edit Speaker Data</h2>
       <div className="checkbox-group">
-        <Checkbox
-          label="Do you have specific flight time?"
-          checkboxValue={specificFlightTime}
-          setCheckboxValue={setSpecificFlightTime}
-          className="form-checkbox"
+        <Input
+          label="Number of Nights Covered"
+          placeholder="Enter single base price"
+          inputValue={numberOfNights}
+          setInputValue={setNumberOfNights}
+          required={true}
+        />
+        <Select
+          options={options}
+          value={roomType}
+          setValue={setRoomType}
+          label="Room Type"
+          placeholder="Select..."
         />
 
         <Checkbox
@@ -93,12 +109,12 @@ const EditSpeakerData = () => {
           className="form-checkbox"
         />
 
-        <Checkbox
+        {/* <Checkbox
           label="Is Certificate Active?"
           checkboxValue={isCertificateActive}
           setCheckboxValue={setIsCertificateActive}
           className="form-checkbox"
-        />
+        /> */}
 
         <Checkbox
           label="Is Visa Payment Required?"
