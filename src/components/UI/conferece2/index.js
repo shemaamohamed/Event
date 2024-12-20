@@ -45,6 +45,8 @@ const Conference3 = () => {
                         color: 'white',
                         fontWeight: 'bold',
                         borderRadius: '5px',
+                        textShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+
                     }}
                     data-aos="fade-up"
 

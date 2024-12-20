@@ -45,6 +45,7 @@ const Expositions = () => {
                         padding: 2,
                         backgroundColor: "rgba(255, 255, 255, 0.8)",
                         borderRadius: '5px',
+                        
                     }}
                     data-aos="fade-down"
                 >

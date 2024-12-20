@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Virtual, Navigation, Pagination , Autoplay} from 'swiper/modules';
+import React from 'react';
+import {  Navigation, Pagination , Autoplay} from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { backendUrlImages } from "../../constant/config";
 
@@ -37,6 +37,8 @@ const CustomSlider = ({data ,handleConferenceClick}) => {
             centeredSlides={true}
             pagination={{
                 type: 'bullets',
+                clickable: true,
+
               }}
            
             

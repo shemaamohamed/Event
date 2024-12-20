@@ -1,8 +1,6 @@
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
+import React, { useRef} from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -10,7 +8,7 @@ import 'swiper/css/navigation';
 import './styles.css';
 
 // Import required modules
-import { Autoplay, Pagination } from 'swiper/modules';
+import { Autoplay, Pagination ,Navigation } from 'swiper/modules';
 import { Typography, Button } from '@mui/material';
 
 const SliderImage = ({ images }) => {
@@ -25,9 +23,9 @@ const SliderImage = ({ images }) => {
 
   const onSlideChange = (swiper) => {
     const currentSlide = images[swiper.activeIndex];
-    const delay = currentSlide.type === 'video' ? 10000 : 3000; // 10 seconds for video, 3 seconds for images
+    const delay = currentSlide.type === 'video' ? 10000 : 3000; 
     swiper.params.autoplay.delay = delay;
-    swiper.autoplay.start(); // Restart autoplay with new delay
+    swiper.autoplay.start(); 
   };
 
   return (
@@ -47,10 +45,12 @@ const SliderImage = ({ images }) => {
         }}
         pagination={{
           clickable: true,
+          type: 'bullets',
+
         }}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
         onSlideChange={onSlideChange}
-        modules={[Autoplay, Pagination]}
+        modules={[Navigation, Pagination, Autoplay]}
         className="mySwiper"
       >
         {images.map((image, index) => (
@@ -63,7 +63,7 @@ const SliderImage = ({ images }) => {
                 autoPlay
                 muted
                 loop
-                style={{ objectFit: 'cover', borderRadius: '10px' }}
+                style={{ objectFit: 'cover' }}
               />
             ) : (
               <img
@@ -71,7 +71,7 @@ const SliderImage = ({ images }) => {
                 width="100%"
                 height="100%"
                 alt={`Slide ${index + 1}`}
-                style={{ objectFit: 'cover', borderRadius: '10px' }}
+                style={{ objectFit: 'cover'}}
               />
             )}
             <Typography

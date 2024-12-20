@@ -139,6 +139,16 @@ const App = () => {
       window.removeEventListener("hideLoader", handleHideLoader);
     };
   }, []);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto", // التمرير يتم فوراً بدون تأثير السلاسة
+    });
+  }, [pathname]);
+
 
   const noNavRoute = [
     "/registertype",
