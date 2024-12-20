@@ -10,7 +10,8 @@ import 'swiper/css/navigation';
 import './styles.css';
 
 // Import required modules
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
+import { Typography, Button } from '@mui/material';
 
 const SliderImage = ({ images }) => {
   const progressCircle = useRef(null);
@@ -22,52 +23,106 @@ const SliderImage = ({ images }) => {
     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
   };
 
-  const handleVideoLoad = (event) => {
-    setVideoDuration(event.target.duration);
-  };
+  
 
   return (
     <>
       <Swiper
+      style={{
+        '--swiper-navigation-color': '#c82333',
+        '--swiper-navigation-size': '30px',
+        '--swiper-pagination-color': '#c82333',
+      }}
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 5000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         pagination={{
           clickable: true,
         }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
+        modules={[Autoplay, Pagination]}
         onAutoplayTimeLeft={onAutoplayTimeLeft}
         className="mySwiper"
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>
-            {image.includes('.mp4') ? (
-              <video
-                src={image}
-                width="100%"
-                height="100%"
-                autoPlay
-                loop
-                muted
-                onLoadedMetadata={handleVideoLoad}
-                style={{ objectFit: 'cover', borderRadius: '10px' }}
-              >
-                Your browser does not support the video tag.
-              </video>
-            ) : (
               <img
-                src={image}
+                src={image.src}
                 width="100%"
                 height="100%"
                 alt={`Slide ${index + 1}`}
-                onLoad={() => setVideoDuration(null)}
                 style={{ objectFit: 'cover', borderRadius: '10px' }}
               />
+                <Typography
+        sx={{
+          position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        color: 'white',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        padding: { xs: '5px 3px', sm: '10px 15px' }, // Responsive padding
+        width:{
+          xs:'90%',
+          sm:'90%',
+          md:'auto'
+        },
+        borderRadius: '10px',
+        fontSize: { xs: '8vw', sm: '3vw', md: '2.2vw' }, // Responsive font size
+        fontWeight: '400',
+        fontFamily: 'Roboto, sans-serif',
+        letterSpacing: '1px',
+        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
+        transition: 'font-size 0.3s ease-in-out',
+        }}
+      >
+        
+        {index === 0 
+  ? <Typography
+  sx={{
+    fontSize: { xs: '8vw', sm: '5vw', md: '4vw' },
+    alignItems:'center'
+
+     // Responsive font size
+
+
+  }}
+  ><span style={{ color: "#c82333" }}>E</span>vents
+  <span style={{ color: "gray" }}>Consulant</span> 
+   </Typography> 
+  : (image.content || `Slide ${index + 1}`)
+}
+           {
+            index === 0?
+            <>
+            </>:(
+              <>
+              <br />
+              <Button
+                variant="contained"
+                component="a" 
+                href={image.to}
+                sx={{
+                  marginTop: '15px',
+                  backgroundColor: '#c82333',
+                  '&:hover': {
+                    backgroundColor: '#e74c3c',
+                  },
+                  padding: '8px 16px',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  textTransform: 'none',
+                }}
+              >
+                {image.link}
+              </Button>
+              </>
             )}
+              
+      </Typography>
+            
           </SwiperSlide>
         ))}
 
@@ -75,8 +130,9 @@ const SliderImage = ({ images }) => {
           <svg viewBox="0 0 48 48" ref={progressCircle}>
             <circle cx="24" cy="24" r="20"></circle>
           </svg>
-          <span ref={progressContent}>
-            {videoDuration ? `${Math.ceil(videoDuration)}s` : null}
+          <span style={{
+            color:'white'
+          }} ref={progressContent}>
           </span>
         </div>
       </Swiper>

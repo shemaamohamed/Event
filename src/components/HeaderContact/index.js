@@ -41,7 +41,7 @@ function HeaderContact() {
                 </Typography>
 
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6} xl={6} >
                 <Typography
                 variant="h6"
                 sx={{ color: 'gray' }}

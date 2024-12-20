@@ -1,31 +1,108 @@
-import React from 'react';
-import './style.scss'; // لاستيراد التصميم
+import React, { useEffect } from 'react';
+import { Box, Typography, Grid, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+const CheckListItem = ({ text, aosEffect, delay }) => (
+  <ListItem
+    disablePadding
+    data-aos={aosEffect}
+    data-aos-delay={delay}
+    sx={{
+      mb: 2,
+      display: 'flex',
+      alignItems: 'start',
+      flexDirection: 'row',
+    }}
+  >
+    <ListItemIcon sx={{ minWidth: '36px', color: 'gray' }}>
+      <CheckCircleIcon />
+    </ListItemIcon>
+    <ListItemText
+      primary={
+        <Typography variant="body1" sx={{ fontSize: '1.2rem' }}>
+          {text}
+        </Typography>
+      }
+    />
+  </ListItem>
+);
 
 const Workshops = () => {
-    return (
-        <div className="workshops-container">
-            {/* Headline section */}
-            <div className="headline-section">
-                <div className="overlay">
-                    <h1 className="title">Workshops & Conferences</h1>
-                </div>
-            </div>
-            
-            {/* Content section below the picture */}
-            <div className="content-section">
-                <h2 className="subtitle">Welcome to Our Workshops</h2>
-                <p className="description">
-                    Conferences have traditionally provided opportunities for networking, socializing, and hearing the latest management ideas. However, they are often underutilized for creative problem-solving and mobilizing meaningful action.
-                </p>
-                <p className="description">
-                    Our event consultants offer advice on how to make conferences more productive and engaging. From stage design, lighting, sound, and projection, we ensure the message is communicated effectively. We manage all aspects of the event: planning, preparation, and execution, to create impactful experiences.
-                </p>
-                <p className="description">
-                    With years of experience, our team uses the best resources to achieve successful results. Services include budgeting, multilingual assistance, translations, technical, and audio-visual support, tailored to meet client needs efficiently.
-                </p>
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    AOS.init({ duration: 1000, easing: 'ease-out' });
+  }, []);
+
+  const highlights = [
+    "Workshops foster collaboration and hands-on learning, providing participants with actionable skills and deeper engagement.",
+    "Our team ensures a seamless experience by organizing workshops tailored to specific audiences and industries.",
+    "We create engaging environments with state-of-the-art tools and resources to maximize learning outcomes.",
+    "Promotional strategies like custom websites, social media campaigns, and attractive materials guarantee high attendance and impact.",
+    "Our extensive network allows us to collaborate with expert speakers, ensuring content quality and relevance for attendees.",
+  ];
+
+  return (
+    <>
+      <Box
+        sx={{
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          display: 'flex',
+          alignItems: 'center',
+          backgroundImage: "url('/image/Workshopsbackground.png')", 
+          height: { xs: '50vh', sm: '70vh', md: '50vh' },
+          padding: { xs: 2, md: 5 },
+          mb: 4,
+          justifyContent: 'center',
+        }}
+      >
+        <Typography
+          variant="h2"
+          sx={{
+            color: 'white',
+            fontWeight: 'bold',
+            textShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+          }}
+          data-aos="fade-up"
+
+        >
+          Workshops
+        </Typography>
+      </Box>
+
+      <Grid
+        container
+        spacing={4}
+        px={{ xs: 2, md: 5 }}
+        sx={{
+          justifyContent: 'center',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <Grid item xs={12} md={8} sx={{ padding: { xs: 2, md: 4 } }}>
+          <Typography
+            variant="h5"
+            sx={{ mb: 3, fontWeight: 'bold', color: '#333' }}
+          >
+            Unlock the Potential of Your Team with Our Workshops
+          </Typography>
+          <List sx={{ listStyleType: 'none', padding: 0 }}>
+            {highlights.map((highlight, index) => (
+              <CheckListItem
+                key={index}
+                text={highlight}
+              />
+            ))}
+          </List>
+        </Grid>
+
+        
+      </Grid>
+    </>
+  );
 };
 
 export default Workshops;

@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Slider from "react-slick";
 import axios from "axios";
 import Footer from "../../components/UI/Footer";
 import { toast } from "react-toastify";
-import { backendUrlImages } from "../../constant/config";
 import { useNavigate } from "react-router-dom";
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { Grid, Box, Typography, Button, Card, CardMedia, CardContent } from "@mui/material";
-import { Container } from "react-bootstrap";
-import SliderImage from "../../components/SliderImage";
+import CustomSlider from "../../components/CustomSlider";
+import SliderImage from './../../components/SliderImage';
 
 const Home = () => {
   const [allConferences, setAllConferences] = useState([]);
   const navigate = useNavigate();
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-  };
+ 
 
   const getConference = () => {
     const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -53,11 +43,86 @@ const Home = () => {
 
   return (
     <Box>
-      {/* Hero Slider */}
       
       <Box className="slider" sx={{ mb: 5 }}>
-      <SliderImage images={["/image/6774633-uhd_3840_2160_30fps.mp4","/image/conff66.webp", "/image/conff.webp"]} />
-</Box>
+      <SliderImage 
+      images = {[
+        {
+          src: "/image/background3.png",
+          title: "Events Consultant",
+          content: "Events Consultant",
+        },
+        {
+          src: "/image/background4.png",
+          title: "Events Consultant",
+          content: "We are a dynamic consulting company based in Jordan.",
+          link:'Read more',
+          to:'/about'
+        },
+        {
+          src: "/image/background6.png",
+          title: "Events Consultant",
+          content: "Organizing marketing scientific conferences, exhibitions, workshops, and seminars.",
+           link:'Services',
+           to:'/conf'
+        },
+        {
+          src: "/image/background2.png",
+          title: "Events Consultant",
+          content: "Delivering high-quality event management and professional consulting services.",
+          link:'Services',
+          to:'/management_consulting'
+
+        },
+        {
+          src: "/image/background5.png",
+          title: "Events Consultant",
+          content: "Combining global experience with a deep understanding of the Jordanian market.",
+          link:'ContactUs',
+          to:'/contact_us'
+        },
+        
+        
+      ] }/>
+      </Box> 
+    {/* <Box
+          sx={{
+            Width: "100%",
+            backgroundSize: "cover",
+            backgroundAttachment: "fixed",
+            backgroundRepeat: "no-repeat",
+            position: "relative",
+            backgroundImage: {
+              xs: "url('/image/aboutus.png')",
+              sm: "url('/image/aboutus.png')",
+              md: "url('/image/background4.png')",
+            },
+            height: {
+              xs: "50vh",
+              sm: "50vh",
+              md: "50vh",
+              lg: "100vh",
+              xl: "100vh",
+            },
+            padding: { xs: 2, md: 5 },
+            justifyContent:'center',
+            alignItems:'center',
+            display:'flex'
+          }}
+     >
+      <Typography
+
+       variant="h4"  gutterBottom sx={{ color: " black", fontWeight: "bold",py: 2 }}>
+          <span style={{ color: "#c82333" }}>E</span>vents
+          <br />
+          <span  style={{ color: "gray" }}> Consulant</span> 
+          
+      </Typography>
+      <Typography variant="body1" sx={{ lineHeight: 1.8 }}>
+      </Typography>
+
+    </Box> */}
+  
 
 
       {/* Welcome Section */}
@@ -69,7 +134,8 @@ const Home = () => {
           <Grid item xs={12} md={6}>
             <Typography variant="body1" textAlign="justify" sx={{ lineHeight: 1.8 }}>
               Deliver results. We are dedicated to being readily available to address any inquiries you may have and provide all the necessary support. Our outstanding reputation for delivering specialized services is the outcome of our management philosophy, which emphasizes the importance of delivering quality work and establishing long-term client relationships. From the initial stages of the planning process to the final execution, we will be there to assist you every step of the way. Benefit from our extensive experience and in-depth knowledge of the Jordanian market.
-            </Typography>
+            </Typography>import SliderImage from './../../components/SliderImage/index';
+
           </Grid>
           <Grid item xs={12} md={6}>
             <Box>
@@ -91,31 +157,12 @@ const Home = () => {
 
       {/* Upcoming Conferences */}
       <Box my={5} px={2}>
-        <Typography variant="h5" align="center" gutterBottom sx={{ color: " #c82333", fontWeight: "bold",py: 2 }}>
+        <Typography variant="h3" align="center" gutterBottom sx={{ color: " #c82333", fontWeight: "bold",py: 2 }}>
           Upcoming Conferences
         </Typography>
-        <Grid container spacing={4} justifyContent="center">
-          {allConferences.map((conference) => (
-            <Grid item key={conference.id} xs={12} sm={6} md={4} lg={3}>
-              <Card
-                onClick={() => handleConferenceClick(conference.id)}
-                sx={{ transition: "0.3s", boxShadow: 3, "&:hover": { boxShadow: 6 } }}
-              >
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={`${backendUrlImages}${conference.image}`}
-                  alt={conference.title}
-                />
-                <CardContent>
-                  <Typography variant="h6" component="div" sx={{ fontWeight: "bold", color: "#555" }}>
-                    {conference.title}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+
+          <CustomSlider data={allConferences}  handleConferenceClick={handleConferenceClick }/>
+            
       </Box>
 
       {/* Featured Services */}

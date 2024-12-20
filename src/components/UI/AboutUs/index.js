@@ -11,7 +11,7 @@ const AboutUsEvent = () => {
     <Box sx={{ padding: 2 }}>
       <Grid container spacing={4} sx={{ maxWidth: '1200px', margin: '0 auto' }}>
         {/* About Us Content Section */}
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6} xxl={6}>
           <Typography variant="h3" sx={{ fontWeight: 700, marginBottom: 2 }}>
             Our History
           </Typography>
@@ -30,7 +30,7 @@ const AboutUsEvent = () => {
         </Grid>
 
         {/* Buttons Section */}
-        <Grid item xs={12} sm={12} md={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6} xxl={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Button
               variant="contained"
