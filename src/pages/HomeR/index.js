@@ -7,6 +7,7 @@ import CustomSlider from "../../components/CustomSlider";
 import SliderImage from './../../components/SliderImage';
 import Welcome1 from "../../components/Welcome1";
 import CustomCard from "../../components/CustomCard";
+import ClientsSlide from "../../components/ClientsSlide";
 
 const Home = () => {
   const [allConferences, setAllConferences] = useState([]);
@@ -288,6 +289,7 @@ const Home = () => {
           ))}
         </Grid>
       </Box>
+      <ClientsSlide/>
 
       
 
