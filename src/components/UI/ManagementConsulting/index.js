@@ -1,34 +1,128 @@
-import React from 'react';
-import './style.scss';
+import React, { useEffect } from 'react';
+import { Box, Typography, Container, List, ListItem } from '@mui/material';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; 
 
 const ManagementConsulting = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1000, easing: 'ease-out' });
+}, []);
   return (
-    <div className="management-consulting66">
+    <Box sx={{ backgroundColor: '#f9f9f9', minHeight: '100vh' }}>
       {/* Headline Section with Background Image */}
-      <div className="headline-section">
-        <div className="overlay">
-          <h1 className="title">Management Consulting</h1>
-        </div>
-      </div>
+      <Box
+        sx={{
+          backgroundImage: 'url("/image/management-consulting-bg.png")', // Update image path
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: '50vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          color: 'white',
+          textShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
+        }}
+      >
+        <Typography
+          variant="h2"
+          sx={{
+            fontWeight: 'bold',
+            textAlign: 'center',
+            px: 1.5,
+            fontSize:{
+              xs:'1.5rem',
+              sm:'2rem',
+              md:'3rem'
+            }
+          }}
+          data-aos="fade-right"
+
+        >
+          Management Consulting
+        </Typography>
+      </Box>
 
       {/* Content Section */}
-      <div className="content-section">
-        <h2 className="subtitle">What We Do ... And How We Do It</h2>
-        <p className="description">
-          Our clients reach out to us when they face critical challenges—whether they are dealing with significant strategic or operational needs, or navigating complex organizational issues. They rely on us for honest, objective, and thoughtful advice, backed by our extensive experience.
-        </p>
-        <p className="description">
-          Clients turn to us when they are under pressure to deliver results, especially in uncertain times. They seek our guidance when information is hard to come by and insights are limited. They trust us to help them make decisions that will have lasting impacts on their people, organizations, and the countries in which they operate. Our clients value our ability to provide a truly global perspective.
-        </p>
-        <h3 className="principles-title">We achieve this by adhering to the following core principles:</h3>
-        <ul className="principles-list">
-          <li>Top Management Approach: We engage directly with top management to address the most critical issues.</li>
-          <li>Global Network: We leverage our extensive global network to deliver the best solutions to all clients.</li>
-          <li>Innovation in Management Practice: We bring cutting-edge innovations in management practices to our clients.</li>
-          <li>Building Client Capabilities: We focus on enhancing client capabilities to ensure sustained improvement.</li>
-        </ul>
-      </div>
-    </div>
+      <Container sx={{ py: 5 }}>
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: 'bold',
+            mb: 3,
+            textAlign: 'center',
+            color: 'gray' 
+          }}
+        >
+          What We Do ... And How We Do It
+        </Typography>
+
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: '1.1rem',
+            lineHeight: 1.8,
+            color: 'text.secondary',
+            textAlign: 'justify',
+            mb: 3,
+          }}
+        >
+          Our clients reach out to us when they face critical challenges—whether they are dealing with significant strategic or
+          operational needs, or navigating complex organizational issues. They rely on us for honest, objective, and thoughtful
+          advice, backed by our extensive experience.
+        </Typography>
+
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: '1.1rem',
+            lineHeight: 1.8,
+            color: 'text.secondary',
+            textAlign: 'justify',
+            mb: 3,
+          }}
+        >
+          Clients turn to us when they are under pressure to deliver results, especially in uncertain times. They seek our
+          guidance when information is hard to come by and insights are limited. They trust us to help them make decisions that
+          will have lasting impacts on their people, organizations, and the countries in which they operate. Our clients value
+          our ability to provide a truly global perspective.
+        </Typography>
+
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 'bold',
+            color: '#c62828' ,
+
+            mb: 2,
+          }}
+        >
+          We achieve this by adhering to the following core principles:
+        </Typography>
+
+        <List>
+          {[
+            'Top Management Approach: We engage directly with top management to address the most critical issues.',
+            'Global Network: We leverage our extensive global network to deliver the best solutions to all clients.',
+            'Innovation in Management Practice: We bring cutting-edge innovations in management practices to our clients.',
+            'Building Client Capabilities: We focus on enhancing client capabilities to ensure sustained improvement.',
+          ].map((principle, index) => (
+            <ListItem
+              key={index}
+              sx={{
+                display: 'list-item',
+                listStyleType: 'disc',
+                color: 'text.primary',
+                fontSize: '1.1rem',
+                mb: 1,
+              }}
+            >
+              {principle}
+            </ListItem>
+          ))}
+        </List>
+      </Container>
+    </Box>
   );
 };
 

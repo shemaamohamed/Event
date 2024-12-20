@@ -117,6 +117,7 @@ import RegisterOther from "./pages/registerOther";
 import AdminForm from "./components/Admin/AdminForm";
 import AddClient from "./components/AddClient";
 import { useAuth } from "./common/AuthContext";
+import Footer from "./components/UI/Footer";
 
 const App = () => {
   const location = useLocation();
@@ -392,6 +393,12 @@ const App = () => {
                 element={<GroupTripRegistration />}
               />
             </Routes>
+            {!noNavRoute.includes(location.pathname) &&
+            !location.pathname.includes("/registerPage") &&
+            !location.pathname.includes("/other") &&
+            !location.pathname.includes("/register/") && (
+                <Footer />
+            )}
           </div>
         </div>
       </div>

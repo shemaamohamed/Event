@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { Box, Typography, Grid, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { CheckCircleIcon } from 'lucide-react';
+
 
 const CheckListItem = ({ text, aosEffect, delay }) => (
   <ListItem
@@ -16,7 +17,7 @@ const CheckListItem = ({ text, aosEffect, delay }) => (
       flexDirection: 'row',
     }}
   >
-    <ListItemIcon sx={{ minWidth: '36px', color: 'gray' }}>
+    <ListItemIcon sx={{ minWidth: '36px', color: 'gray' , mt: 1 }}>
       <CheckCircleIcon />
     </ListItemIcon>
     <ListItemText
@@ -65,7 +66,7 @@ const Workshops = () => {
             fontWeight: 'bold',
             textShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
           }}
-          data-aos="fade-up"
+          data-aos="fade-right"
 
         >
           Workshops

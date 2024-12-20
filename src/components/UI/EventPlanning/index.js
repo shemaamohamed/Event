@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import { Box, Typography, Container } from '@mui/material';
-import './style.scss'; 
 import AOS from 'aos';
-import 'aos/dist/aos.css';
+import 'aos/dist/aos.css'; 
+
 
 const Planning = () => {
-    useEffect(() => {
-              AOS.init({ duration: 1000, easing: 'ease-out' });
-          }, []);
+  useEffect(() => {
+    AOS.init({ duration: 1000, easing: 'ease-out' });
+}, []);
+
+   
   return (
     <>
       <Box
@@ -40,8 +42,8 @@ const Planning = () => {
           sx={{
             fontWeight: 'bold',
             mb: 3,
-            color: 'text.primary',
             textAlign: 'center',
+            color: '#c62828' 
           }}
         >
           Success Doesn't Just Happen—It’s Planned

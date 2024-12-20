@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container, Box, Grid, Typography, ListItemText, ListItemIcon, ListItem, List } from '@mui/material'; // Import Material-UI components
-import './style.scss'; 
+import { Box, Grid, Typography, ListItemText, ListItemIcon, ListItem, List } from '@mui/material'; // Import Material-UI components
 import { CheckCircleIcon } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 

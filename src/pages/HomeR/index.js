@@ -3,7 +3,6 @@ import axios from "axios";
 import Footer from "../../components/UI/Footer";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { Grid, Box, Typography, Button, Card, CardMedia, CardContent } from "@mui/material";
 import CustomSlider from "../../components/CustomSlider";
 import SliderImage from './../../components/SliderImage';
@@ -48,30 +47,34 @@ const Home = () => {
       <SliderImage 
       images = {[
         {
-          src: "/image/background3.png",
+          src: "/image/6774633-uhd_3840_2160_30fps.mp4",
           title: "Events Consultant",
           content: "Events Consultant",
+          type: 'video' 
         },
         {
-          src: "/image/background4.png",
+          src: "/image/background3.png",
           title: "Events Consultant",
           content: "We are a dynamic consulting company based in Jordan.",
           link:'Read more',
-          to:'/about'
+          to:'/about',
+          type: 'image',
         },
         {
           src: "/image/background6.png",
           title: "Events Consultant",
           content: "Organizing marketing scientific conferences, exhibitions, workshops, and seminars.",
            link:'Services',
-           to:'/conf'
+           to:'/conf', 
+           type: 'image',
         },
         {
           src: "/image/background2.png",
           title: "Events Consultant",
           content: "Delivering high-quality event management and professional consulting services.",
           link:'Services',
-          to:'/planning'
+          to:'/planning', 
+          type: 'image',
 
         },
         {
@@ -79,7 +82,8 @@ const Home = () => {
           title: "Events Consultant",
           content: "Combining global experience with a deep understanding of the Jordanian market.",
           link:'ContactUs',
-          to:'/contact_us'
+          to:'/contact_us',
+           type: 'image',
         },
         
         
@@ -181,7 +185,6 @@ const Home = () => {
 
       
 
-      <Footer />
     </Box>
   );
 };

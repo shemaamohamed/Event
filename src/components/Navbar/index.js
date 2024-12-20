@@ -1,14 +1,39 @@
-import React from 'react';
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Navbar, Nav, NavDropdown, Container, Offcanvas } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../common/AuthContext';
 import NotificationDropdown from "../Notification";
 import styled from 'styled-components';
+import { FaEnvelope, FaFacebookSquare, FaLinkedin, FaMapMarkerAlt, FaPhoneAlt, FaYoutube } from 'react-icons/fa';
+import { Box } from '@mui/material';
+import { IoLogoWhatsapp } from 'react-icons/io';
+import { Link } from "react-router-dom";
+
+
+const StyledLink = styled(Link)`
+  color: gray;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    color: #f1f1f1;
+  }
+`;
+const StyledBox = styled(Box)`
+ color: gray;
+  text-decoration: none;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    color: #f1f1f1;
+  },
+`;
 
 const CustomNavbar = styled(Navbar)`
   width: 98%;
   margin: auto;
-  border:none
+  border: none;
 `;
 
 const CustomBrand = styled(Navbar.Brand)`
@@ -18,14 +43,14 @@ const CustomBrand = styled(Navbar.Brand)`
   cursor: pointer;
   
   img {
-    width: 100px;
+    width: 80px; /* Adjusted for responsiveness */
   }
 `;
 
 const CustomNav = styled(Nav)`
   .nav-link {
-    background-color: #ffffff !important; /* White background */
-    color: #c82333 !important; /* Red text */
+    background-color: #ffffff !important;
+    color: #c82333 !important;
     font-family: "Arial", sans-serif;
     font-size: 1rem;
     
@@ -35,50 +60,42 @@ const CustomNav = styled(Nav)`
   }
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
 const AuthButton = styled.div`
-  background-color: #c82333; /* Red button background */
+  background-color: #c82333;
   color: #fff;
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-right: 10px; /* Adjust margin as needed */
-  border: 1px solid #c82333; /* Red border */
+  border: 1px solid #c82333;
 
   &:hover {
-    background-color: #d90429; /* Darker red on hover */
+    background-color: #d90429;
   }
 `;
 
-const RegisterButton = styled.div`
+const RegisterButton = styled(AuthButton)`
   background-color: transparent;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  color: #c82333; /* Red text for register button */
-  border: 1px solid #c82333; /* Red border */
+  color: #c82333;
 
   &:hover {
-    background-color: #c82333; /* Red background on hover */
-    color: #fff; /* White text on hover */
-  }
-`;
-const StyledNotificationDropdown = styled(NotificationDropdown)`
-  margin: 10px 20px;  /* Adjust the margins */
-  padding: 5px;       /* Add padding */
-  background-color: #f8f9fa;  /* Set background color */
-  border-radius: 8px;   /* Add rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Optional shadow for effect */
-
-  &:hover {
-    background-color: #e9ecef;  /* Change background on hover */
+    background-color: #c82333;
+    color: #fff;
   }
 `;
 
 const NavBar = () => {
   const navigate = useNavigate();
   const { logout, isLoggedIn } = useAuth();
+  const [expanded, setExpanded] = useState(false); // Track the state of the Navbar
+
+  const handleClose = () => setExpanded(false); // Function to close the menu
 
   const menuItems = [
     {
@@ -114,94 +131,280 @@ const NavBar = () => {
     {
       title: "Events",
       links: [
-        {
-          label: "Upcoming Events",
-          url: "#",
-          subMenu: "upcoming",
-          subLinks: [
-            { label: "Event", url: "up/event" },
-          ],
-        },
-        {
-          label: "Previous Events",
-          url: "#",
-          subMenu: "previous",
-          subLinks: [{ label: "Gallery", url: "/gallery" }],
-        },
+        { label: "Upcoming Events", url: "/up/event" },
+        { label: "Previous Events", url: "/gallery" },
       ],
     },
     {
       title: "Travel & Tourism",
       links: [{ label: "Sights", url: "/tour_slider" }],
     },
-   
   ];
 
-  const renderMenu = () => {
-    return menuItems.map((menuItem, index) => (
-      <NavDropdown key={index} title={menuItem.title} id={`navbar-dropdown-${index}`}>
+  const renderMenu = () =>
+    menuItems.map((menuItem, index) => (
+      <NavDropdown
+      style={{
+        display: 'flex',
+      justifyContent: 'center',
+      }}
+       key={index} title={menuItem.title} id={`offcanvas-navbar-dropdown-${index}`}>
         {menuItem.links.map((link, linkIndex) => (
-          link.subLinks ? (
-            <NavDropdown.Item key={linkIndex} >
-              {link.label}
-              <NavDropdown.Divider />
-              {link.subLinks.map((subLink, subIndex) => (
-                <NavDropdown.Item key={subIndex} onClick={() => navigate(subLink.url)}>
-                  {subLink.label}
-                </NavDropdown.Item>
-              ))}
-            </NavDropdown.Item>
-          ) : (
-            <NavDropdown.Item key={linkIndex} onClick={() => navigate(link.url)}>
-              {link.label}
-            </NavDropdown.Item>
-          )
+          <NavDropdown.Item key={linkIndex} onClick={() =>{ navigate(link.url);handleClose();}}>
+            {link.label}
+          </NavDropdown.Item>
         ))}
       </NavDropdown>
     ));
-  };
 
   return (
-    <CustomNavbar expand="lg">
+    <CustomNavbar expand="lg"  expanded={expanded}>
+      <Container fluid sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
         <CustomBrand onClick={() => navigate("/home")}>
           <img src={require("./logo.png")} alt="Logo" />
         </CustomBrand>
 
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <CustomNav className="me-auto">
-          {renderMenu()}
-          <Nav.Link onClick={() => navigate("/contact_us")}>Contact Us</Nav.Link>
-        <Nav.Link onClick={() => navigate("/about")}>About</Nav.Link>
-        </CustomNav>
-        
-
-        <Nav>
-          {isLoggedIn ? (
-            <div className="d-flex align-items-center ">
-                <div style={{ margin: '10px 20px' }}>
-                        <NotificationDropdown />
-                      </div>            
+        <Navbar.Toggle aria-controls="offcanvasNavbar"
+            onClick={() => setExpanded(!expanded)} 
+         />
+        <Navbar.Offcanvas
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+          placement="end"
+          onHide={() => setExpanded(false)}
 
 
-              <AuthButton
-                onClick={() => {
-                  logout();
-                  navigate("/login");
+        >
+          <Offcanvas.Header closeButton>
+          </Offcanvas.Header>
+          <Offcanvas.Body 
+             className="d-flex align-items-center justify-content-between flex-column flex-lg-row"
+
+          
+          >
+            <CustomNav 
+            style={{
+              display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            }}
+            >
+              {renderMenu()}
+              <Nav.Link onClick={() =>{ navigate("/contact_us");  handleClose();}}>Contact Us</Nav.Link>
+              <Nav.Link onClick={() =>{ navigate("/about");  handleClose();}}>About</Nav.Link>
+              <Box
+          sx={{
+            display: {
+              sm:'flex',
+              xs:'flex',
+              md:'none',
+              lg:'none',
+              xl:'none',
+            },
+            justifyContent: "center",
+            marginTop: "1rem",
+            gap: 2,
+          }}
+        >
+          <a
+            href="https://api.whatsapp.com/send?phone=%2B962799602002"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-icon"
+          >
+            <Box
+              sx={{
+                backgroundColor: "#25d366",
+                borderRadius: "50%",
+                padding: "0.5rem",
+                border: "1px solid #25d366",
+                transition: "0.5s ease-in-out",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
+              }}
+            >
+              <IoLogoWhatsapp size={30} color="white" />
+            </Box>
+          </a>
+          <a
+            href="https://www.youtube.com/channel/UC6wJycA901VnU6chdmqP58Q"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-icon"
+          >
+            <Box
+              sx={{
+                backgroundColor: "#ff0000",
+                borderRadius: "50%",
+                padding: "0.5rem",
+                border: "1px solid #ff0000",
+                transition: "0.5s ease-in-out",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
+              }}
+            >
+              <FaYoutube size={30} color="white" />
+            </Box>
+          </a>
+          <a
+            href="https://www.linkedin.com/company/events-consultant/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-icon"
+          >
+            <Box
+              sx={{
+                backgroundColor: "#0077b5",
+                borderRadius: "50%",
+                padding: "0.5rem",
+                transition: "0.5s ease-in-out",
+                border: "1px solid #0077b5",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
+              }}
+            >
+              <FaLinkedin size={30} color="white" />
+            </Box>
+          </a>
+          <a
+            href="https://www.facebook.com/eventsconsultant.jo/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-icon"
+          >
+            <Box
+              sx={{
+                backgroundColor: "#3b5998",
+                borderRadius: "50%",
+                padding: "0.5rem",
+                transition: "0.5s ease-in-out",
+                border: "1px solid #3b5998",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
+              }}
+            >
+              <FaFacebookSquare size={30} color="white" />
+            </Box>
+          </a>
+              </Box>
+                <Box
+                            component="ul"
+                            sx={{
+                              listStyleType: "none",
+                              padding: 0,
+                              transition: "color 0.5s ease-in-out",
+                              flexDirection:'row',
+                             
+                              marginTop:'1.5rem',
+                              gap: 1,
+                              display: {
+                                sm:'flex',
+                                xs:'flex',
+                                md:'none',
+                                lg:'none',
+                                xl:'none',
+                              },
+                            }}
+                          >
+                            <Box
+                              component="li"
+                              sx={{
+                                display: "flex",
+                                gap: 2,
+                                alignItems:'center',
+                                justifyContent:'center',
+                                flexDirection:'column',
+                                width:'20%'
+
+                                
+                              }}
+                            >
+                              <FaPhoneAlt color="gray" />
+              
+                              <FaEnvelope color="gray" />
+
+                            </Box>
+                            <Box
+                              component="li"
+                              sx={{
+                                display: "flex",
+                                gap: 2,
+                                justifyContent:'center',
+                                flexDirection:'column',
+                                width:'80%'
+
+                                
+                              }}
+                            >
+                              <StyledLink href="tel:+962799602002">
+                                +962 79 960 2002
+                              </StyledLink>
+                              <StyledLink href="mailto:info@eventscons.com">
+                                info@eventscons.com
+                              </StyledLink>
+                            </Box>
+                           
+                          </Box>
+                           <StyledBox
+                              component="li"
+                              sx={{
+                                gap: 2,
+                                display: {
+                                  sm:'flex',
+                                  xs:'flex',
+                                  md:'none',
+                                  lg:'none',
+                                  xl:'none',
+                                },
+                                
+                              }}
+                            >
+                              <FaMapMarkerAlt color="gray" />
+                              Rawhi Al Katabi Commercial Complex, Al Wakalat St 7, Amman,
+                              Jordan
+                            </StyledBox>
+              
+                         
+            </CustomNav>
+
+            <Nav>
+              {isLoggedIn ? (
+                <ButtonWrapper>
+                  <NotificationDropdown />
+                  <AuthButton
+                    onClick={() => {
+                      logout();
+                      navigate("/login");
+                      handleClose();
+                    }}
+                  >
+                    Logout
+                  </AuthButton>
+                </ButtonWrapper>
+              ) : (
+                <ButtonWrapper 
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
-
-              >
-                Logout
-              </AuthButton>
-            </div>
-          ) : (
-            <div className="d-flex align-items-center justify-content-evenly">
-              <AuthButton onClick={() => navigate("/login")} className="marginrigt">Login</AuthButton>
-              <RegisterButton onClick={() => navigate("/registertype")}>Register</RegisterButton>
-            </div>
-          )}
-        </Nav>
-      </Navbar.Collapse>
+                >
+                  <AuthButton onClick={() => {navigate("/login"); handleClose();}}>Login</AuthButton>
+                  <RegisterButton onClick={() => {navigate("/registertype"); handleClose();}}>Register</RegisterButton>
+                </ButtonWrapper>
+              )}
+            </Nav>
+          </Offcanvas.Body>
+        </Navbar.Offcanvas>
+      </Container>
     </CustomNavbar>
   );
 };

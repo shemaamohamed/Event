@@ -32,7 +32,7 @@ const Seminars = () => {
             fontWeight: 'bold',
             textShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
           }}
-          data-aos="fade-up"
+          data-aos="fade-left"
 
         >
           Seminars
@@ -45,8 +45,8 @@ const Seminars = () => {
           sx={{
             fontWeight: 'bold',
             mb: 3,
-            color: 'black',
             textAlign: 'center',
+            color: '#c62828' 
           }}
         >
           Elevate Your Seminars to Inspire and Engage

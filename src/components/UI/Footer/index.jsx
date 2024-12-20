@@ -30,7 +30,7 @@ const StyledBox = styled(Box)`
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <footer  className="footer">
       <Container>
         {/* Logo Section */}
         <Box
@@ -393,8 +393,10 @@ const Footer = () => {
         {/* Developer */}
         <Typography variant="caption" color="white">
           Designed and Developed by{" "}
-          <Link
-            href="#"
+          <a
+            href="https://mayazin.net/"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               color: "gray",
               textDecoration: "none",
@@ -415,9 +417,9 @@ const Footer = () => {
                 },
               }}
             >
-              {/* Shimaa Mohamed */}
+              MAYAZIN
             </Typography>
-          </Link>
+          </a>
         </Typography>
       </Container>
     </footer>

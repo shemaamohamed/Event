@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { Box, Grid, Typography, ListItemText, ListItemIcon, ListItem, List, Container } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // Using Material-UI icon for consistency
 import AOS from 'aos';
-import 'aos/dist/aos.css';
+import 'aos/dist/aos.css'; 
+
+import { CheckCircleIcon } from 'lucide-react';
+
 
 const Expositions = () => {
     useEffect(() => {
@@ -44,7 +46,7 @@ const Expositions = () => {
                         backgroundColor: "rgba(255, 255, 255, 0.8)",
                         borderRadius: '5px',
                     }}
-                    data-aos="fade-up"
+                    data-aos="fade-down"
                 >
                     Expositions & Exhibitions
                 </Typography>
@@ -64,7 +66,7 @@ const Expositions = () => {
                                         alignItems: 'flex-start',
                                     }}
                                 >
-                                    <ListItemIcon sx={{ minWidth: '36px', color: '#c62828', mt: 0.5 }}>
+                                    <ListItemIcon sx={{ minWidth: '36px', color: '#c62828' , mt: 1 }}>
                                         <CheckCircleIcon />
                                     </ListItemIcon>
                                     <ListItemText
