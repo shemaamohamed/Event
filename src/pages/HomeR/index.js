@@ -71,7 +71,7 @@ const Home = () => {
           title: "Events Consultant",
           content: "Delivering high-quality event management and professional consulting services.",
           link:'Services',
-          to:'/management_consulting'
+          to:'/planning'
 
         },
         {
@@ -85,43 +85,7 @@ const Home = () => {
         
       ] }/>
       </Box> 
-    {/* <Box
-          sx={{
-            Width: "100%",
-            backgroundSize: "cover",
-            backgroundAttachment: "fixed",
-            backgroundRepeat: "no-repeat",
-            position: "relative",
-            backgroundImage: {
-              xs: "url('/image/aboutus.png')",
-              sm: "url('/image/aboutus.png')",
-              md: "url('/image/background4.png')",
-            },
-            height: {
-              xs: "50vh",
-              sm: "50vh",
-              md: "50vh",
-              lg: "100vh",
-              xl: "100vh",
-            },
-            padding: { xs: 2, md: 5 },
-            justifyContent:'center',
-            alignItems:'center',
-            display:'flex'
-          }}
-     >
-      <Typography
-
-       variant="h4"  gutterBottom sx={{ color: " black", fontWeight: "bold",py: 2 }}>
-          <span style={{ color: "#c82333" }}>E</span>vents
-          <br />
-          <span  style={{ color: "gray" }}> Consulant</span> 
-          
-      </Typography>
-      <Typography variant="body1" sx={{ lineHeight: 1.8 }}>
-      </Typography>
-
-    </Box> */}
+    
   
 
 
@@ -215,41 +179,7 @@ const Home = () => {
         </Grid>
       </Box>
 
-      {/* Contact Us */}
-      <Box my={5} px={2} sx={{ backgroundColor: "#e3f2fd", py: 4, borderRadius: "10px" }}>
-        <Typography variant="h5" align="center" gutterBottom sx={{ color: " #c82333", fontWeight: "bold" }}>
-          Contact Us
-        </Typography>
-        <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6">Get In Touch</Typography>
-            <Typography variant="body1" sx={{ lineHeight: 1.8 }}>
-              If you have any questions or need more information, feel free to reach out to us. We are here to help!
-            </Typography>
-            <Box mt={2}>
-              <Typography>
-                <FaEnvelope /> <strong>Email:</strong> info@eventscons.com
-              </Typography>
-              <Typography>
-                <FaPhoneAlt /> <strong>Phone:</strong> +962799602002
-              </Typography>
-              <Typography>
-                <FaMapMarkerAlt /> <strong>Address:</strong> Rawhi Al Katabi Commercial Complex, Al Wakalat St 7, Amman, Jordan
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6} textAlign="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => navigate("/contact_us")}
-              sx={{ px: 4, py: 1.5 }}
-            >
-              Contact Us
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
+      
 
       <Footer />
     </Box>
