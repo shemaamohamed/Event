@@ -1,5 +1,4 @@
 import { Box, Container, Grid, Typography} from "@mui/material";
-import { motion } from 'framer-motion';
 
 
 function HeaderAbout() {
@@ -41,11 +40,7 @@ function HeaderAbout() {
       }}
        spacing={2}>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
+         
             <Typography
               variant="h4"
               sx={{
@@ -56,7 +51,6 @@ function HeaderAbout() {
               }}
             >
             </Typography>
-          </motion.div>
         </Grid>
 
         {/* {[ // Map through the repetitive content for cleaner code

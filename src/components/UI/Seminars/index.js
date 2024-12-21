@@ -16,7 +16,7 @@ const Seminars = () => {
       <Box
         sx={{
           minHeight: '50vh',
-          backgroundImage: 'url("/image/Seminarsbackground.png")',
+          backgroundImage: 'url("/image/SeminarsBackground.png")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           display: 'flex',

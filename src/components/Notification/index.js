@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import SVG from "react-inlinesvg";
 import notification from "../../icons/notification.svg";
 import "./style.scss";
-import axios from "axios";
 import httpService from "../../common/httpService";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"; // استيراد ToastContainer و toast

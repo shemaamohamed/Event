@@ -52,7 +52,7 @@ const Workshops = () => {
           backgroundRepeat: 'no-repeat',
           display: 'flex',
           alignItems: 'center',
-          backgroundImage: "url('/image/Workshopsbackground.png')", 
+          backgroundImage: "url('/image/WorkshopsBackground.png')", 
           height: { xs: '50vh', sm: '70vh', md: '50vh' },
           padding: { xs: 2, md: 5 },
           mb: 4,
