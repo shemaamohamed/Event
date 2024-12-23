@@ -135,6 +135,20 @@ function SideMenu() {
                 label: "Add Clients",
                 path: "/add/client",
               },
+              {
+                label: "Visa Files ",
+                path: "/visa/files",
+              },
+              {
+                label: "Reservations Files ",
+                path: "/reservations/files",
+              },
+
+              {
+                label: "Flights Files",
+                path: "/flight/files",
+              },
+
             ],
           },
         ]

@@ -49,6 +49,9 @@ const EditSpeakerData = () => {
         onError: (error) => {
           toast.error("Failed to submit the form: " + error);
         },
+        onSuccess: (response) => {
+          toast.success("Profile Uploaded Successfully");
+        },
       });
     } catch (error) {
       console.error("Error submitting form:", error);

@@ -141,6 +141,32 @@ export const AuthProvider = ({ children }) => {
   //     console.error("Failed to fetch user data:", error);
   //   }
   // };
+  const setToken = (token) => {
+    const currentTime = new Date().getTime();
+    localStorage.setItem("token", token);
+    localStorage.setItem("tokenTimestamp", currentTime);
+  };
+
+  const checkTokenExpiration = () => {
+    const tokenTimestamp = localStorage.getItem("tokenTimestamp");
+
+    if (tokenTimestamp) {
+      const currentTime = new Date().getTime();
+      const timeElapsed = currentTime - tokenTimestamp;
+
+      if (timeElapsed >= 24 * 60 * 60 * 1000) { 
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokenTimestamp");
+        logout();
+      }
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(checkTokenExpiration, 5000); 
+    return () => clearInterval(interval); 
+  }, []);
+
 
   const login = (newToken) => {
     setAuthData((prevState) => ({
@@ -148,7 +174,7 @@ export const AuthProvider = ({ children }) => {
       token: newToken,
       isLoggedIn: true,
     }));
-    localStorage.setItem("token", newToken);
+    setToken(newToken);
     fetchUserData(newToken);
   };
 
@@ -165,10 +191,11 @@ export const AuthProvider = ({ children }) => {
       attendancesData: null,
       loading: false,
       name: "",
-      isLoggedIn: true,
       isLoggedIn: false,
     });
     localStorage.removeItem("token");
+    localStorage.removeItem("tokenTimestamp");
+
   };
 
   return (

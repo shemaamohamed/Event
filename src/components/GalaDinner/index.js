@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import httpService from "../../common/httpService";
 import { useNavigate } from "react-router-dom";
 import SimpleLabelValue from "../SimpleLabelValue";
+
 const DinnerDetails = () => {
   const [dinnerDetail, setDinnerDetail] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,25 +18,43 @@ const DinnerDetails = () => {
   const [companionDinnerPrice, setCompanionDinnerPrice] = useState(""); // State for guest price
   const [dinnerInvoice, setDinnerInvoice] = useState(null); // State for dinnerInvoice
   const [invoice, setInvoice] = useState(null); // State for invoice
-  const navigate = useNavigate();
-  const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const [attendeeId, setAttendeeId] = useState(null); // تعريف حالة attendeeId
 
+  const navigate = useNavigate();
+  const BaseUrl = process.env.REACT_APP_BASE_URL;  // قراءة الـ URL من البيئة
+
+  // Function to get dinner invoice
   const getDinnerInvoice = () => {
     const token = localStorage.getItem("token");
     axios
       .get(`${BaseUrl}/dinner/invoice`, {
         headers: {
-          Authorization: `Bearer ${token}`, // تمرير التوكن في الهيدر
+          Authorization: `Bearer ${token}`, // تمرير التوكن بشكل صحيح
         },
       })
       .then((response) => {
-        // تخزين البيانات في state
         setDinnerInvoice(response.data.dinner_attendee);
         setInvoice(response.data.invoice);
       })
       .catch((error) => {
         console.error("Error fetching invoice data", error);
-        // إذا لم يتم العثور على البيانات، لا نقوم بإظهار رسالة خطأ
+      });
+  };
+
+  // Function to delete attendee
+  const handleDelete = (attendeeId1) => {
+    const token = localStorage.getItem("token");
+    axios
+      .delete(`http://127.0.0.1:8000/api/dinner-attendees/${attendeeId1}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log('Success:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
       });
   };
 
@@ -45,20 +64,17 @@ const DinnerDetails = () => {
 
   const { myConferenceId } = useAuth();
 
+  // Fetch dinner details function
   const fetchDinnerDetails = async () => {
-    if (!myConferenceId) {
-      return;
-    }
+    if (!myConferenceId) return;
+
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.get(
-        `${BaseUrl}/dinners/conference/${myConferenceId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${BaseUrl}/dinners/conference/${myConferenceId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setDinnerDetail(response?.data?.dinner_detail);
     } catch (error) {
       console.error("Error fetching dinner details", error);
@@ -71,16 +87,14 @@ const DinnerDetails = () => {
     fetchDinnerDetails();
   }, [myConferenceId]);
 
+  // Fetch conference details function
   const fetchConferenceDetails = async () => {
-    if (!myConferenceId) {
-      return;
-    }
+    if (!myConferenceId) return;
+
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get(`${BaseUrl}/con/id/${myConferenceId}`);
-      setCompanionDinnerPrice(
-        response?.data?.conference.companion_dinner_price
-      );
+      setCompanionDinnerPrice(response?.data?.conference?.companion_dinner_price);
     } catch (error) {
       console.error("Error fetching Conference details", error);
     }
@@ -90,10 +104,9 @@ const DinnerDetails = () => {
     fetchConferenceDetails();
   }, [myConferenceId]);
 
+  // Add dinner attendees function
   const addDinnerAttendees = async () => {
     const token = localStorage.getItem("token");
-
-    // إعداد البيانات التي سيتم إرسالها
     const data = {
       companion_name: guestName,
       companion_price: companionDinnerPrice,
@@ -107,16 +120,17 @@ const DinnerDetails = () => {
           "Content-Type": "application/json",
         },
       });
+      const attendeeId1 = response.data.dinner_attendee_id;  // تأكد أن الـ id يتم إرجاعه في الاستجابة
+      setAttendeeId(attendeeId1);  // تخزين الـ ID في الحالة
+
+
       setTimeout(() => {
         getDinnerInvoice();
-      }, [200]);
+      }, 200);
 
       toast.success("Attendance confirmed successfully!");
     } catch (error) {
-      console.error(
-        "Error:",
-        error.response ? error.response.data : error.message
-      );
+      console.error("Error:", error.response ? error.response.data : error.message);
       alert("An error occurred while confirming attendance. Please try again.");
     }
   };
@@ -124,7 +138,7 @@ const DinnerDetails = () => {
   const handleGuestChange = (event) => {
     setHasGuest(event.target.checked); // Toggle guest state
   };
-
+  console.log(attendeeId);
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -216,26 +230,27 @@ const DinnerDetails = () => {
               </div>
             ) : (
               <div className="invoice-section">
-                <h3>Invoice Details</h3>
-                {dinnerInvoice && (
+                {hasGuest && <h3>Invoice Details</h3>}
+                {dinnerInvoice && hasGuest && (
                   <SimpleLabelValue
                     label="Companion Name"
                     value={dinnerInvoice.companion_name || "-"}
                   />
                 )}
-                {dinnerInvoice && (
+                {dinnerInvoice && hasGuest && (
                   <SimpleLabelValue
                     label="Companion Price"
-                    value={`${dinnerInvoice.companion_price  || 0} $`}
+                    value={`${dinnerInvoice.companion_price || 0} $`}
                   />
                 )}
-                {invoice && (
+                {invoice && hasGuest && (
                   <SimpleLabelValue
                     label="Invoice Status"
                     value={invoice.status}
                   />
                 )}
-                <button className="pay-now-btn">Pay Now</button>
+                {hasGuest && <button className="pay-now-btn">Pay Now</button>}
+                {invoice && <button onClick={() => handleDelete(attendeeId)} className="pay-now-btn">Cancel Participation in Dinner</button>}
               </div>
             )}
           </>

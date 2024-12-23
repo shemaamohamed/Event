@@ -90,7 +90,7 @@ import SponsorshipTable2 from "./components/Sponsor/SponsorshipTable/PostTable";
 import BoothCostForm from "./components/BoothCostForm";
 import SponsorInvoice from "./components/SpoonsotInvoice";
 import NavBar from "./components/Navbar";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import SideMenu from "./components/SideMenu";
 import TripForm from "./components/Tourism";
@@ -116,14 +116,21 @@ import SpeakerUpdateForm from "./components/test";
 import RegisterOther from "./pages/registerOther";
 import AdminForm from "./components/Admin/AdminForm";
 import AddClient from "./components/AddClient";
+import VisaFiles from "./components/VisaFiles";
+import ReservationsFiles from "./components/ReservationsFiles";
+import FlightsFiles from "./components/FlightsFiles";
 import { useAuth } from "./common/AuthContext";
 import Footer from "./components/UI/Footer";
+import AdminLayoutBasic from "./AdminLayout";
+import UserLayout from "./UserLayout";
+import NotFound from "./components/NotFound";
 
 const App = () => {
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
   const { isAdmin, registrationType, isLoggedIn } = useAuth();
   const isSponsor = registrationType === "sponsor";
+  const limit =localStorage.getItem("tokenTimestamp");
   // Listen for showLoader and hideLoader events
   useEffect(() => {
     const handleShowLoader = () => setShowLoader(true);
@@ -149,7 +156,6 @@ const App = () => {
     });
   }, [pathname]);
 
-
   const noNavRoute = [
     "/registertype",
     "/register/speaker",
@@ -162,77 +168,25 @@ const App = () => {
       <Loader show={showLoader} />
 
       <div className="layout-page-container">
-        {!noNavRoute.includes(location.pathname) &&
-          !location.pathname.includes("/registerPage") &&
-          !location.pathname.includes("/conference/details") &&
-          !location.pathname.includes("/other") &&
-          !isSponsor &&
-          !location.pathname.includes("/register/") && (
-            <div className="layout-sidemenu">
-              <SideMenu />
-            </div>
-          )}
+       
 
         <div
           style={{
-            width:'100%'
+            width: "100%",
           }}
-          // style={{
-          //   width:
-          //     !noNavRoute.includes(location.pathname) &&
-          //     !location.pathname.includes("/registerPage") &&
-          //     !location.pathname.includes("/conference/details") &&
-          //     !location.pathname.includes("/other") &&
-          //     isLoggedIn &&
-          //     !isSponsor &&
-          //     !location.pathname.includes("/register/")
-          //       ? "calc(100%)"
-          //       : "100%",
-          // }}
+         
         >
-          {/* {!noNavRoute.includes(location.pathname) &&
-            !location.pathname.includes("/registerPage") &&
-            !location.pathname.includes("/other") &&
-            !location.pathname.includes("/register/") && (
-              <div className="layout-navbar">
-                <NavBar />
-              </div>
-            )} */}
-            <NavBar />
+         
 
-          <div className="layout-content">
+          <div >
             <Routes className="main">
-              <Route path="/exhibitions" element={<Exhibitions />} />
-              <Route path="/adminForm/:userId" element={<AdminForm />} />
+              {
+                !isLoggedIn&&!limit &&(
+                  <Route path='/' element={<UserLayout/>}>
+                  <Route path="/" element={<Home />} />
               <Route path="/other" element={<RegisterOther />} />
-              <Route path="/test" element={<SpeakerUpdateForm />} />
-              <Route
-                path="/conference/details/:conferenceId"
-                element={<ConferenceDetails />}
-              />
-              <Route path="/trip/user/:tripId" element={<TripsStepperPage />} />
-              <Route
-                path="/edit/speaker/data/:conferenceId/:userId"
-                element={<EditSpeakerData />}
-              />{" "}
-              <Route
-                path="/edit/attendance/data/:conferenceId/:userId"
-                element={<EditAttendanceData />}
-              />
-              <Route path="/reservation/form" element={<Reservation />} />
-              <Route path="/conferences" element={<AllConferencesPage />} />
-              <Route path="/page/exhibitions" element={<ExhibitionsPage />} />
-              <Route path="/flights" element={<FlightFormAdmin />} />
-              <Route path="/flight/form" element={<FlightForm />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register/speaker/:id" element={<RegisterPage />} />
-              <Route
-                path="/registerPage/:type"
-                element={<SelectConferences />}
-              />
-              <Route path="/conferences/page" element={<HomePage />} />
-              <Route path="/about" element={<AboutUs />} />
-              <Route path="/registertype" element={<RegisterType />} />
+            <Route path="/registertype" element={<RegisterType />} />
+                          {/* register */}
               <Route
                 path="register/attendance/:conferenceId"
                 element={<RegisterAttendancePage />}
@@ -241,23 +195,17 @@ const App = () => {
                 path="/register/group/:conferenceId"
                 element={<RegisterGroupPage />}
               />
-              <Route path="/stepper" element={<ParentComponent />} />
+              <Route path="/register/speaker/:id" element={<RegisterPage />} />
               <Route
+                path="/registerPage/:type"
+                element={<SelectConferences />}
+              />
+               <Route
                 path="register/sponsor/:conferenceId"
                 element={<RegisterSponsorPage />}
               />
-              <Route path="/create/trip" element={<ViewTrip />} />
-              <Route path="/user" element={<UsersList />} />
-              <Route path="/view-user-trips" element={<ViewUserTrips />} />
-              {/* //this route for view one trip for user not admin  */}
-              <Route path="/view/trip/:id" element={<ViewOneTripUser />} />
-              <Route path="/airport/transfer" element={<AirportTransfer />} />
-              <Route path="/gala" element={<GalaDinner />} />
-              <Route path="/gala/dinner" element={<DinnerDetails />} />
-              <Route path="/paper" element={<AddScientificPaper />} />
-              <Route path="/visa" element={<VisaPage />} />
+              {/* before login */}
               <Route path="/home" element={<Home />} />
-              <Route path="/" element={<Home />} />
               <Route path="/about_us" element={<AboutUsEvent />} />
               <Route path="/our_clients" element={<OurClients />} />
               <Route path="/our_team" element={<OurTeams />} />
@@ -288,127 +236,211 @@ const App = () => {
               <Route path="/conf" element={<Conference3 />} />
               <Route path="/packages" element={<Packages />} />
               <Route path="/welcome" element={<Welcome />} />
-              <Route path="/adventureSection" element={<AdventureSection />} />
-              <Route path="/ticket/booking" element={<TicketBooking />} />
-              <Route path="/hotel/booking" element={<HotelBooking />} />
-              <Route path="/transportation" element={<Transportation />} />
-              <Route path="/speaker/profile" element={<SpeakerProfileForm />} />
-              <Route path="/admin/visa" element={<AdminVisa />} />
-              <Route path="/add/excel" element={<ExcelUpload />} />
-              <Route
-                path="/group/update/admin/:register_id"
-                element={<AdminGroupComponent />}
-              />
-              <Route path="/flights/users" element={<FlightStepperPage />} />
-              <Route path="/flights/users/:mode" element={<FlightStepperPage />} />
-              <Route
-                path="/flights/admins/:flight_id"
-                element={<FlightStepperPageAdmin />}
-              />
-              <Route
-                path="/user/flight/update/:id"
-                element={<MainFlightFormUpdate />}
-              />
-              {/* <Route path="/companion" element={<GetCompanion />} /> */}
-              <Route
-                path="/admin/visa2/:registerId"
-                element={<UpdateVisaStatus />}
-              />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/sponsor/section" element={<SponsorSection />} />
-              <Route
-                path={`/accept/flight/:user_id`}
-                element={<StepperAcceptFlight />}
-              />
-              <Route path="/group/msg" element={<NotificationMessage />} />
-              {/* admin table view */}
-              <Route
-                path="/table/dinner/speaker/:conferenceId"
-                element={<SpeakerTable />}
-              />
-              <Route
-                path="/table/booking/airport/:conferenceId"
-                element={<BookingsTable2 />}
-              />
-              <Route
-                path="/upcoming/conferences"
-                element={<UpcomingConferences />}
-              />
-              <Route path="/job/list" element={<JobList />} />
-              <Route path="/job" element={<CreateJob />} />
-              <Route path="/applicants/job/admin" element={<JobApplicants />} />
-              <Route path="/pending/users" element={<PendingUsersTable />} />
-              <Route path="/enter/new/flights" element={<EnterNewFlights />} />
-              {/* <Route path="/Attendance/profile" element={<AttendanceProfileForm />} /> */}
-              <Route
-                path="/job/admin/Applicants/:jobId"
-                element={<ApplicantsList />}
-              />
-              <Route path="/msgs" element={<Messages />} />
-              <Route
-                path="/abs/:userId/:conferenceId"
-                element={<EditAbstractData />}
-              />
-              <Route path="/past/event" element={<PastEvent />} />
-              <Route path="/up/event" element={<UpcomingConferences2 />} />
-              <Route
-                path="/paper/form/:conferenceId"
-                element={<PaperSubmissionForm />}
-              />
-              <Route
-                path="/conference/details/:conferenceId"
-                element={<OnePage />}
-              />
-              <Route
-                path="/conference/speaker/:conferenceId"
-                element={<Speakers4 />}
-              />
-              {/* /abs/${notification?.register_id}/${notification?.conference_id} */}
-              <Route
-                path="/sponsor/option/form"
-                element={<SponsorshipForm />}
-              />
-              <Route
-                path="/sponsor/admin/add/table"
-                element={<SponsorshipTable2 />}
-              />
-              <Route
-                path="/sponsor/admin/booth/cost"
-                element={<BoothCostForm />}
-              />
-              <Route path="/sponsor/invoice" element={<SponsorInvoice />} />
-              <Route path="/trip/form" element={<TripForm />} />
-              <Route path="/trans/form" element={<Transportation3 />} />
-              <Route path="/ticket/booking2" element={<TravelForm2 />} />
-              <Route path="/travel/hotel" element={<TravelFormHotel />} />
-              <Route path="/room/prices" element={<RoomPriceForm />} />
-              <Route path="/admin/invoice/sponsor" element={<InvoicesS />} />
-              <Route
-                path="/admin/upload/floor"
-                element={<FloorPlanUploader />}
-              />
-              <Route
-                path="/admin/excel/table"
-                element={<TableComponentExcel />}
-              />
-              <Route
-                path="/exhibitions/view"
-                element={<ViewFormExhibitions />}
-              />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/conferences" element={<AllConferencesPage />} />
+              <Route path="/page/exhibitions" element={<ExhibitionsPage />} />
               <Route path="/gallery" element={<ImageGallery />} />
-              <Route path="/one/exhibits/:exhibitId" element={<OneExhibit />} />
-              <Route path="/add/client" element={<AddClient />} />
-              <Route
-                path="/group-trip/user/:tripId"
-                element={<GroupTripRegistration />}
-              />
-            </Routes>
+              <Route path="/job/list" element={<JobList />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/up/event" element={<UpcomingConferences2 />} />
+              <Route path="*" element={<NotFound/>} />
+
+
+
+
+
+
+
+
+              </Route>
+
+                )
+              }
+              
+
+                                {
+                                  isLoggedIn && limit &&(
+
+                                    <Route path="/" element={<AdminLayoutBasic/>} >
+                                      
+                                    <Route path="visa/files" element={<VisaFiles />} />
+  
+                                    <Route path="reservations/files" element={<ReservationsFiles />} />
+  
+                                    <Route path="flight/files" element={<FlightsFiles />} />
+  
+  
+  
+                                      <Route path="exhibitions" element={<Exhibitions />} />
+  
+                                      <Route path="adminForm/:userId" element={<AdminForm />} />
+                                      <Route path="test" element={<SpeakerUpdateForm />} />
+                                      <Route
+                                        path="conference/details/:conferenceId"
+                                        element={<ConferenceDetails />}
+                                      />
+                                      <Route path="trip/user/:tripId" element={<TripsStepperPage />} />
+                                      <Route
+                                        path="edit/speaker/data/:conferenceId/:userId"
+                                        element={<EditSpeakerData />}
+                                      />{" "}
+                                      <Route
+                                        path="edit/attendance/data/:conferenceId/:userId"
+                                        element={<EditAttendanceData />}
+                                      />
+                                      <Route path="reservation/form" element={<Reservation />} />
+                                      <Route path="flights" element={<FlightFormAdmin />} />
+                                      <Route path="flight/form" element={<FlightForm />} />
+                                      
+                                      <Route path="conferences/page" element={<HomePage />} />
+                                      <Route path="about" element={<AboutUs />} />
+                                      
+                                      <Route path="stepper/:mode" element={<ParentComponent />} />
+                                      <Route path="stepper" element={<ParentComponent />} />
+                                    
+                                      <Route path="create/trip" element={<ViewTrip />} />
+                                      <Route path="user" element={<UsersList />} />
+                                      <Route path="view-user-trips" element={<ViewUserTrips />} />
+                                      {/* //this route for view one trip for user not admin  */}
+                                      <Route path="view/trip/:id" element={<ViewOneTripUser />} />
+                                      <Route path="airport/transfer" element={<AirportTransfer />} />
+                                      <Route path="gala" element={<GalaDinner />} />
+                                      <Route path="gala/dinner" element={<DinnerDetails />} />
+                                      <Route path="paper" element={<AddScientificPaper />} />
+                                      <Route path="visa" element={<VisaPage />} />
+                                      
+                                      <Route path="adventureSection" element={<AdventureSection />} />
+                                      <Route path="ticket/booking" element={<TicketBooking />} />
+                                      <Route path="hotel/booking" element={<HotelBooking />} />
+                                      <Route path="transportation" element={<Transportation />} />
+                                      <Route path="speaker/profile" element={<SpeakerProfileForm />} />
+                                      <Route path="admin/visa" element={<AdminVisa />} />
+                                      <Route path="add/excel" element={<ExcelUpload />} />
+                                      <Route
+                                        path="group/update/admin/:register_id"
+                                        element={<AdminGroupComponent />}
+                                      />
+                                      <Route path="flights/users" element={<FlightStepperPage />} />
+                                      <Route
+                                        path="flights/users/:mode"
+                                        element={<FlightStepperPage />}
+                                      />
+                                      <Route
+                                        path="flights/admins/:flight_id"
+                                        element={<FlightStepperPageAdmin />}
+                                      />
+                                      <Route
+                                        path="user/flight/update/:id"
+                                        element={<MainFlightFormUpdate />}
+                                      />
+                                      {/* <Route path="/companion" element={<GetCompanion />} /> */}
+                                      <Route
+                                        path="admin/visa2/:registerId"
+                                        element={<UpdateVisaStatus />}
+                                      />
+                                      <Route path="sponsor/section" element={<SponsorSection />} />
+                                      <Route
+                                        path={`accept/flight/:user_id`}
+                                        element={<StepperAcceptFlight />}
+                                      />
+                                      <Route path="group/msg" element={<NotificationMessage />} />
+                                      {/* admin table view */}
+                                      <Route
+                                        path="table/dinner/speaker/:conferenceId"
+                                        element={<SpeakerTable />}
+                                      />
+                                      <Route
+                                        path="table/booking/airport/:conferenceId"
+                                        element={<BookingsTable2 />}
+                                      />
+                                      <Route
+                                        path="upcoming/conferences"
+                                        element={<UpcomingConferences />}
+                                      />
+                                      <Route path="job" element={<CreateJob />} />
+                                      <Route path="applicants/job/admin" element={<JobApplicants />} />
+                                      <Route path="pending/users" element={<PendingUsersTable />} />
+                                      <Route path="enter/new/flights" element={<EnterNewFlights />} />
+                                      {/* <Route path="/Attendance/profile" element={<AttendanceProfileForm />} /> */}
+                                      <Route
+                                        path="job/admin/Applicants/:jobId"
+                                        element={<ApplicantsList />}
+                                      />
+                                      <Route path="msgs" element={<Messages />} />
+                                      <Route
+                                        path="abs/:userId/:conferenceId"
+                                        element={<EditAbstractData />}
+                                      />
+                                      <Route path="past/event" element={<PastEvent />} />
+                                      <Route
+                                        path="paper/form/:conferenceId"
+                                        element={<PaperSubmissionForm />}
+                                      />
+                                      <Route
+                                        path="conference/details/:conferenceId"
+                                        element={<OnePage />}
+                                      />
+                                      <Route
+                                        path="conference/speaker/:conferenceId"
+                                        element={<Speakers4 />}
+                                      />
+                                      {/* /abs/${notification?.register_id}/${notification?.conference_id} */}
+                                      <Route
+                                        path="sponsor/option/form"
+                                        element={<SponsorshipForm />}
+                                      />
+                                      <Route
+                                        path="sponsor/admin/add/table"
+                                        element={<SponsorshipTable2 />}
+                                      />
+                                      <Route
+                                        path="sponsor/admin/booth/cost"
+                                        element={<BoothCostForm />}
+                                      />
+                                      <Route path="sponsor/invoice" element={<SponsorInvoice />} />
+                                      <Route path="trip/form" element={<TripForm />} />
+                                      <Route path="trans/form" element={<Transportation3 />} />
+                                      <Route path="ticket/booking2" element={<TravelForm2 />} />
+                                      <Route path="travel/hotel" element={<TravelFormHotel />} />
+                                      <Route path="room/prices" element={<RoomPriceForm />} />
+                                      <Route path="admin/invoice/sponsor" element={<InvoicesS />} />
+                                      <Route
+                                        path="admin/upload/floor"
+                                        element={<FloorPlanUploader />}
+                                      />
+                                      <Route
+                                        path="admin/excel/table"
+                                        element={<TableComponentExcel />}
+                                      />
+                                      <Route
+                                        path="exhibitions/view"
+                                        element={<ViewFormExhibitions />}
+                                      />
+                                      <Route path="one/exhibits/:exhibitId" element={<OneExhibit />} />
+                                      <Route path="add/client" element={<AddClient />} />
+                                      <Route
+                                        path="group-trip/user/:tripId"
+                                        element={<GroupTripRegistration />}
+                                      />
+                                       <Route path="*" element={<NotFound/>} />
+
+
+                            </Route>
+
+                                  )
+                                }
+
+                    
+                     
+                      
+                    </Routes>
             {!noNavRoute.includes(location.pathname) &&
-            !location.pathname.includes("/registerPage") &&
-            !location.pathname.includes("/other") &&
-            !location.pathname.includes("/register/") && (
-                <Footer />
-            )}
+              !location.pathname.includes("/registerPage") &&
+              !location.pathname.includes("/other") &&
+              !location.pathname.includes("/register/")
+              &&!isLoggedIn &&!limit
+               && <Footer />}
           </div>
         </div>
       </div>

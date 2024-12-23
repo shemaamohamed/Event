@@ -123,9 +123,10 @@
         text-decoration: none;
         border-radius: 8px;
         transition: background 0.3s ease;
+        border: none;
 
         &:hover {
-          background: #16a085;
+          background: #df3e3e;
         }
       }
 

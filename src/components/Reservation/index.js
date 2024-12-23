@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import SimpleLabelValue from "../../components/SimpleLabelValue";
 import { useNavigate } from "react-router-dom";
 import httpService from "../../common/httpService";
@@ -11,6 +11,7 @@ const ReservationDetails = ({ setDisabledButton }) => {
   const { myConferenceId } = useAuth();
 
   const fetchReservations = async () => {
+    if (!myConferenceId) return;
     try {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Authorization token is missing.");
@@ -38,7 +39,7 @@ const ReservationDetails = ({ setDisabledButton }) => {
 
   useEffect(() => {
     fetchReservations();
-  }, []);
+  }, [myConferenceId]);
 
   const formatReservationData = (data) =>
     data.map((reservation) => ({
@@ -134,9 +135,12 @@ const ReservationDetails = ({ setDisabledButton }) => {
           value={reservation.updateDeadline || "-"}
         />
       </div>
-      <div className="title-reservation">Rooms</div>
-      {reservation.rooms.map((room) => (
-        <RoomDetails key={room.id} room={room} />
+      {/* <div className="title-reservation">Rooms</div> */}
+      {reservation.rooms.map((room, index) => (
+        <Fragment>
+          <div className="title-reservation">Room {index + 1}</div>
+          <RoomDetails key={room.id} room={room} />
+        </Fragment>
       ))}
     </div>
   );
@@ -169,6 +173,18 @@ const Reservation = () => {
             }}
           >
             Add Reservation Information
+          </button>
+          <button
+            type="button"
+            className={`reservation-information-btn ${
+              !disabledBtn && "disabled"
+            }`}
+            disabled={!disabledBtn}
+            onClick={() => {
+              navigate("/stepper/edit");
+            }}
+          >
+            Edit Reservation Information
           </button>
         </div>
       </div>

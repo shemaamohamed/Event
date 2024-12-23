@@ -65,27 +65,28 @@ const ViewUserTrips = () => {
         <div className="trips-types-btn">
           {hasFreeTrip && (
             <button
-              className={`trip-type-btn ${
-                selectedTripType === "group" ? "active" : ""
-              }`}
+              className={`trip-type-btn ${selectedTripType === "group" ? "active" : ""
+                }`}
               onClick={() => setSelectedTripType("group")}
             >
               Group Trips
             </button>
           )}
           <button
-            className={`trip-type-btn ${
-              selectedTripType === "private" ? "active" : ""
-            }`}
+            className={`trip-type-btn ${selectedTripType === "private" ? "active" : ""
+              }`}
             onClick={() => setSelectedTripType("private")}
           >
             Private Trips
           </button>
+          <small className="trip-note">
+            You can book multiple trips based on your availability.
+          </small>
         </div>
       </div>
 
       <div className="trip-cards">
-        {allTrips.length > 0  ? (
+        {allTrips.length > 0 ? (
           allTrips.map((trip) => (
             <div className="trip-card" key={trip.id}>
               <img

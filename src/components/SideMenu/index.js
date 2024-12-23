@@ -82,7 +82,7 @@ function SideMenu() {
       ]
     : [];
 
-  const adminMenuItems = isAdmin
+    const adminMenuItems = isAdmin
     ? [
         { label: "Conferences", icon: "🎓", path: "/conferences/page" },
         { label: "Exhibitions", icon: "🏢", path: "/exhibitions" },
@@ -102,8 +102,12 @@ function SideMenu() {
         { label: "Sponsorship Option", icon: "⚙️", path: "/sponsor/option/form" },
         { label: "Booth Cost", icon: "🏬", path: "/sponsor/admin/booth/cost" },
         { label: "Upload Floor Plan", icon: "📐", path: "/admin/upload/floor" },
+        { label: "Visa Files", icon: "📝", path: "/visa/files" },
+        { label: "Reservations Files", icon: "🗂️", path: "/reservations/files" },
+        { label: "Flights Files", icon: "🛫", path: "/flight/files" },
       ]
     : [];
+  
 
   const menuItems = [...speakerMenuItems, ...adminMenuItems];
 

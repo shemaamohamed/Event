@@ -14,6 +14,8 @@ import "./style.scss";
 const SpeakerProfileForm = () => {
   const { speakerData, attendancesData, registrationType } = useAuth();
   const [speakerInfo, setSpeakerInfo] = useState(null);
+  const [online, setOnline] = useState(null);
+
   const [video, setVideo] = useState(null);
 
   const [formFiles, setFormFiles] = useState({
@@ -143,6 +145,9 @@ const SpeakerProfileForm = () => {
       setDepartureDate(response?.data?.speaker?.departure_date)
       setSpeakerInfo(response.data.speaker);
       setVideo(response?.data?.speaker?.video)
+      setOnline(response?.data?.speaker?.is_online_approved)
+      // console.log(online);
+      
     } catch (error) {
       // console.error("Error fetching speaker info:", error);
     }

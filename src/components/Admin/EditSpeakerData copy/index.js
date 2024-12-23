@@ -22,9 +22,9 @@ const EditSpeakerData = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const getAuthToken = () => localStorage.getItem("token");
-
+  
     try {
-      await httpService({
+      const response = await httpService({
         method: "POST",
         url: `${BaseUrl}/admin/speakers/${userId}/${conferenceId}`,
         headers: { Authorization: `Bearer ${getAuthToken()}` },
@@ -36,18 +36,21 @@ const EditSpeakerData = () => {
           airport_pickup: airportPickup ? 1 : 0,
           free_trip: freeTrip ? 1 : 0,
           is_certificate_active: isCertificateActive ? 1 : 0,
-          is_visa_payment_required: isVisaPaymentRequired ? 1 : 0, // تحويل القيمة إلى 0 أو 1
-
+          is_visa_payment_required: isVisaPaymentRequired ? 1 : 0,
         },
         withToast: true,
-        onError: (error) => {
-          toast.error("Failed to submit the form: " + error);
-        },
       });
+  
+      // نجاح العملية
+      console.log(response);
+      toast.success("File uploaded successfully!");
     } catch (error) {
+      // فشل العملية
       console.error("Error submitting form:", error);
+      toast.error("Failed to submit the form: " + error);
     }
   };
+  
 
   return (
     <form onSubmit={handleSubmit} className="edit-speaker-form">

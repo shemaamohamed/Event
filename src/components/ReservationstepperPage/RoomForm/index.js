@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import "./style.scss";
 
 const RoomForm = () => {
-  const { currentStep, completeStep } = useStepper();
+  const { currentStep, completeStep, rooms, setRooms } = useStepper();
 
   const initialValue = {
     roomType: "",
@@ -24,7 +24,7 @@ const RoomForm = () => {
     totalNights: "",
   };
 
-  const [rooms, setRooms] = useState([initialValue]);
+  // const [rooms, setRooms] = useState([initialValue]);
 
   const options = [
     { value: "Single", label: "Single" },
@@ -50,15 +50,15 @@ const RoomForm = () => {
   const handleSubmit = (e) => {
     toast.success("The data was updated successfully!");
     completeStep(currentStep);
-    saveToLocalStorage("otherRooms", rooms);
+    // saveToLocalStorage("otherRooms", rooms);
   };
 
-  useEffect(() => {
-    const data = getFromLocalStorage("otherRooms");
-    if (data) {
-      setRooms(data);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const data = getFromLocalStorage("otherRooms");
+  //   if (data) {
+  //     setRooms(data);
+  //   }
+  // }, []);
 
   return (
     <div>
@@ -72,11 +72,11 @@ const RoomForm = () => {
         {rooms.map((room, index) => (
           <div className="room-form-stepper-container" key={index}>
             <div className="delete-icon-container">
-             <SVG
+              <SVG
                 className="delete-icon"
                 src={deleteIcon}
                 onClick={() => deleteRoom(index)}
-              /> 
+              />
             </div>
 
             <div className="room-form-stepper">

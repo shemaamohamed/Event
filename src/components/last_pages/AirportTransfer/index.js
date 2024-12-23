@@ -6,9 +6,9 @@ import DateInput from "../../../CoreComponent/Date";
 import Checkbox from "../../../CoreComponent/Checkbox";
 import { useAuth } from "../../../common/AuthContext";
 import { toast } from "react-toastify";
-import "./style.scss";
 import Dialog from "../../../CoreComponent/Dialog";
 import SimpleLabelValue from "../../SimpleLabelValue";
+import "./style.scss";
 
 const TripTypeOptions = [
   {
@@ -24,6 +24,8 @@ const TripTypeOptions = [
 
 const AirportTransferForm = () => {
   const { userId } = useAuth();
+  const [id, setId] = useState(0);
+
   const [formData, setFormData] = useState({
     tripType: "",
     arrivalDate: "",
@@ -37,6 +39,7 @@ const AirportTransferForm = () => {
 
   const [invoiceData, setInvoiceData] = useState(null);
   const [open, setOpen] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
   const [bookingData, setBookingData] = useState(null);
 
   const {
@@ -55,14 +58,19 @@ const AirportTransferForm = () => {
   const handleChange = (field) => (value) => {
     setFormData((prevData) => ({ ...prevData, [field]: value }));
   };
-
+  const convertTimeFormat = (timeString) => {
+    const [hours, minutes] = timeString.split(":");
+    return `${parseInt(hours, 10)}:${minutes}`;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-
+    const url = isEdit
+      ? `${BaseUrl}/airport-transfer-bookings/edit/${id}`
+      : `${BaseUrl}/airport-transfer-bookings`;
     try {
       const response = await axios.post(
-        `${BaseUrl}/airport-transfer-bookings`,
+        url,
         {
           userId,
           trip_type: tripType,
@@ -84,6 +92,7 @@ const AirportTransferForm = () => {
       toast.error("An error occurred while submitting the request.");
     }
   };
+
   const getBooking = () => {
     const BaseUrl = process.env.REACT_APP_BASE_URL;
     const token = localStorage.getItem("token");
@@ -94,13 +103,24 @@ const AirportTransferForm = () => {
         },
       })
       .then((response) => {
+        console.log(response);
+
         // وضع البيانات في الحالة
         setBookingData(response.data);
+        const data2 = response?.data?.[0];
+        setId(data2?.id);
+        setFormData({
+          tripType: data2?.trip_type,
+          arrivalDate: data2?.arrival_date,
+          arrivalTime: data2?.arrival_time,
+          departureDate: data2?.departure_date,
+          departureTime: data2?.departure_time,
+          flightNumber: data2?.flight_number,
+          companionName: data2?.companion_name,
+          hasCompanion: !!data2?.companion_name,
+        });
       })
-      .catch((err) => {
-        // التعامل مع الأخطاء وتحديث حالة الخطأ
-        // setError(err.response ? err.response.data : err.message);
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     getBooking();
@@ -108,7 +128,7 @@ const AirportTransferForm = () => {
 
   return (
     <div className="airport-transfer-form-section">
-      {!bookingData || bookingData.length === 0 ? (
+      {!bookingData || bookingData.length === 0 || isEdit ? (
         <div className="airport-transfer-form">
           <form
             className="airport-transfer-form-container"
@@ -250,6 +270,14 @@ const AirportTransferForm = () => {
                     />
 
                     <button className="pay-btn">Pay Now</button>
+                    <button
+                      className="pay-btn"
+                      onClick={() => {
+                        setIsEdit(true);
+                      }}
+                    >
+                      Edit
+                    </button>
                   </div>
                 ) : (
                   <p>No invoice available</p>

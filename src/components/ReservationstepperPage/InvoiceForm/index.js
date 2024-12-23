@@ -1,26 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { getFromLocalStorage } from "..";
 import SimpleLabelValue from "../../SimpleLabelValue";
 import "./style.scss";
 import httpService from "../../../common/httpService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../common/AuthContext";
 import { useStepper } from "../StepperContext";
 
 const InvoiceForm = () => {
-  const { currentStep, completeStep, invoice, setInvoice } = useStepper();
+  const {
+    currentStep,
+    completeStep,
+    setInvoice,
+    mainRoom,
+    setMainRoom,
+    otherRooms,
+    setOtherRooms,
+    reservationDetails,
+    setReservationDetails,
+    rooms,
+    roomType,
+    checkInDate,
+    checkOutDate,
+    lateCheckOut,
+    earlyCheckIn,
+    totalNights,
+    reservationId,
+    mainRoomId,
+  } = useStepper();
   const navigate = useNavigate();
-  const [mainRoom, setMainRoom] = useState(null);
-  const [otherRooms, setOtherRooms] = useState([]);
-  const [reservationDetails, setReservationDetails] = useState(null); // State for invoice details
+  const { mode } = useParams();
   const { userName, myConferenceId } = useAuth();
   const BaseUrl = process.env.REACT_APP_BASE_URL;
-
+  const mainRoom2 = {
+    checkInDate,
+    checkOutDate,
+    lateCheckOut,
+    earlyCheckIn,
+    totalNights,
+    roomType,
+  };
   useEffect(() => {
-    const mainRoomFromStorage = getFromLocalStorage("mainRoom") || {};
-    const otherRoomsFromStorage = getFromLocalStorage("otherRooms") || [];
-    setMainRoom(mainRoomFromStorage);
-    setOtherRooms(otherRoomsFromStorage);
+    setMainRoom(mainRoom2 || {});
+    setOtherRooms(rooms || []);
   }, []);
 
   function convertObject(obj) {
@@ -42,6 +63,7 @@ const InvoiceForm = () => {
       additional_cost: 0,
       late_check_out: obj.mainRoom.lateCheckOut || false,
       early_check_in: obj.mainRoom.earlyCheckIn || false,
+      id: mainRoomId || 0,
     });
 
     // Add other rooms
@@ -56,6 +78,7 @@ const InvoiceForm = () => {
         additional_cost: 0,
         late_check_out: room.lateCheckOut || false,
         early_check_in: room.earlyCheckIn || false,
+        id: room.id || 0,
       });
     });
 
@@ -65,21 +88,28 @@ const InvoiceForm = () => {
   const getAuthToken = () => localStorage.getItem("token");
 
   const submitReservation = async () => {
-    const mainRoom = getFromLocalStorage("mainRoom") || {};
-    const otherRooms = getFromLocalStorage("otherRooms") || [];
+    const mainRoom = mainRoom2 || {};
+    const otherRooms = rooms || [];
 
     const body = convertObject({
-      mainRoom: { ...mainRoom, occupant_name: userName },
+      mainRoom: { ...mainRoom, occupant_name: userName, id: mainRoomId },
       otherRooms,
     });
 
     try {
       const response = await httpService({
         method: "POST",
-        url: `${BaseUrl}/reservation`,
+        url:
+          mode == "edit"
+            ? `${BaseUrl}/edit/reservation`
+            : `${BaseUrl}/reservation`,
         headers: { Authorization: `Bearer ${getAuthToken()}` },
-        showLoader: true,
-        data: { conference_id: myConferenceId, ...body },
+        // showLoader: true,
+        data: {
+          conference_id: myConferenceId,
+          reservation_id: reservationId,
+          ...body,
+        },
         // withToast: true,
       });
 
@@ -95,35 +125,7 @@ const InvoiceForm = () => {
 
   return (
     <div className="invoice-container-section">
-      {reservationDetails && (
-        <div className="invoice-details-section">
-          <h3>Invoice Details</h3>
-          <div className="section-1">
-            <SimpleLabelValue
-              label="Reservation ID"
-              value={reservationDetails.reservation_id}
-            />
-            <SimpleLabelValue
-              label="Total Invoice"
-              value={`$${reservationDetails.total_invoice}`}
-            />{" "}
-          </div>
-          <h3>Room Invoices</h3>
-          {reservationDetails.room_invoices.map((room, index) => (
-            <div key={index} className="section-1">
-              <SimpleLabelValue label="Room Type" value={room.room_type} />
-              <SimpleLabelValue
-                label="Base Price"
-                value={`$${room.base_price}`}
-              />
-              <SimpleLabelValue
-                label="Total Cost"
-                value={`$${room.total_cost}`}
-              />
-            </div>
-          ))}
-        </div>
-      )}
+      {reservationDetails && <div className="invoice-details-section"></div>}
       <h3>Main Room</h3>
       <div className="main-room-section">
         <SimpleLabelValue label="Room Type" value={mainRoom?.roomType?.label} />

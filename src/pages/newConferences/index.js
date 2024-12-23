@@ -8,12 +8,14 @@ import PaperSubmissionForm from "../../components/abstract/abstractUser";
 import Speakers4 from "../../components/SpeakerProduct";
 import Home from "../HomeR";
 import Welcome from "../../components/UI/Welcome";
+import { useNavigate } from "react-router-dom";
 // ** styles
 import "./style.scss";
 import TemporaryDrawer from "./Drawer";
 import OurClients from "../../components/UI/OurClients";
 
 const ConferenceDetails = () => {
+  const navigate =useNavigate()
   const { conferenceId } = useParams();
   const [selectedSection, setSelectedSection] = useState("overview");
   const [data, setData] = useState({});
@@ -41,7 +43,7 @@ const ConferenceDetails = () => {
     Abstract: "Abstract",
     Speakers: "Speakers",
     topics: "Scientific Topics",
-    pricing: "Pricing Information",
+    pricing: "Registration",
     committee: "Committee Members",
     firstAnnouncement: "First Announcement Document",
     secondAnnouncement: "Second Announcement Document",
@@ -49,7 +51,7 @@ const ConferenceDetails = () => {
     scientificProgram: "Scientific Program Document",
     sponsor:"Sponsor"
   };
-
+const token = localStorage.getItem("token")
   const renderContent = () => {
     const { conference, scientific_topics, prices, committee_members } = data;
 
@@ -167,6 +169,9 @@ const ConferenceDetails = () => {
                 <p>{price?.description}</p>
               </div>
             ))}
+           {!token &&  <button className="btn-download" onClick={()=>{
+              navigate("/registertype")
+            }}>Register?</button>}
           </div>
         );
       case "committee":

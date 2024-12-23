@@ -219,7 +219,36 @@ const FlightForm = () => {
         console.error("Error fetching flight data:", error);
       });
   };
+  const handelDelete = () => {
+    const token = localStorage.getItem("token"); // استبدل بـ التوكن الفعلي
+    const endpoint = `${BaseUrl}/flights/com/2`; // نقطة النهاية
+  
+    axios
+      .delete(endpoint, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log("Flights deleted successfully:", response.data);
+        alert("All flights have been deleted successfully!");
+      })
+      .catch((error) => {
+        console.error("Error deleting flights:", error.response.data);
+        alert("An error occurred while deleting flights. Please try again.");
+      });
+  };
 
+
+
+  const EmergencyButton = () => {
+    const handleEmergencyClick = () => {
+      const message = "This is an urgent matter. Please get in touch as soon as possible.";
+      const phoneNumber = "962799602002"; // رقمك مع رمز البلد
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+    
+    }}
   return (
     <div className="flight-form-page-container">
       <div className="flight-form-header-container">
@@ -251,10 +280,10 @@ const FlightForm = () => {
           >
             Edit Flight Information
           </button>{" "}
-          <button type="button" onClick={() => {}}>
+          <button type="button" onClick={() => {EmergencyButton()}}>
             Emargency
           </button>
-          <button type="button" onClick={() => {}}>
+          <button type="button" onClick={() => {handelDelete()}}>
             Delete
           </button>
         </div>

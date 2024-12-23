@@ -4,19 +4,30 @@ import Checkbox from "../../../CoreComponent/Checkbox/index";
 import DateInput from "../../../CoreComponent/Date";
 import { toast } from "react-toastify";
 import { useStepper } from "../StepperContext";
-import { getFromLocalStorage, saveToLocalStorage } from "..";
 import "./style.scss";
 import Select from "../../../CoreComponent/Select";
 
 const ReservationForm = () => {
-  const { currentStep, completedSteps, setCurrentStep, completeStep } =
-    useStepper();
-  const [checkInDate, setCheckInDate] = useState("");
-  const [checkOutDate, setCheckOutDate] = useState("");
-  const [lateCheckOut, setLateCheckOut] = useState(false);
-  const [earlyCheckIn, setEarlyCheckIn] = useState(false);
-  const [totalNights, setTotalNights] = useState(1);
-  const [roomType, setRoomType] = useState();
+  const {
+    currentStep,
+    completedSteps,
+    setCurrentStep,
+    completeStep,
+    //this is states
+    roomType,
+    setRoomType,
+    checkInDate,
+    setCheckInDate,
+    checkOutDate,
+    setCheckOutDate,
+    lateCheckOut,
+    setLateCheckOut,
+    earlyCheckIn,
+    setEarlyCheckIn,
+    totalNights,
+    setTotalNights,
+  } = useStepper();
+
   const options = [
     { value: "Single", label: "Single" },
     { value: "Double", label: "Double" },
@@ -33,19 +44,8 @@ const ReservationForm = () => {
       roomType,
     };
     completeStep(currentStep);
-    saveToLocalStorage("mainRoom", formData);
   };
-  useEffect(() => {
-    const data = getFromLocalStorage("mainRoom");
-    if (data) {
-      setCheckInDate(data?.checkInDate);
-      setCheckOutDate(data?.checkOutDate);
-      setLateCheckOut(data?.lateCheckOut);
-      setEarlyCheckIn(data?.earlyCheckIn);
-      setTotalNights(data?.totalNights);
-      setRoomType(data?.roomType)
-    }
-  }, []);
+
   return (
     <div>
       <form className="reservation-form-container-stepper">

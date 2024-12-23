@@ -1,0 +1,90 @@
+.flights-files-container {
+  padding: 20px;
+
+  .visa-files {
+    color: #d32f2f;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .upload-button {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: #f44336;
+    color: white;
+
+    &:hover {
+      background-color: #d32f2f;
+    }
+  }
+  .dialog-content-files {
+    padding: 20px;
+
+    .file-con {
+      height: 125px;
+    }
+  }
+
+  .title-container {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f1f1f;
+    margin-bottom: 20px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .dialog-container .children-container {
+    height: 312px;
+  }
+
+  .buttons-file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    .save-button,
+    .cancel-button {
+      width: 100%;
+      padding: 0.5rem 1.5rem; // Space inside the buttons
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .save-button {
+      background-color: #4caf50; // Green for save
+      color: white;
+
+      &:hover {
+        background-color: #45a049; // Darker green on hover
+      }
+    }
+
+    .cancel-button {
+      background-color: #f44336; // Red for cancel
+      color: white;
+
+      &:hover {
+        background-color: #d32f2f; // Darker red on hover
+      }
+    }
+  }
+}

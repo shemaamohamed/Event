@@ -38,12 +38,13 @@ const LoginPage = () => {
       const response = await axiosInstance.post(url, userData);
       const token = response.data.token;
       login(token);
+      
       console.log(response?.data?.user?.isAdmin);
       console.log(response?.data?.user?.registration_type);
 
       // Wait until isAdmin is updated
       if (response?.data?.user?.isAdmin) {
-        navigate("/home");
+        navigate("/");
       } else {
         if (response?.data?.user?.registration_type === "speaker") {
           navigate("/speaker/profile");
