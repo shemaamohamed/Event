@@ -82,6 +82,8 @@ const AddScientificPaper = () => {
           setPhone={setWhatsapp}
           required={true}
         />
+                  <div> It will be used to send conference-related messages.</div>
+
         <Input
           label="Country"
           placeholder="Enter country"

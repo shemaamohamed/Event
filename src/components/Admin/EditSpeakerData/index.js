@@ -19,6 +19,8 @@ const EditSpeakerData = () => {
   const [isVisaPaymentRequired, setIsVisaPaymentRequired] = useState(false);
   const [numberOfNights, setNumberOfNights] = useState(0);
   const [roomType, setRoomType] = useState("");
+  // const [onlineLink, setOnlineLink] = useState(""); // حالة جديدة لتتبع الرابط
+
   const options = [
     { value: "single", label: "Single" },
     { value: "double", label: "Double" },
@@ -44,6 +46,7 @@ const EditSpeakerData = () => {
           free_trip: freeTrip ? 1 : 0,
           is_certificate_active: 0,
           is_visa_payment_required: isVisaPaymentRequired ? 1 : 0,
+
         },
         withToast: true,
         onError: (error) => {

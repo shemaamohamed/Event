@@ -46,8 +46,8 @@ const FlightFormAdmin = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log({response});
-        
+        console.log({ response });
+
         setFlights(response.data.data);
         setTotalPages(response.data.pagination?.total_pages);
         setCurrentPage(response.data.pagination?.current_page);
@@ -129,7 +129,7 @@ const FlightFormAdmin = () => {
                 setSelectedItem(item);
               }}
             >
-              Set Ticket
+              view Invoice
             </button>
           </div>
         ),
@@ -139,54 +139,54 @@ const FlightFormAdmin = () => {
 
   return (
     <div className="flight-form2">
-    <div className="flight-form">
-    <div className="flight-form-admin-header">
-        <div className="header">
-          <Input
-            label="Passenger Name	"
-            placeholder="Search"
-            inputValue={travelerName}
-            setInputValue={setTravelerName}
-            type="text"
+      <div className="flight-form">
+        <div className="flight-form-admin-header">
+          <div className="header">
+            <Input
+              label="Passenger Name	"
+              placeholder="Search"
+              inputValue={travelerName}
+              setInputValue={setTravelerName}
+              type="text"
+            />
+          </div>
+        </div>
+
+        <div className="flight-table-container">
+          <Table headers={headers} data={handleTableData()} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
           />
         </div>
-      </div>
 
-      <div className="flight-table-container">
-        <Table headers={headers} data={handleTableData()} />
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
+        <CompanionModal
+          isOpen={openCompanionModal}
+          setIsOpen={setOpenCompanionModal}
+          companions={companions}
+          headers={headers}
         />
-      </div>
 
-      <CompanionModal
-        isOpen={openCompanionModal}
-        setIsOpen={setOpenCompanionModal}
-        companions={companions}
-        headers={headers}
-      />
+        <MySideDrawer isOpen={openView} setIsOpen={setOpenView}>
+          <FlightDetails data={selectedItem} />
+        </MySideDrawer>
+        <MySideDrawer isOpen={openTripForm} setIsOpen={setOpenTripForm}>
+          <AddTripForm data={selectedItem} setOpen={setOpenTripForm} />
+        </MySideDrawer>
+        <MySideDrawer isOpen={openPriceForm} setIsOpen={setOpenPriceForm}>
+          <SeatCostForm data={selectedItem} setOpen={setOpenPriceForm} />
+        </MySideDrawer>
 
-      <MySideDrawer isOpen={openView} setIsOpen={setOpenView}>
-        <FlightDetails data={selectedItem} />
-      </MySideDrawer>
-      <MySideDrawer isOpen={openTripForm} setIsOpen={setOpenTripForm}>
-        <AddTripForm data={selectedItem} setOpen={setOpenTripForm} />
-      </MySideDrawer>
-      <MySideDrawer isOpen={openPriceForm} setIsOpen={setOpenPriceForm}>
-        <SeatCostForm data={selectedItem} setOpen={setOpenPriceForm} />
-      </MySideDrawer>
-
-      <MySideDrawer isOpen={openUpdateForm} setIsOpen={setOpenUpdateForm}>
-        <UpdateDeadline data={selectedItem} setOpen={setOpenUpdateForm} />
-      </MySideDrawer>
-      <MySideDrawer isOpen={openTicketForm} setIsOpen={setOpenTicketForm}>
-        <UpdateTicket data={selectedItem} setOpen={setOpenTicketForm} />
-      </MySideDrawer>
+        <MySideDrawer isOpen={openUpdateForm} setIsOpen={setOpenUpdateForm}>
+          <UpdateDeadline data={selectedItem} setOpen={setOpenUpdateForm} />
+        </MySideDrawer>
+        <MySideDrawer isOpen={openTicketForm} setIsOpen={setOpenTicketForm}>
+          <UpdateTicket data={selectedItem} setOpen={setOpenTicketForm} />
+        </MySideDrawer>
       </div>
-      </div>
-    );
+    </div>
+  );
 };
 
 export default FlightFormAdmin;

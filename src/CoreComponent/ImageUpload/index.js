@@ -20,17 +20,22 @@ const ImageUpload = ({
   const [imageError, setImageError] = useState(false); // Track image loading error
 
   const handleImageError = () => {
-    setImageError(true); 
+    setImageError(true);
   };
-  // إذا كان هناك ملف قديم، استخدمه
+
+  // Handle initial file display
   useEffect(() => {
     if (existingFile) {
-      console.log(`${backendUrlImages}${existingFile}`);
-
-      setFileName(existingFile.split("/").pop()); // استخراج اسم الملف من المسار
-      setFileURL(`${backendUrlImages}${existingFile}`); // تأكد من أنه يتم استخدام المسار بشكل صحيح
+      setFileName(existingFile.split("/").pop());
+      setFileURL(`${backendUrlImages}${existingFile}`);
+    } else if (typeof inputValue === "string") {
+      setFileName(inputValue.split("/").pop());
+      setFileURL(`${backendUrlImages}${inputValue}`);
+    } else if (inputValue instanceof File) {
+      setFileName(inputValue.name);
+      setFileURL(URL.createObjectURL(inputValue));
     }
-  }, [existingFile]);
+  }, [existingFile, inputValue]);
 
   const handleDelete = () => {
     setInputValue(null);
@@ -67,10 +72,18 @@ const ImageUpload = ({
 
   const handleDownload = () => {
     if (fileURL) {
-      const link = document.createElement("a"); // Create a link element
-      link.href = fileURL; // Set the href to the file URL
-      link.download = fileName; // Set the download attribute with the file name
-      link.click(); // Programmatically click the link to trigger the download
+      // If the inputValue is a string (URL), open it in a new tab
+      if (typeof inputValue === "string") {
+        window.open(fileURL, "_blank"); // Open the URL in a new tab
+      } else {
+        // For file objects, trigger the download
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = fileName || "file"; // Set the download filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     }
   };
 
@@ -90,7 +103,6 @@ const ImageUpload = ({
           accept={allowedExtensions.map((ext) => `.${ext}`).join(",")}
           onChange={handleChange}
           style={{ display: "none" }}
-          value={""}
         />
         <div className="upload-img-container" onClick={handleClick}>
           <div className="placholder">
@@ -111,15 +123,12 @@ const ImageUpload = ({
         {errorMsg && <span className="error-msg-container">{errorMsg}</span>}
         {(fileName || fileURL) && (
           <div className="img-container">
-            {/* <img className="img" src={fileURL} alt={fileName} /> */}
-
             <img
               className="img"
-              src={imageError ? defaultFileImage : fileURL} // If imageError is true, show the default image
+              src={imageError ? defaultFileImage : fileURL}
               alt={fileName}
-              onError={handleImageError} // If image fails to load, trigger handleImageError
+              onError={handleImageError}
             />
-
             <div className="actions-container">
               <SVG
                 className="delete-icon"

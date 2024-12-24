@@ -166,6 +166,14 @@ const ConferencesPage = () => {
                   >
                     Dinner details
                   </button>
+                  <button
+                    className="view"
+                    onClick={() => {
+                      navigate(`/table/zoom/speaker/${conference.id}`);
+                    }}
+                  >
+               Add Zoom Link
+                  </button>
                 </div>
               </div>
             </Fragment>

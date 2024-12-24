@@ -209,6 +209,7 @@ const RegisterOtherPage = () => {
             required={true}
             errorMsg={error.whatsApp}
           />
+          <div> It will be used to send conference-related messages.</div>
 
           <Input
             label={"Specialization"}

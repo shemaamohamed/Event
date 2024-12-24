@@ -119,11 +119,15 @@ import AddClient from "./components/AddClient";
 import VisaFiles from "./components/VisaFiles";
 import ReservationsFiles from "./components/ReservationsFiles";
 import FlightsFiles from "./components/FlightsFiles";
+import CertificateComponent from "./components/CertificateComponent";
+import SpeakersComponent from "./components/SpeakersComponent";
+import AddZoomLink from "./components/AddZoomLink";
 import { useAuth } from "./common/AuthContext";
 import Footer from "./components/UI/Footer";
 import AdminLayoutBasic from "./AdminLayout";
 import UserLayout from "./UserLayout";
 import NotFound from "./components/NotFound";
+
 
 const App = () => {
   const location = useLocation();
@@ -264,9 +268,9 @@ const App = () => {
 
                                     <Route path="/" element={<AdminLayoutBasic/>} >
                                       
-                                    <Route path="visa/files" element={<VisaFiles />} />
+                                    <Route path="files/visa" element={<VisaFiles />} />
   
-                                    <Route path="reservations/files" element={<ReservationsFiles />} />
+                                    <Route path="files/reservations" element={<ReservationsFiles />} />
   
                                     <Route path="flight/files" element={<FlightsFiles />} />
   
@@ -299,8 +303,8 @@ const App = () => {
                                       <Route path="stepper/:mode" element={<ParentComponent />} />
                                       <Route path="stepper" element={<ParentComponent />} />
                                     
-                                      <Route path="create/trip" element={<ViewTrip />} />
-                                      <Route path="user" element={<UsersList />} />
+                                      <Route path="trip" element={<ViewTrip />} />
+                                      <Route path="trip/user" element={<UsersList />} />
                                       <Route path="view-user-trips" element={<ViewUserTrips />} />
                                       {/* //this route for view one trip for user not admin  */}
                                       <Route path="view/trip/:id" element={<ViewOneTripUser />} />
@@ -359,12 +363,12 @@ const App = () => {
                                         element={<UpcomingConferences />}
                                       />
                                       <Route path="job" element={<CreateJob />} />
-                                      <Route path="applicants/job/admin" element={<JobApplicants />} />
+                                      <Route path="job/applicants" element={<JobApplicants />} />
                                       <Route path="pending/users" element={<PendingUsersTable />} />
-                                      <Route path="enter/new/flights" element={<EnterNewFlights />} />
+                                      <Route path="flights/enter/new" element={<EnterNewFlights />} />
                                       {/* <Route path="/Attendance/profile" element={<AttendanceProfileForm />} /> */}
                                       <Route
-                                        path="job/admin/Applicants/:jobId"
+                                        path="job/Applicants/:jobId"
                                         element={<ApplicantsList />}
                                       />
                                       <Route path="msgs" element={<Messages />} />
@@ -391,12 +395,16 @@ const App = () => {
                                         element={<SponsorshipForm />}
                                       />
                                       <Route
-                                        path="sponsor/admin/add/table"
+                                        path="sponsor/add/table"
                                         element={<SponsorshipTable2 />}
                                       />
                                       <Route
-                                        path="sponsor/admin/booth/cost"
+                                        path="sponsor/booth/cost"
                                         element={<BoothCostForm />}
+                                      />
+                                      <Route
+                                        path="sponsor/upload/floor"
+                                        element={<FloorPlanUploader />}
                                       />
                                       <Route path="sponsor/invoice" element={<SponsorInvoice />} />
                                       <Route path="trip/form" element={<TripForm />} />
@@ -405,10 +413,7 @@ const App = () => {
                                       <Route path="travel/hotel" element={<TravelFormHotel />} />
                                       <Route path="room/prices" element={<RoomPriceForm />} />
                                       <Route path="admin/invoice/sponsor" element={<InvoicesS />} />
-                                      <Route
-                                        path="admin/upload/floor"
-                                        element={<FloorPlanUploader />}
-                                      />
+                                      
                                       <Route
                                         path="admin/excel/table"
                                         element={<TableComponentExcel />}
@@ -424,6 +429,15 @@ const App = () => {
                                         element={<GroupTripRegistration />}
                                       />
                                        <Route path="*" element={<NotFound/>} />
+                                       <Route path="/certificate/files" element={<CertificateComponent />} />
+                                       <Route path="/flights/files" element={<FlightsFiles />} />
+                                       <Route path="/all-speakers" element={<SpeakersComponent />} />
+                                       <Route
+                                                          path="/table/zoom/speaker/:conferenceId"
+                                                          element={<AddZoomLink />}
+                                                        />
+                                        <Route path="*" element={<NotFound/>} />
+
 
 
                             </Route>

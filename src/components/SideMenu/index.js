@@ -104,7 +104,10 @@ function SideMenu() {
         { label: "Upload Floor Plan", icon: "📐", path: "/admin/upload/floor" },
         { label: "Visa Files", icon: "📝", path: "/visa/files" },
         { label: "Reservations Files", icon: "🗂️", path: "/reservations/files" },
-        { label: "Flights Files", icon: "🛫", path: "/flight/files" },
+        { label: "Flights Files", icon: "🛫", path: "/flights/files" },
+        { label: "Certificate Files", icon: "🎓", path: "/certificate/files" },
+        { label: "All Speakers", icon: "🎤", path: "/all-speakers" }
+
       ]
     : [];
   

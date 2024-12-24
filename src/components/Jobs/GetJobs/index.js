@@ -137,6 +137,8 @@ const JobList = () => {
                     value={whatsappNumber}
                     onChange={(e) => setWhatsappNumber(e.target.value)}
                   />
+                            <div> It will be used to send conference-related messages.</div>
+
                   <Input
                     type="email"
                     name="email"

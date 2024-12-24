@@ -12,28 +12,21 @@ import Topics from "./topic.js";
 import "./style.scss";
 
 const SpeakerProfileForm = () => {
-  const { speakerData, attendancesData, registrationType } = useAuth();
-  const [speakerInfo, setSpeakerInfo] = useState(null);
+  const { speakerData, registrationType } = useAuth();
   const [online, setOnline] = useState(null);
-
   const [video, setVideo] = useState(null);
-
   const [formFiles, setFormFiles] = useState({
     image: null,
     abstract: null,
     presentationFile: null,
   });
-  const [formFiles2, setFormFiles2] = useState({
-    image: null,
-    abstract: null,
-    presentationFile: null,
-    video:null
-  });
+
   const [attendanceOptions, setAttendanceOptions] = useState({
     showOnlineOption: false,
     inPerson: false,
     onlineParticipation: false,
   });
+
   const [topics, setTopics] = useState([]);
   const [profileDetails, setProfileDetails] = useState({
     userName: "",
@@ -55,39 +48,60 @@ const SpeakerProfileForm = () => {
     }
   }, [registrationType, speakerData]);
 
-  useEffect(() => {
-    initializeProfileDetails();
-  }, [initializeProfileDetails]);
-
   const handleUpdate = async (e) => {
     e.preventDefault();
+
+    // Prepare FormData for submission
     const formData = new FormData();
 
-    formData.append("abstract", formFiles.abstract);
-    formData.append("presentation_file", formFiles.presentationFile);
-    formData.append("topics", JSON.stringify(topics));
+    // Append files only if they exist
+    if (formFiles.abstract) {
+      formData.append("abstract", formFiles.abstract);
+    }
+
+    if (formFiles.presentationFile) {
+      formData.append("presentation_file", formFiles.presentationFile);
+    }
+
+    // Append other data with conditional checks
+    formData.append("topics", JSON.stringify(topics || [])); // Fallback to empty array if topics are null
     formData.append(
       "online_participation",
       attendanceOptions.onlineParticipation ? 1 : 0
-
     );
 
-    formData.append("departure_date", departureDate);
-    formData.append("arrival_date", arrivalDate);
-    formData.append("video", video);
+    if (departureDate) {
+      formData.append("departure_date", departureDate);
+    }
+
+    if (arrivalDate) {
+      formData.append("arrival_date", arrivalDate);
+    }
+
+    if (video) {
+      formData.append("video", video);
+    }
 
     try {
       const token = localStorage.getItem("token");
+
+      // HTTP request using httpService
       await httpService({
         method: "POST",
         url: `${BaseUrl}/speakers/user/update`,
         headers: { Authorization: `Bearer ${token}` },
         data: formData,
-        withToast: true,
-        showLoader: true,
+        withToast: true, // Display toast notifications
+        showLoader: true, // Show a loader during the request
       });
-      navigate("/visa");
+      toast.success("Profile Uploaded Successfully");
+
+      // Navigate to another page upon success
+      // navigate("/visa");
     } catch (error) {
+      console.error("An error occurred while updating:", error);
+
+      // Optionally, display an error toast
       // toast.error("An error occurred while updating.");
     }
   };
@@ -99,10 +113,6 @@ const SpeakerProfileForm = () => {
       inPerson: prev.onlineParticipation ? false : prev.inPerson,
     }));
   }, []);
-
-  useEffect(() => {
-    toggleAttendanceOptions();
-  }, [attendanceOptions.inPerson, attendanceOptions.onlineParticipation]);
 
   const handleTopicChange = (index, newValue) => {
     setTopics((prev) =>
@@ -126,28 +136,30 @@ const SpeakerProfileForm = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await axios.get(
-        `${BaseUrl}/speakers/info`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${BaseUrl}/speakers/info`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const topics = JSON.parse(response.data.speaker.topics || "[]");
-      setTopics(topics)
-      setFormFiles2({
+      setTopics(topics);
+      setFormFiles({
         abstract: response?.data?.speaker?.abstract,
         image: response?.data?.speaker?.image,
         presentationFile: response?.data?.speaker?.presentation_file,
       });
-      setArrivalDate(response?.data?.speaker?.arrival_date)
-      setDepartureDate(response?.data?.speaker?.departure_date)
-      setSpeakerInfo(response.data.speaker);
-      setVideo(response?.data?.speaker?.video)
-      setOnline(response?.data?.speaker?.is_online_approved)
-      // console.log(online);
+      setArrivalDate(response?.data?.speaker?.arrival_date);
+      setDepartureDate(response?.data?.speaker?.departure_date);
+      setVideo(response?.data?.speaker?.video);
+      setOnline(response?.data?.speaker?.is_online_approved);
+      console.log(online);
       
+      setAttendanceOptions({
+        showOnlineOption: response?.data?.speaker?.is_online_approved,
+        inPerson: !response?.data?.speaker?.online_participation,
+        onlineParticipation: response?.data?.speaker?.online_participation,
+      });
+      console.log(response?.data?.speaker?.online_participation);
     } catch (error) {
       // console.error("Error fetching speaker info:", error);
     }
@@ -156,16 +168,12 @@ const SpeakerProfileForm = () => {
   useEffect(() => {
     getSpeakerData();
   }, []);
-
-  // Disable button logic
-  const isButtonDisabled =
-    !(formFiles.abstract || formFiles2.abstract) ||
-    !(formFiles.presentationFile || formFiles2.presentationFile) ||
-    !arrivalDate ||
-    !departureDate ||
-    !video ||
-    topics.length === 0 ||
-    topics.some((topic) => !topic.trim());
+  useEffect(() => {
+    toggleAttendanceOptions();
+  }, [attendanceOptions.inPerson, attendanceOptions.onlineParticipation]);
+  useEffect(() => {
+    initializeProfileDetails();
+  }, [initializeProfileDetails]);
 
   return (
     <div className="speaker-section-container">
@@ -193,7 +201,6 @@ const SpeakerProfileForm = () => {
               label="Abstract"
               allowedExtensions={["txt", "pdf", "doc", "docx"]}
               inputValue={formFiles.abstract}
-              existingFile={formFiles2.abstract}
               setInputValue={handleFileChange("abstract")}
               className="image-upload"
               placeholder="Abstract"
@@ -203,7 +210,6 @@ const SpeakerProfileForm = () => {
               label="Presentation File"
               allowedExtensions={["ppt", "pptx"]}
               inputValue={formFiles.presentationFile}
-              existingFile={formFiles2.presentationFile}
               setInputValue={handleFileChange("presentationFile")}
               className="image-upload"
               placeholder="Presentation File"
@@ -213,7 +219,6 @@ const SpeakerProfileForm = () => {
               label="Video"
               allowedExtensions={["ppt", "pptx", "mp4"]}
               inputValue={video}
-              existingFile={formFiles2.video}
               setInputValue={setVideo}
               className="image-upload"
               placeholder="Video"
@@ -230,7 +235,7 @@ const SpeakerProfileForm = () => {
               setInputValue={setDepartureDate}
               type="date"
             />
-            {attendanceOptions.showOnlineOption && (
+            {online && (
               <div className="attendance-option">
                 <h3 className="attendance-title">
                   How would you like to attend the conference?
@@ -275,12 +280,7 @@ const SpeakerProfileForm = () => {
             />
           </div>
 
-          <button
-            className={`update-btn ${isButtonDisabled ? "disabled" : ""}`}
-            disabled={isButtonDisabled}
-          >
-            Update Profile
-          </button>
+          <button className={`update-btn`}>Update Profile</button>
         </form>
       </div>
     </div>

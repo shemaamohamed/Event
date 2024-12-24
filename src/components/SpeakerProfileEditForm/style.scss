@@ -6,24 +6,28 @@ $background-color: #fafafa;
 $border-radius: 8px;
 $transition-speed: 0.3s;
 .speaker-section-container {
-  height: calc(100vh - 58px);
-  overflow: overlay;
-  overflow-x: hidden;
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
+  // height: calc(100vh - 58px);
+  // overflow: overlay;
+  // overflow-x: hidden;
+  // &::-webkit-scrollbar {
+  //   width: 3px;
+  // }
 
-  &::-webkit-scrollbar-track {
-    background: var(--scrollbar-track-color);
-  }
+  // &::-webkit-scrollbar-track {
+  //   background: var(--scrollbar-track-color);
+  // }
 
-  &::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb-color);
-    border-radius: 50px;
-  }
+  // &::-webkit-scrollbar-thumb {
+  //   background: var(--scrollbar-thumb-color);
+  //   border-radius: 50px;
+  // }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover-color);
+  // &::-webkit-scrollbar-thumb:hover {
+  //   background: var(--scrollbar-thumb-hover-color);
+  // }
+
+  .checkbox-label {
+    margin-right: 10px;
   }
   .speaker-profile-section-container {
     display: flex;
@@ -51,8 +55,8 @@ $transition-speed: 0.3s;
           align-items: center;
 
           .profile-image-speakerr {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             margin-right: 1rem;
             object-fit: cover;
@@ -73,7 +77,7 @@ $transition-speed: 0.3s;
               color: darken($font-color, 20%);
 
               .bio {
-                padding:10px 20px;
+                padding: 10px 20px;
                 width: 100%;
                 max-width: 500px;
                 margin: 5px auto;
@@ -193,6 +197,7 @@ $transition-speed: 0.3s;
       .update-btn {
         margin-right: 30px;
         margin-top: 20px;
+        margin-bottom: 20px;
         width: 270px;
         height: 45px;
         background-color: #cc0000; // Red background
@@ -202,7 +207,6 @@ $transition-speed: 0.3s;
         padding: 10px 20px;
         font-size: 16px;
         cursor: pointer;
-        // transition: background-color 0.3s ease, transform 0.2s ease;
 
         &:hover {
           background-color: #cc0000; // Darker red on hover

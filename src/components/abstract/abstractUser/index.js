@@ -61,7 +61,6 @@ function PaperSubmissionForm({ conferenceId }) {
   return (
     <div className="register-page-container112">
       {/* Adding the important notes section */}
-  
 
       {/* The rest of the form */}
       <form onSubmit={handleSubmit} className="register-form">
@@ -102,6 +101,8 @@ function PaperSubmissionForm({ conferenceId }) {
             required={true}
             errorMsg={error.phone}
           />
+          <div> It will be used to send conference-related messages.</div>
+
           <PhoneNumberInput
             className="input-field"
             label="WhatsApp Number"

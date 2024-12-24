@@ -12,6 +12,7 @@ import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
 import SimpleLabelValue from "../../SimpleLabelValue";
 import { backendUrlImages } from "../../../constant/config";
 import ImageUpload from "../../../CoreComponent/ImageUpload";
+import axios from "axios";
 
 const PendingUsersTable = () => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -47,6 +48,29 @@ const PendingUsersTable = () => {
         headers: { Authorization: `Bearer ${getAuthToken()}` },
         showLoader: true,
       });
+      const BaseUrl = process.env.REACT_APP_BASE_URL;
+
+
+      
+      const handleDelete = (userId) => {
+        const token = localStorage.getItem("token"); // ضع التوكن الخاص بك هنا
+    
+        axios.delete(`${BaseUrl}/delete/user/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}` // تمرير التوكن هنا
+            }
+        })
+        .then(response => {
+            console.log("User deleted successfully:", response.data);
+
+        })
+        .catch(error => {
+            console.error("Error deleting user:", error.response ? error.response.data : error.message);
+        });
+    };
+    
+
+
 
       const usersWithActions = response?.data?.map((user) => {
         return {
@@ -97,6 +121,7 @@ const PendingUsersTable = () => {
               >
                 Submit
               </button>
+              <button className="actions-buttons-list" onClick={()=>handleDelete(user.id)}>Delete</button>
             </div>
           ),
         };

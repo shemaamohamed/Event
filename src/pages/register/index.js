@@ -352,6 +352,8 @@ const RegisterPage = () => {
                     </FormHelperText>
                   )}
                 </FormControl>
+                <div> It will be used to send conference-related messages.</div>
+
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <FormControl fullWidth>

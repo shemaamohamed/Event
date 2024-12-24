@@ -26,7 +26,7 @@ const navigate =useNavigate()
     fetchJobs();
   }, []);
   const viewApplicants = (jobId) => {
-    navigate(`/job/admin/applicants/${jobId}`);
+    navigate(`/job/applicants/${jobId}`);
   };
   return (
     <div className="job-list">

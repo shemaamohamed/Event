@@ -285,6 +285,7 @@ const RegisterAttendancePage = () => {
                       <FormHelperText style={{ color: "red" }}>{error.whatsApp}</FormHelperText>
                     )}
                     </FormControl>
+                    <div> It will be used to send conference-related messages.</div>
 
                   </Grid>
                   <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>

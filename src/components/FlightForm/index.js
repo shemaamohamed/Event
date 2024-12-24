@@ -242,13 +242,12 @@ const FlightForm = () => {
 
 
   const EmergencyButton = () => {
-    const handleEmergencyClick = () => {
       const message = "This is an urgent matter. Please get in touch as soon as possible.";
       const phoneNumber = "962799602002"; // رقمك مع رمز البلد
       const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
       window.open(url, "_blank");
     
-    }}
+    }
   return (
     <div className="flight-form-page-container">
       <div className="flight-form-header-container">
@@ -281,7 +280,7 @@ const FlightForm = () => {
             Edit Flight Information
           </button>{" "}
           <button type="button" onClick={() => {EmergencyButton()}}>
-            Emargency
+            Emergency
           </button>
           <button type="button" onClick={() => {handelDelete()}}>
             Delete

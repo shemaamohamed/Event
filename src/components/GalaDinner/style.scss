@@ -8,25 +8,25 @@ $hover-bg-color: rgba(192, 57, 43, 0.1); // تأثير عند التحويم
 $font-family: "Arial", sans-serif; // خط بسيط
 
 .dinner-details3 {
-  max-height: calc(100vh - 57px);
-  overflow: overlay;
+  // max-height: calc(100vh - 57px);
+  // overflow: overlay;
 
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
+  // &::-webkit-scrollbar {
+  //   width: 3px;
+  // }
 
-  &::-webkit-scrollbar-track {
-    background: var(--scrollbar-track-color);
-  }
+  // &::-webkit-scrollbar-track {
+  //   background: var(--scrollbar-track-color);
+  // }
 
-  &::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb-color);
-    border-radius: 50px;
-  }
+  // &::-webkit-scrollbar-thumb {
+  //   background: var(--scrollbar-thumb-color);
+  //   border-radius: 50px;
+  // }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover-color);
-  }
+  // &::-webkit-scrollbar-thumb:hover {
+  //   background: var(--scrollbar-thumb-hover-color);
+  // }
   .dinner-detail-section {
     display: grid;
     grid-template-columns: 1fr 1fr;

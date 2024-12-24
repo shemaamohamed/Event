@@ -1,0 +1,208 @@
+.certificate-component {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .filters {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 20px;
+    .dropdown-container2 {
+      width: 200px;
+    }
+    .select-container {
+      margin-right: 15px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .select-container select {
+      // width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      transition: all 0.3s ease-in-out;
+
+      &:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      }
+    }
+
+    .select-container label {
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .error-msg {
+      color: #d9534f;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  }
+
+  .table-container {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        font-size: 14px;
+        color: #555;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f7f7f7;
+        font-weight: bold;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      td a {
+        color: #007bff;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    .pagination {
+      display: flex;
+      align-items: center;
+
+      .page-item {
+        padding: 8px 15px;
+        margin: 0 5px;
+        cursor: pointer;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+
+        &.active {
+          background-color: #007bff;
+          color: #fff;
+          border-color: #007bff;
+        }
+      }
+    }
+  }
+  .visa-files {
+    color: #d32f2f;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .upload-button {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: #f44336;
+    color: white;
+
+    &:hover {
+      background-color: #d32f2f;
+    }
+  }
+  .dialog-content-files {
+    padding: 20px;
+
+    .file-con {
+      height: 125px;
+    }
+  }
+
+  .title-container {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f1f1f;
+    margin-bottom: 20px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .dialog-container .children-container {
+    height: 312px;
+  }
+
+  .buttons-file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+
+    .save-button,
+    .cancel-button {
+      width: 100%;
+      padding: 0.5rem 1.5rem; // Space inside the buttons
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .save-button {
+      background-color: #4caf50; // Green for save
+      color: white;
+
+      &:hover {
+        background-color: #45a049; // Darker green on hover
+      }
+    }
+
+    .cancel-button {
+      background-color: #f44336; // Red for cancel
+      color: white;
+
+      &:hover {
+        background-color: #d32f2f; // Darker red on hover
+      }
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "./common/AuthContext";
 import NotificationDropdown from "./components/Notification";
 import styled from "styled-components";
+import { useDemoRouter } from "@toolpad/core/internal";
 
 const demoTheme = createTheme({
   palette: {
@@ -62,7 +63,7 @@ const ButtonWrapper = styled.div`
   gap: 10px;
 `;
 
-function ToolbarActionsSearch() {
+function ToolbarActions() {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
@@ -84,6 +85,8 @@ const AdminLayoutBasic = () => {
   const isSpeaker = registrationType === "speaker";
   const navigate = useNavigate();
   const location = useLocation();
+  const router = useDemoRouter('/admin');
+
 
   const menuItems = {
     speaker: [
@@ -98,25 +101,74 @@ const AdminLayoutBasic = () => {
     admin: [
       { title: "Conferences", icon: "🎓", segment: "conferences/page" },
       { title: "Exhibitions", icon: "🏢", segment: "exhibitions" },
-      { title: "Trips", icon: "🧳", segment: "create/trip" },
-      { title: "Flight Admin", icon: "✈️", segment: "flights" },
+      // { title: "Trips", icon: "🧳", segment: "trip" },
+      // { title: "Flight Admin", icon: "✈️", segment: "flights" },
       { title: "Gala Dinner", icon: "🍷", segment: "gala" },
-      { title: "Create Job", icon: "🛠️", segment: "job" },
+      // { title: "Create Job", icon: "🛠️", segment: "job" },
       { title: "Messages", icon: "💬", segment: "msgs" },
-      { title: "Job Applicants", icon: "📋", segment: "applicants/job/admin" },
-      { title: "Trips Users Discount", icon: "💸", segment: "user" },
+      // { title: "Job Applicants", icon: "📋", segment: "applicants/job/admin" },
+      // { title: "Trips Users Discount", icon: "💸", segment: "user" },
       { title: "Users", icon: "👥", segment: "pending/users" },
       { title: "Reservation Room Prices", icon: "🏠", segment: "room/prices" },
-      { title: "Enter new flights", icon: "🛩️", segment: "enter/new/flights" },
+      // { title: "Enter new flights", icon: "🛩️", segment: "flights/enter/new" },
       { title: "Group Registration Table", icon: "📊", segment: "admin/excel/table" },
       { title: "Add Clients", icon: "➕", segment: "add/client" },
-      { title: "Sponsorship Packages", icon: "📦", segment: "sponsor/admin/add/table" },
-      { title: "Sponsorship Option", icon: "⚙️", segment: "sponsor/option/form" },
-      { title: "Booth Cost", icon: "🏬", segment: "sponsor/admin/booth/cost" },
-      { title: "Upload Floor Plan", icon: "📐", segment: "admin/upload/floor" },
-      { title: "Visa Files", icon: "📝", segment: "visa/files" },
-      { title: "Reservations Files", icon: "🗂️", segment: "reservations/files" },
-      { title: "Flights Files", icon: "🛫", segment: "flight/files" },
+      // { title: "Sponsorship Packages", icon: "📦", segment: "sponsor/admin/add/table" },
+      // { title: "Sponsorship Option", icon: "⚙️", segment: "sponsor/option/form" },
+      // { title: "Booth Cost", icon: "🏬", segment: "sponsor/admin/booth/cost" },
+      // { title: "Upload Floor Plan", icon: "📐", segment: "sponsor/upload/floor" },
+      // { title: "Visa Files", icon: "📝", segment: "files/visa" },
+      // { title: "Reservations Files", icon: "🗂️", segment: "flies/reservations" },
+      // { title: "Flights Files", icon: "🛫", segment: "flight/files" },
+      {
+        title:'Flights',
+        icon: "🛩️",
+        segment: [ "flights"],
+        children: [
+          { title: "Flight Admin", segment: "" },
+          { title: "Flight Files", segment: "files" },
+          {title: "Enter new flights", segment: "enter/new" },
+        ],
+
+      },
+      {
+        title:'Job',
+        icon: "🛠️",
+        segment: [ "job"],
+        children: [
+          { title: "Create Job", segment: "" },
+          { title: "Job Applicants", segment: "applicants" },
+        ],
+      },
+      {
+        title:'Sponsor',
+        icon: "📦",
+        segment: [ "sponsor"],
+        children: [
+          { title: "Sponsorship Packages", segment: "add/table" },
+          { title: "Sponsorship Option", segment: "option/form" },
+          { title: "Booth Cost", segment: "booth/cost" },
+          { title: "Upload Floor Plan", segment: "upload/floor" },
+        ],
+      },{
+        title:'Files',
+        icon: "📁",
+        segment: [ "files"],
+        children: [
+          { title: "Visa Files", segment: "visa" },
+          { title: "Reservations Files", segment: "reservations" },
+        ],
+      },{
+        title:'Trip',
+        icon: "🧳",
+        segment: [ "trip"],
+        children: [
+          { title: "All Trips", segment: "" },
+          { title: " Trips Users Discount", segment: "user" },
+        ],
+      }
+
+
     ],
   };
 
@@ -136,7 +188,7 @@ const AdminLayoutBasic = () => {
   return (
     <AppProvider
       navigation={NAVIGATION}
-      router={{ navigate }}
+      router={{ router, navigate, pathname: location.pathname, searchParams: new URLSearchParams(location.search) }}
       theme={demoTheme}
       disableColorScheme={true}
       branding={{
@@ -147,19 +199,20 @@ const AdminLayoutBasic = () => {
     >
       <DashboardLayout
         slots={{
-          toolbarActions: ToolbarActionsSearch,
+          toolbarActions: ToolbarActions,
         }}
         sx={{
           '& .MuiDrawer-root, & .MuiDrawer-paper': {
             backgroundColor: '#2c3e50',
             color: 'white',
             '& .MuiListItemButton-root': {
-              borderRadius: '8px',
+              borderRadius: '10px',
+              marginBottom: '10px',
               '&:hover': {
                 backgroundColor: '#c82333',
               },
              '&.Mui-selected': {
-    backgroundColor: '#d90455', 
+    backgroundColor: '#c82333', 
   },
             },
           },

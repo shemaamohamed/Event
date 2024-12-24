@@ -21,7 +21,7 @@ const DinnerDetails = () => {
   const [attendeeId, setAttendeeId] = useState(null); // تعريف حالة attendeeId
 
   const navigate = useNavigate();
-  const BaseUrl = process.env.REACT_APP_BASE_URL;  // قراءة الـ URL من البيئة
+  const BaseUrl = process.env.REACT_APP_BASE_URL; // قراءة الـ URL من البيئة
 
   // Function to get dinner invoice
   const getDinnerInvoice = () => {
@@ -51,10 +51,10 @@ const DinnerDetails = () => {
         },
       })
       .then((response) => {
-        console.log('Success:', response.data);
+        console.log("Success:", response.data);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error("Error:", error);
       });
   };
 
@@ -70,11 +70,14 @@ const DinnerDetails = () => {
 
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.get(`${BaseUrl}/dinners/conference/${myConferenceId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `${BaseUrl}/dinners/conference/${myConferenceId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setDinnerDetail(response?.data?.dinner_detail);
     } catch (error) {
       console.error("Error fetching dinner details", error);
@@ -94,7 +97,9 @@ const DinnerDetails = () => {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get(`${BaseUrl}/con/id/${myConferenceId}`);
-      setCompanionDinnerPrice(response?.data?.conference?.companion_dinner_price);
+      setCompanionDinnerPrice(
+        response?.data?.conference?.companion_dinner_price
+      );
     } catch (error) {
       console.error("Error fetching Conference details", error);
     }
@@ -120,9 +125,8 @@ const DinnerDetails = () => {
           "Content-Type": "application/json",
         },
       });
-      const attendeeId1 = response.data.dinner_attendee_id;  // تأكد أن الـ id يتم إرجاعه في الاستجابة
-      setAttendeeId(attendeeId1);  // تخزين الـ ID في الحالة
-
+      const attendeeId1 = response.data.dinner_attendee_id; // تأكد أن الـ id يتم إرجاعه في الاستجابة
+      setAttendeeId(attendeeId1); // تخزين الـ ID في الحالة
 
       setTimeout(() => {
         getDinnerInvoice();
@@ -130,8 +134,10 @@ const DinnerDetails = () => {
 
       toast.success("Attendance confirmed successfully!");
     } catch (error) {
-      console.error("Error:", error.response ? error.response.data : error.message);
-      alert("An error occurred while confirming attendance. Please try again.");
+      toast.error(
+        error.response.data?.message ||
+          "The speaker has already been registered for the dinner."
+      );
     }
   };
 
@@ -250,7 +256,14 @@ const DinnerDetails = () => {
                   />
                 )}
                 {hasGuest && <button className="pay-now-btn">Pay Now</button>}
-                {invoice && <button onClick={() => handleDelete(attendeeId)} className="pay-now-btn">Cancel Participation in Dinner</button>}
+                {invoice && (
+                  <button
+                    onClick={() => handleDelete(attendeeId)}
+                    className="pay-now-btn"
+                  >
+                    Cancel Participation in Dinner
+                  </button>
+                )}
               </div>
             )}
           </>

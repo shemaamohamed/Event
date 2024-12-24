@@ -112,7 +112,7 @@ function SideMenu() {
             children: [
               { label: "Conferences", path: "/conferences/page" },
               { label: "Exhibitions", path: "/exhibitions" },
-              { label: "Trips", path: "/create/trip" },
+              { label: "Trips", path: "trip" },
               { label: "Flight Admin", path: "/flights" },
 
               { label: "Gala Dinner", path: "/gala" },
@@ -146,7 +146,7 @@ function SideMenu() {
 
               {
                 label: "Flights Files",
-                path: "/flight/files",
+                path: "/flights/files",
               },
 
             ],
