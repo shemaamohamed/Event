@@ -127,6 +127,7 @@ import Footer from "./components/UI/Footer";
 import AdminLayoutBasic from "./AdminLayout";
 import UserLayout from "./UserLayout";
 import NotFound from "./components/NotFound";
+import OverViewDashboard from "./components/OverViewDashboard";
 
 
 const App = () => {
@@ -248,6 +249,11 @@ const App = () => {
               <Route path="/job/list" element={<JobList />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/up/event" element={<UpcomingConferences2 />} />
+              
+              <Route
+                                        path="conference/details/:conferenceId"
+                                        element={<ConferenceDetails />}
+                                      />
               <Route path="*" element={<NotFound/>} />
 
 
@@ -267,6 +273,7 @@ const App = () => {
                                   isLoggedIn && limit &&(
 
                                     <Route path="/" element={<AdminLayoutBasic/>} >
+                                    <Route path="/" element={<OverViewDashboard />} />
                                       
                                     <Route path="files/visa" element={<VisaFiles />} />
   
@@ -381,10 +388,10 @@ const App = () => {
                                         path="paper/form/:conferenceId"
                                         element={<PaperSubmissionForm />}
                                       />
-                                      <Route
+                                      {/* <Route
                                         path="conference/details/:conferenceId"
                                         element={<OnePage />}
-                                      />
+                                      /> */}
                                       <Route
                                         path="conference/speaker/:conferenceId"
                                         element={<Speakers4 />}
