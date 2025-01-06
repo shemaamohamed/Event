@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import httpService from "../../common/httpService";
 import "./style.scss";
 import Select from "../../CoreComponent/Select";
+import { Typography } from "@mui/material";
 
 const RoomPriceForm = () => {
   const [singleBasePrice, setSingleBasePrice] = useState("");
@@ -101,7 +102,19 @@ const RoomPriceForm = () => {
     <div className="prices-form-room">
       <div className="room-prices-form">
         <form onSubmit={handleRegister2} className="form-container">
-          <h2 className="form-title">Room Price Form</h2>
+        <Typography variant="h6" 
+        sx={{
+        
+          color: '#c62828',
+          backgroundColor:'#f1f1f1',
+
+          textAlign: 'center',
+        }}
+
+        textAlign={"center"}
+        gutterBottom>
+          Room Price Form
+        </Typography>
 
           <div className="input-group">
             <Select

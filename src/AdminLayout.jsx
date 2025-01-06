@@ -83,12 +83,14 @@ function ToolbarActions() {
 const AdminLayoutBasic = () => {
   const { isAdmin, registrationType } = useAuth();
   const isSpeaker = registrationType === "speaker";
+  const isSponsor =registrationType==="sponsor";
   const navigate = useNavigate();
   const location = useLocation();
   const router = useDemoRouter('/admin');
 
 
   const menuItems = {
+    
     speaker: [
       { title: "Visa", icon: "🛂", segment: "visa" },
       { title: "Flight", icon: "✈️", segment: "flight/form" },
@@ -101,25 +103,15 @@ const AdminLayoutBasic = () => {
     admin: [
       { title: "Conferences", icon: "🎓", segment: "conferences/page" },
       { title: "Exhibitions", icon: "🏢", segment: "exhibitions" },
-      // { title: "Trips", icon: "🧳", segment: "trip" },
-      // { title: "Flight Admin", icon: "✈️", segment: "flights" },
+  
       { title: "Gala Dinner", icon: "🍷", segment: "gala" },
-      // { title: "Create Job", icon: "🛠️", segment: "job" },
       { title: "Messages", icon: "💬", segment: "msgs" },
-      // { title: "Job Applicants", icon: "📋", segment: "applicants/job/admin" },
-      // { title: "Trips Users Discount", icon: "💸", segment: "user" },
+   
       { title: "Users", icon: "👥", segment: "pending/users" },
       { title: "Reservation Room Prices", icon: "🏠", segment: "room/prices" },
-      // { title: "Enter new flights", icon: "🛩️", segment: "flights/enter/new" },
       { title: "Group Registration Table", icon: "📊", segment: "admin/excel/table" },
       { title: "Add Clients", icon: "➕", segment: "add/client" },
-      // { title: "Sponsorship Packages", icon: "📦", segment: "sponsor/admin/add/table" },
-      // { title: "Sponsorship Option", icon: "⚙️", segment: "sponsor/option/form" },
-      // { title: "Booth Cost", icon: "🏬", segment: "sponsor/admin/booth/cost" },
-      // { title: "Upload Floor Plan", icon: "📐", segment: "sponsor/upload/floor" },
-      // { title: "Visa Files", icon: "📝", segment: "files/visa" },
-      // { title: "Reservations Files", icon: "🗂️", segment: "flies/reservations" },
-      // { title: "Flights Files", icon: "🛫", segment: "flight/files" },
+      
       {
         title:'Flights',
         icon: "🛩️",
@@ -197,6 +189,7 @@ const AdminLayoutBasic = () => {
         logo: <img src="/image/logo.png" alt="Logo" height={40} />,
       }}
     >
+      
       <DashboardLayout
         slots={{
           toolbarActions: ToolbarActions,

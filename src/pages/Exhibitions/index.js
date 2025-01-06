@@ -12,6 +12,8 @@ import Pagination from "../../CoreComponent/Pagination";
 import ViewFormExhibitions from "./ViewForm";
 import EditExhibitionForm from "./EditForm";
 import httpService from "../../common/httpService";
+import { Button, Card, CardActions, CardContent, CardMedia, Drawer, Grid, IconButton, Typography  } from "@mui/material";
+import { CloseRounded } from "@mui/icons-material";
 
 const ExhibitionForm = ({ setIsOpen, getExhibitions }) => {
   const [title, setTitle] = useState("");
@@ -108,8 +110,14 @@ const ExhibitionForm = ({ setIsOpen, getExhibitions }) => {
 
   return (
     <form className="exhibition-form-container" onSubmit={handleSubmit}>
-      <div className="header-exhibition-form">Add New Exhibition</div>
-      <div className="form-section">
+      <Typography variant="h5" component="h2" sx={{textAlign:"center",
+         color: "#c62828",
+        marginBottom:"20px",
+        backgroundColor:'#f1f1f1'
+
+
+
+        }}>Add New Exhibition</Typography>
         <Select
           options={allConference}
           value={conferenceId}
@@ -174,33 +182,44 @@ const ExhibitionForm = ({ setIsOpen, getExhibitions }) => {
               allowedExtensions={["jpg", "jpeg", "png"]}
               errorMsg={errorMsg}
             />
-            <button
+            <Button
               type="button"
               className="remove-image-btn"
               onClick={() => removeImageField(index)}
             >
               Remove
-            </button>
+            </Button>
           </div>
         ))}
-        <button className="submit-btn" type="button" onClick={addImageField}>
-          Add Image
-        </button>
-      </div>
+        <Button 
+        className="submit-btn" 
+        sx={{
+          marginTop: "20px"
 
-      <div className="actions-section-container">
-        <button
-          className="cancel-btn"
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        >
-          Cancel
-        </button>
-        <button className="submit-btn" type="submit">
+        }}
+         onClick={addImageField}>
+          Add Image
+        </Button>
+      
+
+        
+        <Button
+                    variant="contained"
+                    sx={{
+                      marginTop: "20px",
+
+              
+                      backgroundColor: "#c62828",
+                      color: "#fff",
+                      width: "100%",
+                      "&:hover": {
+                        backgroundColor: "",
+                      },
+                    }}
+
+         className="submit-btn" type="submit">
           Submit
-        </button>
-      </div>
+        </Button>
     </form>
   );
 };
@@ -257,15 +276,27 @@ const Exhibitions = () => {
 
   return (
     <div className="exhibitions-page">
-      <div className="exhibitions-form-admin-header">
-        <div className="section-input">
-          <Input
+       <Grid container spacing={2}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "20px",
+      }}
+      >
+        <Grid item xs={12} sm={6} md={4} >  
+          
+        <Input
             placeholder="Search"
             inputValue={exhibitionName}
             setInputValue={setExhibitionName}
             type="text"
             label={"Exhibition Name"}
           />
+        
+
+          </Grid>
+          <Grid item  xs={12} sm={6} md={4}>
           <Select
             options={[
               { value: "upcoming", label: "Upcoming" },
@@ -276,51 +307,139 @@ const Exhibitions = () => {
             label="Status"
             errorMsg={""}
           />
-        </div>
-        <button
-          className="add-exhibitions-btn"
+          </Grid>
+          <Grid item  xs={12} sm={6} md={4}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop:{
+              xs:"0px",
+              sm:"0px",
+              md:"22px"
+            },
+          }}
+         
+          >
+          <Button
+          variant="outlined"
+          color="secondary"
+
           onClick={() => setOpenAddExhibition(true)}
+
+
+          sx={{
+            borderColor: "#d32f2f",
+            color: "#d32f2f",
+            "&:hover": {
+              borderColor: "#b71c1c",
+              backgroundColor: "#ffebee",
+            },
+          }}
+           
+        
         >
-          Add new Exhibitions
-        </button>
-      </div>
+                    Add new Exhibitions
+
+        </Button>
+          </Grid>
+
+
+        </Grid>
+      
       <div className="exhibition-list">
         {allExhibitions?.map((exhibition) => (
           <Fragment key={exhibition.id}>
-            <div className="exhibition-item">
-              <img
-                className="exhibition-image"
-                src={`${backendUrlImages}${exhibition.image}`}
-                alt={exhibition.title}
-              />
-              <div className="exhibition-info">
-                <div className="titlee">{exhibition.title}</div>
-                <div className="date">{exhibition.date}</div>
-                <div className="place">{exhibition.place}</div>
-                <div className="actions-btns">
-                  <button
-                    className="view"
-                    onClick={() => {
-                      console.log("yes");
+          <Card
+            sx={{
+              maxWidth: 345,
+              margin: "20px auto",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+              borderRadius: "12px",
+              transition: "transform 0.3s, box-shadow 0.3s",
+              
+            }}
+          >
+            <CardMedia
+              component="img"
+              height="180"
+              src={`${backendUrlImages}${exhibition.image}`}
+              alt={exhibition.title}
+             
+              sx={{
+                borderTopLeftRadius: "12px",
+                borderTopRightRadius: "12px",
+                objectFit: "cover",
+              }}
+            />
+            <CardContent sx={{ padding: "16px 24px" }}>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ fontWeight: "bold", marginBottom: "8px" }}
+              >
+                {exhibition.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ marginBottom: "4px" }}
+              >
+                <strong>Date:</strong> {exhibition.date}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                <strong>Place:</strong> {exhibition.place}
+              </Typography>
+            </CardContent>
+            <CardActions
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "8px",
+                alignItems: "center",
+                padding: "16px",
+              }}
+            >
+              <Button
+                variant="contained"
+                size="medium"
+                onClick={() => {
+                  console.log("yes");
 
                       setOpenViewForm(true);
                       setExhibitionData(exhibition);
-                    }}
-                  >
-                    View
-                  </button>
-                  <button
-                    className="edit"
+                }}
+                sx={{
+                  width: "100%",
+                  
+                }}
+              >
+                View
+              </Button>
+              <Button
+                variant="outlined"
+                size="medium"
+                color="secondary"
                     onClick={() => {
                       handleEditClick(exhibition);
                     }}
-                  >
-                    Edit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </Fragment>
+                sx={{
+                  width: "100%",
+                  borderColor: "#d32f2f",
+                  color: "#d32f2f",
+                  "&:hover": {
+                    borderColor: "#b71c1c",
+                    backgroundColor: "#ffebee",
+                  },
+                }}
+              >
+                Edit
+              </Button>
+              
+            </CardActions>
+          </Card>
+        </Fragment>
+         
         ))}
       </div>
       <Pagination
@@ -335,19 +454,72 @@ const Exhibitions = () => {
         exhibitionData={exhibitionData}
       />
 
-      <MySideDrawer isOpen={openAddExhibition} setIsOpen={setOpenAddExhibition}>
+      <Drawer 
+            anchor="right"
+            open={openAddExhibition}
+            onClose={() => setOpenAddExhibition(false)}
+            sx={{
+              zIndex: (theme) => theme.zIndex.modal + 1, 
+      
+              "& .MuiDrawer-paper": {
+                width: { xs: "100%", sm: "100%", md: "50%" },
+                padding: "24px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+              },
+            }}
+       >
+         <div
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        padding: 2,
+      }}
+    >
+      <IconButton             onClick={() => setOpenAddExhibition(false)}
+      >
+        <CloseRounded />
+      </IconButton>
+    </div>
         <ExhibitionForm
           setIsOpen={setOpenAddExhibition}
           getExhibitions={getExhibitions}
         />
-      </MySideDrawer>
-      <MySideDrawer isOpen={isEditDrawerOpen} setIsOpen={setIsEditDrawerOpen}>
+      </Drawer>
+      <Drawer
+       anchor="right"
+       open={isEditDrawerOpen}
+       onClose={() => setIsEditDrawerOpen(false)}
+       sx={{
+         zIndex: (theme) => theme.zIndex.modal + 1, 
+ 
+         "& .MuiDrawer-paper": {
+           width: { xs: "100%", sm: "100%", md: "50%" },
+           padding: "24px",
+           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+         },
+       }}
+       
+      
+      >
+               <div
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        padding: 2,
+      }}
+    >
+      <IconButton             onClick={() =>setIsEditDrawerOpen(false)}
+      >
+        <CloseRounded />
+      </IconButton>
+    </div>
         <EditExhibitionForm
           setIsOpen={setIsEditDrawerOpen}
           getExhibitions={getExhibitions}
           exhibitionData={exhibitionData}
         />
-      </MySideDrawer>
+     
+      </Drawer>
     </div>
   );
 };

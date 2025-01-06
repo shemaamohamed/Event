@@ -95,54 +95,7 @@ const PendingUsersTable = () => {
         return {
           ...user,
           name: user?.name || user?.company_name,
-        //   actions: (
-        //     <div className="actions-buttons-list">
-        //       <button
-        //         className="view-btn"
-        //         onClick={() => {
-        //           setSelectedUser(user);
-        //           setIsDrawerOpen(true);
-        //         }}
-        //       >
-        //         View
-        //       </button>
-        //       <button
-        //         className={`view-btn ${
-        //           user?.status !== "pending" && "disabled-btn"
-        //         } `}
-        //         onClick={() => {
-        //           if (user?.registration_type === "speaker") {
-        //             navigate(
-        //               `/edit/speaker/data/${user.conferences?.[0]?.id}/${user.id}`
-        //             );
-        //           } else if (user?.registration_type === "attendance") {
-        //             navigate(
-        //               `/edit/attendance/data/${user.conference_id}/${user.id}`
-        //             );
-        //           } else if (user?.registration_type === "sponsor") {
-        //             const sponsor = {
-        //               user_id: user?.id,
-        //               conference_id: user?.conference_id,
-        //               company_name: user?.company_name,
-        //               contact_person: user?.contact_person,
-        //               company_address: user?.company_address,
-        //               registration_type: user?.registration_type,
-        //             };
-        //             setSponsorData(sponsor);
-        //             setIsDialogOpen(true);
-        //           } else if (user?.registration_type === "group_registration") {
-        //             navigate(`/group/update/admin/${user.id}`);
-        //           } else if (!user?.registration_type) {
-        //             navigate(`/adminForm/${user.id}`);
-        //           }
-        //         }}
-        //         disabled={user?.status !== "pending"}
-        //       >
-        //         Submit
-        //       </button>
-        //       <button className="actions-buttons-list" onClick={()=>handleDelete(user.id)}>Delete</button>
-        //     </div>
-        //   ),
+        
         };
       });
 
@@ -371,110 +324,7 @@ const PendingUsersTable = () => {
           />
 
      
-      {/* <MySideDrawer isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen}>
-        <CustomFormWrapper
-          title="User Details"
-          handleSubmit={() => setIsDrawerOpen(false)}
-          setOpenForm={setIsDrawerOpen}
-          noActions={true}
-        >
-          {selectedUser && (
-            <div className="users-details">
-              <SimpleLabelValue label="Name" value={selectedUser.name || "-"} />
-              <SimpleLabelValue
-                label="Email"
-                value={selectedUser.email || "-"}
-              />
-              <SimpleLabelValue
-                label="Phone Number"
-                value={selectedUser.phone_number || "-"}
-              />
-              <SimpleLabelValue
-                label="WhatsApp Number"
-                value={selectedUser.whatsapp_number || "-"}
-              />
-              <SimpleLabelValue
-                label="Nationality"
-                value={selectedUser.nationality || "-"}
-              />
-              <SimpleLabelValue
-                label="Country of Residence"
-                value={selectedUser.country_of_residence || "-"}
-              />
-              <SimpleLabelValue
-                label="Status"
-                value={selectedUser.status || "-"}
-              />
-              <SimpleLabelValue
-                label="Registration Type"
-                value={selectedUser.registration_type || "-"}
-              />
-              <SimpleLabelValue
-                label="Biography"
-                value={selectedUser.biography || "-"}
-              />
-              <SimpleLabelValue
-                label="Company Name"
-                value={selectedUser.company_name || "-"}
-              />
-              <SimpleLabelValue
-                label="Contact Person"
-                value={selectedUser.contact_person || "-"}
-              />
-              <SimpleLabelValue
-                label="Company Address"
-                value={selectedUser.company_address || "-"}
-              />
-              <SimpleLabelValue
-                label="Conferences"
-                value={
-                  selectedUser.conferences?.length
-                    ? selectedUser.conferences
-                        .map(
-                          (conference) =>
-                            `${conference.title} (Location: ${conference.location}, Status: ${conference.status})`
-                        )
-                        .join(", ")
-                    : "-"
-                }
-              />
-              {selectedUser.papers?.length
-                ? selectedUser.papers.map((paper, index) => (
-                    <Fragment key={index}>
-                      <SimpleLabelValue
-                        label="Paper Title"
-                        value={paper.title}
-                      />
-                      <SimpleLabelValue
-                        label="Abstract"
-                        value={
-                          <img
-                            src={`${backendUrlImages}${paper.file_path}`}
-                            className="conference-thumbnail"
-                          />
-                          // <ImageUpload
-                          //   required
-                          //   label="Abstract"
-                          //   allowedExtensions={["txt", "pdf", "doc", "docx"]}
-                          //   // inputValue={formFiles.abstract}
-                          //   existingFile={paper.abstract}
-                          //   // setInputValue={handleFileChange("abstract")}
-                          //   className="image-upload"
-                          //   placeholder="Abstract"
-                          // />
-                        }
-                      />
-                      <SimpleLabelValue
-                        label="Paper Status"
-                        value={paper.status}
-                      />
-                    </Fragment>
-                  ))
-                : "-"}
-            </div>
-          )}
-        </CustomFormWrapper>
-      </MySideDrawer> */}
+     
       <Drawer anchor="right"
       
       sx={{
@@ -516,7 +366,8 @@ const PendingUsersTable = () => {
         sx={{
         
           color: '#c62828',
-          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+          backgroundColor:'#f1f1f1',
+
           textAlign: 'center',
         }}
 

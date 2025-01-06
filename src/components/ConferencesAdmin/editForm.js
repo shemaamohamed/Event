@@ -76,12 +76,12 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
             />
           </div>
 
-          <button
+          <Button
             className="delete-button-committee"
             onClick={() => deleteCommitteeMember(member.id)}
           >
             Delete
-          </button>
+          </Button>
         </div>
       ))}
     </div>
@@ -409,8 +409,9 @@ const EditConferencesAdmin = ({
         variant="h6"
         sx={{
           color: "#c62828",
-          fontSize: { xs: "2rem", sm: "2rem", md: "2rem" },
           textAlign: "center",
+          backgroundColor:'#f1f1f1'
+
         }}
         gutterBottom
       >
@@ -553,16 +554,16 @@ const EditConferencesAdmin = ({
     </Box>
   
     <div className="actions-section-container">
-      <Button
-        className="cancel-btn"
-        onClick={() => {
-          setIsOpen(false);
-          getConference();
-        }}
-      >
-        Cancel
-      </Button>
-      <Button className="submit-btn" onClick={handleSubmit}>
+      
+      <Button 
+      sx={{
+        width: "100%",
+        "&:hover": {
+          backgroundColor: "",
+        },
+      }}
+      
+       onClick={handleSubmit}>
         Edit
       </Button>
     </div>

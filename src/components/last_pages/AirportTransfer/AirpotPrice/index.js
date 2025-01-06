@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Input from "../../../../CoreComponent/Input";
-import MySideDrawer from "../../../../CoreComponent/SideDrawer";
-import CustomFormWrapper from "../../../../CoreComponent/CustomFormWrapper";
+
 import toast from "react-hot-toast";
 import "./style.scss";
 import httpService from "../../../../common/httpService";
+import { Button, Drawer, IconButton } from "@mui/material";
+import { CloseRounded } from "@mui/icons-material";
 
 const AirportTransferPrice = ({ isOpen, setIsOpen, selectedConference }) => {
   const [fromAirportPrice, setFromAirportPrice] = useState("");
@@ -82,13 +83,33 @@ const AirportTransferPrice = ({ isOpen, setIsOpen, selectedConference }) => {
   }, [selectedConference, isOpen, BaseUrl]);
 
   return (
-    <div>
-      <MySideDrawer isOpen={isOpen} setIsOpen={setIsOpen}>
-        <CustomFormWrapper
-          title="Airport Transfer Price"
-          handleSubmit={handleSubmit}
-          setOpenForm={setIsOpen}
-        >
+      <Drawer 
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+      anchor="right"
+      sx={{
+        zIndex: (theme) => theme.zIndex.modal + 1,
+        "& .MuiDrawer-paper": {
+          width: { xs: "100%", sm: "100%", md: "40%" },
+          padding: "24px",
+          boxShadow: "0 4px 12px rgba(0,0,  0,0.1)",
+        },
+    
+      }}
+      >
+          <div
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        padding: 2,
+      }}
+    >
+      <IconButton onClick={() => setIsOpen(false)}>
+        <CloseRounded />
+      </IconButton>
+    </div>
+        
+        
           <form onSubmit={handleSubmit} className="price-airport-form9">
             <Input
               label="From Airport Price"
@@ -117,10 +138,27 @@ const AirportTransferPrice = ({ isOpen, setIsOpen, selectedConference }) => {
               step="0.01"
               required
             />
+            
+          <Button
+            type="submit"
+            variant="contained"
+
+            onClick={handleSubmit ? handleSubmit : null}
+            sx={{
+
+              
+              backgroundColor: "#c62828",
+              color: "#fff",
+              width: "100%",
+              "&:hover": {
+                backgroundColor: "",
+              },
+            }}
+          >
+            Submit
+          </Button>
           </form>
-        </CustomFormWrapper>
-      </MySideDrawer>
-    </div>
+      </Drawer>
   );
 };
 

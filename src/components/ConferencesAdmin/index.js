@@ -9,8 +9,9 @@ import TextArea from "../../CoreComponent/TextArea";
 import SVG from "react-inlinesvg";
 import deleteIcon from "../../icons/deleteIcon.svg";
 import toast from "react-hot-toast";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem, Drawer, IconButton, Typography, Button } from "@mui/material";
 import { countriesOptions } from "../../constant";
+import { CloseRounded } from "@mui/icons-material";
 
 const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
   const addCommitteeMember = () => {
@@ -49,9 +50,9 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
     <div className="committee-form-container">
       <div className="title-committee">Committee Members</div>
       <div className="button-section-container">
-        <button className="add-button-committee" onClick={addCommitteeMember}>
+        <Button className="add-button-committee" onClick={addCommitteeMember}>
           Add Member
-        </button>
+        </Button>
       </div>
 
       {committeeMembers.map((member) => (
@@ -74,7 +75,12 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
               required={false}
             />
             
-            <FormControl fullWidth>
+            <FormControl fullWidth
+            sx={{
+              marginTop: "8px",
+
+            }}
+            >
               <InputLabel id={`country-label-${member.id}`}>Country</InputLabel>
               <Select
                 labelId={`country-label-${member.id}`}
@@ -99,12 +105,12 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
             </FormControl>
           </div>
 
-          <button
+          <Button
             className="delete-button-committee"
             onClick={() => deleteCommitteeMember(member.id)}
           >
             Delete
-          </button>
+          </Button>
         </div>
       ))}
     </div>
@@ -200,9 +206,9 @@ const PriceForm = ({ entries, setEntries }) => {
     <div className="price-form-container">
       <div className="price-header">Add Pricing Information</div>
       <div className="button-section-container">
-        <button className="add-button-pricing" onClick={addEntry}>
+        <Button className="add-button-pricing" onClick={addEntry}>
           Add Entry
-        </button>
+        </Button>
       </div>
       {entries.map((entry) => (
         <div key={entry.id} className="entry-row">
@@ -236,12 +242,12 @@ const PriceForm = ({ entries, setEntries }) => {
             type="text"
           />
 
-          <button
+          <Button
             className="delete-button-entry"
             onClick={() => deleteEntry(entry.id)}
           >
             Delete
-          </button>
+          </Button>
         </div>
       ))}{" "}
     </div>
@@ -383,8 +389,43 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
   };
 
   return (
-    <div className="conference-form-admin">
-      <div className="header-conference-form">Add New Conference</div>
+    <Drawer
+      anchor="right"
+      open={true}
+      onClose={() => setIsOpen(false)}
+      sx={{
+        zIndex: (theme) => theme.zIndex.modal + 1, 
+
+        "& .MuiDrawer-paper": {
+          width: { xs: "100%", sm: "100%", md: "50%" },
+          padding: "24px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        },
+      }}
+    >
+      <div
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        padding: 2,
+      }}
+    >
+      <IconButton onClick={() => setIsOpen(false)}>
+        <CloseRounded />
+      </IconButton>
+    </div>
+    <Typography
+        variant="h6"
+        sx={{
+          color: "#c62828",
+          textAlign: "center",
+          backgroundColor:'#f1f1f1'
+
+        }}
+        gutterBottom
+      >
+        Add New Conference
+      </Typography>
       <div className="form-section">
         <Input
           label="Title"
@@ -508,13 +549,13 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
               </div>
             ))}
             <div className="add-topic-btn-container">
-              <button
+              <Button
                 type="button"
                 onClick={handleAddTopic}
                 className="add-topic-btn"
               >
                 Add Topic
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -525,21 +566,23 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
           setCommitteeMembers={setCommitteeMembers}
         />
       </div>
-      <div className="actions-section-container">
-        <button
-          className="cancel-btn"
-          onClick={() => {
-            setIsOpen(false);
-            getConference();
-          }}
-        >
-          Cancel
-        </button>
-        <button className="submit-btn" onClick={handleSubmit}>
+       
+        <Button
+          variant="contained"
+        sx={{
+
+              
+          backgroundColor: "#c62828",
+          color: "#fff",
+          width: "100%",
+          "&:hover": {
+            backgroundColor: "",
+          },
+        }}
+         className="submit-btn" onClick={handleSubmit}>
           Submit
-        </button>
-      </div>
-    </div>
+        </Button>
+    </Drawer>
   );
 };
 

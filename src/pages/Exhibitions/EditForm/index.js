@@ -6,6 +6,7 @@ import axios from "axios";
 import Select from "../../../CoreComponent/Select";
 import toast from "react-hot-toast";
 import "./style.scss";
+import { Button, Typography } from "@mui/material";
 
 // this form for create ExhibitionForm
 const EditExhibitionForm = ({ setIsOpen, getExhibitions, exhibitionData }) => {
@@ -127,8 +128,18 @@ const EditExhibitionForm = ({ setIsOpen, getExhibitions, exhibitionData }) => {
 
   return (
     <form className="exhibition-form-container" onSubmit={handleSubmit}>
-      <div className="header-exhibition-form">Edit Exhibition</div>
-      <div className="form-section">
+      <Typography
+        variant="h6"
+        sx={{
+          color: "#c62828",
+          textAlign: "center",
+          backgroundColor:'#f1f1f1'
+
+        }}
+        gutterBottom
+      >
+        Edit Exhibition
+      </Typography>
         <Select
           options={allConference}
           value={conferenceId}
@@ -189,21 +200,25 @@ const EditExhibitionForm = ({ setIsOpen, getExhibitions, exhibitionData }) => {
           allowedExtensions={["jpg", "jpeg", "png"]}
           errorMsg={errorMsg}
         />
-      </div>
 
-      <div className="actions-section-container">
-        <button
-          className="cancel-btn"
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        >
-          Cancel
-        </button>
-        <button className="submit-btn" type="submit" onClick={handleSubmit}>
+        
+        <Button
+        variant="contained"
+        sx={{
+          marginTop: "20px",
+
+  
+          backgroundColor: "#c62828",
+          color: "#fff",
+          width: "100%",
+          "&:hover": {
+            backgroundColor: "",
+          },
+        }}
+        
+         className="submit-btn" type="submit" onClick={handleSubmit}>
           Submit
-        </button>
-      </div>
+        </Button>
     </form>
   );
 };

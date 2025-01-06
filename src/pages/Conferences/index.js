@@ -138,13 +138,15 @@ const ConferencesPage = () => {
          
           >
           <Button
-          variant="contained"
           onClick={() => setOpenAddConference(true)}
+           variant="outlined"
+          color="secondary"
           sx={{
-            backgroundColor: "#c62828",
-            color: "white",
+            borderColor: "#d32f2f",
+            color: "#d32f2f",
             "&:hover": {
-              backgroundColor: "#c62834",
+              borderColor: "#b71c1c",
+              backgroundColor: "#ffebee",
             },
           }}
         >
@@ -301,154 +303,14 @@ const ConferencesPage = () => {
           conferenceData={conferenceData}
         />
       </MySideDrawer>
-      {/* <MySideDrawer isOpen={isViewDrawerOpen} setIsOpen={setIsViewDrawerOpen}>
-        <div className="conference-details">
-          <div className="details-header">{selectedConference?.title}</div>
-          <div className="view-con-container">
-            <div className="new-section">Main Info</div>
-            <div className="info-details">
-              <SimpleLabelValue
-                label="Start Date"
-                value={moment(selectedConference?.start_date).format(
-                  "DD-MM-YYYY"
-                )}
-              />
-              <SimpleLabelValue
-                label="End Date"
-                value={moment(selectedConference?.end_date).format(
-                  "DD-MM-YYYY"
-                )}
-              />
-              <SimpleLabelValue
-                label="Location"
-                value={selectedConference?.location}
-              />
-            </div>
-
-            <div className="new-section">Committee</div>
-            <div className="conference-details-container">
-              {selectedConference?.committee_members?.length > 0 ? (
-                selectedConference?.committee_members?.map((member, index) => {
-                  return (
-                    <div key={index} className="committee-member">
-                      <img
-                        src={`${backendUrlImages}${member.committee_image}`}
-                        alt={member.name}
-                      />
-                      <div className="member-info">
-                        {member.name} - {member.role}
-                      </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <div>No committee members available</div>
-              )}
-            </div>
-
-            <div className="new-section">Topics</div>
-            <div className="topics-container">
-              {selectedConference?.scientific_topics ? (
-                selectedConference?.scientific_topics?.map((topic, index) => (
-                  <div className="topic" key={index}>
-                    {topic?.title || ""}
-                  </div>
-                ))
-              ) : (
-                <div>No topics available</div>
-              )}
-            </div>
-
-            <div className="new-section">Downloads</div>
-            <div className="downloads-container">
-              <SimpleLabelValue
-                label="Download First Announcement PDF"
-                value={
-                  <div>
-                    <a
-                      href={`${backendUrlImages}${selectedConference?.first_announcement_pdf}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <SVG
-                        className="delete-icon"
-                        src={downloadIcon}
-                        height={25}
-                        width={25}
-                      />
-                    </a>
-                  </div>
-                }
-              />
-              <SimpleLabelValue
-                label=" Download Second Announcement PDF"
-                value={
-                  <div>
-                    <a
-                      href={`${backendUrlImages}${selectedConference?.second_announcement_pdf}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <SVG
-                        className="delete-icon"
-                        src={downloadIcon}
-                        height={25}
-                        width={25}
-                      />
-                    </a>
-                  </div>
-                }
-              />
-              <SimpleLabelValue
-                label="Download Conference Brochure PDF"
-                value={
-                  <div>
-                    <a
-                      href={`${backendUrlImages}${selectedConference?.conference_brochure_pdf}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <SVG
-                        className="delete-icon"
-                        src={downloadIcon}
-                        height={25}
-                        width={25}
-                      />
-                    </a>
-                  </div>
-                }
-              />
-
-              <SimpleLabelValue
-                label=" Download Scientific Program PDF"
-                value={
-                  <div>
-                    <a
-                      href={`${backendUrlImages}${selectedConference?.conference_scientific_program_pdf}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <SVG
-                        className="delete-icon"
-                        src={downloadIcon}
-                        height={25}
-                        width={25}
-                      />
-                    </a>
-                  </div>
-                }
-              />
-            </div>
-          </div>
-        </div>
-      </MySideDrawer> */}
+      
       <Drawer
       anchor="right"
       sx={{
         zIndex: (theme) => theme.zIndex.modal + 1, 
 
         "& .MuiDrawer-paper": {
-          width: { xs: "90%", sm: "70%", md: "50%" },
+          width: { xs: "100%", sm: "70%", md: "50%" },
           padding: "24px",
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
         },
@@ -468,13 +330,15 @@ const ConferencesPage = () => {
                 </IconButton>
               </div>
       <Box>
-      
+   
         <Typography variant="h6"  gutterBottom
         sx={{
         
           color: '#c62828',
-          fontSize: { xs: '2rem', sm: '2rem', md: '2rem' },
+          fontSize: { xs: '2rem', sm: '1.5rem', md: '1.5rem' },
           textAlign: 'center',
+          backgroundColor:'#f1f1f1'
+
         }}
         >
           {selectedConference?.title}
