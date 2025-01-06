@@ -569,16 +569,17 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
        
         <Button
           variant="contained"
-        sx={{
+          sx={{
+            backgroundColor: '#c62828',// Modern vibrant red
 
-              
-          backgroundColor: "#c62828",
-          color: "#fff",
-          width: "100%",
-          "&:hover": {
-            backgroundColor: "",
-          },
-        }}
+            marginTop: "20px",
+            color: "#fff",
+            width: "100%",
+            "&:hover": {
+              backgroundColor: "#e63946",
+              color: "#fff",
+            }
+          }}
          className="submit-btn" onClick={handleSubmit}>
           Submit
         </Button>

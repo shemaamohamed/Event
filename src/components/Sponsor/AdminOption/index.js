@@ -6,6 +6,7 @@ import "./style.scss";
 import toast from "react-hot-toast";
 import Input from "../../../CoreComponent/Input";
 import TextArea from "../../../CoreComponent/TextArea";
+import { Button, Grid, Typography } from "@mui/material";
 
 const SponsorshipForm = () => {
   const [title, setTitle] = useState("");
@@ -89,47 +90,105 @@ const SponsorshipForm = () => {
   
 
   return (
-    <div className="sponsorship-form-container">
-      <h2 className="add-new-Sponsorship">Add a New Sponsorship Option</h2>
+    <Grid
+  container
+  spacing={3}
+  sx={{
+    padding: '20px',
+    borderRadius: '10px',
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+    width: { xs: '100%', sm: '95%', md: '90%' }, // Responsive width
+    margin: 'auto',
+  }}
+>
+  <Grid item xs={12}>
+  <Typography variant="h5" 
+        sx={{
+          color: '#c62828',
+          textAlign: 'center',
+        }}
+        textAlign={"center"}
+        gutterBottom>
+        Add Sponsorship Option
+      </Typography>
+  </Grid>
 
-      <form onSubmit={handleSubmit} className="sponsorship-form">
-        <div className="sponsorship-sec">
-          <Select
-            options={allConference}
-            value={conferenceId}
-            setValue={setConferenceId}
-            label="Conference "
-            placeholder="Select..."
-          />
-          <Input
-            label="Title"
-            placeholder="Enter title"
-            inputValue={title}
-            setInputValue={setTitle}
-            required
-          />
+  <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={12} md={6}>
+        <Select
+          options={allConference}
+          value={conferenceId}
+          setValue={setConferenceId}
+          label="Conference"
+          placeholder="Select..."
+          width="100%"
+        />
+      </Grid>
 
-          <TextArea
-            label="Description"
-            placeholder="Enter description"
-            value={description}
-            setValue={setDescription}
-            type="text"
-            required
-          />
-          <Input
-            label="Price"
-            inputValue={price}
-            setInputValue={setPrice}
-            placeholder="Enter price"
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading} className="submit-btn">
-          {loading ? "Submitting..." : "Submit"}
-        </button>
-      </form>
-    </div>
+      <Grid item xs={12} sm={12} md={6}>
+        <Input
+          label="Title"
+          placeholder="Enter title"
+          inputValue={title}
+          setInputValue={setTitle}
+          required
+          width="100%"
+        />
+      </Grid>
+
+      <Grid item xs={12}>
+        <TextArea
+          label="Description"
+          placeholder="Enter description"
+          value={description}
+          setValue={setDescription}
+          type="text"
+          required
+          width="100%"
+        />
+      </Grid>
+
+      <Grid item xs={12} sm={12} md={6}>
+        <Input
+          label="Price"
+          inputValue={price}
+          setInputValue={setPrice}
+          placeholder="Enter price"
+          required
+          width="100%"
+        />
+      </Grid>
+
+      <Grid item xs={12} sm={12} md={12}
+      sx={{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+      }}
+      >
+        <Button
+
+        sx={{
+          backgroundColor: '#c62828',// Modern vibrant red
+
+          marginTop: "20px",
+          color: "#fff",
+          width: "50%",
+          "&:hover": {
+            backgroundColor: "#e63946",
+            color: "#fff",
+          }
+        }}
+        type="submit" disabled={loading} className="submit-btn">
+          {loading ? 'Submitting...' : 'Submit'}
+        </Button>
+      </Grid>
+    </Grid>
+  </form>
+</Grid>
+
+   
   );
 };
 

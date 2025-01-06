@@ -205,15 +205,15 @@ const EditExhibitionForm = ({ setIsOpen, getExhibitions, exhibitionData }) => {
         <Button
         variant="contained"
         sx={{
-          marginTop: "20px",
+          backgroundColor: '#c62828',// Modern vibrant red
 
-  
-          backgroundColor: "#c62828",
+          marginTop: "20px",
           color: "#fff",
           width: "100%",
           "&:hover": {
-            backgroundColor: "",
-          },
+            backgroundColor: "#e63946",
+            color: "#fff",
+          }
         }}
         
          className="submit-btn" type="submit" onClick={handleSubmit}>

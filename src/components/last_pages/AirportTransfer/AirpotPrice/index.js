@@ -145,14 +145,15 @@ const AirportTransferPrice = ({ isOpen, setIsOpen, selectedConference }) => {
 
             onClick={handleSubmit ? handleSubmit : null}
             sx={{
+              backgroundColor: '#c62828',
 
-              
-              backgroundColor: "#c62828",
+              marginTop: "20px",
               color: "#fff",
               width: "100%",
               "&:hover": {
-                backgroundColor: "",
-              },
+                backgroundColor: "#e63946",
+                color: "#fff",
+              }
             }}
           >
             Submit

@@ -206,15 +206,15 @@ const ExhibitionForm = ({ setIsOpen, getExhibitions }) => {
         <Button
                     variant="contained"
                     sx={{
+                      backgroundColor: '#c62828',// Modern vibrant red
+        
                       marginTop: "20px",
-
-              
-                      backgroundColor: "#c62828",
                       color: "#fff",
                       width: "100%",
                       "&:hover": {
-                        backgroundColor: "",
-                      },
+                        backgroundColor: "#e63946",
+                        color: "#fff",
+                      }
                     }}
 
          className="submit-btn" type="submit">

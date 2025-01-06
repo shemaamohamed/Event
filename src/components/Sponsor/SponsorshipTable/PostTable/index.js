@@ -4,6 +4,7 @@ import Select from "../../../../CoreComponent/Select";
 import toast from "react-hot-toast";
 import Input from "../../../../CoreComponent/Input"; // Assuming Input is imported from the correct path
 import "./style.scss";
+import { Button, Grid } from "@mui/material";
 const SponsorshipTable2 = () => {
   const [formData, setFormData] = useState({
     item: "",
@@ -133,9 +134,6 @@ const SponsorshipTable2 = () => {
         {error && <p className="error">{error}</p>}
 
         <div className="form-container">
-          <div className="sponsorship-packages-section">
-            {/* Conference Dropdown */}
-            <div className="input-group">
               <Select
                 options={allConference}
                 value={conferenceId}
@@ -143,7 +141,6 @@ const SponsorshipTable2 = () => {
                 label="Conference"
                 placeholder="Select..."
               />
-            </div>
             <Select
               options={[
                 { label: "Yes", value: "yes" },
@@ -154,11 +151,10 @@ const SponsorshipTable2 = () => {
               label="Video Show Between the Sessions"
               placeholder="Select..."
             />
-            {/* Sponsorship Form Inputs */}
+            <Grid container spacing={2}>
             {Object.keys(formData).map((key) => (
-              <div key={key} className="input-group">
-                <Input
-                  className="input-field"
+              <Grid item xs={12} sm={12} md={12} lg={6} key={key}>
+                 <Input
                   label={key
                     .replace(/([A-Z])/g, " $1")
                     .replace(/^./, (str) => str.toUpperCase())}
@@ -170,21 +166,33 @@ const SponsorshipTable2 = () => {
                     handleInputChange({ target: { name: key, value } })
                   }
                   required={true}
-                  errorMsg={error && error[key]} // Assuming error messages are structured similarly
+                  errorMsg={error && error[key]} 
                 />
-              </div>
+                </Grid>
+               
             ))}
+            </Grid>
           </div>
-          <button
+          <Button
             onClick={handlePostRequest}
             className="submit-button"
             disabled={loading}
+            sx={{
+              BackgroundColor: '#e63946',// Modern vibrant red
+
+              marginTop: "20px",
+              color: "#fff",
+              width: "100%",
+              "&:hover": {
+                backgroundColor: "#c62828",
+                color: "#fff",
+              }
+            }}
           >
             {loading ? "Submitting..." : "Submit"}
-          </button>
+          </Button>
         </div>
       </div>
-    </div>
   );
 };
 

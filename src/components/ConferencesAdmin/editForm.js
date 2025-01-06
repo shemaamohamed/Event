@@ -557,10 +557,15 @@ const EditConferencesAdmin = ({
       
       <Button 
       sx={{
+        backgroundColor: '#c62828',// Modern vibrant red
+
+        marginTop: "20px",
+        color: "#fff",
         width: "100%",
         "&:hover": {
-          backgroundColor: "",
-        },
+          backgroundColor: "#e63946",
+          color: "#fff",
+        }
       }}
       
        onClick={handleSubmit}>

@@ -142,12 +142,15 @@ const ConferencesPage = () => {
            variant="outlined"
           color="secondary"
           sx={{
-            borderColor: "#d32f2f",
-            color: "#d32f2f",
+            backgroundColor: '#c62828',// Modern vibrant red
+
+            marginTop: "20px",
+            color: "#fff",
+            width: "100%",
             "&:hover": {
-              borderColor: "#b71c1c",
-              backgroundColor: "#ffebee",
-            },
+              backgroundColor: "#e63946",
+              color: "#fff",
+            }
           }}
         >
           Add new Conferences
