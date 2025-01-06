@@ -11,10 +11,14 @@ import Pagination from "../../CoreComponent/Pagination";
 import EditConferencesAdmin from "../../components/ConferencesAdmin/editForm";
 import httpService from "../../common/httpService";
 import AirportTransferPrice from "../../components/last_pages/AirportTransfer/AirpotPrice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
+import DownloadIcon from "@mui/icons-material/Download";
+
 
 import "./style.scss";
+import { Avatar, Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Drawer, Grid, IconButton, Typography } from "@mui/material";
+import { CloseRounded } from "@mui/icons-material";
 
 const ConferencesPage = () => {
   const navigate = useNavigate();
@@ -31,12 +35,14 @@ const ConferencesPage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const [isOpenPrice, setIsOpenPrice] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
   const handleViewClick = (conference) => {
     setSelectedConference(conference);
-    setIsViewDrawerOpen(true);
+    setIsDrawerOpen(true)
   };
   const handlePriceClick = (conference) => {
     setSelectedConference(conference);
@@ -83,18 +89,30 @@ const ConferencesPage = () => {
   useEffect(() => {
     getConference();
   }, [conferenceName, currentPage, status]);
+  
 
   return (
     <div className="conferences-page">
-      <div className="conferences-form-admin-header">
-        <div className="inputs-container">
-          <Input
+      <Grid container spacing={2}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "20px",
+      }}
+      >
+        <Grid item xs={12} sm={6} md={4} >  
+          
+        <Input
             placeholder="Search"
             inputValue={conferenceName}
             setInputValue={setConferenceName}
             type="text"
             label={"conference Name"}
           />
+
+          </Grid>
+          <Grid item  xs={12} sm={6} md={4}>
           <Select
             options={[
               { value: "upcoming", label: "Upcoming" },
@@ -105,78 +123,157 @@ const ConferencesPage = () => {
             label="Status"
             errorMsg={""}
           />
-        </div>
-        <button
-          className="add-conferences-btn"
+          </Grid>
+          <Grid item  xs={12} sm={6} md={4}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop:{
+              xs:"0px",
+              sm:"0px",
+              md:"20px"
+            },
+          }}
+         
+          >
+          <Button
+          variant="contained"
           onClick={() => setOpenAddConference(true)}
+          sx={{
+            backgroundColor: "#c62828",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#c62834",
+            },
+          }}
         >
           Add new Conferences
-        </button>
-      </div>
+        </Button>
+          </Grid>
+
+
+        </Grid>
+      
       <div className="conference-list">
         {allConference?.map((conference) => {
           return (
             <Fragment key={conference.id}>
-              <div className="conference-item">
-                <img
-                  className="conference-image"
-                  src={`${backendUrlImages}${conference.image}`}
-                  alt={conference.title}
-                  onError={(e) => {
-                    e.target.src = require("./image.jpg");
+            <Card
+              sx={{
+                maxWidth: 345,
+                margin: "20px auto",
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                borderRadius: "12px",
+                transition: "transform 0.3s, box-shadow 0.3s",
+                
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="180"
+                image={`${backendUrlImages}${conference.image}`}
+                alt={conference.title}
+                onError={(e) => {
+                  e.target.src = require("./image.jpg");
+                }}
+                sx={{
+                  borderTopLeftRadius: "12px",
+                  borderTopRightRadius: "12px",
+                  objectFit: "cover",
+                }}
+              />
+              <CardContent sx={{ padding: "16px 24px" }}>
+                <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{ fontWeight: "bold", marginBottom: "8px" }}
+                >
+                  {conference.title}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ marginBottom: "4px" }}
+                >
+                  <strong>Date:</strong> {conference.date}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  <strong>Place:</strong> {conference.place}
+                </Typography>
+              </CardContent>
+              <CardActions
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "8px",
+                  alignItems: "center",
+                  padding: "16px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={() => handleViewClick(conference)}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#1976d2",
+                    "&:hover": {
+                      backgroundColor: "#1565c0",
+                    },
                   }}
-                />
-
-                <div className="conference-info">
-                  <div className="titlee">{conference.title}</div>
-                  <div className="date">{conference.date}</div>
-                  <div className="place">{conference.place}</div>
-                  <div className="actions-btns">
-                    <button
-                      className="view"
-                      onClick={() => {
-                        handleViewClick(conference);
-                      }}
-                    >
-                      View
-                    </button>
-
-                    <button
-                      className="edit"
-                      onClick={() => handleEditClick(conference.id, conference)}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                </div>
-                <div className="actions-btns2">
-                  <button
-                    className="view"
-                    onClick={() => {
-                      handlePriceClick(conference);
-                    }}
-                  >
-                    Airport Transfer Price
-                  </button>
-                  <button
-                    className="view"
-                    onClick={() => {
-                      navigate(`/table/dinner/speaker/${conference.id}`);
-                    }}
-                  >
-                    Dinner details
-                  </button>
-                  <button
-                    className="view"
-                    onClick={() => {
-                      navigate(`/table/zoom/speaker/${conference.id}`);
-                    }}
-                  >
-               Add Zoom Link
-                  </button>
-                </div>
-              </div>
-            </Fragment>
+                >
+                  View
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="medium"
+                  color="secondary"
+                  onClick={() => handleEditClick(conference.id, conference)}
+                  sx={{
+                    width: "100%",
+                    borderColor: "#d32f2f",
+                    color: "#d32f2f",
+                    "&:hover": {
+                      borderColor: "#b71c1c",
+                      backgroundColor: "#ffebee",
+                    },
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={() => handlePriceClick(conference)}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#43a047",
+                    "&:hover": {
+                      backgroundColor: "#388e3c",
+                    },
+                  }}
+                >
+                  Airport Transfer Price
+                </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={() => navigate(`/table/dinner/speaker/${conference.id}`)}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#ffa000",
+                    "&:hover": {
+                      backgroundColor: "#ff8f00",
+                    },
+                  }}
+                >
+                  Dinner Details
+                </Button>
+              </CardActions>
+            </Card>
+          </Fragment>
+            
           );
         })}
       </div>
@@ -204,12 +301,10 @@ const ConferencesPage = () => {
           conferenceData={conferenceData}
         />
       </MySideDrawer>
-      <MySideDrawer isOpen={isViewDrawerOpen} setIsOpen={setIsViewDrawerOpen}>
+      {/* <MySideDrawer isOpen={isViewDrawerOpen} setIsOpen={setIsViewDrawerOpen}>
         <div className="conference-details">
-          {/* Conference Title */}
           <div className="details-header">{selectedConference?.title}</div>
           <div className="view-con-container">
-            {/* Main Info Section */}
             <div className="new-section">Main Info</div>
             <div className="info-details">
               <SimpleLabelValue
@@ -346,7 +441,183 @@ const ConferencesPage = () => {
             </div>
           </div>
         </div>
-      </MySideDrawer>
+      </MySideDrawer> */}
+      <Drawer
+      anchor="right"
+      sx={{
+        zIndex: (theme) => theme.zIndex.modal + 1, 
+
+        "& .MuiDrawer-paper": {
+          width: { xs: "90%", sm: "70%", md: "50%" },
+          padding: "24px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        },
+      }}
+      open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}
+      
+    >
+      <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                padding: 2,
+              }}
+              >
+                <IconButton onClick={() => setIsDrawerOpen(false)}>
+                 <CloseRounded /> 
+                </IconButton>
+              </div>
+      <Box>
+      
+        <Typography variant="h6"  gutterBottom
+        sx={{
+        
+          color: '#c62828',
+          fontSize: { xs: '2rem', sm: '2rem', md: '2rem' },
+          textAlign: 'center',
+        }}
+        >
+          {selectedConference?.title}
+        </Typography>
+
+        <Divider sx={{ marginBottom: "16px" }} />
+
+        <Typography variant="h6" gutterBottom>
+          Main Info
+        </Typography>
+        <Box sx={{ marginBottom: "16px" }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="body1">
+                <strong>Start Date:</strong>{" "}
+                {moment(selectedConference?.start_date).format("DD-MM-YYYY")}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="body1">
+                <strong>End Date:</strong>{" "}
+                {moment(selectedConference?.end_date).format("DD-MM-YYYY")}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="body1">
+                <strong>Location:</strong> {selectedConference?.location}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+
+        <Divider sx={{ marginBottom: "16px" }} />
+
+        {/* Committee Section */}
+        <Typography variant="h6" gutterBottom>
+          Committee
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px",
+            marginBottom: "16px",
+          }}
+        >
+          {selectedConference?.committee_members?.length > 0 ? (
+            selectedConference?.committee_members?.map((member, index) => (
+              <Box key={index} sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                <Avatar
+                  src={`${backendUrlImages}${member.committee_image}`}
+                  alt={member.name}
+                  sx={{ width: 48, height: 48 }}
+                />
+                <Typography variant="body1">
+                  {member.name} - {member.role}
+                </Typography>
+              </Box>
+            ))
+          ) : (
+            <Typography>No committee members available</Typography>
+          )}
+        </Box>
+
+        <Divider sx={{ marginBottom: "16px" }} />
+
+        {/* Topics Section */}
+        <Typography variant="h6" gutterBottom>
+          Topics
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "8px",
+            marginBottom: "16px",
+          }}
+        >
+          {selectedConference?.scientific_topics ? (
+            selectedConference?.scientific_topics?.map((topic, index) => (
+              <Typography
+                key={index}
+                variant="body2"
+                sx={{
+                  backgroundColor: "#e0f7fa",
+                  padding: "4px 8px",
+                  borderRadius: "8px",
+                }}
+              >
+                {topic?.title || ""}
+              </Typography>
+            ))
+          ) : (
+            <Typography>No topics available</Typography>
+          )}
+        </Box>
+
+        <Divider sx={{ marginBottom: "16px" }} />
+
+        {/* Downloads Section */}
+        <Typography variant="h6" gutterBottom>
+          Downloads
+        </Typography>
+        <Box>
+          {[
+            { label: "First Announcement PDF", file: selectedConference?.first_announcement_pdf },
+            { label: "Second Announcement PDF", file: selectedConference?.second_announcement_pdf },
+            { label: "Conference Brochure PDF", file: selectedConference?.conference_brochure_pdf },
+            { label: "Scientific Program PDF", file: selectedConference?.conference_scientific_program_pdf },
+          ].map(
+            (item, index) =>
+              item.file && (
+                <Box
+                  key={index}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{ flexGrow: 1, fontWeight: "bold" }}
+                  >
+                    {item.label}
+                  </Typography>
+                  <IconButton
+
+                  component="a"
+                    href={`${backendUrlImages}${item.file}`}
+                    target="_blank"
+                   
+                    rel="noopener noreferrer"
+                    sx={{ color: "#1976d2" }}
+                  >
+                    <DownloadIcon />
+                  </IconButton>
+                </Box>
+              )
+          )}
+        </Box>
+      </Box>
+    </Drawer>
       <AirportTransferPrice
         isOpen={isOpenPrice}
         setIsOpen={setIsOpenPrice}

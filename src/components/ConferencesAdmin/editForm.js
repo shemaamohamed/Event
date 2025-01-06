@@ -10,6 +10,8 @@ import SVG from "react-inlinesvg";
 import deleteIcon from "../../icons/deleteIcon.svg";
 import toast from "react-hot-toast";
 import moment from "moment";
+import { Box, Button, Drawer, IconButton, Typography } from '@mui/material';
+import { CloseRounded } from "@mui/icons-material";
 
 const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
   console.log({ committeeMembers });
@@ -48,9 +50,9 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
     <div className="committee-form-container">
       <div className="title-committee"> Committee Members</div>
       <div className="button-section-container">
-        <button className="add-button-committee" onClick={addCommitteeMember}>
+        <Button className="add-button-committee" onClick={addCommitteeMember}>
           Add Member
-        </button>
+        </Button>
       </div>
 
       {committeeMembers.map((member) => (
@@ -108,9 +110,9 @@ const PriceForm = ({ entries, setEntries }) => {
     <div className="price-form-container">
       <div className="price-header">Add Pricing Information</div>
       <div className="button-section-container">
-        <button className="add-button-pricing" onClick={addEntry}>
+        <Button className="add-button-pricing" onClick={addEntry}>
           Add Entry
-        </button>
+        </Button>
       </div>
       {entries.map((entry) => (
         <div key={entry.id} className="entry-row">
@@ -144,12 +146,12 @@ const PriceForm = ({ entries, setEntries }) => {
             type="text"
           />
 
-          <button
+          <Button
             className="delete-button-entry"
             onClick={() => deleteEntry(entry.id)}
           >
             Delete
-          </button>
+          </Button>
         </div>
       ))}{" "}
     </div>
@@ -167,6 +169,13 @@ const EditConferencesAdmin = ({
   const [committeeMembers, setCommitteeMembers] = useState([
     { id: Date.now(), name: "", image: null },
   ]);
+  console.log(
+    setIsOpen ,
+    getConference,
+  setConference,
+  conferenceData,
+
+  )
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -179,6 +188,8 @@ const EditConferencesAdmin = ({
   const [brochure, setBrochure] = useState(null);
   const [scientificProgram, setScientificProgram] = useState(null);
   const [companionDinnerPrice, setCompanionDinnerPrice] = useState("");
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  
 
   const [errors, setErrors] = useState({});
 
@@ -367,161 +378,196 @@ const EditConferencesAdmin = ({
     return Object.keys(validationErrors).length === 0;
   };
   return (
-    <div className="conference-form-admin">
-      <div className="header-conference-form">Edit Conference</div>
-      <div className="form-section">
-        <Input
-          label="Title"
-          placeholder="Enter title"
-          inputValue={title}
-          setInputValue={setTitle}
-          type="text"
-          required
-          errorMsg={errors.title}
-        />
-        <TextArea
-          label="Description"
-          placeholder="Enter description"
-          value={description}
-          setValue={setDescription}
-          type="text"
-          required
-          errorMsg={errors.description}
-        />
-        <DateInput
-          label="Start Date"
-          placeholder="YYYY-MM-DD"
-          inputValue={startDate}
-          setInputValue={setStartDate}
-          required
-          errorMsg={errors.startDate}
-        />
-        <DateInput
-          label="End Date"
-          placeholder="YYYY-MM-DD"
-          inputValue={endDate}
-          setInputValue={setEndDate}
-          required
-          errorMsg={errors.endDate}
-        />
-        <Input
-          label="Location"
-          placeholder="Enter location"
-          inputValue={location}
-          setInputValue={setLocation}
-          type="text"
-          required
-          errorMsg={errors.location}
-        />
-        <Input
-          label="Companion Dinner Cost (USD)"
-          placeholder="Enter companion Dinner Price Cost"
-          inputValue={companionDinnerPrice}
-          setInputValue={setCompanionDinnerPrice}
-          type="number"
-          required
-        />
-
-        <ImageUpload
-          label="Upload Image"
-          inputValue={image}
-          setInputValue={setImage}
-          existingFile={conferenceData.image}
-          allowedExtensions={["jpg", "jpeg", "png"]}
-          errorMsg={errors.image}
-        />
-
-        <ImageUpload
-          label="First Announcement PDF"
-          inputValue={firstAnnouncement}
-          setInputValue={setFirstAnnouncement}
-          existingFile={conferenceData.first_announcement_pdf}
-          allowedExtensions={["pdf"]}
-          errorMsg={errors.firstAnnouncement}
-        />
-
-        <ImageUpload
-          label="Second Announcement PDF"
-          inputValue={secondAnnouncement}
-          setInputValue={setSecondAnnouncement}
-          existingFile={conferenceData.second_announcement_pdf}
-          allowedExtensions={["pdf"]}
-          errorMsg={errors.secondAnnouncement}
-        />
-
-        <ImageUpload
-          label="Conference Brochure PDF"
-          inputValue={brochure}
-          setInputValue={setBrochure}
-          allowedExtensions={["pdf"]}
-          existingFile={conferenceData.conference_brochure_pdf}
-          errorMsg={errors.brochure}
-        />
-
-        <ImageUpload
-          label="Conference Scientific Program PDF"
-          inputValue={scientificProgram}
-          setInputValue={setScientificProgram}
-          allowedExtensions={["pdf"]}
-          existingFile={conferenceData.conference_scientific_program_pdf}
-          errorMsg={errors.scientificProgram}
-        />
-
-        <div className="topics-container">
-          <div className="topic-title">
-            Topics
-            <span className="star">*</span>
-          </div>
-          <div className="topics-container-inputs">
-            {topics.map((topic, index) => (
-              <div key={index} className="topic-input-container">
-                <Input
-                  placeholder="Enter a topic"
-                  inputValue={topic}
-                  setInputValue={(newValue) =>
-                    handleTopicChange(index, newValue)
-                  }
-                />
-                <SVG
-                  className="delete-icon"
-                  src={deleteIcon}
-                  onClick={() => handleRemoveTopic(index)}
-                />
-              </div>
-            ))}
-            <div className="add-topic-btn-container">
-              <button
-                type="button"
-                onClick={handleAddTopic}
-                className="add-topic-btn"
-              >
-                Add Topic
-              </button>
+    <Drawer
+    anchor="right"
+    sx={{
+      zIndex: (theme) => theme.zIndex.modal + 1,
+      "& .MuiDrawer-paper": {
+        width: { xs: "100%", sm: "100%", md: "50%" },
+        padding: "24px",
+        boxShadow: "0 4px 12px rgba(0,0,  0,0.1)",
+      },
+  
+    }}
+    open={setIsOpen}
+    onClose={() => setIsOpen(false)}
+  >
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        padding: 2,
+      }}
+    >
+      <IconButton onClick={() => setIsOpen(false)}>
+        <CloseRounded />
+      </IconButton>
+    </div>
+  
+    <Box sx={{ padding: 2 }}>
+      <Typography
+        variant="h6"
+        sx={{
+          color: "#c62828",
+          fontSize: { xs: "2rem", sm: "2rem", md: "2rem" },
+          textAlign: "center",
+        }}
+        gutterBottom
+      >
+        Edit Conference
+      </Typography>
+      <Input
+        label="Title"
+        placeholder="Enter title"
+        inputValue={title}
+        setInputValue={setTitle}
+        type="text"
+        required
+        errorMsg={errors.title}
+      />
+      <TextArea
+        label="Description"
+        placeholder="Enter description"
+        value={description}
+        setValue={setDescription}
+        required
+        errorMsg={errors.description}
+      />
+      <DateInput
+        label="Start Date"
+        placeholder="YYYY-MM-DD"
+        inputValue={startDate}
+        setInputValue={setStartDate}
+        required
+        errorMsg={errors.startDate}
+      />
+      <DateInput
+        label="End Date"
+        placeholder="YYYY-MM-DD"
+        inputValue={endDate}
+        setInputValue={setEndDate}
+        required
+        errorMsg={errors.endDate}
+      />
+      <Input
+        label="Location"
+        placeholder="Enter location"
+        inputValue={location}
+        setInputValue={setLocation}
+        required
+        errorMsg={errors.location}
+      />
+      <Input
+        label="Companion Dinner Cost (USD)"
+        placeholder="Enter companion Dinner Price Cost"
+        inputValue={companionDinnerPrice}
+        setInputValue={setCompanionDinnerPrice}
+        type="number"
+        required
+      />
+  
+      <ImageUpload
+        label="Upload Image"
+        inputValue={image}
+        setInputValue={setImage}
+        existingFile={conferenceData.image}
+        allowedExtensions={["jpg", "jpeg", "png"]}
+        errorMsg={errors.image}
+      />
+  
+      <ImageUpload
+        label="First Announcement PDF"
+        inputValue={firstAnnouncement}
+        setInputValue={setFirstAnnouncement}
+        existingFile={conferenceData.first_announcement_pdf}
+        allowedExtensions={["pdf"]}
+        errorMsg={errors.firstAnnouncement}
+      />
+  
+      <ImageUpload
+        label="Second Announcement PDF"
+        inputValue={secondAnnouncement}
+        setInputValue={setSecondAnnouncement}
+        existingFile={conferenceData.second_announcement_pdf}
+        allowedExtensions={["pdf"]}
+        errorMsg={errors.secondAnnouncement}
+      />
+  
+      <ImageUpload
+        label="Conference Brochure PDF"
+        inputValue={brochure}
+        setInputValue={setBrochure}
+        allowedExtensions={["pdf"]}
+        existingFile={conferenceData.conference_brochure_pdf}
+        errorMsg={errors.brochure}
+      />
+  
+      <ImageUpload
+        label="Conference Scientific Program PDF"
+        inputValue={scientificProgram}
+        setInputValue={setScientificProgram}
+        allowedExtensions={["pdf"]}
+        existingFile={conferenceData.conference_scientific_program_pdf}
+        errorMsg={errors.scientificProgram}
+      />
+  
+      <div className="topics-container">
+        <div className="topic-title">
+          Topics
+          <span className="star">*</span>
+        </div>
+        <div className="topics-container-inputs">
+          {topics.map((topic, index) => (
+            <div key={index} className="topic-input-container">
+              <Input
+                placeholder="Enter a topic"
+                inputValue={topic}
+                setInputValue={(newValue) =>
+                  handleTopicChange(index, newValue)
+                }
+              />
+              <SVG
+                className="delete-icon"
+                src={deleteIcon}
+                onClick={() => handleRemoveTopic(index)}
+              />
             </div>
+          ))}
+          <div className="add-topic-btn-container">
+            <Button
+              type="button"
+              onClick={handleAddTopic}
+              className="add-topic-btn"
+            >
+              Add Topic
+            </Button>
           </div>
         </div>
-
-        <PriceForm entries={entries} setEntries={setEntries} />
-        <CommitteeForm
-          committeeMembers={committeeMembers}
-          setCommitteeMembers={setCommitteeMembers}
-        />
       </div>
-      <div className="actions-section-container">
-        <button
-          className="cancel-btn"
-          onClick={() => {
-            setIsOpen(false);
-            getConference();
-          }}
-        >
-          Cancel
-        </button>
-        <button className="submit-btn" onClick={handleSubmit}>
-          Edit
-        </button>
-      </div>
+  
+      <PriceForm entries={entries} setEntries={setEntries} />
+      <CommitteeForm
+        committeeMembers={committeeMembers}
+        setCommitteeMembers={setCommitteeMembers}
+      />
+    </Box>
+  
+    <div className="actions-section-container">
+      <Button
+        className="cancel-btn"
+        onClick={() => {
+          setIsOpen(false);
+          getConference();
+        }}
+      >
+        Cancel
+      </Button>
+      <Button className="submit-btn" onClick={handleSubmit}>
+        Edit
+      </Button>
     </div>
+  </Drawer>
+  
   );
 };
 

@@ -16,9 +16,8 @@ import ImageUpload from "../../../CoreComponent/ImageUpload";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import axios from "axios";
-import { Avatar, Box, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemText, Menu, MenuItem, Typography } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
-import { CloseRounded } from "@mui/icons-material";
 
 
 const PendingUsersTable = () => {
@@ -177,44 +176,51 @@ const PendingUsersTable = () => {
     {
       field: "phone_number",
       headerName:  "Phone Number",
-      flex: 1,
+      flex: 0.45,
       minWidth: 230,
       cellClassName: "centered-cell",
     },
     {
         field: "whatsapp_number",
         headerName:  "WhatsApp Number",
-        flex: 1,
+        flex: 0.45,
         minWidth: 230,
         cellClassName: "centered-cell",
       },
       {
         field: "specialization",
         headerName:  "Specialization",
-        flex: 1,
+        flex: 0.45,
         minWidth: 230,
         cellClassName: "centered-cell",
       },
       {
         field: "country_of_residence",
         headerName:  "Country of Residence",
-        flex: 1,
+        flex: 0.45,
         minWidth: 230,
         cellClassName: "centered-cell",
       },
     {
       field: "registration_type",
       headerName: "Registration Type",
-      flex: 1,
+      flex: 0.5,
       minWidth: 150,
       cellClassName: "centered-cell",
       
       
     },
     {
+        field: "registration_type",
+      headerName: "Registration Type",
+      flex: 0.5,
+      minWidth: 150,
+      cellClassName: "centered-cell",
+
+    },{
         field: "status",
         headerName: "Status",
-        flex: 1,
+        flex: 0.5,
         minWidth: 150,
         cellClassName: "centered-cell",
 
@@ -324,17 +330,7 @@ const PendingUsersTable = () => {
 
   return (
     <div className="pending-users-container">
-      <Typography
-              variant="h6"
-              sx={{
-                color: '#c62828',
-                fontWeight: 'bold',
-                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-                textAlign: 'center',
-              }}
-            >
-              All Users
-            </Typography>
+      <h2>All Users</h2>
       <DialogMessage
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}
@@ -363,15 +359,11 @@ const PendingUsersTable = () => {
             getRowId={(row) => row.id}
             checkboxSelection
             disableRowSelectionOnClick
-           sx={{
-  marginTop: "20px",
-  marginBottom: "20px",
-}}
           
           />
 
      
-      {/* <MySideDrawer isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen}>
+      <MySideDrawer isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen}>
         <CustomFormWrapper
           title="User Details"
           handleSubmit={() => setIsDrawerOpen(false)}
@@ -474,164 +466,7 @@ const PendingUsersTable = () => {
             </div>
           )}
         </CustomFormWrapper>
-      </MySideDrawer> */}
-      <Drawer anchor="right"
-      
-      sx={{
-        //width
-        zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
-
-        '& .MuiDrawer-paper': {
-            zIndex: (theme) => theme.zIndex.modal + 1,
-
-
-      width: 
-      {
-        xs: '100%',
-        sm: '50%',
-        md: '50%',
-        lg: '40%',
-        xl: '40%',
-      }, 
-    },
-
-      }}
-       open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-        <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: 2,
-        }}
-        >
-          <IconButton onClick={() => setIsDrawerOpen(false)}>
-           <CloseRounded /> 
-          </IconButton>
-        </div>
-      <Box sx={{
-       padding: 2,
-        
-       }}>
-        <Typography variant="h6" 
-        sx={{
-        
-          color: '#c62828',
-          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-          textAlign: 'center',
-        }}
-
-        textAlign={"center"}
-        gutterBottom>
-          User Details
-        </Typography>
-        <Divider sx={{ mb: 2 }} />
-        {selectedUser ? (
-          <Grid container spacing={2}>
-          {/* Basic Details */}
-          <Grid item xs={12} sm={6}>
-            <List>
-              <ListItem>
-                <ListItemText primary="Name" secondary={selectedUser.name || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Email" secondary={selectedUser.email || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Phone Number" secondary={selectedUser.phone_number || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="WhatsApp Number" secondary={selectedUser.whatsapp_number || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Nationality" secondary={selectedUser.nationality || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Country of Residence" secondary={selectedUser.country_of_residence || "-"} />
-              </ListItem>
-            </List>
-          </Grid>
-        
-          <Grid item xs={12} sm={6}>
-            <List>
-              <ListItem>
-                <ListItemText primary="Status" secondary={selectedUser.status || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Registration Type" secondary={selectedUser.registration_type || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Biography" secondary={selectedUser.biography || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Company Name" secondary={selectedUser.company_name || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Contact Person" secondary={selectedUser.contact_person || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Company Address" secondary={selectedUser.company_address || "-"} />
-              </ListItem>
-            </List>
-          </Grid>
-        
-          {/* Conferences */}
-          <Grid item xs={12}>
-            <List>
-              <ListItem>
-                <ListItemText
-                  primary="Conferences"
-                  secondary={
-                    selectedUser.conferences?.length
-                      ? selectedUser.conferences
-                          .map(
-                            (conference) =>
-                              `${conference.title} (Location: ${conference.location}, Status: ${conference.status})`
-                          )
-                          .join(", ")
-                      : "-"
-                  }
-                />
-              </ListItem>
-            </List>
-          </Grid>
-        
-          {/* Papers */}
-          {selectedUser.papers?.length
-            ? selectedUser.papers.map((paper, index) => (
-                <Grid container key={index} spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <List>
-                      <ListItem>
-                        <ListItemText primary="Paper Title" secondary={paper.title} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText
-                          primary="Abstract"
-                          secondary={
-                            <Avatar
-                              src={`${backendUrlImages}${paper.file_path}`}
-                              alt="Abstract"
-                              variant="square"
-                              sx={{ width: 100, height: 100 }}
-                            />
-                          }
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText primary="Paper Status" secondary={paper.status} />
-                      </ListItem>
-                    </List>
-                  </Grid>
-                </Grid>
-              ))
-            : null}
-        </Grid>
-        
-        ) : (
-          <Typography>No user selected.</Typography>
-        )}
-      </Box>
-    </Drawer>
+      </MySideDrawer>
     </div>
   );
 };
