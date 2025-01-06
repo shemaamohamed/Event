@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Input from "../../CoreComponent/Input";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import httpService from "../../common/httpService";
 import "./style.scss";
@@ -54,23 +54,18 @@ const RoomPriceForm = () => {
         onSuccess: (data) => {
           toast.success(data.success);
         },
-        onError: (err) => {
-          toast.error(err);
-        },
+       
       });
     } catch (error) {
-      toast.error("An error occurred while adding room prices.");
-    }
+      toast.error(error?.response?.data?.error || "An error occurred while adding room prices.");
+    } 
   };
 
   // Check if all fields are filled
   const isFormValid =
-    singleBasePrice &&
-    singleCompanionPrice &&
+    singleBasePrice && 
     doubleBasePrice &&
-    doubleCompanionPrice &&
     tripleBasePrice &&
-    tripleCompanionPrice &&
     conferenceId?.value 
 
   const getConference = () => {
@@ -123,13 +118,13 @@ const RoomPriceForm = () => {
               setInputValue={setSingleBasePrice}
               required={true}
             />
-            <Input
+            {/* <Input
               label="Single Companion Price"
               placeholder="Enter single companion price"
               inputValue={singleCompanionPrice}
               setInputValue={setSingleCompanionPrice}
               required={true}
-            />
+            /> */}
 
             <Input
               label="Double Base Price"
@@ -138,13 +133,13 @@ const RoomPriceForm = () => {
               setInputValue={setDoubleBasePrice}
               required={true}
             />
-            <Input
+            {/* <Input
               label="Double Companion Price"
               placeholder="Enter double companion price"
               inputValue={doubleCompanionPrice}
               setInputValue={setDoubleCompanionPrice}
               required={true}
-            />
+            /> */}
 
             <Input
               label="Triple Base Price"
@@ -153,13 +148,13 @@ const RoomPriceForm = () => {
               setInputValue={setTripleBasePrice}
               required={true}
             />
-            <Input
+            {/* <Input
               label="Triple Companion Price"
               placeholder="Enter triple companion price"
               inputValue={tripleCompanionPrice}
               setInputValue={setTripleCompanionPrice}
               required={true}
-            />
+            /> */}
           </div>
 
           <div className="submit-btn-container">

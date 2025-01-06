@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { countriesOptions, nationalitiesOptions } from "../../constant";
 import registerImg from "../../icons/registerImg.svg";
 import "./style.scss";
@@ -155,10 +155,11 @@ const RegisterPage = () => {
     // Resume validation
     if (!resumeText) {
       errorResume = "Please enter your resume.";
-    } else if (resumeText.length < 50) {
-      // Example: resume should be at least 50 characters
-      errorResume = "Resume should be at least 50 characters long.";
     }
+    //  else if (resumeText.length < 50) {
+    //   // Example: resume should be at least 50 characters
+    //   errorResume = "Resume should be at least 50 characters long.";
+    // }
 
     // Set errors in state
     setError({

@@ -5,7 +5,7 @@ import httpService from "../../common/httpService"; // Import the httpService
 import "./style.scss";
 import CustomFormWrapper from "../../CoreComponent/CustomFormWrapper";
 import MySideDrawer from "../../CoreComponent/SideDrawer";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const AddDiscountForm = ({ isOpen, setIsOpen, userId }) => {
   const [participantId, setParticipantId] = useState("");

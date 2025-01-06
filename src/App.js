@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import HomePage from "./pages/home";
@@ -23,6 +23,7 @@ import GalaDinner from "./components/last_pages/GalaDinner";
 import AddScientificPaper from "./components/SceintificPaper";
 import VisaPage from "./components/last_pages/Visa";
 import AboutUsEvent from "./components/UI/AboutUs";
+import toast, { Toaster } from "react-hot-toast";
 import OurClients from "./components/UI/OurClients";
 import OurTeams from "./components/UI/OurTeam";
 import ManagementConsulting from "./components/UI/ManagementConsulting";
@@ -111,23 +112,37 @@ import OneExhibit from "./components/OneExhibit";
 // import Speakers4 from "./components/SpeakerConf";
 import "./style.scss";
 import FloorPlanUploader from "./components/FloorPlann";
-import GroupTripRegistration from "./components/GroupTripRegistration";
+// import GroupTripRegistration from "./components/GroupTripRegistration";
 import SpeakerUpdateForm from "./components/test";
 import RegisterOther from "./pages/registerOther";
 import AdminForm from "./components/Admin/AdminForm";
 import AddClient from "./components/AddClient";
 import VisaFiles from "./components/VisaFiles";
 import ReservationsFiles from "./components/ReservationsFiles";
-import FlightsFiles from "./components/FlightsFiles";
 import CertificateComponent from "./components/CertificateComponent";
+import FlightsFiles from "./components/FlightsFiles";
 import SpeakersComponent from "./components/SpeakersComponent";
 import AddZoomLink from "./components/AddZoomLink";
 import { useAuth } from "./common/AuthContext";
 import Footer from "./components/UI/Footer";
-import AdminLayoutBasic from "./AdminLayout";
-import UserLayout from "./UserLayout";
-import NotFound from "./components/NotFound";
-import OverViewDashboard from "./components/OverViewDashboard";
+import SpeakerList from "./components/SpeakerList";
+import DataTable from "./components/ReservationAdminData";
+import ReservationsComponent from "./components/ReservationAdminData";
+import TripParticipantsComponent from "./components/TripParticipantsComponent";
+import TripParticipantsComponentGroup from "./components/TripParticipantsComponentGroup";
+import AttendanceComponent from "./components/AttendanceComponent";
+import SponsorsComponent from "./components/SponsorsComponent";
+import AirportTransferBookingsComponent from "./components/AirportTransferBookingsComponent";
+import TripParticipantsForUser from "./components/TripParticipantsForUser";
+import Certification from "./components/Certification";
+import VisasComponent from "./components/VisaComponent";
+import Certificate from "./components/certificate";
+import InvoiceTrip from "./components/InvoiceTrip";
+import UserLayout from './UserLayout';
+import NotFound from './components/NotFound/index';
+import AdminLayoutBasic from './AdminLayout';
+import OverViewDashboard from './components/OverViewDashboard/index';
+import GroupTripRegistration from './components/GroupTripRegistration/index';
 
 
 const App = () => {
@@ -169,7 +184,15 @@ const App = () => {
   ];
   return (
     <Fragment>
-      <ToastContainer />
+      <Toaster
+        position="top-right" // الموضع الافتراضي
+        toastOptions={{
+          duration: 5000, // المدة الافتراضية (5 ثواني)
+          // style: {
+          //   background: '#333',
+          //   color: '#fff',
+          // },
+        }}/>
       <Loader show={showLoader} />
 
       <div className="layout-page-container">
@@ -196,6 +219,7 @@ const App = () => {
                 path="register/attendance/:conferenceId"
                 element={<RegisterAttendancePage />}
               />
+
               <Route
                 path="/register/group/:conferenceId"
                 element={<RegisterGroupPage />}
@@ -233,6 +257,8 @@ const App = () => {
                 path="/corporate_meetings"
                 element={<CorporateMeetings />}
               />
+                            <Route path="/certification" element={<Certification />} />
+
               <Route path="/concept_creation" element={<ConceptCreation />} />
               <Route path="/ser" element={<Conference />} />
               <Route path="/contact_us" element={<ContactUs />} />
@@ -244,6 +270,11 @@ const App = () => {
               <Route path="/about" element={<AboutUs />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/conferences" element={<AllConferencesPage />} />
+              <Route
+                path="/conference/details/:conferenceId"
+                element={<OnePage />}
+              />
+
               <Route path="/page/exhibitions" element={<ExhibitionsPage />} />
               <Route path="/gallery" element={<ImageGallery />} />
               <Route path="/job/list" element={<JobList />} />
@@ -254,6 +285,17 @@ const App = () => {
                                         path="conference/details/:conferenceId"
                                         element={<ConferenceDetails />}
                                       />
+                                      <Route path="/all-speakers" element={<SpeakersComponent />} />
+              <Route
+                path="/all-attendances"
+                element={<AttendanceComponent />}
+
+              />
+               <Route
+                path="/all-airports"
+                element={<AirportTransferBookingsComponent />}
+              />
+              <Route path="/all-sponsors" element={<SponsorsComponent />} />
               <Route path="*" element={<NotFound/>} />
 
 
@@ -431,23 +473,64 @@ const App = () => {
                                       />
                                       <Route path="one/exhibits/:exhibitId" element={<OneExhibit />} />
                                       <Route path="add/client" element={<AddClient />} />
-                                      <Route
+                                      {/* <Route
                                         path="group-trip/user/:tripId"
                                         element={<GroupTripRegistration />}
-                                      />
-                                       <Route path="*" element={<NotFound/>} />
+                                      /> */}
+                                      <Route
+                                          path="/trip/participants"
+                                          element={<TripParticipantsComponent />}
+                                        />{" "}
+                                        <Route
+                                          path="/user/trip/participants"
+                                          element={<TripParticipantsForUser />}
+                                        />
+                                        <Route
+                                          path="group/trip/participants"
+                                          element={<TripParticipantsComponentGroup />}
+                                        />
+                                        <Route path="*" element={<NotFound/>} />
                                        <Route path="/certificate/files" element={<CertificateComponent />} />
                                        <Route path="/flights/files" element={<FlightsFiles />} />
                                        <Route path="/all-speakers" element={<SpeakersComponent />} />
                                        <Route
                                                           path="/table/zoom/speaker/:conferenceId"
                                                           element={<AddZoomLink />}
+                                                          
                                                         />
+                                                                      <Route path="/speaker/link" element={<SpeakerList />} />
+                                                                      <Route
+                path="/table/zoom/speaker/:conferenceId"
+                element={<AddZoomLink />}
+              />
+              <Route path="/speaker/link" element={<SpeakerList />} />
+              <Route path="/reservations/room" element={<DataTable />} />
+              <Route
+                path="/reservations/room"
+                element={<ReservationsComponent />}
+              />
+              <Route
+                path="/trip/participants"
+                element={<TripParticipantsComponent />}
+              />{" "}
+              <Route
+                path="/user/trip/participants"
+                element={<TripParticipantsForUser />}
+              />
+              <Route
+                path="group/trip/participants"
+                element={<TripParticipantsComponentGroup />}
+              />
+                   <Route path="/view-visas" element={<VisasComponent />} />
+                    <Route path="/certificate" element={<Certificate />} />
+                    <Route path="//invoice/trip/:participantId/:name" element={<InvoiceTrip />} />
+
+
                                         <Route path="*" element={<NotFound/>} />
 
 
 
-                            </Route>
+          </Route>
 
                                   )
                                 }

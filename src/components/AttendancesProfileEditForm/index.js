@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Input from "../../CoreComponent/Input";
 import Checkbox from "../../CoreComponent/Checkbox";
 import ImageUpload from "../../CoreComponent/ImageUpload";

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "./style.scss";
 import Pagination from "../../../CoreComponent/Pagination";
 import DialogMessage from "../../DialogMessage";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import MySideDrawer from "../../../CoreComponent/SideDrawer";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
 import SimpleLabelValue from "../../SimpleLabelValue";

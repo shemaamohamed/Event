@@ -90,6 +90,14 @@
       &:hover {
         background-color: #0056b3;
       }
+
+      &.disabled{
+        background-color: #ddd;
+        
+     
+        color: #ccc;
+        cursor: not-allowed;
+      }
     }
 
     .error-msg {

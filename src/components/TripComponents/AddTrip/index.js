@@ -6,7 +6,7 @@ import Select from "../../../CoreComponent/Select";
 import DateInput from "../../../CoreComponent/Date";
 import ImageUpload from "../../../CoreComponent/ImageUpload";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import SVG from "react-inlinesvg";
 import "./style.scss";
 import { deleteIcon } from "../../../icons";

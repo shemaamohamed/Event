@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../../../CoreComponent/Input";
 import Select from "../../../CoreComponent/Select";
 import PhoneNumberInput from "../../../CoreComponent/PhoneNumber";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { nationalitiesOptions } from "../../../constant/index";
 import SVG from "react-inlinesvg";
 import deleteIcon from "../../../icons/deleteIcon.svg";

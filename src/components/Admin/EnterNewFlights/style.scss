@@ -31,7 +31,7 @@
   .add-trip-btn {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #007bff;
+    background-color: #c83222;
     color: white;
     border: none;
     border-radius: 5px;
@@ -88,5 +88,12 @@
   .free-trip-checkbox label {
     font-size: 14px;
     color: #555;
+  }
+  .submit-btn{
+    padding: 5px 9px;
+    background-color: #c83222;
+    color: white;
+    border-radius: 4px;
+    border: none;
   }
 }

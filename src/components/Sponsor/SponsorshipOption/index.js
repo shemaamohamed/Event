@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import SponsorshipTable from "../SponsorshipTable";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useAuth } from "../../../common/AuthContext";
 import "./style.scss";
 import SponsorInvoice from "../../SpoonsotInvoice";
+import Input from "../../../CoreComponent/Input";
 
 const SponsorshipOption = ({ id, title, description, price, onSelect }) => {
   const [selected, setSelected] = useState(false);
@@ -37,10 +38,10 @@ const SponsorshipOption = ({ id, title, description, price, onSelect }) => {
 const StandardBoothPackage = ({ onExhibitNumberChange }) => {
   const [floorPlanUrl, setFloorPlanUrl] = useState(null);
   const { myConferenceId } = useAuth();
-  const BaseUrl = process.env.REACT_APP_BASE_URL;;
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
   const fetchFloorPlan = async () => {
     if (!myConferenceId) return;
-   
+
     try {
       const response = await axios.get(
         `${BaseUrl}/floor/plan/${myConferenceId}`
@@ -119,12 +120,47 @@ const BoothCostTable = ({
   onSelectBooth,
   shellSchemeSelected,
   onShellSchemeChange,
+  onShellSchemePriceChange, // دالة لتمرير السعر إلى SponsorSection
+  onSquareMetersChange, // دالة لتمرير الأمتار المربعة إلى SponsorSection
+  shellSchemePrice,
+  setShellSchemePrice,
+  squareMeters,
+  setSquareMeters,
 }) => {
   const [boothData, setBoothData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const { myConferenceId } = useAuth();
+  const [standDepth, setStandDepth] = useState(0);
+  const [standPrice, setStandPrice] = useState(0);
+
+  const fetchFloorPlan = async () => {
+    if (!myConferenceId) return;
+
+    try {
+      const response = await axios.get(
+        `${BaseUrl}/floor/plan/${myConferenceId}`
+      );
+      setShellSchemePrice(response?.data.data[0].shell_scheme_price_per_sqm);
+      setStandDepth(response?.data.data[0].space_only_stand_depth);
+      setStandPrice(response?.data.data[0].space_only_stand_price_usd);
+      onShellSchemePriceChange(
+        response?.data.data[0].shell_scheme_price_per_sqm
+      ); // تمرير السعر
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (myConferenceId) {
+      fetchFloorPlan();
+    }
+  }, [myConferenceId]);
+
+  useEffect(() => {
+    console.log("Shell scheme price:", shellSchemePrice);
+    console.log("Square meters:", squareMeters);
+  }, [shellSchemePrice, squareMeters]);
 
   const fetchData = async () => {
     try {
@@ -142,6 +178,7 @@ const BoothCostTable = ({
       setLoading(false);
     }
   };
+
   useEffect(() => {
     if (myConferenceId) {
       fetchData();
@@ -158,16 +195,21 @@ const BoothCostTable = ({
     onSelectBooth(boothId, isChecked);
   };
 
+  const handleSquareMetersChange = (event) => {
+    const value = event.target?.value;
+    setSquareMeters(value);
+    onSquareMetersChange(value); // تمرير الأمتار المربعة
+  };
+
   if (loading) return <p>Loading data...</p>;
   if (error) return <p className="error-message">{error}</p>;
-
   return (
     Array.isArray(boothData) &&
     boothData.length > 0 && (
       <div className="booth-cost-table">
         <div className="booth-cost-table-header3">Booth Cost Table</div>
         <h5 className="booth-cost-table-description">
-          Space only stand USD 1400 Per Meter - Depth = 3M
+          Space only stand USD {standPrice} Per Meter - Depth = {standDepth}
         </h5>
         <div className="con-booth-cost-table-table">
           <table className="booth-cost-table-table">
@@ -212,14 +254,29 @@ const BoothCostTable = ({
           <span className="shell-scheme-text">
             Additional cost for Shell Scheme Booth (special build-up booth):{" "}
             <strong className="shell-scheme-cost">
-              50 USD per square meter.
+              {shellSchemePrice} USD per square meter.
             </strong>
           </span>
+          {/* حقل إدخال الأمتار المربعة */}
+          {shellSchemeSelected && (
+            <div className="input-group">
+              <Input
+                label="Enter square meters:"
+                // type="number"
+                placeholder="Enter square meters:"
+                inputValue={squareMeters}
+                setInputValue={setSquareMeters}
+                // onSquareMetersChange={setSquareMeters}
+                required={true}
+              />
+            </div>
+          )}
         </div>
       </div>
     )
   );
 };
+
 const SponsorSection = () => {
   const [options, setOptions] = useState([]);
   const [selectedOptionIds, setSelectedOptionIds] = useState([]);
@@ -231,6 +288,9 @@ const SponsorSection = () => {
   const [exhibitNumber, setExhibitNumber] = useState("");
   const [shellSchemeSelected, setShellSchemeSelected] = useState(false);
   const [invoiceData, setInvoiceData] = useState(null);
+  const [shellSchemePrice, setShellSchemePrice] = useState(0);
+  const [squareMeters, setSquareMeters] = useState(0);
+  const [viewSubmit, setViewSubmit] = useState(false);
 
   const handleShellSchemeChange = (event) => {
     setShellSchemeSelected(event.target.checked);
@@ -245,6 +305,13 @@ const SponsorSection = () => {
         return prevIds.filter((id) => id !== boothId);
       }
     });
+  };
+  const handleShellSchemePriceChange = (price) => {
+    setShellSchemePrice(price); // تحديث السعر
+  };
+
+  const handleSquareMetersChange = (meters) => {
+    setSquareMeters(meters); // تحديث الأمتار المربعة
   };
 
   const handleSelectedSponsorshipsChange = (ids) => {
@@ -263,6 +330,7 @@ const SponsorSection = () => {
     setIsAgreementSigned(true);
     setIsPopupOpen(false);
     toast.success("Agreement signed successfully!");
+    setViewSubmit(true);
   };
 
   const { myConferenceId } = useAuth();
@@ -308,25 +376,24 @@ const SponsorSection = () => {
     const token = localStorage.getItem("token");
     const payload = {
       user_id: userId,
-      user_name: "John Doe",
+      // user_name: "John Doe",
       conference_sponsorship_option_ids: selectedSponsorshipIds,
       booth_cost_ids: chosenBooths,
       sponsorship_option_ids: selectedOptionIds,
       conference_id: myConferenceId,
       additional_cost_for_shell_scheme_booth: shellSchemeSelected,
       exhibit_number: exhibitNumber,
+      shell_scheme_price: shellSchemePrice, // إضافة السعر
+      square_meters: squareMeters,
     };
+    console.log(squareMeters);
 
     try {
-      const response = await axios.post(
-        `${BaseUrl}/invoice`,
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // تمرير التوكن
-          },
-        }
-      );
+      const response = await axios.post(`${BaseUrl}/invoice`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`, // تمرير التوكن
+        },
+      });
       console.log("Response data:", response.data);
       toast.success(
         "The options have been successfully registered as a sponsor for this event."
@@ -394,15 +461,30 @@ const SponsorSection = () => {
             onSelectBooth={handleSelectBooth}
             shellSchemeSelected={shellSchemeSelected}
             onShellSchemeChange={handleShellSchemeChange}
+            onShellSchemePriceChange={handleShellSchemePriceChange} // تمرير دالة السعر
+            onSquareMetersChange={handleSquareMetersChange}
+            shellSchemePrice={shellSchemePrice}
+            setShellSchemePrice={setShellSchemePrice}
+            squareMeters={squareMeters}
+            setSquareMeters={setSquareMeters}
           />
           <StandardBoothPackage
             onExhibitNumberChange={handleExhibitNumberChange}
           />
           <div className="button-container-list">
-            <button className="Sign-Agreement-button" onClick={openAgreementPopup}>Sign Agreement</button>
-            <button onClick={handleSubmit} className="submit-button">
-              Submit
-            </button>
+            {!viewSubmit && (
+              <button
+                className="Sign-Agreement-button"
+                onClick={openAgreementPopup}
+              >
+                Sign Agreement
+              </button>
+            )}
+            {viewSubmit && (
+              <button onClick={handleSubmit} className="submit-button">
+                Submit
+              </button>
+            )}
           </div>
 
           {isAgreementSigned && (

@@ -1,0 +1,75 @@
+// تعيين بعض المتغيرات العامة للتحكم في الألوان والخطوط
+$primary-color: #007bff;
+$secondary-color: #f8f9fa;
+$error-color: #dc3545;
+$font-family: 'Arial', sans-serif;
+
+// الحاوية الرئيسية للكمبوننت
+.user-link-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: $secondary-color;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  @media (max-width: 600px) {
+    width: 90%;
+    padding: 15px;
+  }
+}
+
+// نص التحميل
+.loading-text {
+  font-size: 16px;
+  color: #6c757d;
+}
+
+// النص الذي يظهر عندما لا يوجد رابط
+.no-link-text {
+  font-size: 16px;
+  color: $error-color;
+  font-weight: bold;
+}
+
+// النص الخاص بالخطأ
+.error-text {
+  font-size: 14px;
+  color: $error-color;
+  margin-top: 10px;
+}
+
+// تنسيق الرابط
+.link-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: $primary-color;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  
+  &:hover {
+    background-color: darken($primary-color, 10%);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// تنسيق الرابط عندما لا يكون هناك رابط
+.no-link-text {
+  font-size: 16px;
+  color: #dc3545;
+  font-weight: bold;
+}

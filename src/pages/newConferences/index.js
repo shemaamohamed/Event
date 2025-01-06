@@ -54,7 +54,48 @@ const ConferenceDetails = () => {
 const token = localStorage.getItem("token")
   const renderContent = () => {
     const { conference, scientific_topics, prices, committee_members } = data;
-
+    // const renderDocumentContent = (url, label) => {
+    //   const token = localStorage.getItem("token"); // التحقق من وجود التوكن في الـ localStorage
+    
+    //   return (
+    //     <div className="document-section">
+    //       {url ? (
+    //         token ? ( // تحقق من وجود التوكن
+    //           <>
+    //             <div className="document-preview">
+    //               <img src={image} alt="Document Icon" width={"100px"} />
+    //             </div>
+    //             <div className="document-info">
+    //               <h3>{label}</h3>
+    //               <p className="desc">
+    //                 This document contains important details about {label}. Please
+    //                 download it for more information.
+    //               </p>
+    //               <a href={url} download className="btn-download">
+    //                 Download {label}
+    //               </a>
+    //             </div>
+    //           </>
+    //         ) : (
+    //           <div className="no-token">
+    //             <p>You must be logged in to download this document.</p>
+    //           </div>
+    //         )
+    //       ) : (
+    //         <div className="no-document">
+    //           <div className="document-preview">
+    //             <img src="/path/to/no-document-icon.png" alt="Document Icon" />
+    //           </div>
+    //           <div className="document-info">
+    //             <h3>{label}</h3>
+    //             <p>No document is currently available for this section.</p>
+    //           </div>
+    //         </div>
+    //       )}
+    //     </div>
+    //   );
+    // };
+    
     const renderDocumentContent = (url, label) => (
       <div className="document-section">
         {url ? (

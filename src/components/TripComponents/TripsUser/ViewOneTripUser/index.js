@@ -4,10 +4,104 @@ import httpService from "../../../../common/httpService";
 import { useNavigate, useParams } from "react-router-dom";
 import { backendUrlImages } from "../../../../constant/config";
 import SimpleLabelValue from "../../../SimpleLabelValue";
+import toast from "react-hot-toast";
+import axios from "axios";
+import Input from "../../../../CoreComponent/Input";
+import Dialog from "../../../../CoreComponent/Dialog";
+import Select from "../../../../CoreComponent/Select";
+
+const GroupTripRegistration = ({ availableDates, setIsDialogOpen }) => {
+  console.log({ availableDates });
+  function convertStringToObjects(input) {
+    return input.split(",").map((date) => ({
+      label: date,
+      value: date,
+    }));
+  }
+
+  const dates = convertStringToObjects(availableDates);
+
+  const { id } = useParams();
+  const [selectedDate, setSelectedDate] = useState("2024-12-10");
+  const [companionsCount, setCompanionsCount] = useState();
+  const [totalPrice, setTotalPrice] = useState(null);
+  const [error, setError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const token = localStorage.getItem("token");
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        `${BaseUrl}/group-trip-participants`,
+        {
+          trip_id: id,
+          selected_date: selectedDate?.value,
+          companions_count: companionsCount,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setTotalPrice(response.data.participant.total_price);
+      setSubmitted(true);
+      toast.success("register successfully!");
+      setIsDialogOpen(false);
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message || "حدث خطأ في الطلب");
+      } else {
+        setError("حدث خطأ في الاتصال بالخادم");
+      }
+    }
+  };
+
+  return (
+    <div className="registration-container">
+      <h2>Group Trip Registration</h2>
+
+      {submitted ? (
+        <div className="result">
+          <h3>Total Price: {totalPrice} $</h3>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="registration-form">
+          <div className="form-group9">
+            <Select
+              options={dates}
+              value={selectedDate}
+              setValue={setSelectedDate}
+              label="Selected Date"
+              placeholder="Select..."
+            />
+            <Input
+              label={"Companions Count"}
+              type="number"
+              inputValue={companionsCount}
+              setInputValue={setCompanionsCount}
+            />
+          </div>
+
+          <button type="submit" className="submit-button">
+            Submit
+          </button>
+        </form>
+      )}
+
+      {error && <p className="error-message">{error}</p>}
+    </div>
+  );
+};
 
 const ViewOneTripUser = () => {
   const { id } = useParams();
   const [tripData, setTripData] = useState({});
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const getAuthToken = () => localStorage.getItem("token");
   const navigate = useNavigate();
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -33,7 +127,6 @@ const ViewOneTripUser = () => {
 
   return (
     <div className="view-one-trip-for-user">
-      {/* Displaying the first image if available */}
       {tripData?.image_1 && (
         <div className="slider">
           <img
@@ -44,16 +137,15 @@ const ViewOneTripUser = () => {
       )}
 
       <div className="trip-name-section">
-        {/* Display trip name if available */}
         {tripData?.name && <h1>{tripData?.name}</h1>}
 
-        {/* Display trip description if available */}
         {tripData?.description && (
           <div className="info-header">{tripData?.description}</div>
         )}
 
-        {/* Display trip price details only if available */}
-        {(tripData?.price_per_person || tripData?.price_for_two || tripData?.price_for_three_or_more) && (
+        {(tripData?.price_per_person > 0  ||
+          tripData?.price_for_two >0 ||
+          tripData?.price_for_three_or_more > 0) &&  (
           <>
             <h3>Price Information</h3>
             <div className="additional-options-container">
@@ -79,7 +171,6 @@ const ViewOneTripUser = () => {
           </>
         )}
 
-        {/* Display trip additional options if available */}
         {tripData?.additional_options?.length > 0 && (
           <>
             <h3>Additional Options</h3>
@@ -96,18 +187,23 @@ const ViewOneTripUser = () => {
           </>
         )}
 
-        {/* Display more trip details if available */}
         {tripData?.trip_type && (
           <SimpleLabelValue label="Trip Type" value={tripData?.trip_type} />
         )}
-        {tripData?.available_dates && (
-          <SimpleLabelValue label="Available Dates" value={tripData?.available_dates} />
+        {tripData?.trip_type === "group" && tripData?.available_dates && (
+          <SimpleLabelValue
+            label="Available Dates"
+            value={tripData?.available_dates}
+          />
         )}
         {tripData?.location && (
           <SimpleLabelValue label="Location" value={tripData?.location} />
         )}
         {tripData?.duration && (
-          <SimpleLabelValue label="Duration" value={`${tripData?.duration} days`} />
+          <SimpleLabelValue
+            label="Duration"
+            value={`${tripData?.duration} days`}
+          />
         )}
         {tripData?.inclusions && (
           <SimpleLabelValue label="Inclusions" value={tripData?.inclusions} />
@@ -125,28 +221,48 @@ const ViewOneTripUser = () => {
           />
         )}
         {tripData?.trip_details && (
-          <SimpleLabelValue label="Trip Details" value={tripData?.trip_details} />
-        )}
-        {tripData?.group_accompanying_price && (
           <SimpleLabelValue
-            label="Group Accompanying Price"
-            value={`${tripData?.group_accompanying_price}$`}
+            label="Trip Details"
+            value={tripData?.trip_details}
           />
         )}
-<button
-  className="register-trip-btn"
-  onClick={() => {
-    if (tripData?.trip_type === "group") {
-      navigate(`/group-trip/user/${id}`); // التنقل لمكون خاص بالرحلات الجماعية
-    } else {
-      navigate(`/trip/user/${id}`); // التنقل للرحلات الأخرى
-    }
-  }}
->
-  Register now
-</button>
+{(tripData?.trip_type === "group" && (tripData?.group_accompanying_price ?? 0) > 0) ? (
+  <SimpleLabelValue
+    label="Group Accompanying Price"
+    value={`${tripData?.group_accompanying_price}$`}
+  />
+) : null}
 
+
+
+        <button
+          className="register-trip-btn"
+          onClick={() => {
+            if (tripData?.trip_type === "group") {
+              setIsDialogOpen(true);
+              // navigate(`/group-trip/user/${id}`);
+            } else {
+              navigate(`/trip/user/${id}`);
+            }
+          }}
+        >
+          Register now
+        </button>
       </div>
+      <Dialog
+        viewHeader={true}
+        header=""
+        open={isDialogOpen}
+        setOpen={setIsDialogOpen}
+      >
+        <div className="dialog-message">
+          <GroupTripRegistration
+            id={id}
+            availableDates={tripData?.available_dates}
+            setIsDialogOpen={setIsDialogOpen}
+          />
+        </div>
+      </Dialog>
     </div>
   );
 };

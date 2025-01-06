@@ -3,7 +3,7 @@ import Table from "../../CoreComponent/Table";
 import Pagination from "../../CoreComponent/Pagination";
 import Dialog from "../../CoreComponent/Dialog";
 import httpService from "../../common/httpService";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import ImageUpload from "../../CoreComponent/ImageUpload";
 import "./style.scss";
 import { backendUrlImages } from "../../constant/config";

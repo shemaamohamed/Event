@@ -11,6 +11,7 @@ import WhatsAppButton from "../WhatsAppButton";
 import MainFlightFormUpdate from "./updateMainFlightForm";
 import { useAuth } from "../../common/AuthContext";
 import "./style.scss";
+import FlightsWithInvoices from "../FlightView";
 
 const MainFlightForm = ({ setOpenForm, getFlightData }) => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -222,7 +223,7 @@ const FlightForm = () => {
   const handelDelete = () => {
     const token = localStorage.getItem("token"); // استبدل بـ التوكن الفعلي
     const endpoint = `${BaseUrl}/flights/com/2`; // نقطة النهاية
-  
+
     axios
       .delete(endpoint, {
         headers: {
@@ -239,15 +240,13 @@ const FlightForm = () => {
       });
   };
 
-
-
   const EmergencyButton = () => {
-      const message = "This is an urgent matter. Please get in touch as soon as possible.";
-      const phoneNumber = "962799602002"; // رقمك مع رمز البلد
-      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank");
-    
-    }
+    const message =
+      "This is an urgent matter. Please get in touch as soon as possible.";
+    const phoneNumber = "962799602002"; // رقمك مع رمز البلد
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
   return (
     <div className="flight-form-page-container">
       <div className="flight-form-header-container">
@@ -279,15 +278,27 @@ const FlightForm = () => {
           >
             Edit Flight Information
           </button>{" "}
-          <button type="button" onClick={() => {EmergencyButton()}}>
+          <button
+            type="button"
+            onClick={() => {
+              EmergencyButton();
+            }}
+          >
             Emergency
           </button>
-          <button type="button" onClick={() => {handelDelete()}}>
+          <button
+            type="button"
+            onClick={() => {
+              handelDelete();
+            }}
+          >
             Delete
           </button>
         </div>
       </div>
-      {Object.keys(data).length ? (
+      <FlightsWithInvoices />
+
+      {/* {Object.keys(data).length ? (
         <div className="view-flight-details">
           <SimpleLabelValue
             label="Arrival Date"
@@ -338,7 +349,7 @@ const FlightForm = () => {
         <div className="no-flight-data">
           <p>No flight data available.</p>
         </div>
-      )}
+      )} */}
       {openFlight && (
         <MySideDrawer open={openFlight} setOpen={setOpenFlight}>
           <MainFlightForm

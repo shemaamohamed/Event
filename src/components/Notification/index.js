@@ -197,8 +197,15 @@ const NotificationDropdown = () => {
               key={notification.id}
               className={`notification-item unread`}
               onClick={() => {
-                read(notification.id);
+                // read(notification.id);
                 // أضف التوجيه إلى الرابط عند النقر على الإشعار
+                if (
+                  notification?.message?.includes("New attendance registration")
+                ) {
+                  navigate(
+                    `/pending/users`
+                  );
+                }
                 if (
                   notification?.message?.includes("New speaker registration")
                 ) {
@@ -250,6 +257,31 @@ const NotificationDropdown = () => {
                   notification?.message?.includes("New sponsor registration")
                 ) {
                   navigate(`/pending/users`);
+                } else if (
+                  notification?.message?.includes("New flight registered by")
+                ) {
+                  navigate(`/flights`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "Your visa document has been successfully uploaded"
+                  )
+                ) {
+                  navigate(`/visa`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "Your certificate has been successfully uploaded. You can now download it from your profile."
+                  )
+                ) {
+                  navigate(`/certification`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "has requested additional trips"
+                  )
+                ) {
+                  navigate(`/enter/new/flights`);
                 }
               }}
             >

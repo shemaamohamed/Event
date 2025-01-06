@@ -68,15 +68,15 @@ const ExhibitionsPage = () => {
               setInputValue={(value) => handleFilterChange("name", value)}
               label="Exhibition Name"
             />
-            {/* <Select
+            <Select
               options={[
                 { value: "upcoming", label: "Upcoming" },
                 { value: "past", label: "Past" },
               ]}
               value={filters.status}
-              setValue={(value) => handleFilterChange("status", value)}
+              setValue={(value) => handleFilterChange("status", value?.value)}
               label="Status"
-            /> */}
+            />
           </div>
         </header>
         {error ? (

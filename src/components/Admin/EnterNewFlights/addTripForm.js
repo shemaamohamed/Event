@@ -7,6 +7,7 @@ import MySideDrawer from "../../../CoreComponent/SideDrawer";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
 import { deleteIcon } from "../../../icons";
 import httpService from "../../../common/httpService";
+import toast from "react-hot-toast";
 
 const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
   const [trips, setTrips] = useState([
@@ -51,6 +52,12 @@ const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
           departure_time: trip.departure_time,
           price: trip.price,
           is_free: trip.is_free,
+          departure_flight_number: trip.departure_flight_number, // الحقل الجديد
+          departure_airport: trip.departure_airport, // الحقل الجديد
+          arrival_flight_number: trip.arrival_flight_number, // الحقل الجديد
+          arrival_airport: trip.arrival_airport, // الحقل الجديد
+          arrival_date: trip.arrival_date, // الحقل الجديد
+          arrival_time: trip.arrival_time, // الحقل الجديد
         },
       ],
     }));
@@ -62,10 +69,14 @@ const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
       data: { flights: formattedTrips },
       showLoader: false,
       withToast: true,
+      onSuccess: () => {
+        toast.success("Trip Added successfully!");
+      },
     });
     setTrips([]);
     setIsOpen(false);
     console.log({ response });
+
   };
 
   return (
@@ -134,9 +145,9 @@ const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
                     type="number"
                     required={true}
                   />
-                  <div className="free-trip-checkbox">
+                  {/* <div className="free-trip-checkbox">
                     <Checkbox
-                      label="Is Free?"
+                      // label="Is Free?"
                       checkboxValue={trip.is_free}
                       setCheckboxValue={(value) => {
                         const updatedTrips = [...trips];
@@ -146,7 +157,69 @@ const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
                       icon={""}
                       errorMsg={""}
                     />
-                  </div>
+                  </div> */}
+                            <Input
+            label="Departure Flight Number"
+            inputValue={trip.departure_flight_number}
+            setInputValue={(value) => {
+              const updatedTrips = [...trips];
+              updatedTrips[index].departure_flight_number = value;
+              setTrips(updatedTrips);
+            }}
+            required
+          />
+          <Input
+            label="Departure Airport"
+            inputValue={trip.departure_airport}
+            setInputValue={(value) => {
+              const updatedTrips = [...trips];
+              updatedTrips[index].departure_airport = value;
+              setTrips(updatedTrips);
+            }}
+            required
+          />
+          <Input
+            label="Arrival Flight Number"
+            inputValue={trip.arrival_flight_number}
+            setInputValue={(value) => {
+              const updatedTrips = [...trips];
+              updatedTrips[index].arrival_flight_number = value;
+              setTrips(updatedTrips);
+            }}
+            required
+          />
+          <DateInput
+            label="Arrival Date"
+            inputValue={trip.arrival_date}
+            setInputValue={(value) => {
+              const updatedTrips = [...trips];
+              updatedTrips[index].arrival_date = value;
+              setTrips(updatedTrips);
+            }}
+            required
+          />
+          <Input
+            label="Arrival Time"
+            inputValue={trip.arrival_time}
+            setInputValue={(value) => {
+              const updatedTrips = [...trips];
+              updatedTrips[index].arrival_time = value;
+              setTrips(updatedTrips);
+            }}
+            type="time"
+            required
+          />
+          <Input
+            label="Arrival Airport"
+            inputValue={trip.arrival_airport}
+            setInputValue={(value) => {
+              const updatedTrips = [...trips];
+              updatedTrips[index].arrival_airport = value;
+              setTrips(updatedTrips);
+            }}
+            required
+          />
+
                 </div>
               </div>
             ))}

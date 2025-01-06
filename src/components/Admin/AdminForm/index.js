@@ -3,7 +3,7 @@ import "./style.scss";
 import Checkbox from "../../../CoreComponent/Checkbox";
 import httpService from "../../../common/httpService";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const AdminForm = () => {
   const [isAdmin, setIsAdmin] = useState(false);

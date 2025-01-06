@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./style.scss"; // تأكد من أن لديك تنسيق CSS مناسب
 import Select from "../../CoreComponent/Select";
 import httpService from "../../common/httpService";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 const UpdateVisaStatus = () => {
   const [status, setStatus] = useState("pending"); // الحالة الافتراضية

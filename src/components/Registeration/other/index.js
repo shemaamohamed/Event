@@ -3,7 +3,7 @@ import Input from "../../CoreComponent/Input";
 import Select from "../../CoreComponent/Select";
 import axiosInstance from "../../common/http";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import PhoneNumberInput from "../../CoreComponent/PhoneNumber";
 import { countriesOptions, nationalitiesOptions } from "../../constant";
 import SVG from "react-inlinesvg";

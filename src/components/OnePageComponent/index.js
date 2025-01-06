@@ -110,11 +110,11 @@ const OnePage = () => {
             <button onClick={() => navigate("/home")}>Accommodation</button>
           </li>
           <li>
-            <button
+            {/* <button
               onClick={() => navigate(`/register/sponsor/${conferenceId}`)}
             >
               Sponsors
-            </button>
+            </button> */}
           </li>
           <li>
             <button onClick={() => navigate("/contact_us")}>Contact Us</button>

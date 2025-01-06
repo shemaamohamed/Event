@@ -6,7 +6,7 @@ import ImageUpload from "../../../CoreComponent/ImageUpload";
 import SVG from "react-inlinesvg";
 import deleteIcon from "../../../icons/deleteIcon.svg";
 import { useFlightStepper } from "../StepperContext";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import httpService from "../../../common/httpService";
 import "./style.scss";
 import { useNavigate, useParams } from "react-router-dom";
@@ -125,8 +125,15 @@ const CompanionInformation = () => {
       // withToast: false,
       // showLoader: true,
     });
+    console.log({ res });
+    if (res?.message == "You cannot modify the flight as the admin update deadline has passed.") {
+      toast.error(res.message);
+      navigate("/flight/form")
+    } else {
+      setIsDialogOpen(true);
 
-    setIsDialogOpen(true);
+    }
+
   };
 
   const handleSubmit = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Checkbox from "../../CoreComponent/Checkbox";
 import ImageUpload from "../../CoreComponent/ImageUpload";
 import httpService from "../../common/httpService";
@@ -51,10 +51,8 @@ const SpeakerProfileForm = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    // Prepare FormData for submission
     const formData = new FormData();
 
-    // Append files only if they exist
     if (formFiles.abstract) {
       formData.append("abstract", formFiles.abstract);
     }
@@ -63,7 +61,6 @@ const SpeakerProfileForm = () => {
       formData.append("presentation_file", formFiles.presentationFile);
     }
 
-    // Append other data with conditional checks
     formData.append("topics", JSON.stringify(topics || [])); // Fallback to empty array if topics are null
     formData.append(
       "online_participation",
@@ -84,26 +81,16 @@ const SpeakerProfileForm = () => {
 
     try {
       const token = localStorage.getItem("token");
-
-      // HTTP request using httpService
       await httpService({
         method: "POST",
         url: `${BaseUrl}/speakers/user/update`,
         headers: { Authorization: `Bearer ${token}` },
         data: formData,
-        withToast: true, // Display toast notifications
+        // withToast: true, // Display toast notifications
         showLoader: true, // Show a loader during the request
       });
       toast.success("Profile Uploaded Successfully");
-
-      // Navigate to another page upon success
-      // navigate("/visa");
-    } catch (error) {
-      console.error("An error occurred while updating:", error);
-
-      // Optionally, display an error toast
-      // toast.error("An error occurred while updating.");
-    }
+    } catch (error) {}
   };
 
   const toggleAttendanceOptions = useCallback(() => {
@@ -153,7 +140,7 @@ const SpeakerProfileForm = () => {
       setVideo(response?.data?.speaker?.video);
       setOnline(response?.data?.speaker?.is_online_approved);
       console.log(online);
-      
+
       setAttendanceOptions({
         showOnlineOption: response?.data?.speaker?.is_online_approved,
         inPerson: !response?.data?.speaker?.online_participation,

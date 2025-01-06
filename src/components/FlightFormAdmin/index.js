@@ -12,6 +12,7 @@ import UpdateDeadline from "./SetUpdateDeadline";
 import UpdateTicket from "./SetTicket";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../CoreComponent/Pagination";
+import ViewInvoice from "./ViewInvoice";
 
 const FlightFormAdmin = () => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -29,6 +30,7 @@ const FlightFormAdmin = () => {
   ];
 
   const [openView, setOpenView] = useState(false);
+  const [openInvoice, setOpenInvoice] = useState(false);
   const [openTripForm, setOpenTripForm] = useState(false);
   const [openPriceForm, setOpenPriceForm] = useState(false);
   const [openCompanionModal, setOpenCompanionModal] = useState(false); // حالة لفتح المودال
@@ -123,13 +125,21 @@ const FlightFormAdmin = () => {
               Set Update Deadline
             </button>
 
-            <button
+            {/* <button
               onClick={() => {
                 setOpenTicketForm(true);
                 setSelectedItem(item);
               }}
             >
-              view Invoice
+              view Ticket
+            </button> */}
+            <button
+              onClick={() => {
+                setOpenInvoice(true);
+                setSelectedItem(item);
+              }}
+            >
+              View Invoice
             </button>
           </div>
         ),
@@ -183,6 +193,9 @@ const FlightFormAdmin = () => {
         </MySideDrawer>
         <MySideDrawer isOpen={openTicketForm} setIsOpen={setOpenTicketForm}>
           <UpdateTicket data={selectedItem} setOpen={setOpenTicketForm} />
+        </MySideDrawer>
+        <MySideDrawer isOpen={openInvoice} setIsOpen={setOpenInvoice}>
+          <ViewInvoice data={selectedItem} setOpen={setOpenInvoice} />
         </MySideDrawer>
       </div>
     </div>

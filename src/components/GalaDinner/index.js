@@ -4,7 +4,7 @@ import Input from "../../CoreComponent/Input";
 import Checkbox from "../../CoreComponent/Checkbox";
 import "./style.scss"; // Import the Sass file
 import { useAuth } from "../../common/AuthContext";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import httpService from "../../common/httpService";
 import { useNavigate } from "react-router-dom";
 import SimpleLabelValue from "../SimpleLabelValue";
@@ -19,11 +19,11 @@ const DinnerDetails = () => {
   const [dinnerInvoice, setDinnerInvoice] = useState(null); // State for dinnerInvoice
   const [invoice, setInvoice] = useState(null); // State for invoice
   const [attendeeId, setAttendeeId] = useState(null); // تعريف حالة attendeeId
+  const { myConferenceId } = useAuth();
 
   const navigate = useNavigate();
   const BaseUrl = process.env.REACT_APP_BASE_URL; // قراءة الـ URL من البيئة
 
-  // Function to get dinner invoice
   const getDinnerInvoice = () => {
     const token = localStorage.getItem("token");
     axios
@@ -34,6 +34,7 @@ const DinnerDetails = () => {
       })
       .then((response) => {
         setDinnerInvoice(response.data.dinner_attendee);
+        setAttendeeId(response.data?.dinner_attendee?.id);
         setInvoice(response.data.invoice);
       })
       .catch((error) => {
@@ -41,33 +42,28 @@ const DinnerDetails = () => {
       });
   };
 
-  // Function to delete attendee
-  const handleDelete = (attendeeId1) => {
+  const handleDelete = () => {
     const token = localStorage.getItem("token");
     axios
-      .delete(`http://127.0.0.1:8000/api/dinner-attendees/${attendeeId1}`, {
+      .delete(`${BaseUrl}/dinner-attendees/${attendeeId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log("Success:", response.data);
+        getDinnerInvoice()
+        toast.success("Attendance canceled successfully!");
+
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      .catch((error) => {});
   };
 
   useEffect(() => {
     getDinnerInvoice();
   }, []);
 
-  const { myConferenceId } = useAuth();
 
-  // Fetch dinner details function
   const fetchDinnerDetails = async () => {
-    if (!myConferenceId) return;
-
     const token = localStorage.getItem("token");
     try {
       const response = await axios.get(
@@ -90,7 +86,6 @@ const DinnerDetails = () => {
     fetchDinnerDetails();
   }, [myConferenceId]);
 
-  // Fetch conference details function
   const fetchConferenceDetails = async () => {
     if (!myConferenceId) return;
 
@@ -125,8 +120,8 @@ const DinnerDetails = () => {
           "Content-Type": "application/json",
         },
       });
-      const attendeeId1 = response.data.dinner_attendee_id; // تأكد أن الـ id يتم إرجاعه في الاستجابة
-      setAttendeeId(attendeeId1); // تخزين الـ ID في الحالة
+      const attendeeId1 = response.data.dinner_attendee_id; 
+      setAttendeeId(attendeeId1); 
 
       setTimeout(() => {
         getDinnerInvoice();
@@ -141,10 +136,6 @@ const DinnerDetails = () => {
     }
   };
 
-  const handleGuestChange = (event) => {
-    setHasGuest(event.target.checked); // Toggle guest state
-  };
-  console.log(attendeeId);
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -258,7 +249,7 @@ const DinnerDetails = () => {
                 {hasGuest && <button className="pay-now-btn">Pay Now</button>}
                 {invoice && (
                   <button
-                    onClick={() => handleDelete(attendeeId)}
+                    onClick={() => handleDelete()}
                     className="pay-now-btn"
                   >
                     Cancel Participation in Dinner

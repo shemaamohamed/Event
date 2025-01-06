@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Input from "../../../CoreComponent/Input/index";
 import Select from "../../../CoreComponent/Select/index";
 import MySideDrawer from "../../../CoreComponent/SideDrawer";

@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
 import MySideDrawer from "../../../CoreComponent/SideDrawer";
 import Input from "../../../CoreComponent/Input";
+import Checkbox from "../../../CoreComponent/Checkbox"; // Import the Checkbox component
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "./style.scss";
 
-const AddOption = ({ isOpen, setIsOpen, tripId , fetchTrips }) => {
+const AddOption = ({ isOpen, setIsOpen, tripId, fetchTrips }) => {
   // State for all options
   const [options, setOptions] = useState([
-    { optionName: "", optionDescription: "", price: 0 },
+    { optionName: "", optionDescription: "", price: 0, multiplyByNights: false },
   ]);
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -22,7 +23,7 @@ const AddOption = ({ isOpen, setIsOpen, tripId , fetchTrips }) => {
   const addNewOption = () => {
     setOptions([
       ...options,
-      { optionName: "", optionDescription: "", price: 0 },
+      { optionName: "", optionDescription: "", price: 0, multiplyByNights: false },
     ]);
   };
 
@@ -41,6 +42,7 @@ const AddOption = ({ isOpen, setIsOpen, tripId , fetchTrips }) => {
         option_name: option.optionName,
         option_description: option.optionDescription,
         price: option.price,
+        multiply_by_nights: option.multiplyByNights, // Add this field to the API payload
       };
 
       try {
@@ -55,8 +57,7 @@ const AddOption = ({ isOpen, setIsOpen, tripId , fetchTrips }) => {
         );
         setIsOpen(false);
         toast.success("The data was updated successfully!");
-        fetchTrips()
-
+        fetchTrips();
       } catch (error) {
         console.error(
           "Error adding option:",
@@ -110,6 +111,14 @@ const AddOption = ({ isOpen, setIsOpen, tripId , fetchTrips }) => {
                   }
                   placeholder="Enter price"
                   type="number"
+                />
+                <Checkbox
+                  label="Multiply by Nights?"
+                  checkboxValue={option.multiplyByNights}
+                  setCheckboxValue={(value) =>
+                    handleOptionChange(index, "multiplyByNights", value)
+                  }
+                  className="form-checkbox"
                 />
                 <button
                   type="button"

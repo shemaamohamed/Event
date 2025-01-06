@@ -9,14 +9,26 @@ const AddZoomLink = () => {
   const [selectedSpeakerId, setSelectedSpeakerId] = useState(null);
   const [zoomLink, setZoomLink] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [id ,setId] =useState(0)
 
+
+
+
+
+
+
+
+
+const BaseUrl = process.env.REACT_APP_BASE_URL;
+
+  // console.log(token);
   const getOnlineParticipant = () => {
     const token = localStorage.getItem('token'); // استخراج التوكن من الـ localStorage
 
-    // إرسال طلب GET مع التوكن في الهيدر
-    axios.get(`http://127.0.0.1:8000/api/conference/${conferenceId}/online-speakers`, {
+
+    axios.get(`${BaseUrl}/conference/${conferenceId}/online-speakers`, {
       headers: {
-        'Authorization': `Bearer ${token}` // إضافة التوكن في هيدر الطلب
+        Authorization: `Bearer ${token}` // إضافة التوكن في هيدر الطلب
       }
     })
     .then(response => {
@@ -35,9 +47,10 @@ const AddZoomLink = () => {
 
   const handleSubmitLink = (Id) => {
     const token = localStorage.getItem('token');
+
     console.log(  { link: zoomLink,speaker_id:Id },);
 
-    axios.post(`http://127.0.0.1:8000/api/speakers/link`, 
+    axios.post(`${BaseUrl}/speakers/link`, 
       { link: zoomLink,speaker_id:Id },
       {
         headers: {
@@ -57,7 +70,7 @@ const AddZoomLink = () => {
   };
 
   useEffect(() => {
-    getOnlineParticipant();
+    getOnlineParticipant()
   }, []);
 
   return (
@@ -86,7 +99,13 @@ const AddZoomLink = () => {
                 <td>
                   <button 
                     className="btn-add-link" 
-                    onClick={() => handleAddLink(speaker.id)}
+                    onClick={() =>{ handleAddLink(speaker.id)
+
+                      setId(speaker.id)
+                    }
+                  
+                  }
+                   
                   >
                     Add Link
                   </button>
@@ -110,7 +129,7 @@ const AddZoomLink = () => {
               onChange={(e) => setZoomLink(e.target.value)}
             />
             <div className="modal-actions">
-              <button onClick={handleSubmitLink}>Submit</button>
+              <button onClick={()=>handleSubmitLink(id)}>Submit</button>
               <button onClick={() => setIsModalOpen(false)}>Cancel</button>
             </div>
           </div>

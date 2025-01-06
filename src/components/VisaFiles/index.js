@@ -4,7 +4,7 @@ import Dialog from "../../CoreComponent/Dialog";
 import ImageUpload from "../../CoreComponent/ImageUpload";
 import "./style.scss";
 import httpService from "../../common/httpService";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const VisaFiles = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -96,7 +96,7 @@ const VisaFiles = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-        withToast: true,
+        // withToast: true,
         data: formData,
         onSuccess: async (response) => {
           console.log(response);

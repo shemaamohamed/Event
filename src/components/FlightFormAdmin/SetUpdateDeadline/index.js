@@ -14,11 +14,12 @@ const UpdateDeadline = ({ data, setOpen }) => {
 
     const formData = {
       admin_update_deadline: adminUpdateDeadline,
+      flight_id:flightId
     };
 
     axios
       .put(
-        `${BaseUrl}/admin/update-flight/${flightId}`,
+        `${BaseUrl}/flights/update/deadLine`,
         formData,
         {
           headers: {

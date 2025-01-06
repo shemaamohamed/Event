@@ -4,7 +4,7 @@ import Dialog from "../../CoreComponent/Dialog";
 import ImageUpload from "../../CoreComponent/ImageUpload";
 import axios from "axios";
 import "./style.scss";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import httpService from "../../common/httpService";
 
 const FlightsFiles = () => {
@@ -15,7 +15,6 @@ const FlightsFiles = () => {
 
   const [data, setData] = useState([]);
   // Mock data for the table
-
 
   const headers = [
     { key: "id", label: "ID" },
@@ -31,38 +30,38 @@ const FlightsFiles = () => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   const getData = () => {
+    console.log("hihi");
+    
     // استبدال التوكن هنا
     const token = localStorage.getItem("token");
 
-    axios.get(`${BaseUrl}/pay/approved`,
-      { headers: { Authorization: `Bearer ${token}` } }
-
-    )
+    axios
+      .get(`${BaseUrl}/pay/approved`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
-        console.log('Response:', response);
-        setData(response?.data?.approved_invoices.map((item) => {
-          return {
-            id: item?.invoice_id,
-            name: item.user?.name || "",
-            email: item.user?.email || "",
-            status: item.status,
-
-          }
-        })); // تخزين البيانات في الحالة (state)
+        console.log("Response:", response);
+        setData(
+          response?.data?.approved_invoices.map((item) => {
+            return {
+              id: item?.invoice_id,
+              name: item.user?.name || "",
+              email: item.user?.email || "",
+              status: item.status,
+            };
+          })
+        ); // تخزين البيانات في الحالة (state)
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error("Error:", error);
       });
   };
 
-  useEffect(() => {
-    getData()
-  }, [])
   const handleSubmit = async () => {
     // post api to upload fil
     const formData = new FormData();
     formData.append("ticketPDF", file);
-    const authToken = localStorage.getItem("token")
+    const authToken = localStorage.getItem("token");
     try {
       const response = await httpService({
         method: "POST",
@@ -75,15 +74,9 @@ const FlightsFiles = () => {
         onSuccess: async (response) => {
           console.log(response);
           toast.success("File uploaded successfully!");
-
-
-
-
         },
         onError: (error) => console.error("Failed to fetch user data:", error),
       });
-
-
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
@@ -94,12 +87,12 @@ const FlightsFiles = () => {
   const tableData = data.map((row) => ({
     ...row,
     actions: (
-      <button className="upload-button" onClick={() => {
-        handleUploadClick(row)
-        setId(row.id)
-      }
-      }
-
+      <button
+        className="upload-button"
+        onClick={() => {
+          handleUploadClick(row);
+          setId(row.id);
+        }}
       >
         Upload Flight Ticket
       </button>

@@ -48,7 +48,7 @@ const EnterNewFlights = () => {
           passenger_name: flight.flight?.passenger_name || "N/A",
           actions: (
             <div>
-              <button
+              <button className="submit-btn"
                 onClick={() => {
                   setFlight_id(flight?.flight?.flight_id);
                   // setMain_user_id(flight?.flight?.main_user_id)
@@ -63,7 +63,7 @@ const EnterNewFlights = () => {
           ),
         }));
 
-        setFlights(flightsData);
+        setFlights(flightsData.reverse());
       }
     } catch (error) {
       console.error("Error fetching flight data:", error);

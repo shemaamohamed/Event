@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Input from "../../../CoreComponent/Input/index";
 import Checkbox from "../../../CoreComponent/Checkbox/index";
 import DateInput from "../../../CoreComponent/Date/index";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import deleteIcon from "../../../icons/deleteIcon.svg";
 import SVG from "react-inlinesvg";
 import { useFlightStepperAdmin } from "../StepperContext";
@@ -58,6 +58,12 @@ const FlightInformation = ({ member, index }) => {
       departure_time: "",
       price: "",
       is_free: false,
+      departure_flight_number: "",
+      departure_airport: "",
+      arrival_flight_number: "",
+      arrival_date: "",
+      arrival_time: "",
+      arrival_airport: "",
     },
   ]);
   const [ticketPricing, setTicketPricing] = useState({
@@ -127,7 +133,7 @@ const FlightInformation = ({ member, index }) => {
         flights: data,
       },
       showLoader: true,
-      withToast: true,
+      withToast: false,
     });
     toast.success("The data was updated successfully!");
 
@@ -143,6 +149,12 @@ const FlightInformation = ({ member, index }) => {
           departure_time: item?.departure_time,
           price: item?.price,
           is_free: item?.is_free,
+          departure_flight_number: item.departure_flight_number,
+          departure_airport: item.departure_airport,
+          arrival_flight_number: item.arrival_flight_number,
+          arrival_date: item.arrival_date,
+          arrival_time: item.arrival_time,
+          arrival_airport: item.arrival_airport,
         };
       })
     );
@@ -171,6 +183,12 @@ const FlightInformation = ({ member, index }) => {
       departure_time: "",
       price: "",
       is_free: false,
+      departure_flight_number: "",
+      departure_airport: "",
+      arrival_flight_number: "",
+      arrival_date: "",
+      arrival_time: "",
+      arrival_airport: "",
     };
     setTrips((prevTrips) => [...prevTrips, newTrip]);
   };
@@ -247,19 +265,67 @@ const FlightInformation = ({ member, index }) => {
                   type="number"
                   required={true}
                 />
-                {/* <div className="check-in-input-container">
-                  <Checkbox
-                    label="Is Free?"
-                    checkboxValue={trip.is_free}
-                    setCheckboxValue={(value) => {
-                      const updatedTrips = [...trips];
-                      updatedTrips[index].is_free = value;
-                      setTrips(updatedTrips);
-                    }}
-                    icon={""}
-                    errorMsg={""}
-                  />
-                </div> */}
+              <Input
+                  label="Departure Flight Number"
+                  inputValue={trip.departure_flight_number}
+                  setInputValue={(value) => {
+                    const updatedTrips = [...trips];
+                    updatedTrips[index].departure_flight_number = value;
+                    setTrips(updatedTrips);
+                  }}
+                  required
+                />
+                <Input
+                  label="Departure Airport"
+                  inputValue={trip.departure_airport}
+                  setInputValue={(value) => {
+                    const updatedTrips = [...trips];
+                    updatedTrips[index].departure_airport = value;
+                    setTrips(updatedTrips);
+                  }}
+                  required
+                />
+                <Input
+                  label="Arrival Flight Number"
+                  inputValue={trip.arrival_flight_number}
+                  setInputValue={(value) => {
+                    const updatedTrips = [...trips];
+                    updatedTrips[index].arrival_flight_number = value;
+                    setTrips(updatedTrips);
+                  }}
+                  required
+                />
+                <DateInput
+                  label="Arrival Date"
+                  inputValue={trip.arrival_date}
+                  setInputValue={(value) => {
+                    const updatedTrips = [...trips];
+                    updatedTrips[index].arrival_date = value;
+                    setTrips(updatedTrips);
+                  }}
+                  required
+                />
+                <Input
+                  label="Arrival Time"
+                  inputValue={trip.arrival_time}
+                  setInputValue={(value) => {
+                    const updatedTrips = [...trips];
+                    updatedTrips[index].arrival_time = value;
+                    setTrips(updatedTrips);
+                  }}
+                  type="time"
+                  required
+                />
+                <Input
+                  label="Arrival Airport"
+                  inputValue={trip.arrival_airport}
+                  setInputValue={(value) => {
+                    const updatedTrips = [...trips];
+                    updatedTrips[index].arrival_airport = value;
+                    setTrips(updatedTrips);
+                  }}
+                  required
+                />
               </div>
             </div>
           ))}

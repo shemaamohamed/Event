@@ -65,16 +65,18 @@ const ViewUserTrips = () => {
         <div className="trips-types-btn">
           {hasFreeTrip && (
             <button
-              className={`trip-type-btn ${selectedTripType === "group" ? "active" : ""
-                }`}
+              className={`trip-type-btn ${
+                selectedTripType === "group" ? "active" : ""
+              }`}
               onClick={() => setSelectedTripType("group")}
             >
               Group Trips
             </button>
           )}
           <button
-            className={`trip-type-btn ${selectedTripType === "private" ? "active" : ""
-              }`}
+            className={`trip-type-btn ${
+              selectedTripType === "private" ? "active" : ""
+            }`}
             onClick={() => setSelectedTripType("private")}
           >
             Private Trips

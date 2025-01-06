@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./style.scss";
 import ImageUpload from "../../CoreComponent/ImageUpload";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const AddClient = () => {
   const [image, setImage] = useState(null);

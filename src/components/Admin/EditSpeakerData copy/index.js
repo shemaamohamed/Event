@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Checkbox from "../../../CoreComponent/Checkbox";
 import { useParams } from "react-router-dom";
 import httpService from "../../../common/httpService";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "./style.scss";
 
 const EditSpeakerData = () => {
@@ -39,6 +39,7 @@ const EditSpeakerData = () => {
           is_visa_payment_required: isVisaPaymentRequired ? 1 : 0,
         },
         withToast: true,
+        
       });
   
       // نجاح العملية

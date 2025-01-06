@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+// import toast from "react-hot-toast";
 import { useFlightStepperAdmin } from "../StepperContext";
 import httpService from "../../../common/httpService";
 import "./style.scss";
@@ -9,6 +9,7 @@ import {
 } from "../../../common/localStorage";
 import DialogMessage from "../../DialogMessage";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AcceptFlight = ({ member, index }) => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -85,15 +86,13 @@ const AcceptFlight = ({ member, index }) => {
           data: {
             flights: data,
           },
-          withToast: true,
+          withToast: false,
         });
         completeStep(currentStep);
-      } catch (error) {
-        console.error("Error submitting form:", error);
-      }
+      } catch (error) {}
     } else {
       try {
-        await httpService({
+        const res = await httpService({
           method: "POST",
           url: `${BaseUrl}/accepted-flights/user/all`,
           headers: { Authorization: `Bearer ${getAuthToken()}` },
@@ -103,10 +102,13 @@ const AcceptFlight = ({ member, index }) => {
           },
           withToast: false,
         });
-        setIsDialogOpen(true);
-      } catch (error) {
-        console.error("Error submitting form:", error);
-      }
+        console.log(res.error);
+        if (res?.error) {
+          toast.error(res.error);
+        } else {
+          setIsDialogOpen(true);
+        }
+      } catch (error) {}
     }
   };
 
@@ -115,7 +117,7 @@ const AcceptFlight = ({ member, index }) => {
 
     if (!isFinalStep) {
       completeStep(currentStep);
-      toast.success("The data was updated successfully!");
+      // toast.success("The data was updated successfully!");
     } else {
       submit();
     }

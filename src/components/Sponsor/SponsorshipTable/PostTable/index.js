@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Select from "../../../../CoreComponent/Select";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Input from "../../../../CoreComponent/Input"; // Assuming Input is imported from the correct path
 import "./style.scss";
 const SponsorshipTable2 = () => {

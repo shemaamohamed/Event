@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SponsorshipTable from "../SponsorshipTable";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useAuth } from "../../../common/AuthContext";
 import "./style.scss";
 
@@ -111,8 +111,29 @@ const BoothCostTable = ({
   const [boothData, setBoothData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [shellSchemePrice, setShellSchemePrice] = useState(0);
+  const [standDepth, setStandDepth] = useState(0);
+  const [standPrice, setStandPrice] = useState(0);
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const { myConferenceId } = useAuth();
+  const fetchFloorPlan = async () => {
+    if (!myConferenceId) return;
+   
+    try {
+      const response = await axios.get(
+        `${BaseUrl}/floor/plan/${myConferenceId}`
+      );
+      setFloorPlanUrl(response?.data.data[0].floor_plan);
+      setShellSchemePrice(response?.data.data[0].shell_scheme_price_per_sqm);
+      setStandDepth(response?.data.data[0].space_only_stand_depth);
+      setStandPrice(response?.data.data[0].space_only_stand_price_usd)
+    } catch (error) {}
+  };
+  useEffect(() => {
+    if (myConferenceId) {
+      fetchFloorPlan();
+    }
+  }, [{ myConferenceId }]);
 
   const fetchData = async () => {
     try {
@@ -153,7 +174,7 @@ const BoothCostTable = ({
     <div className="booth-cost-table">
       <h2 className="booth-cost-table-header">Booth Cost Table</h2>
       <h5 className="booth-cost-table-description">
-        Space only stand USD 1400 Per Meter - Depth = 3M
+        Space only stand USD {standPrice} Per Meter - Depth = {standDepth}
       </h5>
       <table className="booth-cost-table-table">
         <thead>
@@ -214,6 +235,7 @@ const SponsorSection = () => {
   const [chosenBooths, setChosenBooths] = useState([]);
   const [exhibitNumber, setExhibitNumber] = useState("");
   const [shellSchemeSelected, setShellSchemeSelected] = useState(false);
+  const [squareMeters, setSquareMeters] = useState(false);
 
   const handleShellSchemeChange = (event) => {
     setShellSchemeSelected(event.target.checked);
@@ -229,6 +251,9 @@ const SponsorSection = () => {
       }
     });
   };
+
+
+
   const handleSelectedSponsorshipsChange = (ids) => {
     setSelectedSponsorshipIds(ids);
   };
@@ -287,11 +312,11 @@ const SponsorSection = () => {
     const token = localStorage.getItem("token");
     const payload = {
       user_id: userId,
-      user_name: "John Doe",
+      // user_name: "John Doe",
       conference_sponsorship_option_ids: selectedSponsorshipIds,
       booth_cost_ids: chosenBooths,
       sponsorship_option_ids: selectedOptionIds,
-      conference_id: 1,
+      conference_id: myConferenceId,
       additional_cost_for_shell_scheme_booth: shellSchemeSelected,
       exhibit_number: exhibitNumber,
     };
@@ -342,6 +367,7 @@ const SponsorSection = () => {
         onSelectBooth={handleSelectBooth}
         shellSchemeSelected={shellSchemeSelected}
         onShellSchemeChange={handleShellSchemeChange}
+        
       />
       <StandardBoothPackage onExhibitNumberChange={handleExhibitNumberChange} />
       <div className="button-container">

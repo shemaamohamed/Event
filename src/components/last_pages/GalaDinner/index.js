@@ -4,7 +4,7 @@ import Input from "../../../CoreComponent/Input";
 import DateInput from "../../../CoreComponent/Date";
 import Select from "../../../CoreComponent/Select";
 import "./style.scss";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const GalaDinner = ({ isOpen, setIsOpen }) => {
   // Defining the state variables
@@ -79,6 +79,7 @@ const GalaDinner = ({ isOpen, setIsOpen }) => {
       toast.success(response?.data?.message);
     } catch (error) {
       console.error("There was an error submitting the dinner details!", error);
+      toast.error(error?.response?.data?.message || "An error occurred. Please try again.");
     }
   };
 

@@ -40,28 +40,32 @@ const UsersList = () => {
     setCurrentPage(pageNumber);
   };
 
-  const formattedData = users.map((user) => ({
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    action: (
-      <button
-        onClick={() => {
-          setOpenDiscountForm(true);
-          setUserId(user.id);
-        }}
-        className="link-button"
-      >
-        Add Discount
-      </button>
-    ),
-  }));
+  const formattedData = users
+    .filter((item) => item?.registration_type == "speaker")
+    ?.map((user) => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      registration_type: user.registration_type,
+      action: (
+        <button
+          onClick={() => {
+            setOpenDiscountForm(true);
+            setUserId(user.id);
+          }}
+          className="link-button"
+        >
+          Add Discount
+        </button>
+      ),
+    }));
 
   return (
     <div className="all-users-table">
       <Table
         headers={[
           { key: "name", label: "Name" },
+          { key: "registration_type", label: "Registration Type" },
           { key: "email", label: "Email" },
           { key: "action", label: "Action" },
         ]}

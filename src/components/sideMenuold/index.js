@@ -146,7 +146,7 @@ function SideMenu() {
 
               {
                 label: "Flights Files",
-                path: "/flights/files",
+                path: "/all/flight/files",
               },
 
             ],

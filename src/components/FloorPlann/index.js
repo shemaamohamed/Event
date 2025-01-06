@@ -3,7 +3,8 @@ import axios from "axios";
 import ImageUpload from "../../CoreComponent/ImageUpload";
 import "./style.scss";
 import Select from "../../CoreComponent/Select";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
+import Input from "../../CoreComponent/Input"; // Assuming you have this custom Input component
 
 const FloorPlanUploader = () => {
   const [file, setFile] = useState("");
@@ -11,6 +12,9 @@ const FloorPlanUploader = () => {
   const [message, setMessage] = useState("");
   const [allConference, setAllConference] = useState([]);
   const [conferenceId, setConferenceId] = useState(null);
+  const [shellSchemePrice, setShellSchemePrice] = useState("");
+  const [standDepth, setStandDepth] = useState("");
+  const [standPrice, setStandPrice] = useState("");
 
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -39,17 +43,19 @@ const FloorPlanUploader = () => {
 
   // رفع البيانات إلى الخادم
   const handleSubmit = async () => {
-    if (!file || !conferenceId) {
-      setMessage("Please select both a conference and a file.");
+    if (!file || !conferenceId || !shellSchemePrice || !standDepth || !standPrice) {
+      setMessage("Please fill all fields and select a file.");
       return;
     }
-    const BaseUrl = process.env.REACT_APP_BASE_URL;;
     const token = localStorage.getItem("token");
     const url = `${BaseUrl}/floor/plan`;
     const formData = new FormData();
 
     formData.append("floor_plan", file);
     formData.append("conference_id", conferenceId.value);
+    formData.append("shell_scheme_price_per_sqm", shellSchemePrice);
+    formData.append("space_only_stand_depth", standDepth);
+    formData.append("space_only_stand_price_usd", standPrice);
 
     try {
       setLoading(true);
@@ -60,14 +66,12 @@ const FloorPlanUploader = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.success("File uploaded successfully!");
+      toast.success("File and data uploaded successfully!");
 
-
-    //   setMessage("File uploaded successfully!");
     } catch (error) {
-      setMessage(
-        error.response?.data?.message || "An error occurred during upload."
-      );
+      const errorMessage = error.response?.data?.error || "An error occurred during upload.";
+      toast.error(errorMessage);
+      console.log(errorMessage); // عرض رسالة الخطأ
     } finally {
       setLoading(false);
     }
@@ -92,6 +96,58 @@ const FloorPlanUploader = () => {
         setInputValue={setFile}
         allowedExtensions={["pdf"]}
       />
+
+      {/* إدخال السعر لكل متر مربع */}
+      <div className="input-group">
+        {/* <label htmlFor="shell_scheme_price">Shell Scheme Price (per sqm):</label>
+        <input
+          type="number"
+          id="shell_scheme_price"
+          value={shellSchemePrice}
+          onChange={(e) => setShellSchemePrice(e.target.value)}
+        /> */}
+        <Input
+          label="Shell Scheme Price (per sqm):"
+          type="number"
+          placeholder="Enter Shell Scheme Price"
+          inputValue={shellSchemePrice}
+          setInputValue={setShellSchemePrice}
+          required={true}
+        />
+      </div>
+
+      {/* إدخال العمق */}
+      <div className="input-group">
+        {/* <label htmlFor="stand_depth">Stand Depth (meters):</label>
+        <input
+          type="number"
+          id="stand_depth"
+          value={standDepth}
+          onChange={(e) => setStandDepth(e.target.value)}
+        /> */}
+        <Input
+          label="Stand Depth (meters):"
+          type="number"
+          placeholder="Enter Stand Depth "
+          inputValue={standDepth}
+          setInputValue={setStandDepth}
+          required={true}
+        />
+      </div>
+
+      {/* إدخال السعر لكل متر */}
+      <div className="input-group">
+
+        <Input
+          label="Stand Price (USD per meter):"
+          type="number"
+          step="0.01"
+          placeholder="Enter Stand Price"
+          inputValue={standPrice}
+          setInputValue={setStandPrice}
+          required={true}
+        />
+      </div>
 
       {/* رسالة الحالة */}
       {message && <p>{message}</p>}

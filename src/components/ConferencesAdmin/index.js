@@ -8,7 +8,7 @@ import "./style.scss";
 import TextArea from "../../CoreComponent/TextArea";
 import SVG from "react-inlinesvg";
 import deleteIcon from "../../icons/deleteIcon.svg";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { countriesOptions } from "../../constant";
 

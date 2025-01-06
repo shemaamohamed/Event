@@ -1,23 +1,23 @@
 .container-sponsorship-list {
-  height: calc(100vh - 60px);
-  overflow: overlay;
+  // height: calc(100vh - 60px);
+  // overflow: overlay;
 
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
+  // &::-webkit-scrollbar {
+  //   width: 3px;
+  // }
 
-  &::-webkit-scrollbar-track {
-    background: var(--scrollbar-track-color);
-  }
+  // &::-webkit-scrollbar-track {
+  //   background: var(--scrollbar-track-color);
+  // }
 
-  &::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb-color);
-    border-radius: 50px;
-  }
+  // &::-webkit-scrollbar-thumb {
+  //   background: var(--scrollbar-thumb-color);
+  //   border-radius: 50px;
+  // }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover-color);
-  }
+  // &::-webkit-scrollbar-thumb:hover {
+  //   background: var(--scrollbar-thumb-hover-color);
+  // }
 }
 .container-sponsorship-packages {
   padding: 40px;

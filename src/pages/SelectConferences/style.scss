@@ -1,49 +1,80 @@
-$conferences-bg: #f8f9fa;
-$primary-color: #ef233c;
-
 .conferences {
   padding: 20px;
-  border-radius: 8px;
-
-  .titlee {
+  // background-color: #f9f9f9;
+  .title {
     text-align: center;
-    color: $primary-color;
+    font-size: 2rem;
+    color: #c82333;
     margin-bottom: 20px;
   }
-
   .conference-list {
     list-style: none;
     padding: 0;
-
     .conference-item {
-      background-color: white;
-      padding: 15px;
-      margin: 10px 0;
-      border: 1px solid #e0e0e0;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-
-      &:hover {
-        background-color: $primary-color;
-        color: white;
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      h2 {
+        cursor: pointer;
+        color: #c82333;
+        &:hover {
+          color: #57000a;
+          // background-color: #9a9a9a3b;
+          // text-decoration: underline;
+        }
+      }
+      .prices-list {
+        list-style: none;
+        margin-top: 10px;
+        padding: 0;
+        .price-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          margin-top: 10px;
+          background-color: #f8f8f8;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          &.selected {
+            background-color: #c82333;
+            color: #ffffff;
+          }
+          &:hover {
+            background-color: #c82333;
+            .price-amount {
+              font-size: 1rem;
+              color: #ffffff;
+            }
+            .price-type {
+              font-weight: bold;
+              font-size: 1rem;
+              color: #ffffff;
+            }
+            .price-description {
+              font-size: 0.875rem;
+              color: #ffffff;
+            }
+          }
+          .price-type {
+            font-weight: bold;
+            font-size: 1rem;
+          }
+          .price-amount {
+            font-size: 1rem;
+            color: #28a745;
+          }
+          .price-description {
+            font-size: 0.875rem;
+            color: #666;
+          }
+        }
       }
     }
   }
-}
-body::-webkit-scrollbar {
-  width: 3px;
-}
-
-body::-webkit-scrollbar-track {
-  background: var(--scrollbar-track-color);
-}
-
-body::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb-color);
-  border-radius: 50px;
-}
-
-body::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover-color);
 }

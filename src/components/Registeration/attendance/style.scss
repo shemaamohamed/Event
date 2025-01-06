@@ -1,109 +1,99 @@
-// @use "../../Global/style.scss";
+.register-attendance-page {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-.register-page-container {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #d3d3d31d;
-  .register-img {
-    position: relative;
-    top: -72px;
+  .payment-section {
+    background: linear-gradient(145deg, #ffffff, #f1f1f1); // Modern gradient background
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Soft shadow for depth
+    border-radius: 12px; // Smooth rounded corners
+    padding: 33px; // Comfortable padding for spacing
+    max-width: 550px; // Limit the width for better structure
+    margin: 20px auto; // Center on the page
+    text-align: center; // Center-align all text
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px; // Adequate spacing between child elements
+  
+    div:first-child {
+      font-size: 1.8rem; // Standout font size for the title
+      font-weight: 600; // Semi-bold for emphasis
+      color: #333333; // Neutral dark color
+      // text-transform: uppercase; // Modern uppercase text
+      letter-spacing: 1px; // Slight spacing for a modern touch
+    }
+  
+    div:last-child {
+      font-size: 1.2rem; // Balanced font size for the description
+      color: #666666; // Soft gray for secondary text
+      line-height: 1.6; // Improve readability
+      max-width: 400px; // Restrict text width for neatness
+    }
+  
+    button {
+      padding: 12px 24px; // Comfortable button size
+      font-size: 1.1rem; // Modern font size
+      font-weight: 600; // Bold for emphasis
+      border: none;
+      border-radius: 8px; // Rounded corners for a sleek look
+      background: linear-gradient(145deg, #ff4d4d, #cc0000); // Vibrant red gradient
+      color: #ffffff; // White text for contrast
+      cursor: pointer;
+      transition: all 0.3s ease; // Smooth transitions
+  
+      &:hover {
+        background: linear-gradient(145deg, #cc0000, #990000); // Darker red hover effect
+        transform: translateY(-2px); // Subtle hover animation
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); // Elevated hover shadow
+      }
+  
+      &:disabled {
+        background: #e0e0e0; // Muted gray for disabled state
+        cursor: not-allowed;
+        color: #a0a0a0; // Softer text color
+        box-shadow: none; // No shadow for disabled button
+      }
+    }
   }
-  .register-form {
+  
+  
+  
+
+
+  .form-section {
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .form-title {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .submit-button {
+      text-align: end;
+      background-color: #c82333;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 4px;
+      &:hover {
+        background-color: #8b1b26;
+      }
+    }
+
+    .MuiTextField-root {
+      margin-bottom: 16px;
+    }
+  }
+
+  .but-con2 {
     width: 100%;
-    margin-top: 2%;
-
-    .title {
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 22px;
-      text-align: left;
-      padding: 0px 30px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      color: #ef233c;
-      margin-bottom: 15px;
-      margin-top: 15px;
-       .sub-title {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 22px;
-        text-align: left;
-        padding: 0px 20px;
-        cursor: pointer;
-        text-decoration: underline;
-        
-      }
-    }
-
-    .note {
-      padding: 15px 20px;
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 20px;
-      text-align: left;
-    }
-    .fields-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-column-gap: 20px;
-      padding: 0px 30px;
-
-      
-      .image-container{
-        height: 80px;
-      }
-    }
-  }
-
-  .input-container ,.phone-input-container ,.dropdown-container {
-    height: 84px !important;
-  }
-.textarea-container{
-  height: 120px ;
-}
-
-  .register-btn-container {
     display: flex;
     flex-direction: row;
-    padding-left: 30px;
-
-    .register-btn {
-      cursor: pointer;
-      width: 200px;
-      display: inline-block;
-      padding: 10px 20px;
-      font-size: 16px;
-      font-weight: bold;
-      color: #ffffff;
-      background-color: #ef233c;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      text-align: center;
-      transition: background-color 0.3s, color 0.3s;
-      margin-top: 10px;
-    }
-
-    .register-btn:hover {
-      background-color: #407cffbd;
-      color: #ffffff;
-    }
-    .register-btn:active {
-      background-color: #104bcd;
-      color: #ffffff;
-    }
-  }
-}
-@media only screen and (max-width: 768px) {
-  .register-page-container {
-    align-items: start;
-
-    .register-form {
-      margin-top: 40%;
-      box-shadow: none;
-    }
+    justify-content: end;
   }
 }

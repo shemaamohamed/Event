@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./style.scss";
 import Select from "../../CoreComponent/Select";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Input from "../../CoreComponent/Input"; // Assuming you have this custom Input component
 
 const BoothCostForm = () => {

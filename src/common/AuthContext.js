@@ -98,6 +98,7 @@ export const AuthProvider = ({ children }) => {
             isAdmin: userData?.isAdmin,
             loading: false,
             isLoggedIn: true,
+            certificatePDF:userData?.certificatePDF
           }));
         },
         onError: (error) => console.error("Failed to fetch user data:", error),
@@ -192,12 +193,12 @@ export const AuthProvider = ({ children }) => {
       loading: false,
       name: "",
       isLoggedIn: false,
+      certificatePDF:""
     });
     localStorage.removeItem("token");
     localStorage.removeItem("tokenTimestamp");
 
   };
-
   return (
     <AuthContext.Provider
       value={{

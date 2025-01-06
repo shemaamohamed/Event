@@ -1,5 +1,5 @@
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 const httpService = async ({
   method = "GET",
   url,
@@ -33,9 +33,7 @@ const httpService = async ({
     }
     if (withToast) {
       if (response?.data?.message) {
-        if (toast && toast.props) {
-          toast.success(response?.data?.message || "");
-        }
+          // toast.success(response?.data?.message || "");
       }
     }
     return response.data;
@@ -44,9 +42,7 @@ const httpService = async ({
       onError(error.message);
     }
     if (withToast && error?.data?.message) {
-      if (toast && toast.props) {
         toast.error(error?.data?.message || "");
-      }
     }
     throw error;
   } finally {

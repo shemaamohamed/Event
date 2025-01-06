@@ -107,6 +107,20 @@ const SponsorInvoice = () => {
                 <p>No sponsorship options available.</p>
               )}
             </div>
+            <div className="section sponsorship-options"> 
+{/* Shell Scheme Price and Square Meters */}
+{invoiceData?.square_meters > 0 && <div className="row">
+  <span className="label">Shell Scheme Price:</span>
+  <span className="value">${invoiceData.shell_scheme_price || "N/A"}</span>
+</div>}
+<div className="row">
+  <span className="label">Square Meters:</span>
+  <span className="value">{invoiceData.square_meters || 0}</span>
+</div>
+
+
+
+            </div>
           </>
         )}
       </div>

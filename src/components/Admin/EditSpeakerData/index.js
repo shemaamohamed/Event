@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Checkbox from "../../../CoreComponent/Checkbox";
 import { useParams } from "react-router-dom";
 import httpService from "../../../../src/common/httpService";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "./style.scss";
 import Input from "../../../CoreComponent/Input";
 import Select from "../../../CoreComponent/Select";
@@ -12,22 +12,23 @@ const EditSpeakerData = () => {
 
   const { conferenceId, userId } = useParams();
   const [isOnlineApproved, setIsOnlineApproved] = useState(true);
-  const [ticketStatus, setTicketStatus] = useState("1");
+  // const [ticketStatus, setTicketStatus] = useState("1");
   const [dinnerInvitation, setDinnerInvitation] = useState(true);
   const [airportPickup, setAirportPickup] = useState(true);
   const [freeTrip, setFreeTrip] = useState(true);
   const [isVisaPaymentRequired, setIsVisaPaymentRequired] = useState(false);
   const [numberOfNights, setNumberOfNights] = useState(0);
-  const [roomType, setRoomType] = useState("");
+  const [roomType, setRoomType] = useState(""); // قيمة افتراضية
   // const [onlineLink, setOnlineLink] = useState(""); // حالة جديدة لتتبع الرابط
 
   const options = [
-    { value: "single", label: "Single" },
-    { value: "double", label: "Double" },
-    { value: "triple", label: "Triple" },
+    { value: "Single", label: "Single" },
+    { value: "Double", label: "Double" },
+    { value: "Triple", label: "Triple" },
   ];
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const getAuthToken = () => localStorage.getItem("token");
 
     try {
@@ -40,24 +41,25 @@ const EditSpeakerData = () => {
           nights_covered: numberOfNights,
           room_type: roomType?.value,
           is_online_approved: isOnlineApproved ? 1 : 0,
-          ticket_status: ticketStatus,
+          // ticket_status: ticketStatus,
           dinner_invitation: dinnerInvitation ? 1 : 0,
           airport_pickup: airportPickup ? 1 : 0,
           free_trip: freeTrip ? 1 : 0,
           is_certificate_active: 0,
           is_visa_payment_required: isVisaPaymentRequired ? 1 : 0,
-
         },
-        withToast: true,
+        // withToast: true,
         onError: (error) => {
-          toast.error("Failed to submit the form: " + error);
+          
         },
         onSuccess: (response) => {
           toast.success("Profile Uploaded Successfully");
         },
       });
     } catch (error) {
-      console.error("Error submitting form:", error);
+ 
+      toast.error(error?.response?.data?.error);
+      
     }
   };
 
@@ -80,6 +82,7 @@ const EditSpeakerData = () => {
           placeholder="Select..."
         />
 
+
         <Checkbox
           label="Is Online Approved?"
           checkboxValue={isOnlineApproved}
@@ -87,12 +90,12 @@ const EditSpeakerData = () => {
           className="form-checkbox"
         />
 
-        <Checkbox
+        {/* <Checkbox
           label="Ticket Status (Active)"
           checkboxValue={ticketStatus}
           setCheckboxValue={setTicketStatus}
           className="form-checkbox"
-        />
+        /> */}
 
         <Checkbox
           label="Dinner Invitation?"

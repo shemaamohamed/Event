@@ -1,0 +1,73 @@
+.visas-component {
+  .head {
+    background-color: rgb(241, 241, 241);
+    padding: 0px 20px;
+    height: 60px;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .head2 {
+    // background-color: rgb(241, 241, 241);
+    padding: 10px 20px;
+    // height: 60px;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #9a9a9a2c;
+    border-top: 1px solid #9a9a9a2c;
+  }
+  .no-messgae {
+    padding: 20px;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .visa-details {
+    .details-list {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-row-gap: 20px;
+      // border-bottom: 1px solid #9a9a9a2c;
+    }
+  }
+
+  .view-details-button {
+    background: none;
+    border: none;
+    color: #007bff; /* Primary link color */
+    // text-decoration: underline; /* Underline to indicate it's a link */
+    font-size: 16px; /* Font size for the link */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    padding: 0;
+    margin: 0;
+    transition:
+      color 0.3s ease,
+      text-decoration 0.3s ease;
+  }
+
+  .view-details-button:hover,
+  .view-details-button:focus {
+    color: #0056b3; /* Darker shade for hover/focus state */
+    text-decoration: none; /* Remove underline on hover/focus for cleaner look */
+  }
+
+  .view-details-button:active {
+    color: #004085; /* Even darker shade for active state */
+  }
+  .all-button {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+}

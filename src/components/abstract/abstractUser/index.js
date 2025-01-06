@@ -9,7 +9,7 @@ import TextArea from "../../../CoreComponent/TextArea";
 import ImageUpload from "../../../CoreComponent/ImageUpload";
 import { countriesOptions, nationalitiesOptions } from "../../../constant";
 import "./style.scss";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 function PaperSubmissionForm({ conferenceId }) {
   const navigate = useNavigate();

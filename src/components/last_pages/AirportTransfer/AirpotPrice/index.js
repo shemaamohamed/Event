@@ -3,7 +3,7 @@ import axios from "axios";
 import Input from "../../../../CoreComponent/Input";
 import MySideDrawer from "../../../../CoreComponent/SideDrawer";
 import CustomFormWrapper from "../../../../CoreComponent/CustomFormWrapper";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "./style.scss";
 import httpService from "../../../../common/httpService";
 
@@ -41,11 +41,9 @@ const AirportTransferPrice = ({ isOpen, setIsOpen, selectedConference }) => {
         }
       );
 
-      console.log("Response:", response.data);
       setIsOpen(false);
       toast.success("Airport Transfer Price Added successfully!");
     } catch (error) {
-      console.error("There was an error submitting the prices!", error);
       toast.error("Failed to submit prices. Please try again.");
     }
   };

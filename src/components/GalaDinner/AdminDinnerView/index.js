@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss"; // تأكد من إضافة SCSS هنا
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 import MySideDrawer from "../../../CoreComponent/SideDrawer";
 import { useParams } from "react-router-dom";

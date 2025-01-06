@@ -1,0 +1,63 @@
+// Base styles
+$primary-color: #c83222;
+$secondary-color: #c83222;
+$error-color: #f44336;
+$background-color: #f9f9f9;
+$white-color: #ffffff;
+$shadow-color: rgba(0, 0, 0, 0.1);
+
+// ملف كامل لتنسيق الصفحة
+.certification-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 30px auto;
+  background-color: $background-color;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px $shadow-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    margin-bottom: 20px;
+    color: $primary-color;
+  }
+
+  .certificate-content {
+    width: 100%;
+    background-color: $white-color;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px $shadow-color;
+
+    iframe {
+      border-radius: 8px;
+    }
+
+    .download-button {
+      margin-top: 20px;
+      background-color: $primary-color;
+      color: $white-color;
+      &:hover {
+        background-color: $secondary-color;
+      }
+    }
+  }
+}
+
+// Loading and Error States
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: $error-color;
+  font-size: 20px;
+}

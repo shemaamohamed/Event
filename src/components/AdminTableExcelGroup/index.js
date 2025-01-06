@@ -1,126 +1,156 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import "./style.scss"
+import React, { useState, useEffect, Fragment } from "react";
+import Table from "../../CoreComponent/Table";
+import Pagination from "../../CoreComponent/Pagination";
+import Dialog from "../../CoreComponent/Dialog";
+import httpService from "../../common/httpService";
+import toast from "react-hot-toast";
+import "./style.scss";
+
 const ActiveRegistrations = () => {
-  const [registrations, setRegistrations] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [pagination, setPagination] = useState({
-    currentPage: 1,
-    perPage: 15,
-    total: 0,
-    lastPage: 1,
-  });
-  const token=localStorage.getItem("token")
+  const [registrationsData, setRegistrationsData] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [file, setFile] = useState(null);
 
-  // Fetch active registrations from the API
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const token = localStorage.getItem("token");
+
+  // Fetch registrations data
   const fetchRegistrations = async (page = 1) => {
-    const token=localStorage.getItem("token")
-    const BaseUrl = process.env.REACT_APP_BASE_URL;;
-    setLoading(true);
-    setError(null);
     try {
-        const response = await axios.get(
-          `${BaseUrl}/admin/all/excel/`,
-          {
-            params: { per_page: pagination.perPage, page },
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-
-      const { data } = response.data.registrations;
-      const { current_page, last_page, total, per_page } =
-        response.data.registrations;
-
-      setRegistrations(data);
-      setPagination({
-        currentPage: current_page,
-        lastPage: last_page,
-        total,
-        perPage: per_page,
+      const response = await httpService({
+        method: "GET",
+        url: `${BaseUrl}/admin/all/excel`,
+        params: { page },
+        headers: { Authorization: `Bearer ${token}` },
+        onSuccess: (data) => {
+          setRegistrationsData(data.registrations || []);
+          setTotalPages(data?.totalPages || 1);
+          setCurrentPage(Number(data?.currentPage) || 1);
+        },
+        onError: (error) => setErrorMsg(error?.message || "Failed to fetch registrations."),
+        withToast: true,
       });
-    } catch (err) {
-      setError('An error occurred while fetching data.');
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      setErrorMsg("Failed to fetch registrations.");
     }
+  };
+
+  const handlePageChange = (page) => {
+    fetchRegistrations(page);
+  };
+
+  const handleUploadClick = (registration) => {
+    setFile(null); // Reset file before uploading
+    setDialogOpen(true);
+  };
+
+  const handleFileUpload = async () => {
+    const formData = new FormData();
+    formData.append("excelFile", file);
+
+    try {
+      const response = await httpService({
+        method: "POST",
+        url: `${BaseUrl}/admin/excel-upload`, // Adjust endpoint as needed
+        headers: { Authorization: `Bearer ${token}` },
+        data: formData,
+        onSuccess: () => {
+          toast.success("File uploaded successfully!");
+          fetchRegistrations(); // Refresh the list after file upload
+        },
+        onError: (error) => console.error("Failed to upload file:", error),
+      });
+    } catch (error) {
+      console.error("Failed to upload file:", error);
+    }
+
+    setDialogOpen(false);
   };
 
   useEffect(() => {
     fetchRegistrations();
   }, []);
 
-  // Handle page change
-  const handlePageChange = (page) => {
-    fetchRegistrations(page);
-  };
+  const tableData = registrationsData.map((registration) => ({
+    ...registration,
+    user_name: registration.user_name,
+    user_email: registration.user_email,
+    contact_phone: registration.contact_phone,
+    organization_name: registration.organization_name,
+    contact_person: registration.contact_person,
+    number_of_doctors: registration.number_of_doctors,
+    excel_file: registration.excel_file ? (
+      <a
+        href={`${BaseUrl}/${registration.excel_file}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View Excel
+      </a>
+    ) : (
+      "No File"
+    ),
+    update_deadline: registration.update_deadline,
+  }));
 
   return (
-    <div className="container">
-      <h1>Active Registrations</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p className="error">{error}</p>}
-
-      {!loading && !error && (
-        <>
-          <table className="table">
-            <thead>
-              <tr>
-                {/* <th>User Name</th> */}
-                <th>User Email</th>
-                <th>User Phone</th>
-                <th>Organization Name</th>
-                <th>Contact Person</th>
-                {/* <th>Contact Email</th> */}
-                {/* <th>Contact Phone</th> */}
-                <th>Number of Doctors</th>
-                <th>Excel File</th>
-                <th>Update Deadline</th>
-              </tr>
-            </thead>
-            <tbody>
-              {registrations.map((registration, index) => (
-                <tr key={index}>
-                  {/* <td>{registration.user_name || 'N/A'}</td> */}
-                  <td>{registration.user_email || 'N/A'}</td>
-                  <td>{registration.contact_phone || 'N/A'}</td>
-                  <td>{registration.organization_name || 'N/A'}</td>
-                  <td>{registration.contact_person || 'N/A'}</td>
-                  {/* <td>{registration.email || 'N/A'}</td> */}
-                  {/* <td>{registration.contact_phone || 'N/A'}</td> */}
-                  <td>{registration.number_of_doctors || 'N/A'}</td>
-                  <td>
-                  <a href={`https://mayazin.co/backend/storage/app/public/${registration.excel_file}`} target="_blank" rel="noopener noreferrer">
-    Download
-  </a>
-                  </td>
-                  <td>{registration.update_deadline || 'N/A'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {/* Pagination Controls */}
-          <div className="pagination">
-            <button
-              disabled={pagination.currentPage === 1}
-              onClick={() => handlePageChange(pagination.currentPage - 1)}
-            >
-              Previous
-            </button>
-            <span>
-              Page {pagination.currentPage} of {pagination.lastPage}
-            </span>
-            <button
-              disabled={pagination.currentPage === pagination.lastPage}
-              onClick={() => handlePageChange(pagination.currentPage + 1)}
-            >
-              Next
-            </button>
+    <Fragment>
+      <div className="registrations-component">
+        <div className="table-container">
+          <div className="table-wrapper">
+            <Table
+              headers={[
+                { label: "Username", key: "user_name" },
+                { label: "Email", key: "user_email" },
+                { label: "Contact Phone", key: "contact_phone" },
+                { label: "Organization", key: "organization_name" },
+                { label: "Contact Person", key: "contact_person" },
+                { label: "Number of Doctors", key: "number_of_doctors" },
+                { label: "Excel File", key: "excel_file" },
+                { label: "Update Deadline", key: "update_deadline" },
+              ]}
+              data={tableData}
+            />
           </div>
-        </>
-      )}
-    </div>
+        </div>
+
+        {isDialogOpen && (
+          <Dialog
+            viewHeader={true}
+            header="Upload Excel File"
+            open={isDialogOpen}
+            setOpen={setDialogOpen}
+            className="dialog-file"
+          >
+            <div className="dialog-content">
+          
+              <div className="dialog-actions">
+                <button className="save-button" onClick={handleFileUpload}>
+                  Save
+                </button>
+                <button
+                  className="cancel-button"
+                  onClick={() => setDialogOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </Dialog>
+        )}
+
+        <div className="pagination-container">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      </div>
+    </Fragment>
   );
 };
 

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import httpService from "../../common/httpService";
 import "./style.scss";
 import { useAuth } from "../../common/AuthContext";
+import { backendUrlImages } from "../../constant/config";
 
 const ReservationDetails = ({ setDisabledButton }) => {
   const [reservations, setReservations] = useState([]);
@@ -106,13 +107,22 @@ const ReservationDetails = ({ setDisabledButton }) => {
                       label="Total"
                       value={`$${invoice.total}`}
                     />
+
                     <SimpleLabelValue
-                      label="Late Check-out Price"
-                      value={`$${invoice.late_check_out_price}`}
-                    />
-                    <SimpleLabelValue
-                      label="Early Check-in Price"
-                      value={`$${invoice.early_check_in_price}`}
+                      label="Confirmation PDF"
+                      value={
+                        invoice.confirmationPDF ? (
+                          <a
+                            href={`${backendUrlImages}${invoice.confirmationPDF}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            View PDF
+                          </a>
+                        ) : (
+                          "-"
+                        )
+                      }
                     />
                     <SimpleLabelValue label="Status" value={invoice.status} />
                   </div>

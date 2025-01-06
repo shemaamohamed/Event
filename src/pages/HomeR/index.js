@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Grid, Box, Typography, Container } from "@mui/material";
 import CustomSlider from "../../components/CustomSlider";

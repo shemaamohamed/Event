@@ -1,27 +1,27 @@
 .pending-users-container {
   border-radius: 8px;
   width: 100%;
-  max-width: 1200px;
-  height: calc(100vh - 80px);
+  max-width: 1700px;
+  // height: calc(100vh - 80px);
   padding: 20px;
-  overflow: overlay;
+  // overflow: overlay;
 
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
+  // &::-webkit-scrollbar {
+  //   width: 3px;
+  // }
 
-  &::-webkit-scrollbar-track {
-    background: var(--scrollbar-track-color);
-  }
+  // &::-webkit-scrollbar-track {
+  //   background: var(--scrollbar-track-color);
+  // }
 
-  &::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb-color);
-    border-radius: 50px;
-  }
+  // &::-webkit-scrollbar-thumb {
+  //   background: var(--scrollbar-thumb-color);
+  //   border-radius: 50px;
+  // }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover-color);
-  }
+  // &::-webkit-scrollbar-thumb:hover {
+  //   background: var(--scrollbar-thumb-hover-color);
+  // }
   .pending-users-container h2 {
     font-size: 24px;
     font-weight: 600;

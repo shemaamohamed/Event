@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import ImageUpload from "../../../../CoreComponent/ImageUpload";
 import "./style.scss";
 import httpService from "../../../../common/httpService";
@@ -133,7 +133,8 @@ const ExcelUpload = () => {
             Download Excel File
           </a>
 
-        {userGroupData.update_deadline && <p>Update Deadline: {userGroupData.update_deadline}</p>}
+        {userGroupData.update_deadline && <p>Update Deadline: {new Date(userGroupData.update_deadline).toISOString().split('T')[0]}</p>
+}
           {/* إضافة شرط لإخفاء الجملة إذا كان الموعد النهائي قد انقضى */}
           {!isUpdateDeadlinePassed && (
             <p>

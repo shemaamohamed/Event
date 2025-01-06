@@ -5,7 +5,7 @@ import { backendUrlImages } from "../../constant/config";
 import ImageUpload from "../../CoreComponent/ImageUpload";
 import DateInput from "../../CoreComponent/Date";
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "./style.scss";
 import Select from "../../CoreComponent/Select";
 import Pagination from "../../CoreComponent/Pagination";

@@ -59,8 +59,8 @@ const CreateJob = () => {
               label="Responsibilities"
               type="text"
               placeholder="Enter responsibilities"
-              inputValue={responsibilities}
-              setInputValue={setResponsibilities}
+              value={responsibilities}
+              setValue={setResponsibilities}
             />
           </div>
           <div className="form-group">
@@ -69,8 +69,8 @@ const CreateJob = () => {
               className="desc"
               type="text"
               placeholder="Enter job description"
-              inputValue={description}
-              setInputValue={setDescription}
+              value={description}
+              setValue={setDescription}
             />
           </div>
           <button type="submit">Create Job</button>

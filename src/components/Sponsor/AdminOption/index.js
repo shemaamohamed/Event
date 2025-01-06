@@ -3,7 +3,7 @@ import axios from "axios";
 import Select from "../../../CoreComponent/Select";
 
 import "./style.scss";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Input from "../../../CoreComponent/Input";
 import TextArea from "../../../CoreComponent/TextArea";
 

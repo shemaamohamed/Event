@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "./style.scss";
 import Checkbox from "../../CoreComponent/Checkbox";
 import httpService from "../../common/httpService";
@@ -19,11 +19,11 @@ const EditAbstractData = () => {
 
   const [specificFlightTime, setSpecificFlightTime] = useState(false);
   const [isOnlineApproved, setIsOnlineApproved] = useState(true);
-  const [ticketStatus, setTicketStatus] = useState("1");
+  // const [ticketStatus, setTicketStatus] = useState("1");
   const [dinnerInvitation, setDinnerInvitation] = useState(true);
   const [airportPickup, setAirportPickup] = useState(true);
   const [freeTrip, setFreeTrip] = useState(true);
-  const [isCertificateActive, setIsCertificateActive] = useState(true);
+  // const [isCertificateActive, setIsCertificateActive] = useState(true);
   const [isVisaPaymentRequired, setIsVisaPaymentRequired] = useState(false);
   const [paperStatus, setPaperStatus] = useState("under review"); // الحالة الجديدة
   const [roomType, setRoomType] = useState("");
@@ -49,23 +49,26 @@ const EditAbstractData = () => {
           nights_covered: numberOfNights,
           room_type: roomType?.value,
           is_online_approved: isOnlineApproved ? 1 : 0,
-          ticket_status: ticketStatus,
+          // ticket_status: ticketStatus,
           dinner_invitation: dinnerInvitation ? 1 : 0,
           airport_pickup: airportPickup ? 1 : 0,
           free_trip: freeTrip ? 1 : 0,
-          is_certificate_active: isCertificateActive ? 1 : 0,
+          // is_certificate_active: isCertificateActive ? 1 : 0,
           is_visa_payment_required: isVisaPaymentRequired ? 1 : 0, 
           paper_status: paperStatus.value, // إضافة status
           // link: isOnlineApproved ? onlineLink : null, // إرسال الرابط فقط إذا تمت الموافقة
 
         },
-        withToast: true,
-        // onError: (error) => {
-        //   toast.succeee("Failed to submit the form: " + error);
-        // },
+        // withToast: true,
+        onSuccess: (data) => {
+          toast.success("Speaker was Edit Successfully");
+
+        },
       });
     } catch (error) {
-      console.error("Error submitting form:", error);
+      // console.error("Error submitting form:", error);
+      console.log(error.response.data.error)
+      toast.error(error.response.data.error)
     }
   };
 
@@ -100,12 +103,12 @@ const EditAbstractData = () => {
           className="form-checkbox"
         />
  {/* {isOnlineApproved && <div>You will be provided with the Zoom link for the conference or your session one day prior to the scheduled date to ensure your participation</div>} */}
-        <Checkbox
+        {/* <Checkbox
           label="Ticket Status (Active)"
           checkboxValue={ticketStatus}
           setCheckboxValue={setTicketStatus}
           className="form-checkbox"
-        />
+        /> */}
 
         <Checkbox
           label="Dinner Invitation?"
@@ -128,12 +131,7 @@ const EditAbstractData = () => {
           className="form-checkbox"
         />
 
-        <Checkbox
-          label="Is Certificate Active?"
-          checkboxValue={isCertificateActive}
-          setCheckboxValue={setIsCertificateActive}
-          className="form-checkbox"
-        />
+ 
 
         <Checkbox
           label="Is Visa Payment Required?"

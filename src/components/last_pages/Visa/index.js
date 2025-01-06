@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation after clicking "Yes"
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Input from "../../../CoreComponent/Input";
 import ImageUpload from "../../../CoreComponent/ImageUpload"; // Importing ImageUpload component
 import DateInput from "../../../CoreComponent/Date"; // Importing DateInput component
@@ -10,6 +10,7 @@ import httpService from "../../../common/httpService";
 import { getFromLocalStorage } from "../../../common/localStorage";
 import SimpleLabelValue from "../../SimpleLabelValue";
 import { useAuth } from "../../../common/AuthContext";
+import { backendUrlImages } from "../../../constant/config";
 const VisaPage = () => {
   const { userId } = useAuth();
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -21,9 +22,10 @@ const VisaPage = () => {
   const [arrivalDate, setArrivalDate] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [error, setError] = useState("");
+  const [visapdf, setVisapdf] = useState(null);
 
   const [visaPrice, setVisaPrice] = useState(0); // Changed initial state to null to check for data
-  const [visaData, setVisaData] = useState(null); // Changed initial state to null to check for data
+  const [visaData, setVisaData] = useState(""); // Changed initial state to null to check for data
   const [speakerData, setSpeakerData] = useState(null);
 
   const handleUserChoice = (choice) => {
@@ -31,6 +33,7 @@ const VisaPage = () => {
       setShowVisaForm(true); // Show the visa form if "Yes" is chosen
     } else {
       setShowVisaForm(false); // Close the form if "No" is chosen
+      navigate("/flight/form");
     }
   };
 
@@ -105,6 +108,7 @@ const VisaPage = () => {
         withToast: true, // Show toast
       });
       setVisaData(data.visa);
+      setVisapdf(data.visa.visapdf);
 
       // Set fields based on the data
       if (data.visa) {
@@ -120,7 +124,7 @@ const VisaPage = () => {
     }
   };
   const token = localStorage.getItem("token"); // استرجاع التوكن
-
+  console.log(visapdf);
   // const fetchSpeakerData = async () => {
 
   //   try {
@@ -217,9 +221,15 @@ const VisaPage = () => {
               required
             />
           </div>
-          <button type="submit" className="submit-btn">
+          <button
+            type="submit"
+            className={`submit-btn ${!arrivalDate ||!departureDate || !passportImage ? "disabled" : ""}`}
+            disabled={!arrivalDate ||!departureDate || !passportImage ? true : false}
+
+          >
             Submit
           </button>
+
         </form>
       )}
 
@@ -249,13 +259,22 @@ const VisaPage = () => {
                 value={visaData.updated_at_by_admin}
               />
             )}
+
+            {visapdf && (
+              <div className="download-link">
+                <a
+                  href={`${backendUrlImages}${visapdf}`}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Download Visa PDF
+                </a>
+              </div>
+            )}
           </div>
           <div className="actions-section">
-            <button
-              className="next-button"
-              onClick={() => {
-              }}
-            >
+            <button className="next-button" onClick={() => { }}>
               Pay
             </button>{" "}
             <button

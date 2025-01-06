@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../../../CoreComponent/Input";
 import DateInput from "../../../CoreComponent/Date";
 import Checkbox from "../../../CoreComponent/Checkbox";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "./style.scss";
 import { useTripsStepper } from "../StepperContext";
 import {

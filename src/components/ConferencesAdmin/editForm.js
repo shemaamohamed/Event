@@ -8,13 +8,21 @@ import Select from "../../CoreComponent/Select";
 import TextArea from "../../CoreComponent/TextArea";
 import SVG from "react-inlinesvg";
 import deleteIcon from "../../icons/deleteIcon.svg";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
+import moment from "moment";
 
 const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
+  console.log({ committeeMembers });
+
+  const generateId = () => {
+    // Generate a random string of characters for the ID
+    return Math.random().toString(36).substr(2, 9); // Generates a random string of 9 characters
+  };
+
   const addCommitteeMember = () => {
     setCommitteeMembers([
       ...committeeMembers,
-      { id: Date.now(), name: "", image: null },
+      { id: generateId(), name: "", image: null },
     ]);
   };
 
@@ -198,15 +206,29 @@ const EditConferencesAdmin = ({
   useEffect(() => {
     if (conferenceData) {
       console.log({ conferenceData });
+      console.log(conferenceData.start_date);
 
       // تحديث الحقول الرئيسية
       setTitle(conferenceData.title || "");
       setDescription(conferenceData.description || "");
-      setStartDate(conferenceData.start_date || "");
-      setEndDate(conferenceData.end_date || "");
+      setStartDate(
+        conferenceData?.start_date
+          ? conferenceData?.start_date?.split("T")[0]
+          : ""
+      );
+      setEndDate(
+        conferenceData?.end_date ? conferenceData?.end_date?.split("T")[0] : ""
+      );
+      // setStartDate(conferenceData.start_date || "");
+      // setEndDate(conferenceData.end_date || "");
       setLocation(conferenceData.location || "");
       setStatus(conferenceData.status || "upcoming");
-
+      setFirstAnnouncement(conferenceData.first_announcement_pdf || "");
+      setSecondAnnouncement(conferenceData.second_announcement_pdf || "");
+      setBrochure(conferenceData.conference_brochure_pdf || "");
+      setScientificProgram(
+        conferenceData.conference_scientific_program_pdf || ""
+      );
       // تحديث أعضاء اللجنة
       const committee = conferenceData.committee_members.map((member) => ({
         id: member.id,
@@ -259,6 +281,7 @@ const EditConferencesAdmin = ({
   };
 
   async function addCommitteeMembers(mainId, members) {
+    if (!mainId) return;
     const formData = new FormData();
     const token = localStorage.getItem("token");
     members.forEach((member, index) => {
@@ -267,6 +290,11 @@ const EditConferencesAdmin = ({
         formData.append(`members[${index}][committee_image]`, member.image);
       }
       formData.append(`members[${index}][conference_id]`, mainId);
+      if (typeof member.id === "number" || !isNaN(parseInt(member.id))) {
+        formData.append(`members[${index}][id]`, member.id);
+      } else {
+        formData.append(`members[${index}][id]`, null);
+      }
     });
 
     try {
@@ -278,9 +306,7 @@ const EditConferencesAdmin = ({
 
       setIsOpen(false);
       getConference();
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    } catch (error) {}
   }
 
   const handleSubmit = (e) => {
@@ -338,23 +364,6 @@ const EditConferencesAdmin = ({
   const validateForm = () => {
     let validationErrors = {};
 
-    // if (!title) validationErrors.title = "Title is required";
-    // if (!description) validationErrors.description = "Description is required";
-    // if (!startDate) validationErrors.startDate = "Start date is required";
-    // if (!endDate) validationErrors.endDate = "End date is required";
-    // if (!location) validationErrors.location = "Location is required";
-    // if (!image || !conferenceData.image)
-    //   validationErrors.image = "Image is required";
-    // if (!firstAnnouncement || !conferenceData.first_announcement_pdf)
-    //   validationErrors.firstAnnouncement = "First announcement PDF is required";
-    // if (!secondAnnouncement || !conferenceData.second_announcement_pdf)
-    //   validationErrors.secondAnnouncement =
-    //     "Second announcement PDF is required";
-    // if (!brochure || !conferenceData.conference_brochure_pdf)
-    //   validationErrors.brochure = "Brochure PDF is required";
-    // if (!scientificProgram || !conferenceData.conference_scientific_program_pdf)
-    //   validationErrors.scientificProgram = "Scientific program PDF is required";
-    // setErrors(validationErrors);
     return Object.keys(validationErrors).length === 0;
   };
   return (

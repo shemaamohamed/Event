@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Checkbox from "../../../CoreComponent/Checkbox";
 import { useParams } from "react-router-dom";
 import httpService from "../../../../src/common/httpService";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "./style.scss";
 
 const EditAttendanceData = () => {
@@ -37,7 +37,10 @@ const EditAttendanceData = () => {
           includes_certificate: includesCertificate ? 1 : 0,
           includes_lecture_attendance: includesLectureAttendance ? 1 : 0,
         },
-        withToast: true,
+        // withToast: true,
+        onSuccess: (data) => {
+          toast.success("The attendance was added successfully");
+      },
         onError: (error) => {
           toast.error("Failed to submit the form: " + error);
         },

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import httpService from "../../../common/httpService";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const Invoice = () => {
   const [invoices, setInvoices] = useState([]);
@@ -38,17 +38,15 @@ const Invoice = () => {
         data: {
           flight_id: ids,
         },
-        withToast: true,
-        onError: (error) => {
-          // toast.error("Failed to submit the form: " + error);
-        },
+        // withToast: true,
       });
-      // console.log(data?.invoices);
+      if (data.error) {
+        toast.error(data.error);
+      }
+      console.log(data.error);
 
       setInvoices(data?.invoices || []);
-    } catch (error) {
-      // console.error("Error submitting form:", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

@@ -5,9 +5,10 @@ import Input from "../../../CoreComponent/Input";
 import DateInput from "../../../CoreComponent/Date";
 import Checkbox from "../../../CoreComponent/Checkbox";
 import { useAuth } from "../../../common/AuthContext";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Dialog from "../../../CoreComponent/Dialog";
 import SimpleLabelValue from "../../SimpleLabelValue";
+import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
 const TripTypeOptions = [
@@ -21,10 +22,10 @@ const TripTypeOptions = [
   },
   { value: "Round trip", label: "Round trip" },
 ];
-
 const AirportTransferForm = () => {
   const { userId } = useAuth();
   const [id, setId] = useState(0);
+  const navigate=useNavigate()
 
   const [formData, setFormData] = useState({
     tripType: "",
@@ -88,6 +89,7 @@ const AirportTransferForm = () => {
       setInvoiceData(invoice); // Store the invoice data
       setOpen(true);
       toast.success("Request submitted successfully.");
+      navigate("/home")
     } catch (error) {
       toast.error("An error occurred while submitting the request.");
     }

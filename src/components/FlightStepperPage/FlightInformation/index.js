@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Input from "../../../CoreComponent/Input/index";
 import Checkbox from "../../../CoreComponent/Checkbox/index";
 import DateInput from "../../../CoreComponent/Date/index";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import ImageUpload from "../../../CoreComponent/ImageUpload";
 import { useFlightStepper } from "../StepperContext";
 import "./style.scss";
@@ -45,25 +45,7 @@ const FlightInformation = ({
   const handleSubmit = () => {
     toast.success("The data was updated successfully!");
     completeStep(currentStep);
-
   };
-
-  useEffect(() => {
-    // const data = getFromLocalStorage("flightDetails");
-    // if (data) {
-    //   setArrivalDate(data?.arrivalDate);
-    //   setDepartureDate(data?.departureDate);
-    //   setDepartureAirport(data?.departureAirport);
-    //   setReturnAirport(data?.returnAirport);
-    //   setSpecificFlightTime(data?.specificFlightTime);
-    //   setFlightTime(data?.flightTime);
-    //   setFlightNumber(data?.flightNumber);
-    //   setOtherRequests(data?.otherRequests);
-    //   setSeatNumber(data?.seatNumber);
-    //   setUpgradeClass(data?.upgradeClass);
-    //   setTicketCount(data?.ticketCount);
-    // }
-  }, []);
 
   // Disable button logic: check if any required field is empty
   const isSubmitDisabled =

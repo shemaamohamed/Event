@@ -4,7 +4,7 @@ import Table from "../../CoreComponent/Table";
 import Pagination from "../../CoreComponent/Pagination";
 import Dialog from "../../CoreComponent/Dialog";
 import httpService from "../../common/httpService";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import ImageUpload from "../../CoreComponent/ImageUpload";
 import "./style.scss";
 import { backendUrlImages } from "../../constant/config";
@@ -30,28 +30,68 @@ const CertificateComponent = () => {
     { label: "Attendance", value: "attendance" },
   ];
 
+
+
+
+  // Get upcoming conferences
+  // const getConference = () => {
+  //   const url = `${BaseUrl}/conferences/all`;
+  //   axios
+  //     .get(url, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setAllConference(
+  //         response.data.data?.map((item) => ({
+  //           label: item?.title,
+  //           value: item?.id,
+  //         }))
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       toast.error("Error fetching conferences");
+  //     });
+  // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // عند جلب البيانات من API
   const fetchConferences = async () => {
-    try {
-      const response = await httpService({
-        method: "GET",
-        url: `${BaseUrl}/con/upcoming`,
-        onSuccess: (data) => {
-          const conferenceOptions =
-            data?.upcoming_conferences?.map((item) => ({
-              label: item?.title,
-              value: item?.id,
-            })) || [];
-          setConferences(conferenceOptions);
-        //   setConferenceId(conferenceOptions[0]?.value);
-        },
-        onError: (error) =>
-          setErrorMsg(error?.message || "Failed to fetch conferences."),
-        withToast: false,
-      });
-    } catch (error) {
-      setErrorMsg("Failed to fetch conferences.");
-    }
+      try {
+          const response = await httpService({
+              method: "GET",
+              url: `${BaseUrl}/conferences/all`,
+              onSuccess: (data) => {
+                  setConferences(data.data);  // تأكد من أنك تحفظ البيانات بشكل صحيح
+              },
+              onError: (error) =>
+                  setErrorMsg(error?.message || "Failed to fetch conferences."),
+          });
+      } catch (error) {
+          setErrorMsg("Failed to fetch conferences.");
+      }
   };
+  
 
   // Function to fetch users based on the selected conference and registration type
   const fetchUsers = async (conferenceId, registrationType, page = 1) => {
@@ -63,13 +103,12 @@ const CertificateComponent = () => {
     try {
       const response = await httpService({
         method: "GET",
-        url: `${BaseUrl}/users/speaker-att/${
-          conferenceId ? conferenceId : ""
-        }/${registrationType ? registrationType : ""}`,
+        url: `${BaseUrl}/users/speaker-att/${conferenceId ? conferenceId : ""
+          }/${registrationType ? registrationType : ""}`,
         params: { page },
         headers: { Authorization: `Bearer ${token}` },
         onSuccess: (data) => {
-          setUsersData(data.users || []);
+          setUsersData(data.users.reverse()|| []);
           setTotalPages(data.totalPages || 1);
           setCurrentPage(data.currentPage || 1);
         },
@@ -158,14 +197,17 @@ const CertificateComponent = () => {
       <div className="filters">
         <Select
           label="Select Conference"
-          options={conferences}
-          value={conferences.find((item) => item?.value === conferenceId)}
+          options={conferences.map((item) => ({
+            label: item.title,  // استخدم title كـ label
+            value: item.id,     // استخدم id كـ value
+          }))}
+          value={conferences.find((item) => item.id === conferenceId)} // تأكد من أن القيمة تتطابق مع id
           setValue={(option) => {
-            setConferenceId(option.value);
-            fetchUsers(option.value, registrationType, 1);
+            setConferenceId(option.value); // تعيين الـconferenceId
+            fetchUsers(option.value, registrationType, 1); // جلب البيانات بناءً على المؤتمر المحدد
           }}
-          //   errorMsg={errorMsg}
         />
+
 
         <Select
           label="Select Registration Type"
@@ -177,7 +219,7 @@ const CertificateComponent = () => {
             setRegistrationType(option.value);
             fetchUsers(conferenceId, option.value, 1);
           }}
-          //   errorMsg={errorMsg}
+        //   errorMsg={errorMsg}
         />
       </div>
 

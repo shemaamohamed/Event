@@ -4,6 +4,7 @@ import ImageUpload from "../../../CoreComponent/ImageUpload";
 import DateInput from "../../../CoreComponent/Date";
 import axios from "axios";
 import Select from "../../../CoreComponent/Select";
+import toast from "react-hot-toast";
 import "./style.scss";
 
 // this form for create ExhibitionForm
@@ -114,6 +115,8 @@ const EditExhibitionForm = ({ setIsOpen, getExhibitions, exhibitionData }) => {
       setEndDate("");
       setStatus("upcoming");
       setExhibitionImages(null);
+      toast.success("Exhibition Edited successfully!");
+      getExhibitions()
     } catch (error) {
       if (error.response) {
       } else {

@@ -7,7 +7,7 @@ import deleteIcon from "../../../icons/deleteIcon.svg";
 import { useStepper } from "../StepperContext";
 import SVG from "react-inlinesvg";
 import { getFromLocalStorage, saveToLocalStorage } from "..";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import "./style.scss";
 
 const RoomForm = () => {

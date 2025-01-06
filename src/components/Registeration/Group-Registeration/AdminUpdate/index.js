@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios"; // استيراد axios
 import "./style.scss"; // استيراد ملف Sass
 import DateInput from "../../../../CoreComponent/Date";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 const AdminGroupComponent = () => {

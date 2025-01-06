@@ -3,60 +3,79 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./style.scss";
 
-
 const SelectConferences = () => {
-  const [allConference, setAllConference] = useState([]);
+  const [allConferences, setAllConferences] = useState([]);
   const [conferenceName, setConferenceName] = useState("");
+  const [selectedPriceId, setSelectedPriceId] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const BaseUrl = process.env.REACT_APP_BASE_URL;;
-
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const currentPath = location.pathname;
+  const isAttendance = currentPath === "/registerPage/attendance";
   const getConference = () => {
     const searchQuery = conferenceName
       ? `?search=${encodeURIComponent(conferenceName)}`
       : "";
     const url = `${BaseUrl}/con/upcoming`;
-    console.log(BaseUrl);
+
     axios
       .get(url)
       .then((response) => {
-        setAllConference(response.data.upcoming_conferences);
+        setAllConferences(response.data.upcoming_conferences);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.error("Error fetching conferences", error);
+      });
   };
 
   useEffect(() => {
     getConference();
+    console.log(currentPath);
   }, [conferenceName]);
 
   const handleTitleClick = (conferenceId) => {
+    if (isAttendance) return;
     const currentPath = location.pathname;
-    console.log({ currentPath });
-    if (currentPath === "/registerPage/attendance") {
-      console.log("hedaya");
-
-      navigate(`/register/attendance/${conferenceId}`);
-    } else if (currentPath === "/registerPage/speaker") {
-      navigate(`/register/speaker/${conferenceId}`);
-    } else if (currentPath === "/registerPage/group") {
-      navigate(`/register/group/${conferenceId}`);
-    }else if (currentPath === "/registerPage/sponsor") {
-      navigate(`/register/sponsor/${conferenceId}`);
-    }
-    // navigate(`${currentPath}/${conferenceId}`);
+    const paths = {
+      "/registerPage/attendance": `/register/attendance/${conferenceId}`,
+      "/registerPage/speaker": `/register/speaker/${conferenceId}`,
+      "/registerPage/group": `/register/group/${conferenceId}`,
+      "/registerPage/sponsor": `/register/sponsor/${conferenceId}`,
+    };
+    navigate(paths[currentPath] || currentPath);
+  };
+  const handleAttendanceClick = (conferenceId, type) => {
+    navigate(`/register/attendance/${conferenceId}/${type}`);
   };
 
   return (
     <div className="conferences">
-      <h1 className="titlee">Available Conferences</h1>
+      <h1 className="title">Available Conferences</h1>
       <ul className="conference-list">
-        {allConference?.map((conference) => (
-          <li
-            key={conference.id}
-            className="conference-item"
-            onClick={() => handleTitleClick(conference.id)}
-          >
-            {conference.title}
+        {allConferences?.map((conference) => (
+          <li key={conference.id} className="conference-item">
+            <h2 onClick={() => handleTitleClick(conference.id)}>
+              {conference.title}
+            </h2>
+            {isAttendance && (
+              <ul className="prices-list">
+                {conference.prices.map((price) => (
+                  <li
+                    key={price.id}
+                    className={`price-item ${
+                      selectedPriceId === price.id ? "selected" : ""
+                    }`}
+                    onClick={() =>
+                      handleAttendanceClick(conference.id, price.price_type)
+                    }
+                  >
+                    <div className="price-type">{price.price_type}</div>
+                    <div className="price-amount">${price.price}</div>
+                    <div className="price-description">{price.description}</div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>
