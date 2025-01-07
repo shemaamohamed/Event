@@ -1,16 +1,12 @@
 
 import React, { useState, useEffect, useCallback, Fragment } from "react";
-import Table from "../../../CoreComponent/Table";
 import httpService from "../../../common/httpService";
 import Select from "../../../CoreComponent/Select";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
-import Pagination from "../../../CoreComponent/Pagination";
 import DialogMessage from "../../DialogMessage";
 import toast from "react-hot-toast";
-import MySideDrawer from "../../../CoreComponent/SideDrawer";
-import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
-import SimpleLabelValue from "../../SimpleLabelValue";
+
 import { backendUrlImages } from "../../../constant/config";
 import ImageUpload from "../../../CoreComponent/ImageUpload";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -301,27 +297,28 @@ const PendingUsersTable = () => {
         setValue={setStatus}
         label="Visa Status"
       />
-      <DataGrid
-            rows={rows}
-            columns={columns}
-            getRowHeight={() => "auto"}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 5,
-                },
-              },
-            }}
-            pageSizeOptions={[5]}
-            getRowId={(row) => row.id}
-            checkboxSelection
-            disableRowSelectionOnClick
-           sx={{
-  marginTop: "20px",
-  marginBottom: "20px",
-}}
-          
-          />
+     <DataGrid
+        rows={rows}
+        columns={columns}
+        getRowId={(row) => row.id}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 8,
+            },
+          },
+        }}
+        pageSizeOptions={[8]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        autoHeight
+        sx={{
+          marginTop: "20px",
+          "& .MuiDataGrid-virtualScroller": {
+            overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+          },
+        }}
+      />
 
      
      

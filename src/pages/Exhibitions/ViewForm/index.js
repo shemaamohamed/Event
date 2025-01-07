@@ -1,7 +1,6 @@
 import React from "react";
 import SimpleLabelValue from "../../../components/SimpleLabelValue";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper"; 
-import MySideDrawer from "../../../CoreComponent/SideDrawer";
 import "./style.scss";
 import { backendUrlImages } from "../../../constant/config";
 import { Drawer, IconButton, Typography } from "@mui/material";

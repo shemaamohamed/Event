@@ -8,6 +8,8 @@ import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
 import { deleteIcon } from "../../../icons";
 import httpService from "../../../common/httpService";
 import toast from "react-hot-toast";
+import { Button, Drawer, IconButton } from "@mui/material";
+import { CloseRounded } from "@mui/icons-material";
 
 const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
   const [trips, setTrips] = useState([
@@ -78,30 +80,59 @@ const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
     console.log({ response });
 
   };
-
+  
   return (
-    <MySideDrawer isOpen={isOpen} setIsOpen={setIsOpen}>
-      <CustomFormWrapper
-        title="Add Extra Flight Choices"
+    <Drawer anchor="right"
+      
+  sx={{
+    zIndex: (theme) => theme.zIndex.modal + 1, 
+
+    '& .MuiDrawer-paper': {
+        zIndex: (theme) => theme.zIndex.modal + 1,
+
+
+  width: 
+  {
+    xs: '100%',
+    sm: '50%',
+    md: '30%',
+    lg: '20%',
+    xl: '20%',
+  }, 
+},
+
+  }}
+   open={isOpen} onClose={() => setIsOpen(false)}>
+    <div
+    style={{
+      display: 'flex',
+      justifyContent: 'flex-end',
+      padding: 2,
+    }}
+    >
+      <IconButton onClick={() => setIsOpen(false)}>
+       <CloseRounded /> 
+      </IconButton>
+    </div>
+    <CustomFormWrapper
         handleSubmit={() => {
           handleSave();
         }}
         setOpenForm={setIsOpen}
         noActions={false}
       >
-        <div className="add-trip-form">
           <div className="add-trip-btn-container">
-            <button
+            <Button
               className="add-trip-btn"
               type="button"
               onClick={handleAddTrip}
             >
               + Add Trip
-            </button>
+            </Button>
           </div>
-          <div className="trips-container">
+          <div >
             {trips.map((trip, index) => (
-              <div className="trip-card" key={index}>
+              <div  key={index}>
                 <div className="trip-card-header">
                   <SVG
                     className="delete-icon"
@@ -109,7 +140,7 @@ const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
                     onClick={() => handleDeleteTrip(index)}
                   />
                 </div>
-                <div className="trip-form">
+                <div>
                   <DateInput
                     label="Departure Date"
                     placeholder="Enter departure date"
@@ -224,9 +255,12 @@ const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
               </div>
             ))}
           </div>
-        </div>
       </CustomFormWrapper>
-    </MySideDrawer>
+
+
+    </Drawer>
+
+    
   );
 };
 

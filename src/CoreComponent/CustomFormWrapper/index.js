@@ -9,19 +9,17 @@ const CustomFormWrapper = ({
   noActions = false,
 }) => {
   return (
-    <div className="custom-form-wrapper">
+    <div style={{
+      display:'flex',
+      flexDirection:'column',
+      justifyContent:'center',
+      alignItems:'center',
+    }}>
       <div className="information-header">{title}</div>
       <div className="form-section">{children}</div>
       {!noActions && (
         <div className="actions-section-container">
-          <button
-            className="cancel-btn"
-            onClick={() => {
-              setOpenForm(false);
-            }}
-          >
-            Cancel
-          </button>
+         
           <button
             className="submit-btn"
             type="submit"

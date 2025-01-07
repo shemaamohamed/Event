@@ -5,6 +5,8 @@ import Dialog from "../../CoreComponent/Dialog";
 import httpService from "../../common/httpService";
 import toast from "react-hot-toast";
 import "./style.scss";
+import { DataGrid } from "@mui/x-data-grid";
+import { Typography } from "@mui/material";
 
 const ActiveRegistrations = () => {
   const [registrationsData, setRegistrationsData] = useState([]);
@@ -27,8 +29,7 @@ const ActiveRegistrations = () => {
         headers: { Authorization: `Bearer ${token}` },
         onSuccess: (data) => {
           setRegistrationsData(data.registrations || []);
-          setTotalPages(data?.totalPages || 1);
-          setCurrentPage(Number(data?.currentPage) || 1);
+          console.log(data.registrations);
         },
         onError: (error) => setErrorMsg(error?.message || "Failed to fetch registrations."),
         withToast: true,
@@ -38,9 +39,7 @@ const ActiveRegistrations = () => {
     }
   };
 
-  const handlePageChange = (page) => {
-    fetchRegistrations(page);
-  };
+
 
   const handleUploadClick = (registration) => {
     setFile(null); // Reset file before uploading
@@ -73,18 +72,76 @@ const ActiveRegistrations = () => {
   useEffect(() => {
     fetchRegistrations();
   }, []);
+    
+  const columns = [
+    {
+      field: "user_name",
+      headerName:  "User Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "contact_phone",
+      headerName:  "Email",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      
+    },
 
-  const tableData = registrationsData.map((registration) => ({
-    ...registration,
-    user_name: registration.user_name,
-    user_email: registration.user_email,
-    contact_phone: registration.contact_phone,
-    organization_name: registration.organization_name,
-    contact_person: registration.contact_person,
-    number_of_doctors: registration.number_of_doctors,
-    excel_file: registration.excel_file ? (
+    {
+      field: "organization_name",
+      headerName:  "Organization",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+        field: "contact_person",
+        headerName:  "ContactPerson",
+        flex: 1,
+        minWidth: 230,
+        cellClassName: "centered-cell",
+      },
+      {
+        field: "number_of_doctors",
+        headerName:  "Number of Doctors",
+        flex: 1,
+        minWidth: 230,
+        cellClassName: "centered-cell",
+      },
+      {
+        field: "excel_file",
+        headerName:  "Excel File",
+        flex: 1,
+        minWidth: 230,
+        cellClassName: "centered-cell",
+      },
+    {
+      field: "update_deadline",
+      headerName: "Update Deadline",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      
+      
+    },
+    
+
+   
+  ];
+  const rows = registrationsData.map((row) => {
+    return {
+      user_name: row.user_name,
+     user_email: row.user_email,
+    contact_phone: row.contact_phone,
+    organization_name: row.organization_name,
+    contact_person:row.contact_person,
+    number_of_doctors: row.number_of_doctors,
+    excel_file: row.excel_file? (
       <a
-        href={`${BaseUrl}/${registration.excel_file}`}
+        href={`${BaseUrl}/${row.excel_file}`}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -92,30 +149,56 @@ const ActiveRegistrations = () => {
       </a>
     ) : (
       "No File"
-    ),
-    update_deadline: registration.update_deadline,
-  }));
+    )
+    ,
+    update_deadline: row.update_deadline,
+    };
+  });
+
+ 
 
   return (
     <Fragment>
       <div className="registrations-component">
-        <div className="table-container">
-          <div className="table-wrapper">
-            <Table
-              headers={[
-                { label: "Username", key: "user_name" },
-                { label: "Email", key: "user_email" },
-                { label: "Contact Phone", key: "contact_phone" },
-                { label: "Organization", key: "organization_name" },
-                { label: "Contact Person", key: "contact_person" },
-                { label: "Number of Doctors", key: "number_of_doctors" },
-                { label: "Excel File", key: "excel_file" },
-                { label: "Update Deadline", key: "update_deadline" },
-              ]}
-              data={tableData}
-            />
-          </div>
-        </div>
+      <Typography
+              variant="h6"
+              sx={{
+                color: '#c62828',
+                fontWeight: 'bold',
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                textAlign: 'center',
+              }}
+            >
+              Group Registrations
+            </Typography>
+        
+          <DataGrid
+                   
+                    getRowId={(row) => row.user_email} 
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 8,
+                        },
+                      },
+                    }}
+                    pageSizeOptions={[8]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                    autoHeight
+                    sx={{
+                      marginTop: "20px",
+                      "& .MuiDataGrid-virtualScroller": {
+                        overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                      },
+        }}
+                   
+                  />
+
+
+        
 
         {isDialogOpen && (
           <Dialog
@@ -142,13 +225,7 @@ const ActiveRegistrations = () => {
           </Dialog>
         )}
 
-        <div className="pagination-container">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+       
       </div>
     </Fragment>
   );

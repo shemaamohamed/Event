@@ -13,6 +13,12 @@ import UpdateTicket from "./SetTicket";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../CoreComponent/Pagination";
 import ViewInvoice from "./ViewInvoice";
+import { Drawer, IconButton, Menu, MenuItem } from "@mui/material";
+import { CloseRounded } from "@mui/icons-material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { DataGrid } from "@mui/x-data-grid";
+
+
 
 const FlightFormAdmin = () => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -20,6 +26,19 @@ const FlightFormAdmin = () => {
   const navigate = useNavigate();
   const [flights, setFlights] = useState([]);
   const [companions, setCompanions] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const openMenu = (event, row) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedRow(row);
+  };
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+    setSelectedRow(null);
+  };
   const headers = [
     { key: "user_name", label: "Passenger Name" },
     { key: "departure_airport", label: "Departure Airport" },
@@ -38,8 +57,7 @@ const FlightFormAdmin = () => {
   const [travelerName, setTravelerName] = useState("");
   const [openUpdateForm, setOpenUpdateForm] = useState(false);
   const [openTicketForm, setOpenTicketForm] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+
   const getFlight = () => {
     const token = localStorage.getItem("token");
     const url = `${BaseUrl}/user/pag/filter?page=${currentPage}`;
@@ -61,9 +79,7 @@ const FlightFormAdmin = () => {
         );
       });
   };
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  
 
   const getCompanionFlights = (userId) => {
     const token = localStorage.getItem("token");
@@ -89,63 +105,136 @@ const FlightFormAdmin = () => {
     getFlight();
   }, [currentPage]);
 
-  const handleTableData = () => {
-    return flights?.map((item) => {
-      return {
-        ...item,
-        actions: (
-          <div className="table-actions-container">
-            <button
-              onClick={() => {
-                navigate(`/flights/admins/${item?.flight_id}`);
-              }}
+  
+  const columns = [
+   
+    {
+      field: "user_name",
+      headerName:  "Passenger Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+
+    {
+      field: "departure_airport",
+      headerName:  "Departure Airport",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      
+    },
+    {
+      field: "departure_date",
+      headerName:  "Departure Date",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+        field: "arrival_date",
+        headerName:  "Arrival Date",
+        flex: 1,
+        minWidth: 230,
+        cellClassName: "centered-cell",
+      },
+
+    {
+      field: "actions",
+      headerName:  "Actions",
+      flex: 0.2,
+      minWidth: 90,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        <>
+          <IconButton onClick={(event) => openMenu(event, params.row)}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+            onClose={closeMenu}
+          >
+             <MenuItem onClick={() => {
+                navigate(`/flights/admins/${params.row?.flight_id}`);
+
+
+             }}>
+                             Add Trips
+
+            </MenuItem> 
+            <MenuItem
+                          onClick={() =>{
+                           
+                            getCompanionFlights(params.row.flight_id)
+
+                          } }
+
+
             >
-              Add Trips
-            </button>
-            <button
-              onClick={() => {
-                setOpenView(true);
-                setSelectedItem(item);
-              }}
-            >
-              View
-            </button>
-            <button
-              className="get-companion-btn"
-              onClick={() => getCompanionFlights(item.flight_id)}
-            >
-              View Companion
-            </button>
-            <button
-              onClick={() => {
-                setOpenUpdateForm(true);
-                setSelectedItem(item);
-              }}
+                            View Companion
+
+
+            </MenuItem>
+            <MenuItem
+            onClick={() => {
+              setOpenUpdateForm(true);
+              setSelectedItem(params);
+            }}
+
+
             >
               Set Update Deadline
-            </button>
 
-            {/* <button
-              onClick={() => {
-                setOpenTicketForm(true);
-                setSelectedItem(item);
-              }}
+
+            </MenuItem>
+            
+            <MenuItem
+             onClick={() => {
+              setOpenTicketForm(true);
+              setSelectedItem(params);
+            }}
+
             >
-              view Ticket
-            </button> */}
-            <button
-              onClick={() => {
-                setOpenInvoice(true);
-                setSelectedItem(item);
-              }}
+                            view Ticket
+
+                    
+            
+
+            </MenuItem>
+            <MenuItem
+            onClick={() => {
+              setOpenInvoice(true);
+              setSelectedItem(params)
+            }}
             >
-              View Invoice
-            </button>
-          </div>
-        ),
-      };
-    });
-  };
+                            View Invoice
+
+
+            
+            
+
+            </MenuItem>
+            
+          </Menu>
+        </>
+      ),
+    },
+  ];
+  const rows = flights.map((row) => {
+    return {
+      user_id: row.user_id,
+      user_name: row.user_name, 
+      departure_airport: row.departure_airport, 
+      departure_date: row.departure_date, 
+      arrival_date: row.arrival_date, 
+      flight_id: row.flight_id,
+     
+      actions: row.actions, 
+    };
+  });
+
+ 
 
   return (
     <div className="flight-form2">
@@ -161,15 +250,26 @@ const FlightFormAdmin = () => {
             />
           </div>
         </div>
+        <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    getRowHeight={() => "auto"}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 5,
+                        },
+                      },
+                    }}
+                    pageSizeOptions={[5]}
+                    getRowId={(row) => row.user_id}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                  
+                  />
 
-        <div className="flight-table-container">
-          <Table headers={headers} data={handleTableData()} />
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+
+        
 
         <CompanionModal
           isOpen={openCompanionModal}
@@ -178,25 +278,162 @@ const FlightFormAdmin = () => {
           headers={headers}
         />
 
-        <MySideDrawer isOpen={openView} setIsOpen={setOpenView}>
-          <FlightDetails data={selectedItem} />
-        </MySideDrawer>
+        
+        <Drawer anchor="right"
+      
+      sx={{
+        zIndex: (theme) => theme.zIndex.modal + 1, 
+
+        '& .MuiDrawer-paper': {
+            zIndex: (theme) => theme.zIndex.modal + 1,
+
+
+      width: 
+      {
+        xs: '100%',
+        sm: '50%',
+        md: '50%',
+        lg: '40%',
+        xl: '40%',
+      }, 
+    },
+
+      }}
+       open={openView} onClose={() => setOpenView(false)}>
+        <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          padding: 2,
+        }}
+        >
+          <IconButton onClick={() => setOpenView(false)}>
+           <CloseRounded /> 
+          </IconButton>
+        </div>
+        <FlightDetails data={selectedItem} />
+
+
+        </Drawer>
         <MySideDrawer isOpen={openTripForm} setIsOpen={setOpenTripForm}>
           <AddTripForm data={selectedItem} setOpen={setOpenTripForm} />
         </MySideDrawer>
         <MySideDrawer isOpen={openPriceForm} setIsOpen={setOpenPriceForm}>
           <SeatCostForm data={selectedItem} setOpen={setOpenPriceForm} />
         </MySideDrawer>
+        <Drawer anchor="right"
+      
+      sx={{
+        //width
+        zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
 
-        <MySideDrawer isOpen={openUpdateForm} setIsOpen={setOpenUpdateForm}>
-          <UpdateDeadline data={selectedItem} setOpen={setOpenUpdateForm} />
-        </MySideDrawer>
-        <MySideDrawer isOpen={openTicketForm} setIsOpen={setOpenTicketForm}>
-          <UpdateTicket data={selectedItem} setOpen={setOpenTicketForm} />
-        </MySideDrawer>
-        <MySideDrawer isOpen={openInvoice} setIsOpen={setOpenInvoice}>
-          <ViewInvoice data={selectedItem} setOpen={setOpenInvoice} />
-        </MySideDrawer>
+        '& .MuiDrawer-paper': {
+            zIndex: (theme) => theme.zIndex.modal + 1,
+
+
+      width: 
+      {
+        xs: '100%',
+        sm: '20%',
+        md: '20%',
+        lg: '20%',
+        xl: '20%',
+      }, 
+    },
+
+      }}
+       open={openUpdateForm} onClose={() => setOpenUpdateForm(false)}>
+        <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          padding: 2,
+        }}
+        >
+          <IconButton onClick={() => setOpenUpdateForm(false)}>
+           <CloseRounded /> 
+          </IconButton>
+        </div>
+        <UpdateDeadline data={selectedItem}  />
+
+
+        </Drawer>
+        <Drawer anchor="right"
+      
+      sx={{
+        zIndex: (theme) => theme.zIndex.modal + 1, 
+
+        '& .MuiDrawer-paper': {
+            zIndex: (theme) => theme.zIndex.modal + 1,
+
+
+      width: 
+      {
+        xs: '100%',
+        sm: '50%',
+        md: '30%',
+        lg: '20%',
+        xl: '20%',
+      }, 
+    },
+
+      }}
+       open={openTicketForm} onClose={() => setOpenTicketForm(false)}>
+        <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          padding: 2,
+        }}
+        >
+          <IconButton onClick={() => setOpenTicketForm(false)}>
+           <CloseRounded /> 
+          </IconButton>
+        </div>
+        <UpdateTicket data={selectedItem}  />
+
+
+        </Drawer>
+
+        
+       
+        <Drawer anchor="right"
+      
+      sx={{
+        //width
+        zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
+
+        '& .MuiDrawer-paper': {
+            zIndex: (theme) => theme.zIndex.modal + 1,
+
+
+      width: 
+      {
+        xs: '100%',
+        sm: '50%',
+        md: '50%',
+        lg: '40%',
+        xl: '40%',
+      }, 
+    },
+
+      }}
+       open={openInvoice} onClose={() => setOpenInvoice(false)}>
+        <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          padding: 2,
+        }}
+        >
+          <IconButton onClick={() => setOpenInvoice(false)}>
+           <CloseRounded /> 
+          </IconButton>
+        </div>
+        <ViewInvoice data={selectedItem}  />
+
+        </Drawer>
+       
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import httpService from "../../../common/httpService";
 import moment from "moment";
 import { backendUrlImages } from "../../../constant/config";
 
-const ViewInvoice = ({ data, setOpen }) => {
+const ViewInvoice = ({ data }) => {
   const [invoiceFlights, setInvoiceFlights] = useState([]);
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const getAuthToken = () => localStorage.getItem("token");
@@ -37,7 +37,7 @@ const ViewInvoice = ({ data, setOpen }) => {
   }, [flightId]);
 
   return (
-    <CustomFormWrapper title="Invoice" setOpenForm={setOpen} noActions={false}>
+    <CustomFormWrapper title="Invoice" noActions={false}>
       {invoiceFlights.length > 0 ? (
         invoiceFlights.map((invoice) => (
           <div key={invoice.id} className="all-Invoice">

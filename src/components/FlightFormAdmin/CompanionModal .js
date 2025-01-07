@@ -3,6 +3,8 @@ import MySideDrawer from "../../CoreComponent/SideDrawer";
 import SimpleLabelValue from "../SimpleLabelValue";
 import CustomFormWrapper from "../../CoreComponent/CustomFormWrapper";
 import "./CompanionModal.scss";
+import { Drawer, IconButton } from "@mui/material";
+import { CloseRounded } from "@mui/icons-material";
 
 const FlightDetails = ({ flights }) => {
   console.log({ flights });
@@ -88,8 +90,40 @@ const FlightDetails = ({ flights }) => {
 };
 const CompanionModal = ({ isOpen, setIsOpen, companions, headers }) => {
   return (
-    <div className="companion-modal">
-      <MySideDrawer isOpen={isOpen} setIsOpen={setIsOpen}>
+    < >
+        <Drawer anchor="right"
+      
+      sx={{
+        //width
+        zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
+
+        '& .MuiDrawer-paper': {
+            zIndex: (theme) => theme.zIndex.modal + 1,
+
+
+      width: 
+      {
+        xs: '100%',
+        sm: '50%',
+        md: '50%',
+        lg: '40%',
+        xl: '40%',
+      }, 
+    },
+
+      }}
+       open={isOpen} onClose={() => setIsOpen(false)}>
+        <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          padding: 2,
+        }}
+        >
+          <IconButton onClick={() => setIsOpen(false)}>
+           <CloseRounded /> 
+          </IconButton>
+        </div>
         <CustomFormWrapper
           title="Companions Information"
           handleSubmit={() => {}}
@@ -98,8 +132,13 @@ const CompanionModal = ({ isOpen, setIsOpen, companions, headers }) => {
         >
           <FlightDetails flights={companions} />
         </CustomFormWrapper>
+
+
+        </Drawer>
+      <MySideDrawer isOpen={isOpen} setIsOpen={setIsOpen}>
+        
       </MySideDrawer>
-    </div>
+    </>
   );
 };
 
