@@ -17,6 +17,7 @@ const ActiveRegistrations = () => {
   const [file, setFile] = useState(null);
 
   const BaseUrl = process.env.REACT_APP_BASE_URL;
+  
   const token = localStorage.getItem("token");
 
   // Fetch registrations data
@@ -117,6 +118,23 @@ const ActiveRegistrations = () => {
         flex: 1,
         minWidth: 230,
         cellClassName: "centered-cell",
+        renderCell: (params) => (
+          <span>
+            {params.row.value === "No File" ? (
+              params.row.value
+            ) : (
+              <a
+                href={`https://mayazin.co/backend/storage/app/public/${params.value}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'none', color: 'blue' }}
+              >
+                View Excel
+              </a>
+            )}
+          </span>
+        ),
+
       },
     {
       field: "update_deadline",
@@ -140,13 +158,8 @@ const ActiveRegistrations = () => {
     contact_person:row.contact_person,
     number_of_doctors: row.number_of_doctors,
     excel_file: row.excel_file? (
-      <a
-        href={`${BaseUrl}/${row.excel_file}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View Excel
-      </a>
+     
+     `${row.excel_file}`
     ) : (
       "No File"
     )

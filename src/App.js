@@ -24,7 +24,6 @@ import AddScientificPaper from "./components/SceintificPaper";
 import VisaPage from "./components/last_pages/Visa";
 import AboutUsEvent from "./components/UI/AboutUs";
 import toast, { Toaster } from "react-hot-toast";
-import OurClients from "./components/UI/OurClients";
 import OurTeams from "./components/UI/OurTeam";
 import ManagementConsulting from "./components/UI/ManagementConsulting";
 import Planning from "./components/UI/EventPlanning";
@@ -143,6 +142,7 @@ import NotFound from './components/NotFound/index';
 import AdminLayoutBasic from './AdminLayout';
 import OverViewDashboard from './components/OverViewDashboard/index';
 import GroupTripRegistration from './components/GroupTripRegistration/index';
+import ClientsSlide from "./components/ClientsSlide";
 
 
 
@@ -242,7 +242,7 @@ const App = () => {
               {/* before login */}
               <Route path="/home" element={<Home />} />
               <Route path="/about_us" element={<AboutUsEvent />} />
-              <Route path="/our_clients" element={<OurClients />} />
+              <Route path="/our_clients" element={<ClientsSlide />} />
               <Route path="/our_team" element={<OurTeams />} />
               <Route
                 path="/management_consulting"
@@ -303,6 +303,10 @@ const App = () => {
               />
               <Route path="/all-sponsors" element={<SponsorsComponent />} />
               <Route path="*" element={<NotFound/>} />
+              <Route
+                                          path="/conference/speaker/:conferenceId"
+                                          element={<Speakers4 />}
+                                        />
 
 
 

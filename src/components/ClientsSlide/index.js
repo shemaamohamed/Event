@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { Box, Typography } from "@mui/material";
@@ -6,17 +6,30 @@ import Grid from "@mui/material/Grid2";
 import "swiper/css";
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import axios from "axios";
 
-import client1 from './client1.jpg';
-import client2 from './client2.jpg';
-import client3 from './client3.jpg';
-import client4 from './client4.jpg';
-import client5 from './client5.jpg';
-import client6 from './client6.jpg';
-import client7 from './client7.jpg';
+
+
 
 const ClientsSlide = () => {
-  const clients = [client1, client2, client3, client4, client5, client6, client7]; // Array of images
+  const [clients, setClients] = useState([]); // حالة لتخزين العملاء
+  const BaseUrl = process.env.REACT_APP_BASE_URL;;
+
+  useEffect(() => {
+    const fetchClients = () => {
+      axios.get(`${BaseUrl}/clients`)
+        .then(response => {
+          console.log(response.data);
+          setClients(response.data); 
+        })
+        .catch(error => {
+          console.error('Error fetching clients:', error.response ? error.response.data : error.message);
+        });
+    };
+
+    fetchClients(); 
+  }, []); 
+  
 
   return (
     <div style={{ padding: "1rem" }}>
@@ -70,7 +83,7 @@ const ClientsSlide = () => {
           height:'40vh',
         }}
       >
-        {clients.map((clientImage, i) => (
+        {clients.map((client, i) => (
           <SwiperSlide
             key={i}
             style={{
@@ -90,7 +103,7 @@ const ClientsSlide = () => {
           >
             <div>
               <img
-                src={clientImage}
+                src={`https://mayazin.co/backend/storage/app/public/${client.image}`}
                 alt={`Company Logo ${i + 1}`}
                 style={{
                   objectFit: "contain",

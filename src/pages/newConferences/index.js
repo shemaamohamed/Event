@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 // ** styles
 import "./style.scss";
 import TemporaryDrawer from "./Drawer";
-import OurClients from "../../components/UI/OurClients";
+import ClientsSlide from "../../components/ClientsSlide";
 
 const ConferenceDetails = () => {
   const navigate =useNavigate()
@@ -138,7 +138,7 @@ const token = localStorage.getItem("token")
         case "sponsor":
           return (
             <div className="content">
-              <OurClients />
+              <ClientsSlide />
             </div>
           );
       case "Welcome":
