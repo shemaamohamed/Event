@@ -6,18 +6,23 @@ import "./style.scss";
 import CustomFormWrapper from "../../CoreComponent/CustomFormWrapper";
 import MySideDrawer from "../../CoreComponent/SideDrawer";
 import toast from "react-hot-toast";
+import { Drawer, IconButton } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { CloseRounded } from "@mui/icons-material";
+
 
 const AddDiscountForm = ({ isOpen, setIsOpen, userId }) => {
-  const [participantId, setParticipantId] = useState("");
+  // const [participantId, setParticipantId] = useState("");
   const [selectedOptionId, setSelectedOptionId] = useState("");
   const [discountAmount, setDiscountAmount] = useState(0);
-  const [isDiscountVisible, setIsDiscountVisible] = useState(false);
+  // const [isDiscountVisible, setIsDiscountVisible] = useState(false);
   const [conferenceOptions, setConferenceOptions] = useState([]);
   const [tripOptions, setTripOptions] = useState([]);
   const [additionalOptions, setAdditionalOptions] = useState([]);
   const [selectedTripId, setSelectedTripId] = useState(null);
   const [selectedConferenceId, setSelectedConferenceId] = useState(null);
   const BaseUrl = process.env.REACT_APP_BASE_URL;
+
 
   const getAuthToken = () => localStorage.getItem("token");
 
@@ -130,13 +135,44 @@ const AddDiscountForm = ({ isOpen, setIsOpen, userId }) => {
   }, [selectedTripId]);
 
   return (
-    <MySideDrawer isOpen={isOpen} setIsOpen={setIsOpen}>
+    <Drawer open={isOpen} anchor="right" onClose={() => setIsOpen(false)}
+    sx={{
+      //width
+      zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
+
+      '& .MuiDrawer-paper': {
+          zIndex: (theme) => theme.zIndex.modal + 1,
+
+
+    width: 
+    {
+      xs: '100%',
+      sm: '50%',
+      md: '40%',
+      lg: '30%',
+      xl: '30%',
+    }, 
+  },
+
+    }}
+    >
+       <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          padding: 2,
+        }}
+        >
+          <IconButton onClick={() => setIsOpen(false)}>
+           <CloseRounded /> 
+          </IconButton>
+        </div>
       <CustomFormWrapper
         title="Add Discount for User"
         handleSubmit={handleFormSubmit}
         setOpenForm={setIsOpen}
       >
-        <form className="discount-form-container">
+        <form >
           <Select
             options={conferenceOptions}
             value={selectedConferenceId}
@@ -176,7 +212,7 @@ const AddDiscountForm = ({ isOpen, setIsOpen, userId }) => {
           /> */}
         </form>
       </CustomFormWrapper>
-    </MySideDrawer>
+    </Drawer>
   );
 };
 

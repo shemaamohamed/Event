@@ -196,32 +196,32 @@ const PendingUsersTable = () => {
             </MenuItem> 
             <MenuItem
                 className={`view-btn ${
-                    params?.status !== "pending" && "disabled-btn"
+                    params.row?.status !== "pending" && "disabled-btn"
                   } `}
                   onClick={() => {
-                    if (params?.registration_type === "speaker") {
+                    if (params.row?.registration_type === "speaker") {
                       navigate(
-                        `/edit/speaker/data/${params.conferences?.[0]?.id}/${params.id}`
+                        `/edit/speaker/data/${params.row.conferences?.[0]?.id}/${params.row.id}`
                       );
-                    } else if (params?.registration_type === "attendance") {
+                    } else if (params.row?.registration_type === "attendance") {
                       navigate(
-                        `/edit/attendance/data/${params.conference_id}/${params.id}`
+                        `/edit/attendance/data/${params.row.conference_id}/${params.row.id}`
                       );
-                    } else if (params?.registration_type === "sponsor") {
+                    } else if (params.row?.registration_type === "sponsor") {
                       const sponsor = {
-                        user_id: params?.id,
-                        conference_id: params?.conference_id,
-                        company_name: params?.company_name,
-                        contact_person: params?.contact_person,
-                        company_address: params?.company_address,
-                        registration_type:params?.registration_type,
+                        user_id: params.row?.id,
+                        conference_id: params.row?.conference_id,
+                        company_name: params.row?.company_name,
+                        contact_person: params.row?.contact_person,
+                        company_address: params.row?.company_address,
+                        registration_type:params.row?.registration_type,
                       };
                       setSponsorData(sponsor);
                       setIsDialogOpen(true);
-                    } else if (params?.registration_type === "group_registration") {
-                      navigate(`/group/update/admin/${params.id}`);
-                    } else if (!params?.registration_type) {
-                      navigate(`/adminForm/${params.id}`);
+                    } else if (params.row?.registration_type === "group_registration") {
+                      navigate(`/group/update/admin/${params.row.id}`);
+                    } else if (!params.row?.registration_type) {
+                      navigate(`/adminForm/${params.row.id}`);
                     }
                   }}
                   disabled={params.row?.status !== "pending"}
@@ -230,7 +230,7 @@ const PendingUsersTable = () => {
 
             </MenuItem>
             <MenuItem onClick={() => {
-              handleDelete(params.id)
+              handleDelete(params.row.id)
 
              }}>
                 Delete

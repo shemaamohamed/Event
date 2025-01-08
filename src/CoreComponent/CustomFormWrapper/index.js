@@ -14,9 +14,15 @@ const CustomFormWrapper = ({
       flexDirection:'column',
       justifyContent:'center',
       alignItems:'center',
+     
     }}>
       <div className="information-header">{title}</div>
-      <div className="form-section">{children}</div>
+      <div 
+      style={{
+        width:'100%',
+        padding:'20px',
+      }}
+      >{children}</div>
       {!noActions && (
         <div className="actions-section-container">
          

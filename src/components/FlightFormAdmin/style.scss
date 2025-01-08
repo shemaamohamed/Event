@@ -48,6 +48,7 @@
     gap: 20px;
     padding: 20px;
     height: calc(100vh - 121px);
+    width: 100%;
 
     overflow: overlay;
 
@@ -133,6 +134,7 @@
     max-height: calc(100vh - 57px);
     overflow: overlay;
     height: calc(100vh - 161px);
+    width: 100%;
 
     &::-webkit-scrollbar {
       width: 3px;

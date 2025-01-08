@@ -3,7 +3,11 @@ import axios from "axios";
 import Table from "../../CoreComponent/Table";
 import "./style.scss";
 import AddDiscountForm from "./discountForm";
-import Pagination from "../../CoreComponent/Pagination";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { DataGrid } from "@mui/x-data-grid";
+import { User } from "lucide-react";
+
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -12,6 +16,18 @@ const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [status, setStatus] = useState("all"); // Track status filter
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [open, setOpen] = useState(false);
+    const openMenu = (event, row) => {
+      setAnchorEl(event.currentTarget);
+      setSelectedRow(row);
+    };
+  
+    const closeMenu = () => {
+      setAnchorEl(null);
+      setSelectedRow(null);
+    };
 
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const getAuthToken = () => localStorage.getItem("token");
@@ -36,46 +52,86 @@ const UsersList = () => {
     fetchUsers();
   }, [currentPage]);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
-  const formattedData = users
+  const rows = users
     .filter((item) => item?.registration_type == "speaker")
     ?.map((user) => ({
       id: user.id,
       name: user.name,
       email: user.email,
       registration_type: user.registration_type,
-      action: (
-        <button
-          onClick={() => {
-            setOpenDiscountForm(true);
-            setUserId(user.id);
-          }}
-          className="link-button"
-        >
-          Add Discount
-        </button>
-      ),
+      action:user.actions, 
+
     }));
+  const columns = [
+      
+      { field: "name", headerName: "Name", 
+        flex: 1,
+        minWidth: 230,
+        cellClassName: "centered-cell",
+       },
+      { field: "email", headerName: "Email",
+        flex: 1,
+        minWidth: 230,
+        cellClassName: "centered-cell",
+       },
+      { field: "registration_type", headerName: "Registration Type",
+        flex: 1,
+        minWidth: 230,
+        cellClassName: "centered-cell",
+      },
+      { field: "action", headerName: "Action", width: 180, 
+        renderCell: (params) => (
+          <>
+            <IconButton onClick={(event) => openMenu(event, params.row)}>
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+              onClose={closeMenu}
+            >
+               <MenuItem onClick={() => {
+                  setOpenDiscountForm(true);
+                  setUserId(params.row.id);
+                  
+  
+               }}>
+                 view
+              </MenuItem> 
+             
+            </Menu>
+          </>
+        ),
+      },
+    ];
+  
 
   return (
     <div className="all-users-table">
-      <Table
-        headers={[
-          { key: "name", label: "Name" },
-          { key: "registration_type", label: "Registration Type" },
-          { key: "email", label: "Email" },
-          { key: "action", label: "Action" },
-        ]}
-        data={formattedData}
+     <DataGrid
+        rows={rows}
+        columns={columns}
+        getRowId={(row) => row.id}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 8,
+            },
+          },
+        }}
+        pageSizeOptions={[8]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        autoHeight
+        sx={{
+          marginTop: "20px",
+          "& .MuiDataGrid-virtualScroller": {
+            overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+          },
+        }}
       />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+   
       <AddDiscountForm
         isOpen={openDiscountForm}
         setIsOpen={setOpenDiscountForm}

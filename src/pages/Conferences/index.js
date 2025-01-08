@@ -275,6 +275,22 @@ const ConferencesPage = () => {
                 >
                   Dinner Details
                 </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={() => {
+                    navigate(`/table/zoom/speaker/${conference.id}`);
+                  }}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#ff7632",
+                    "&:hover": {
+                      backgroundColor: "#ff7632",
+                    },
+                  }}
+                >
+                      Add Zoom Link
+                </Button>
               </CardActions>
             </Card>
           </Fragment>

@@ -51,7 +51,6 @@ const SliderImage = ({ images }) => {
         onAutoplayTimeLeft={onAutoplayTimeLeft}
         onSlideChange={onSlideChange}
         modules={[Navigation, Pagination, Autoplay]}
-        className="mySwiper"
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>

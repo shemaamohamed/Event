@@ -95,7 +95,7 @@ const OnePage = () => {
                 <SidebarButton
                   variant="contained"
                   color="error"
-                  onClick={() => navigate(`/conference/${text.toLowerCase()}`)}
+                  onClick={() => navigate(`/${text.toLowerCase()}`)}
                 >
                   {text}
                 </SidebarButton>
@@ -135,17 +135,38 @@ const OnePage = () => {
     <Grid item xs={12} sm={3} md={2}>
       <SidebarContainer sx={{ display: { xs: 'none', sm: 'block' } }}>
         <List>
-          {['Home', 'Welcome', 'Speakers', 'Committees'].map((text, index) => (
+          {['Home', 'Welcome'].map((text, index) => (
             <ListItem key={index}>
               <SidebarButton
                 variant="contained"
                 color="error"
-                onClick={() => navigate(`/conference/${text.toLowerCase()}`)}
+                onClick={() => navigate(`/${text.toLowerCase()}`)}
               >
                 {text}
               </SidebarButton>
             </ListItem>
           ))}
+          <ListItem >
+              <SidebarButton
+                variant="contained"
+                color="error"
+                onClick={() => navigate(`/conference/speaker/${conferenceId}`)}
+              >
+                              Speakers
+
+              </SidebarButton>
+            </ListItem>
+            <ListItem >
+              <SidebarButton
+                variant="contained"
+                color="error"
+                onClick={() => navigate(`/home`)}
+              >
+                Committees
+
+              </SidebarButton>
+            </ListItem>
+          
           <Divider />
           {['Brochure', 'Scientific Program', '1st Announcement', '2nd Announcement'].map((text, index) => (
             <ListItem key={index}>
@@ -161,17 +182,45 @@ const OnePage = () => {
             </ListItem>
           ))}
           <Divider />
-          {['Abstract', 'Registration', 'Contact Us', 'Scientific Topics'].map((text, index) => (
-            <ListItem key={index}>
+          <ListItem >
               <SidebarButton
                 variant="contained"
                 color="error"
-                onClick={() => navigate(`/conference/${text.toLowerCase().replace(' ', '/')}`)}
+                onClick={() => navigate(`/paper/form/${conferenceId}`)}
               >
-                {text}
+                Abstract
               </SidebarButton>
             </ListItem>
-          ))}
+            <ListItem >
+              <SidebarButton
+                variant="contained"
+                color="error"
+                onClick={() => navigate(`/registertype`)}
+              >
+                              Registration
+
+              </SidebarButton>
+            </ListItem>
+            <ListItem >
+              <SidebarButton
+                variant="contained"
+                color="error"
+                onClick={() => navigate(`/contact_us`)}
+              >
+                Contact Us
+
+              </SidebarButton>
+            </ListItem>
+            <ListItem >
+              <SidebarButton
+                variant="contained"
+                color="error"
+                onClick={() => navigate(`/home`)}
+              >
+                Scientific Topics
+
+              </SidebarButton>
+            </ListItem>
         </List>
       </SidebarContainer>
     </Grid>

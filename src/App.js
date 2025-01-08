@@ -325,11 +325,7 @@ const App = () => {
                                   isLoggedIn && limit &&(
 
                                     <Route path="/" element={<AdminLayoutBasic/>} >
-                                      {
-                                        isAdmin &&(
-                                          <Route path="/" element={<OverViewDashboard />} />
-                                        )
-                                      }
+                                   
                                       {
                                   isLoggedIn && limit &&isSponsor &&(
                                     <Route path="sponsor/section" element={<SponsorSection />} />

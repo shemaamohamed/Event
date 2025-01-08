@@ -51,14 +51,13 @@ const ClientsSlide = () => {
                 textShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)',
               }}
             >
-              {/* OurClients */}
             </Typography>
           </Box>
         </Grid>
       </Grid>
       <Swiper
         modules={[Autoplay]}
-        spaceBetween={50}
+        spaceBetween={1}
         pagination={{
           clickable: true,
         }}
@@ -69,7 +68,7 @@ const ClientsSlide = () => {
           disableOnInteraction: false,
           pauseOnMouseEnter: false,
         }}
-        speed={5000}
+        speed={1000}
         breakpoints={{
           768: {
             slidesPerView: 4,
@@ -92,7 +91,6 @@ const ClientsSlide = () => {
               padding: "1rem",
               borderRadius: "12px",
               margin: "0 0.5rem",
-              boxShadow: "0 8px 16px rgba(0, 0, 0, 0.15)",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
