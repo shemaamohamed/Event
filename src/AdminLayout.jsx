@@ -179,17 +179,22 @@ const AdminLayoutBasic = () => {
 
   return (
     <AppProvider
-      navigation={NAVIGATION}
-      router={{ router, navigate, pathname: location.pathname, searchParams: new URLSearchParams(location.search) }}
-      theme={demoTheme}
-      disableColorScheme={true}
-      branding={{
-        title: "",
-        homeUrl: "/",
-        logo: <img src="/image/logo.png" alt="Logo" height={40} />,
-      }}
-    >
-      
+    navigation={NAVIGATION}
+    router={{
+      router,
+      navigate,
+      pathname: location.pathname,
+      searchParams: new URLSearchParams(location.search),
+    }}
+    theme={demoTheme}
+    disableColorScheme={true}
+    branding={{
+      title: "",
+      homeUrl: "/",
+      logo: <img src="/image/logo.png" alt="Logo" height={40} />,
+    }}
+  >
+    {!isSponsor ? (
       <DashboardLayout
         slots={{
           toolbarActions: ToolbarActions,
@@ -204,12 +209,11 @@ const AdminLayoutBasic = () => {
               '&:hover': {
                 backgroundColor: '#c82333',
               },
-             '&.Mui-selected': {
-    backgroundColor: '#c82333', 
-  },
+              '&.Mui-selected': {
+                backgroundColor: '#c82333',
+              },
             },
           },
-        
           '& .MuiDrawer-paper': {
             overflowY: 'auto',
             '&::-webkit-scrollbar': {
@@ -221,11 +225,23 @@ const AdminLayoutBasic = () => {
             },
           },
         }}
-        
       >
         <Outlet />
       </DashboardLayout>
-    </AppProvider>
+    ) : (
+      <DashboardLayout
+      defaultSidebarCollapsed={true}
+
+        slots={{
+          toolbarActions: ToolbarActions,
+        }}
+       
+      >
+        <Outlet />
+      </DashboardLayout>
+    )}
+  </AppProvider>
+  
   );
 };
 

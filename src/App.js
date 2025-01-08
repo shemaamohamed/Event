@@ -145,6 +145,8 @@ import OverViewDashboard from './components/OverViewDashboard/index';
 import GroupTripRegistration from './components/GroupTripRegistration/index';
 
 
+
+
 const App = () => {
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
@@ -215,9 +217,13 @@ const App = () => {
               <Route path="/other" element={<RegisterOther />} />
             <Route path="/registertype" element={<RegisterType />} />
                           {/* register */}
-              <Route
-                path="register/attendance/:conferenceId"
+                          <Route
+                path="register/attendance/:conferenceId/:type"
                 element={<RegisterAttendancePage />}
+              />
+              <Route
+                path="/paper/form/:conferenceId"
+                element={<PaperSubmissionForm />}
               />
 
               <Route
@@ -310,18 +316,33 @@ const App = () => {
                 )
               }
               
-
+                                
                                 {
                                   isLoggedIn && limit &&(
 
                                     <Route path="/" element={<AdminLayoutBasic/>} >
-                                    <Route path="/" element={<OverViewDashboard />} />
+                                      {
+                                        isAdmin &&(
+                                          <Route path="/" element={<OverViewDashboard />} />
+                                        )
+                                      }
+                                      {
+                                  isLoggedIn && limit &&isSponsor &&(
+                                    <Route path="sponsor/section" element={<SponsorSection />} />
+
+                                  )
+
+                                }
                                       
                                     <Route path="files/visa" element={<VisaFiles />} />
   
                                     <Route path="files/reservations" element={<ReservationsFiles />} />
   
                                     <Route path="flight/files" element={<FlightsFiles />} />
+                                    <Route
+                path="/paper/form/:conferenceId"
+                element={<PaperSubmissionForm />}
+              />
   
   
   
@@ -392,7 +413,6 @@ const App = () => {
                                         path="admin/visa2/:registerId"
                                         element={<UpdateVisaStatus />}
                                       />
-                                      <Route path="sponsor/section" element={<SponsorSection />} />
                                       <Route
                                         path={`accept/flight/:user_id`}
                                         element={<StepperAcceptFlight />}
@@ -434,6 +454,10 @@ const App = () => {
                                         path="conference/details/:conferenceId"
                                         element={<OnePage />}
                                       /> */}
+                                      <Route
+                                          path="/conference/speaker/:conferenceId"
+                                          element={<Speakers4 />}
+                                        />
                                       <Route
                                         path="conference/speaker/:conferenceId"
                                         element={<Speakers4 />}

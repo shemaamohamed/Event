@@ -224,7 +224,7 @@ const PendingUsersTable = () => {
                       navigate(`/adminForm/${params.id}`);
                     }
                   }}
-                  disabled={params?.status !== "pending"}
+                  disabled={params.row?.status !== "pending"}
             >
                                 Submit
 
