@@ -80,7 +80,6 @@ const FloorPlanUploader = () => {
   return (
     <div className="container555">
       <h3>Upload Floor Plan PDF</h3>
-      {/* اختيار المؤتمر */}
       <Select
         options={allConference}
         value={conferenceId}
@@ -89,7 +88,6 @@ const FloorPlanUploader = () => {
         errorMsg={""}
       />
 
-      {/* رفع الملف */}
       <ImageUpload
         label="Floor Plan Upload"
         inputValue={file}

@@ -1,33 +1,36 @@
 import React, { useState, useEffect, Fragment } from "react";
-import Table from "../../CoreComponent/Table";
-import Pagination from "../../CoreComponent/Pagination";
-import MySideDrawer from "../../CoreComponent/SideDrawer";
-import SimpleLabelValue from "../SimpleLabelValue";
+
 import httpService from "../../common/httpService";
 import "./style.scss";
+import { Box, Drawer, Grid, IconButton, Menu, MenuItem, Paper, Typography } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { DataGrid } from "@mui/x-data-grid";
+import { CloseRounded } from "@mui/icons-material";
+
 
 const TripParticipantsComponent = () => {
   const [participantsData, setParticipantsData] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [errorMsg, setErrorMsg] = useState("");
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+
   const [selectedParticipantDetails, setSelectedParticipantDetails] =
     useState(null);
+      const [anchorEl, setAnchorEl] = useState(null);
+      const [selectedRow, setSelectedRow] = useState(null);
+      const openMenu = (event, row) => {
+        setAnchorEl(event.currentTarget);
+        setSelectedRow(row);
+      };
+    
+      const closeMenu = () => {
+        setAnchorEl(null);
+        setSelectedRow(null);
+      };
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const TOKEN = localStorage.getItem("token");
 
-  const TABLE_HEADERS = [
-    { label: "ID", key: "id" },
-    { label: "Name", key: "name" },
-    { label: "Nationality", key: "nationality" },
-    { label: "Phone", key: "phone_number" },
-    { label: "WhatsApp", key: "whatsapp_number" },
-    { label: "Accommodation", key: "accommodation_stars" },
-    { label: "Total Price", key: "total_price" },
-    { label: "Status", key: "status" },
-    { label: "Actions", key: "actions" },
-  ];
+
 
   const fetchParticipants = async (page = 1) => {
     try {
@@ -93,7 +96,8 @@ const TripParticipantsComponent = () => {
     fetchParticipants();
   }, []);
 
-  const tableData = participantsData.map((participant) => ({
+  const rows = participantsData.map((participant) => ({
+    ...participant,
     id: participant.id,
     name: participant.name,
     nationality: participant.nationality,
@@ -102,142 +106,423 @@ const TripParticipantsComponent = () => {
     accommodation_stars: participant.accommodation_stars,
     total_price: participant.total_price,
     status: participant.status,
-    actions: (
-      <button
-        className="view-details-button"
-        onClick={() => handleViewDetails(participant)}
-      >
-        View Details
-      </button>
-    ),
+    actions: participant.actions,
   }));
+  const column=[
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "nationality",
+      headerName: "Nationality",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "phone_number",
+      headerName: "Phone Number",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "whatsapp_number",
+      headerName: "WhatsApp Number",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "accommodation_stars",
+      headerName: "Accommodation Stars",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "total_price",
+      headerName: "Total Price",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        <>
+        <IconButton onClick={(event) => openMenu(event, params.row)}>
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+          onClose={closeMenu}
+        >
+          <MenuItem onClick={() => {
+                   handleViewDetails(params.row)
+
+          }}>
+            View Details
+          </MenuItem>
+        </Menu>
+      </>
+        
+
+      )
+    }
+
+
+
+  ];
+
 
   return (
-    <Fragment>
+    <div
+
+    >
       <div className="participants-component">
-        <div className="table-container">
-          <div className="table-wrapper">
-            <Table headers={TABLE_HEADERS} data={tableData} />
-          </div>
-        </div>
+      <Typography
+                      variant="h6"
+                      sx={{
+                        color: '#c62828',
+                        fontWeight: 'bold',
+                        fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                        textAlign: 'center',
+                      }}
+                    >
+                      Private Trip Participants
+                    </Typography>
+                    <DataGrid
+        getRowId={(row) => row.id}
+        rows={rows}
+                    columns={column}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 8,
+                        },
+                      },
+                    }}
+                    pageSizeOptions={[8]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                    autoHeight
+                    sx={{
+                      marginTop: "20px",
+                      "& .MuiDataGrid-virtualScroller": {
+                        overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                      },
+        }}
+        
+      />
+      
 
-        <MySideDrawer isOpen={isDrawerOpen} setIsOpen={setDrawerOpen}>
-          <div className="participant-details">
-            <div className="participant-details-all">
-              <div className="head">Participant & Companions Details</div>
-              {selectedParticipantDetails ? (
-                <Fragment>
-                  <div className="head2">Main Participant Details</div>
-                  <div className="details-list">
-                    <SimpleLabelValue
-                      label="Name"
-                      value={
-                        selectedParticipantDetails.mainParticipant.name || "-"
-                      }
-                    />
-                    <SimpleLabelValue
-                      label="Nationality"
-                      value={
-                        selectedParticipantDetails.mainParticipant
-                          .nationality || "-"
-                      }
-                    />
-                    <SimpleLabelValue
-                      label="Phone Number"
-                      value={
-                        selectedParticipantDetails.mainParticipant
-                          .phone_number || "-"
-                      }
-                    />
-                    <SimpleLabelValue
-                      label="WhatsApp Number"
-                      value={
-                        selectedParticipantDetails.mainParticipant
-                          .whatsapp_number || "-"
-                      }
-                    />
-                    <SimpleLabelValue
-                      label="Accommodation Stars"
-                      value={
-                        selectedParticipantDetails.mainParticipant
-                          .accommodation_stars || "-"
-                      }
-                    />
-                    <SimpleLabelValue
-                      label="Total Price"
-                      value={`$${selectedParticipantDetails.mainParticipant.invoice.total_price || "-"}`}
-                    />
-                    <SimpleLabelValue
-                      label="Status"
-                      value={
-                        selectedParticipantDetails.mainParticipant.invoice
-                          .status || "-"
-                      }
-                    />
-                  </div>
+        <Drawer open={isDrawerOpen} onClose={() => setDrawerOpen(false)}
+        
+        
+        anchor="right"
+        sx={{
+          zIndex: (theme) => theme.zIndex.modal + 1, 
+  
+          '& .MuiDrawer-paper': {
+              zIndex: (theme) => theme.zIndex.modal + 1,
+  
+  
+        width: 
+        {
+          xs: '100%',
+          sm: '70%',
+          md: '70%',
+          lg: '50%',
+          xl: '50%',
+        }, 
+      },
+  
+        }}
+          >
+             <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'flex-end',
+                                  padding: 2,
+                                }}
+                                >
+                                  <IconButton onClick={() => setDrawerOpen(false)}>
+                                   <CloseRounded /> 
+                                  </IconButton>
+                                </div>
+                                <Box
+      sx={{
+        maxWidth: 800,
+        margin: "0 auto",
+        padding: 3,
+        backgroundColor: "#f9f9f9",
+        borderRadius: 2,
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+        overflowY: "auto"
+      }}
+    >
+      <Typography
+        variant="h5"
+        sx={{
+          color: "#c62828",
+          textAlign: "center",
+          marginBottom: 3,
+          fontWeight: "bold",
+        }}
+      >
+        Participant & Companions Details
+      </Typography>
 
-                  {selectedParticipantDetails.companions.length > 0 ? (
-                    selectedParticipantDetails.companions.map(
-                      (companion, index) => (
-                        <Fragment>
-                          <div className="head2">Companions {index +1}</div>
-                          <div key={index} className="details-list">
-                            <SimpleLabelValue
-                              label="Name"
-                              value={companion.name || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="Nationality"
-                              value={companion.nationality || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="Phone Number"
-                              value={companion.phone_number || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="WhatsApp Number"
-                              value={companion.whatsapp_number || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="Check-In Date"
-                              value={companion.check_in_date || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="Check-Out Date"
-                              value={companion.check_out_date || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="Total Price"
-                              value={`${companion?.invoice?.total_price || "-"}`}
-                            />
-                            <SimpleLabelValue
-                              label="Status"
-                              value={companion?.invoice?.status || "-"}
-                            />
-                          </div>{" "}
-                        </Fragment>
-                      )
-                    )
-                  ) : (
-                    <p>No companions available.</p>
-                  )}
-                </Fragment>
-              ) : (
-                <p>No participant details available.</p>
-              )}
-            </div>
-          </div>
-        </MySideDrawer>
+      {selectedParticipantDetails ? (
+        <Fragment>
+          {/* Main Participant Details */}
+          <Paper elevation={2} sx={{ padding: 2, marginBottom: 3 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "#424242",
+                marginBottom: 2,
+                fontWeight: "bold",
+              }}
+            >
+              Main Participant Details
+            </Typography>
 
-        <div className="pagination-container">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Typography variant="body1" fontWeight="bold">
+                  Name:
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">
+                  {selectedParticipantDetails.mainParticipant.name || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Typography variant="body1" fontWeight="bold">
+                  Nationality:
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">
+                  {selectedParticipantDetails.mainParticipant.nationality || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Typography variant="body1" fontWeight="bold">
+                  Phone Number:
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">
+                  {selectedParticipantDetails.mainParticipant.phone_number || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Typography variant="body1" fontWeight="bold">
+                  WhatsApp Number:
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">
+                  {selectedParticipantDetails.mainParticipant.whatsapp_number ||
+                    "-"}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Typography variant="body1" fontWeight="bold">
+                  Accommodation Stars:
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">
+                  {selectedParticipantDetails.mainParticipant
+                    .accommodation_stars || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Typography variant="body1" fontWeight="bold">
+                  Total Price:
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">
+                  ${selectedParticipantDetails.mainParticipant.invoice.total_price ||
+                    "-"}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Typography variant="body1" fontWeight="bold">
+                  Status:
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">
+                  {selectedParticipantDetails.mainParticipant.invoice.status ||
+                    "-"}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+
+          {/* Companions Details */}
+          {selectedParticipantDetails.companions.length > 0 ? (
+            selectedParticipantDetails.companions.map((companion, index) => (
+              <Paper
+                key={index}
+                elevation={1}
+                sx={{ padding: 2, marginBottom: 2 }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#424242",
+                    marginBottom: 2,
+                    fontWeight: "bold",
+                  }}
+                >
+                  Companion {index + 1} Details
+                </Typography>
+
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Typography variant="body1" fontWeight="bold">
+                      Name:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">
+                      {companion.name || "-"}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Typography variant="body1" fontWeight="bold">
+                      Nationality:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">
+                      {companion.nationality || "-"}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Typography variant="body1" fontWeight="bold">
+                      Phone Number:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">
+                      {companion.phone_number || "-"}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Typography variant="body1" fontWeight="bold">
+                      WhatsApp Number:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">
+                      {companion.whatsapp_number || "-"}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Typography variant="body1" fontWeight="bold">
+                      Check-In Date:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">
+                      {companion.check_in_date || "-"}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Typography variant="body1" fontWeight="bold">
+                      Check-Out Date:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">
+                      {companion.check_out_date || "-"}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Typography variant="body1" fontWeight="bold">
+                      Total Price:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">
+                      ${companion.invoice?.total_price || "-"}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Typography variant="body1" fontWeight="bold">
+                      Status:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body1">
+                      {companion.invoice?.status || "-"}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Paper>
+            ))
+          ) : (
+            <Typography variant="body1" sx={{ textAlign: "center" }}>
+              No companions available.
+            </Typography>
+          )}
+        </Fragment>
+      ) : (
+        <Typography
+          variant="body1"
+          sx={{
+            textAlign: "center",
+            color: "#757575",
+            marginTop: 2,
+          }}
+        >
+          No participant details available.
+        </Typography>
+      )}
+    </Box>
+        </Drawer>
+
+      
       </div>
-    </Fragment>
+    </div>
   );
 };
 

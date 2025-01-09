@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Table from "../../CoreComponent/Table";
 import "./style.scss";
 import AddDiscountForm from "./discountForm";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DataGrid } from "@mui/x-data-grid";
-import { User } from "lucide-react";
 
 
 const UsersList = () => {

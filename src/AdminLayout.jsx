@@ -108,9 +108,27 @@ const AdminLayoutBasic = () => {
       { title: "Messages", icon: "💬", segment: "msgs" },
    
       { title: "Users", icon: "👥", segment: "pending/users" },
-      { title: "Reservation Room Prices", icon: "🏠", segment: "room/prices" },
+      { title:"All Speakers", icon: "🎤", segment: "all-speakers" },
+      {title:"All Attendances", icon: "📅", segment: "all-attendances" },
+      { title: "All Sponsors", icon: "🤝", segment: "all-sponsors" },
+      
+
+
       { title: "Group Registration Table", icon: "📊", segment: "admin/excel/table" },
       { title: "Add Clients", icon: "➕", segment: "add/client" },
+      {
+        title:"Airport Transfer Bookings",
+        icon: "✈️",
+        segment:  "all-airports",
+      },
+      { title:"Visas" ,icon:"👨‍👩‍👧‍👦", segment:"view-visas"},
+      { title: "Reservations", icon: "🏨", segment: ["reservations"],
+        children: [
+          { title: "Reservations", segment: "" },
+          { title: "Reservation Room Prices", segment: "room/prices" },
+        ],
+       },
+     
       
       {
         title:'Flights',
@@ -149,6 +167,7 @@ const AdminLayoutBasic = () => {
         children: [
           { title: "Visa Files", segment: "visa" },
           { title: "Reservations Files", segment: "reservations" },
+          {title: "Certificate Files", segment: "certificate" },
         ],
       },{
         title:'Trip',
@@ -157,6 +176,9 @@ const AdminLayoutBasic = () => {
         children: [
           { title: "All Trips", segment: "" },
           { title: " Trips Users Discount", segment: "user" },
+          {title: "Private Trip Participants", segment: "participants/user" },
+          {title: "Group Trip Participants", segment: "participants/group" },
+
         ],
       }
 

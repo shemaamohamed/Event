@@ -31,7 +31,6 @@ const PendingUsersTable = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [open, setOpen] = useState(false);
   const openMenu = (event, row) => {
     setAnchorEl(event.currentTarget);
     setSelectedRow(row);
@@ -242,6 +241,7 @@ const PendingUsersTable = () => {
   ];
   const rows = pendingUsers.map((row) => {
     return {
+      ...row,
       id: row.id,
       name: row.name, 
       email: row.email, 
@@ -298,26 +298,27 @@ const PendingUsersTable = () => {
         label="Visa Status"
       />
      <DataGrid
-        rows={rows}
-        columns={columns}
         getRowId={(row) => row.id}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 8,
-            },
-          },
+        rows={rows}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 8,
+                        },
+                      },
+                    }}
+                    pageSizeOptions={[8]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                    autoHeight
+                    sx={{
+                      marginTop: "20px",
+                      "& .MuiDataGrid-virtualScroller": {
+                        overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                      },
         }}
-        pageSizeOptions={[8]}
-        checkboxSelection
-        disableRowSelectionOnClick
-        autoHeight
-        sx={{
-          marginTop: "20px",
-          "& .MuiDataGrid-virtualScroller": {
-            overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
-          },
-        }}
+        
       />
 
      

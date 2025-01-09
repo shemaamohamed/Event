@@ -162,6 +162,19 @@ const FlightFormAdmin = () => {
              }}>
                              Add Trips
 
+            </MenuItem>
+            <MenuItem
+             onClick={() => {
+              setOpenView(true);
+              setSelectedItem(params.row);
+            }}
+
+            >
+                            view 
+
+                    
+            
+
             </MenuItem> 
             <MenuItem
                           onClick={() =>{
@@ -179,7 +192,7 @@ const FlightFormAdmin = () => {
             <MenuItem
             onClick={() => {
               setOpenUpdateForm(true);
-              setSelectedItem(params);
+              setSelectedItem(params.row);
             }}
 
 
@@ -189,7 +202,7 @@ const FlightFormAdmin = () => {
 
             </MenuItem>
             
-            <MenuItem
+            {/* <MenuItem
              onClick={() => {
               setOpenTicketForm(true);
               setSelectedItem(params);
@@ -201,11 +214,11 @@ const FlightFormAdmin = () => {
                     
             
 
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem
             onClick={() => {
               setOpenInvoice(true);
-              setSelectedItem(params)
+              setSelectedItem(params.row)
             }}
             >
                             View Invoice
@@ -223,12 +236,8 @@ const FlightFormAdmin = () => {
   ];
   const rows = flights.map((row) => {
     return {
-      user_id: row.user_id,
-      user_name: row.user_name, 
-      departure_airport: row.departure_airport, 
-      departure_date: row.departure_date, 
-      arrival_date: row.arrival_date, 
-      flight_id: row.flight_id,
+      ...row,
+      
      
       actions: row.actions, 
     };
@@ -237,7 +246,14 @@ const FlightFormAdmin = () => {
  
 
   return (
-    <div className="flight-form2">
+    <div
+    style={{
+      borderRadius: '8px',
+      width: '100%',
+      maxWidth: '1700px',
+      padding: '20px',
+    }}
+     className="flight-form2">
       <div className="flight-form">
         <div className="flight-form-admin-header">
           <div className="header">

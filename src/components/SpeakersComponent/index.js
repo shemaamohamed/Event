@@ -1,12 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
-import Table from "../../CoreComponent/Table";
-import Pagination from "../../CoreComponent/Pagination";
 import Dialog from "../../CoreComponent/Dialog";
 import httpService from "../../common/httpService";
 import toast from "react-hot-toast";
 import ImageUpload from "../../CoreComponent/ImageUpload";
-import "./style.scss";
 import { backendUrlImages } from "../../constant/config";
+import { DataGrid } from "@mui/x-data-grid";
+import { Typography } from "@mui/material";
 
 const SpeakersComponent = () => {
   const [usersData, setUsersData] = useState([]);
@@ -53,44 +52,14 @@ const SpeakersComponent = () => {
     setDialogOpen(true);
   };
 
-  const tableData = usersData.map((user) => ({
+  const rows = usersData.map((user) => ({
     ...user,
     name: user?.user?.name,
     email: user?.user?.email,
-    abstract: user.abstract ? (
-      <a
-        href={`${backendUrlImages}${user.abstract}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View Abstract
-      </a>
-    ) : (
-      "No Abstract"
-    ),
-    presentation_file: user.presentation_file ? (
-      <a
-        href={`${backendUrlImages}${user.presentation_file}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View Presentation
-      </a>
-    ) : (
-      "No Presentation"
-    ),
-    video: user.video ? (
-      <a
-        href={`${backendUrlImages}${user.video}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View Video
-      </a>
-    ) : (
-      "No Video"
-    ),
-    topics: user.topics ? JSON.parse(user.topics).join(", ") : "No Topics",
+    abstract: user.abstract,
+    presentation_file: user.presentation_file ,
+    video: user.video ,
+    topics: user.topics,
     online_participation: user.online_participation ? "Yes" : "No",
     is_online_approved: user.is_online_approved ? "Yes" : "No",
     accommodation_status: user.accommodation_status ? "Booked" : "Not Booked",
@@ -99,6 +68,152 @@ const SpeakersComponent = () => {
     airport_pickup: user.airport_pickup ? "Yes" : "No",
     free_trip: user.free_trip ? "Yes" : "No",
   }));
+  const column= [
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "abstract",
+      headerName: "Abstract",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        params.row.abstract ? (
+          <a
+            href={`${backendUrlImages}${params.row.abstract}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Abstract
+          </a>
+        ) : (
+          "No Abstract"
+        )
+      ),
+    },
+    {
+      field: "presentation_file",
+      headerName: "Presentation File",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        params.row.presentation_file ? (
+          <a
+            href={`${backendUrlImages}${params.row.presentation_file}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+          View Presentation
+          </a>
+        ) : (
+          "No Presentation"
+
+        )
+      ),
+      
+    },
+    {
+      field: "video",
+      headerName: "Video",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        params.row.video ? (
+          <a
+            href={`${backendUrlImages}${params.row.video}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Video
+          </a>
+        ) : (
+          "No Video"
+        )
+      
+      ),  
+    },
+    {
+      field: "topics",
+      headerName: "Topics",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        params.row.topics ? (
+          <div>
+            {JSON.parse(params.row.topics).join(", ")}
+          </div>
+        ) : (
+          "No Topics"
+        )
+      ),
+    },
+    
+    {
+      field: "online_participation",
+      headerName: "Online Participation",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "is_online_approved",
+      headerName: "Allowed Online",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "accommodation_status",
+      headerName: "Accommodation Status",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "ticket_status",
+      headerName: "Visa Status",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "dinner_invitation",
+      headerName: "Have Dinner Invitation",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "airport_pickup",
+      headerName: "Free Airport Pickup",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "free_trip",
+      headerName: "Free Trip",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+  ];
 
   const handleFileUpload = async () => {
     const formData = new FormData();
@@ -128,30 +243,49 @@ const SpeakersComponent = () => {
   }, []);
 
   return (
-    <Fragment>
-      <div className="speakers-component">
-        <div className="table-container">
-          <div className="table-wrapper">
-            <Table
-              headers={[
-                { label: "Name", key: "name" },
-                { label: "Email", key: "email" },
-                { label: "Abstract", key: "abstract" },
-                { label: "Presentation File", key: "presentation_file" },
-                { label: "Video", key: "video" },
-                { label: "Topics", key: "topics" },
-                { label: "Online Participation", key: "online_participation" },
-                { label: "Allowed Online", key: "is_online_approved" },
-                { label: "Accommodation Status", key: "accommodation_status" },
-                { label: "Visa Status", key: "ticket_status" },
-                { label: "Have Dinner Invitation", key: "dinner_invitation" },
-                { label: "Free Airport Pickup", key: "airport_pickup" },
-                { label: "Free Trip", key: "free_trip" },
-              ]}
-              data={tableData}
-            />
-          </div>
-        </div>
+    <div
+    style={{
+      borderRadius: '8px',
+      width: '100%',
+      maxWidth: '1700px',
+      // height: 'calc(100vh - 80px)',
+      padding: '20px',
+    }}
+    
+    >
+      <Typography
+              variant="h6"
+              sx={{
+                color: '#c62828',
+                fontWeight: 'bold',
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                textAlign: 'center',
+              }}
+            >
+              All Speakers
+            </Typography>
+       <DataGrid
+          rows={rows}
+          columns={column}
+          getRowId={(row) => row.email}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 7,
+              },
+            },
+          }}
+          pageSizeOptions={[7]}
+          checkboxSelection
+          disableRowSelectionOnClick
+          autoHeight
+          sx={{
+            marginTop: "20px",
+            "& .MuiDataGrid-virtualScroller": {
+              overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+            },
+          }}
+        />
 
         {isDialogOpen && (
           <Dialog
@@ -186,15 +320,8 @@ const SpeakersComponent = () => {
           </Dialog>
         )}
 
-        <div className="pagination-container">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
-      </div>
-    </Fragment>
+       
+    </div>
   );
 };
 

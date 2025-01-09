@@ -1,11 +1,14 @@
 import React, { useState, useEffect, Fragment } from "react";
-import Table from "../../CoreComponent/Table";
-import Pagination from "../../CoreComponent/Pagination";
-import MySideDrawer from "../../CoreComponent/SideDrawer";
+
 import SimpleLabelValue from "../SimpleLabelValue";
 import httpService from "../../common/httpService";
 import toast from "react-hot-toast";
 import "./style.scss";
+import { Box, Divider, Drawer, IconButton, List, Menu, MenuItem, Typography } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { DataGrid } from "@mui/x-data-grid";
+import { CloseRounded } from "@mui/icons-material";
+
 
 const ReservationsComponent = () => {
   const [reservationsData, setReservationsData] = useState([]);
@@ -16,17 +19,19 @@ const ReservationsComponent = () => {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const TOKEN = localStorage.getItem("token");
+      const [anchorEl, setAnchorEl] = useState(null);
+      const [selectedRow, setSelectedRow] = useState(null);
+      const openMenu = (event, row) => {
+        setAnchorEl(event.currentTarget);
+        setSelectedRow(row);
+      };
+    
+      const closeMenu = () => {
+        setAnchorEl(null);
+        setSelectedRow(null);
+      };
 
-  const TABLE_HEADERS = [
-    { label: "Name", key: "name" },
-    { label: "Email", key: "email" },
-    { label: "Registration Type", key: "registration_type" },
-    { label: "Room Count", key: "room_count" },
-    { label: "Companions Count", key: "companions_count" },
-    { label: "Update Deadline", key: "update_deadline" },
-    { label: "Created At", key: "created_at" },
-    { label: "Actions", key: "actions" },
-  ];
+
 
   const DEFAULT_ERROR_MESSAGE = "Failed to fetch reservations.";
   // Fetch reservations data
@@ -67,7 +72,8 @@ const ReservationsComponent = () => {
     fetchReservations();
   }, []);
 
-  const tableData = reservationsData.map((reservation) => ({
+  const rows = reservationsData.map((reservation) => ({
+    ...reservation,
     id: reservation.id,
     user_id: reservation.user_id,
     name: reservation.user.name,
@@ -77,118 +83,225 @@ const ReservationsComponent = () => {
     companions_count: reservation.companions_count,
     update_deadline: reservation.update_deadline,
     created_at: reservation.created_at,
-    actions: (
-      <button
-        className="view-rooms-button"
-        onClick={() => handleViewRooms(reservation.rooms)}
-      >
-        View Rooms
-      </button>
-    ),
+    rooms: reservation.rooms,
+    actions: reservation.actions,
   }));
+  const columns=[
+    { field: "name",
+       headerName: "Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell"
+     },
+    { field: "email",
+       headerName: "Email",
+       flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell" },
+    { field: "registration_type",
+       headerName: "Registration Type",
+       flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell" },
+    { field: "room_count",
+       headerName: "Room Count",
+        flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell" },
+    { field: "companions_count",
+       headerName: "Companions Count",
+        flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell" },
+    { field: "update_deadline", headerName: "Update Deadline", flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell" },
+    { field: "created_at", headerName: "Created At", flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell" },
+    { field: "actions", headerName: "Actions", flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        <>
+          <IconButton onClick={(event) => openMenu(event, params.row)}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+            onClose={closeMenu}
+          >
+            <MenuItem onClick={() => {
+              handleViewRooms(params.row.rooms);
+              
+            }}>
+              View Rooms
+            </MenuItem>
+          </Menu>
+        </>
+      ),
+    },
+  ]
+
 
   return (
-    <Fragment>
+    <div
+    style={{
+      borderRadius: '8px',
+      width: '100%',
+      maxWidth: '1700px',
+      // height: 'calc(100vh - 80px)',
+      padding: '20px',
+    }}
+    >
+
       <div className="reservations-component">
-        <div className="table-container">
-          <div className="table-wrapper">
-            <Table headers={TABLE_HEADERS} data={tableData} />
-          </div>
-        </div>
+      <Typography
+              variant="h6"
+              sx={{
+                color: '#c62828',
+                fontWeight: 'bold',
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                textAlign: 'center',
+              }}
+            >
+              All Reservations
+            </Typography>
+        <DataGrid
+        rows={rows}
+        columns={columns}
+        getRowId={(row) => row.email}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 7,
+            },
+          },
+        }}
+        pageSizeOptions={[7]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        autoHeight
+        sx={{
+          marginTop: "20px",
+          "& .MuiDataGrid-virtualScroller": {
+            overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+          },
+        }}
+        />
 
-        <MySideDrawer isOpen={isDrawerOpen} setIsOpen={setDrawerOpen}>
-          <div className="rooms-details">
-            <div className="head">Room Details</div>
-            {selectedRooms.length > 0 ? (
-              <div className="rooms-list">
-                {selectedRooms.map((room, index) => (
-                  <div key={room.id}>
-                    <div className="head2">Room {index + 1}</div>
-                    <div className="room-details">
-                      <SimpleLabelValue
-                        label="Room Type"
-                        value={room.room_type || "-"}
-                      />
-                      <SimpleLabelValue
-                        label="Occupant Name"
-                        value={room.occupant_name || "-"}
-                      />
-                      <SimpleLabelValue
-                        label="Check-In"
-                        value={room.check_in_date || "-"}
-                      />
-                      <SimpleLabelValue
-                        label="Check-Out"
-                        value={room.check_out_date || "-"}
-                      />
-                      <SimpleLabelValue
-                        label="Total Nights"
-                        value={room.total_nights || "-"}
-                      />
-                    </div>{" "}
-                    <div className="head2">Invoices</div>
-                    <div className="room-details">
-                      {room.reservation_invoices &&
-                        room.reservation_invoices.length > 0 &&
-                        room.reservation_invoices.map((invoice) => (
-                          <>
-                            <SimpleLabelValue
-                              label="Invoice ID"
-                              value={invoice.id || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="Base Price"
-                              value={invoice.price || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="Additional Price"
-                              value={invoice.additional_price || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="Total Price"
-                              value={invoice.total || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="Status"
-                              value={invoice.status || "-"}
-                            />
-                            <SimpleLabelValue
-                              label="Confirmation PDF"
-                              value={
-                                invoice.confirmationPDF ? (
-                                  <a
-                                    href={invoice.confirmationPDF}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                  >
-                                    View PDF
-                                  </a>
-                                ) : (
-                                  "-"
-                                )
-                              }
-                            />
-                          </>
-                        ))}
+      
+
+        <Drawer 
+        open={isDrawerOpen} onClose={() => setDrawerOpen(false)}
+          anchor="right"
+          sx={{
+            zIndex: (theme) => theme.zIndex.modal + 1, 
+    
+            '& .MuiDrawer-paper': {
+                zIndex: (theme) => theme.zIndex.modal + 1,
+    
+    
+          width: 
+          {
+            xs: '100%',
+            sm: '50%',
+            md: '50%',
+            lg: '40%',
+            xl: '40%',
+          }, 
+        },
+    
+          }}
+          >
+                <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      padding: 2,
+                    }}
+                    >
+                      <IconButton onClick={() => setDrawerOpen(false)}>
+                       <CloseRounded /> 
+                      </IconButton>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No rooms available for this reservation.</p>
-            )}
-          </div>
-        </MySideDrawer>
 
-        <div className="pagination-container">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+                    <Box sx={{ padding: 2, overflowY: "auto" }}>
+        <Typography variant="h6" component="div" sx={{ marginBottom: 2 }}>
+          Room Details
+        </Typography>
+        {selectedRooms.length > 0 ? (
+          <List>
+            {selectedRooms.map((room, index) => (
+              <Box key={room.id} sx={{ marginBottom: 3 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  Room {index + 1}
+                </Typography>
+                <Box sx={{ padding: 2, border: "1px solid #ddd", borderRadius: 2 }}>
+                  <SimpleLabelValue label="Room Type" value={room.room_type || "-"} />
+                  <SimpleLabelValue label="Occupant Name" value={room.occupant_name || "-"} />
+                  <SimpleLabelValue label="Check-In" value={room.check_in_date || "-"} />
+                  <SimpleLabelValue label="Check-Out" value={room.check_out_date || "-"} />
+                  <SimpleLabelValue label="Total Nights" value={room.total_nights || "-"} />
+                </Box>
+                <Divider sx={{ marginY: 2 }} />
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  Invoices
+                </Typography>
+                {room.reservation_invoices &&
+                room.reservation_invoices.length > 0 ? (
+                  room.reservation_invoices.map((invoice, invoiceIndex) => (
+                    <Box
+                      key={invoiceIndex}
+                      sx={{
+                        padding: 2,
+                        border: "1px solid #ddd",
+                        borderRadius: 2,
+                        marginBottom: 2,
+                      }}
+                    >
+                      <SimpleLabelValue label="Invoice ID" value={invoice.id || "-"} />
+                      <SimpleLabelValue label="Base Price" value={invoice.price || "-"} />
+                      <SimpleLabelValue
+                        label="Additional Price"
+                        value={invoice.additional_price || "-"}
+                      />
+                      <SimpleLabelValue label="Total Price" value={invoice.total || "-"} />
+                      <SimpleLabelValue label="Status" value={invoice.status || "-"} />
+                      <SimpleLabelValue
+                        label="Confirmation PDF"
+                        value={
+                          invoice.confirmationPDF ? (
+                            <a
+                              href={invoice.confirmationPDF}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              View PDF
+                            </a>
+                          ) : (
+                            "-"
+                          )
+                        }
+                      />
+                    </Box>
+                  ))
+                ) : (
+                  <Typography>No invoices available for this room.</Typography>
+                )}
+              </Box>
+            ))}
+          </List>
+        ) : (
+          <Typography>No rooms available for this reservation.</Typography>
+        )}
+      </Box>
+        </Drawer>
+
+     
       </div>
-    </Fragment>
+    </div>
   );
 };
 

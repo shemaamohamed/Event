@@ -3,7 +3,7 @@ import SimpleLabelValue from "../../../components/SimpleLabelValue";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper"; 
 import "./style.scss";
 import { backendUrlImages } from "../../../constant/config";
-import { Drawer, IconButton, Typography } from "@mui/material";
+import { Box, Drawer, Grid, IconButton, Typography } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
 const ViewFormExhibitions = ({ isOpen, setIsOpen, exhibitionData }) => {
   return (
@@ -31,48 +31,87 @@ const ViewFormExhibitions = ({ isOpen, setIsOpen, exhibitionData }) => {
         <CloseRounded />
       </IconButton>
     </div>
-    <Typography
+    <Box
+      
+    >
+      <Typography
         variant="h6"
         sx={{
           color: "#c62828",
           textAlign: "center",
-          backgroundColor:'#f1f1f1'
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
         }}
-        gutterBottom
       >
         Exhibition Details
-
       </Typography>
-        
-            <SimpleLabelValue label="Title" value={exhibitionData?.title} />
-            <SimpleLabelValue
-              label="Description"
-              value={exhibitionData?.description}
-            />
-            <SimpleLabelValue
-              label="Location"
-              value={exhibitionData?.location}
-            />
-            <SimpleLabelValue
-              label="Start Date"
-              value={new Date(exhibitionData?.start_date).toLocaleDateString()}
-            />
-            <SimpleLabelValue
-              label="End Date"
-              value={new Date(exhibitionData?.end_date).toLocaleDateString()}
-            />
-            <SimpleLabelValue label="Status" value={exhibitionData?.status} />
 
-            <SimpleLabelValue
-              label="Exhibition Image"
-              value={
-                <img
-                  src={`${backendUrlImages}${exhibitionData?.image}`}
-                  alt={exhibitionData?.title}
-                  className="view-exhibition-image"
-                />
-              }
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <SimpleLabelValue label="Title" value={exhibitionData?.title || "-"} />
+        </Grid>
+        <Grid item xs={12}>
+          <SimpleLabelValue
+            label="Description"
+            value={exhibitionData?.description || "-"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <SimpleLabelValue
+            label="Location"
+            value={exhibitionData?.location || "-"}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <SimpleLabelValue
+            label="Start Date"
+            value={
+              exhibitionData?.start_date
+                ? new Date(exhibitionData?.start_date).toLocaleDateString()
+                : "-"
+            }
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <SimpleLabelValue
+            label="End Date"
+            value={
+              exhibitionData?.end_date
+                ? new Date(exhibitionData?.end_date).toLocaleDateString()
+                : "-"
+            }
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <SimpleLabelValue label="Status" value={exhibitionData?.status || "-"} />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+            Exhibition Image
+          </Typography>
+          <Box
+            sx={{
+              textAlign: "center",
+              marginTop: 2,
+            }}
+          >
+            <img
+              src={`${backendUrlImages}${exhibitionData?.image}`}
+              alt={exhibitionData?.title}
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+                borderRadius: "8px",
+                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+              }}
+              className="view-exhibition-image"
             />
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
       </Drawer>
   );
 };

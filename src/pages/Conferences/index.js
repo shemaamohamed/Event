@@ -348,7 +348,11 @@ const ConferencesPage = () => {
                  <CloseRounded /> 
                 </IconButton>
               </div>
-      <Box>
+      <Box
+      sx={{
+        overflowY: "auto"
+      }}
+      >
    
         <Typography variant="h6"  gutterBottom
         sx={{

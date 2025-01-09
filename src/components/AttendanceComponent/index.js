@@ -1,12 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
-import Table from "../../CoreComponent/Table";
-import Pagination from "../../CoreComponent/Pagination";
 import Dialog from "../../CoreComponent/Dialog";
 import httpService from "../../common/httpService";
 import toast from "react-hot-toast";
 import ImageUpload from "../../CoreComponent/ImageUpload";
-import "./style.scss";
 import { backendUrlImages } from "../../constant/config";
+import { DataGrid } from "@mui/x-data-grid";
+import { Typography } from "@mui/material";
 
 const AttendanceComponent = () => {
   const [attendanceData, setAttendanceData] = useState([]);
@@ -51,7 +50,7 @@ const AttendanceComponent = () => {
     setDialogOpen(true);
   };
 
-  const tableData = attendanceData.map((attendance) => ({
+  const row = attendanceData.map((attendance) => ({
     ...attendance,
     attendee_name: attendance?.user?.name,
     email: attendance?.user?.email,
@@ -63,6 +62,37 @@ const AttendanceComponent = () => {
     certificate: attendance.includes_certificate ? "Yes" : "No",
     lecture_attendance: attendance.includes_lecture_attendance ? "Yes" : "No",
   }));
+  const columns = [
+    { field: "attendee_name", headerName: "Attendee Name",  flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell"},
+    { field: "email", headerName: "Email", flex: 1 ,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    { field: "conference_title", headerName: "Conference Title",  flex: 1,
+      minWidth: 300,
+      cellClassName: "centered-cell",},
+    { field: "registration_fee", headerName: "Registration Fee",  flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell", },
+    { field: "conference_bag", headerName: "Conference Bag",  flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",},
+    { field: "conference_badge", headerName: "Conference Badge",  flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell", },
+    { field: "conference_book", headerName: "Conference Book",  flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell", },
+    { field: "certificate", headerName: "Certificate",  flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",},
+    { field: "lecture_attendance", headerName: "Lecture Attendance",  flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell", },
+  
+  ];
 
   const handleFileUpload = async () => {
     const formData = new FormData();
@@ -92,26 +122,49 @@ const AttendanceComponent = () => {
   }, []);
 
   return (
-    <Fragment>
-      <div className="attendance-component">
-        <div className="table-container">
-          <div className="table-wrapper">
-            <Table
-              headers={[
-                { label: "Attendee Name", key: "attendee_name" },
-                { label: "Email", key: "email" },
-                { label: "Conference Title", key: "conference_title" },
-                { label: "Registration Fee", key: "registration_fee" },
-                { label: "Conference Bag", key: "conference_bag" },
-                { label: "Conference Badge", key: "conference_badge" },
-                { label: "Conference Book", key: "conference_book" },
-                { label: "Certificate", key: "certificate" },
-                { label: "Lecture Attendance", key: "lecture_attendance" },
-              ]}
-              data={tableData}
-            />
-          </div>
-        </div>
+    <div
+    style={{
+      borderRadius: '8px',
+      width: '100%',
+      maxWidth: '1700px',
+      // height: 'calc(100vh - 80px)',
+      padding: '20px',
+    }}
+    >
+      <Typography
+              variant="h6"
+              sx={{
+                color: '#c62828',
+                fontWeight: 'bold',
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                textAlign: 'center',
+              }}
+            >
+              All Attendances
+            </Typography>
+      <DataGrid
+         getRowId={(row) => row.email}
+         rows={row}
+                     columns={columns}
+                     initialState={{
+                       pagination: {
+                         paginationModel: {
+                           pageSize: 8,
+                         },
+                       },
+                     }}
+                     pageSizeOptions={[8]}
+                     checkboxSelection
+                     disableRowSelectionOnClick
+                     autoHeight
+                     sx={{
+                       marginTop: "20px",
+                       "& .MuiDataGrid-virtualScroller": {
+                         overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                       },
+         }}
+      />
+       
 
         {isDialogOpen && (
           <Dialog
@@ -146,15 +199,8 @@ const AttendanceComponent = () => {
           </Dialog>
         )}
 
-        <div className="pagination-container">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
-      </div>
-    </Fragment>
+        
+    </div>
   );
 };
 

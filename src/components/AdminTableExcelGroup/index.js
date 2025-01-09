@@ -171,8 +171,14 @@ const ActiveRegistrations = () => {
  
 
   return (
-    <Fragment>
-      <div className="registrations-component">
+      <div 
+      style={{
+        borderRadius: '8px',
+        width: '100%',
+        maxWidth: '1700px',
+        padding: '20px',
+      }}
+      >
       <Typography
               variant="h6"
               sx={{
@@ -240,7 +246,6 @@ const ActiveRegistrations = () => {
 
        
       </div>
-    </Fragment>
   );
 };
 

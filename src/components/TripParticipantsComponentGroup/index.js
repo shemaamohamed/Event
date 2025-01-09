@@ -1,12 +1,17 @@
 import React, { useState, useEffect, Fragment } from "react";
-import Table from "../../CoreComponent/Table";
 import Pagination from "../../CoreComponent/Pagination";
 import MySideDrawer from "../../CoreComponent/SideDrawer";
 import SimpleLabelValue from "../SimpleLabelValue";
 import httpService from "../../common/httpService";
 import toast from "react-hot-toast";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+
+
 import "./style.scss";
 import moment from "moment";
+import { Box, Drawer, Grid, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import { CloseRounded } from "@mui/icons-material";
 
 const TripParticipantsComponentGroup = () => {
   const [participantsData, setParticipantsData] = useState([]);
@@ -15,19 +20,20 @@ const TripParticipantsComponentGroup = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [selectedParticipant, setSelectedParticipant] = useState(null);
+   const [anchorEl, setAnchorEl] = useState(null);
+        const [selectedRow, setSelectedRow] = useState(null);
+        const openMenu = (event, row) => {
+          setAnchorEl(event.currentTarget);
+          setSelectedRow(row);
+        };
+      
+        const closeMenu = () => {
+          setAnchorEl(null);
+          setSelectedRow(null);
+        };
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const TOKEN = localStorage.getItem("token");
 
-  const TABLE_HEADERS = [
-    { label: "Name", key: "user_name" },
-    { label: "Email", key: "user_email" },
-    { label: "Trip Name", key: "trip_name" },
-    { label: "Selected Date", key: "selected_date" },
-    { label: "Companion Count", key: "companions_count" },
-    { label: "Total Price", key: "total_price" },
-    { label: "Created At", key: "created_at" },
-    { label: "Actions", key: "actions" },
-  ];
 
   const DEFAULT_ERROR_MESSAGE = "Failed to fetch participants.";
 
@@ -55,10 +61,10 @@ const TripParticipantsComponentGroup = () => {
       toast.error(DEFAULT_ERROR_MESSAGE);
     }
   };
-
-  const handlePageChange = (page) => {
-    fetchParticipants(page);
-  };
+  const formatValue = (value, type) =>
+    type === "date"
+      ? moment(value).format("DD-MM-YYYY")
+      : value || "-";
 
   const handleViewDetails = (participant) => {
     setSelectedParticipant(participant);
@@ -69,7 +75,7 @@ const TripParticipantsComponentGroup = () => {
     fetchParticipants();
   }, []);
 
-  const tableData = participantsData.map((participant) => ({
+  const row = participantsData.map((participant) => ({
     trip_name: participant.trip_name,
     trip_type: participant.trip_type,
     id: participant.id,
@@ -81,88 +87,192 @@ const TripParticipantsComponentGroup = () => {
     total_price: participant.total_price,
     created_at: moment(participant.created_at).format("DD-MM-YYYY HH:MM"),
     updated_at: participant.updated_at,
-    actions: (
-      <button
-        className="view-details-button"
-        onClick={() => handleViewDetails(participant)}
-      >
-        View Details
-      </button>
-    ),
+    actions: participant.actions,
   }));
+  const columns=[
+    { field: "trip_name", headerName: "Trip Name", flex: 1, minWidth: 200 , cellClassName: "centered-cell", },
+    { field: "trip_type", headerName: "Trip Type", flex: 1, minWidth: 200 , cellClassName: "centered-cell" },
+    { field: "user_name", headerName: "User Name", flex: 1, minWidth: 200 , cellClassName: "centered-cell"},
+    { field: "user_email", headerName: "User Email", flex: 1, minWidth: 200 , cellClassName: "centered-cell"},
+    { field: "selected_date", headerName: "Selected Date", flex: 1, minWidth: 200 , cellClassName: "centered-cell" },
+    { field: "companions_count", headerName: "Companions Count", flex: 1, minWidth: 200 , cellClassName: "centered-cell"},
+    { field: "total_price", headerName: "Total Price", flex: 1, minWidth: 200 , cellClassName: "centered-cell" },
+    { field: "created_at", headerName: "Created At", flex: 1, minWidth: 200 , cellClassName: "centered-cell"},
+    { field: "actions", headerName: "Actions", flex: 1, minWidth: 200 , cellClassName: "centered-cell",
+      renderCell: (params) => (
+        <>
+        <IconButton onClick={(event) => openMenu(event, params.row)}>
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+          onClose={closeMenu}
+        >
+          <MenuItem onClick={() => {
+            handleViewDetails(params.row);
+
+          }}>
+            View Details
+          </MenuItem>
+        </Menu>
+      </>
+        
+
+      )
+
+    },
+  ]
 
   return (
-    <Fragment>
-      <div className="participants-component">
-        <div className="table-container">
-          <div className="table-wrapper">
-            <Table headers={TABLE_HEADERS} data={tableData} />
-          </div>
-        </div>
+      <div 
+      
+      style={{
+        borderRadius: '8px',
+        width: '100%',
+        maxWidth: '1700px',
+        // height: 'calc(100vh - 80px)',
+        padding: '20px',
+      }}
+      >
+        <Typography
+                      variant="h6"
+                      sx={{
+                        color: '#c62828',
+                        fontWeight: 'bold',
+                        fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                        textAlign: 'center',
+                      }}
+                    >
+                      Group Trip Participants
+                    </Typography>
+                    <DataGrid
+        getRowId={(row) => row.id}
+        rows={row}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 8,
+                        },
+                      },
+                    }}
+                    pageSizeOptions={[8]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                    autoHeight
+                    sx={{
+                      marginTop: "20px",
+                      "& .MuiDataGrid-virtualScroller": {
+                        overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                      },
+        }}
+        
+      />
+        
 
-        <MySideDrawer isOpen={isDrawerOpen} setIsOpen={setDrawerOpen}>
-          <div className="participant-details">
-            <div className="head">Trip Details</div>
-            <div className="details-list2">
-              {selectedParticipant ? (
-                <Fragment>
-                  <div className="head2">Participant Details</div>
+        <Drawer open={isDrawerOpen} onClose={() => setDrawerOpen(false)}
+        anchor="right"
+        sx={{
+          zIndex: (theme) => theme.zIndex.modal + 1, 
+  
+          '& .MuiDrawer-paper': {
+              zIndex: (theme) => theme.zIndex.modal + 1,
+  
+  
+        width: 
+        {
+          xs: '100%',
+          sm: '70%',
+          md: '70%',
+          lg: '50%',
+          xl: '50%',
+        }, 
+      },
+  
+        }}
+          >
+             <div
+                                            style={{
+                                              display: 'flex',
+                                              justifyContent: 'flex-end',
+                                              padding: 2,
+                                            }}
+                                            >
+                                              <IconButton onClick={() => setDrawerOpen(false)}>
+                                               <CloseRounded /> 
+                                              </IconButton>
+                                            </div>
+                                            <Box className="participant-details" sx={{ p: 3, backgroundColor: "#f9f9f9", borderRadius: 2 }}>
+      <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold",color:'#c62828' }}>
+        Trip Details
+      </Typography>
+      {selectedParticipant ? (
+        <Fragment>
+          <Typography variant="h6" sx={{ mb: 1, color: "#555" }}>
+            Participant Details
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="body2" color="textSecondary">
+                Trip ID
+              </Typography>
+              <Typography variant="body1">{formatValue(selectedParticipant.trip_id)}</Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="body2" color="textSecondary">
+                Trip Name
+              </Typography>
+              <Typography variant="body1">{formatValue(selectedParticipant.trip_name)}</Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="body2" color="textSecondary">
+                Trip Type
+              </Typography>
+              <Typography variant="body1">{formatValue(selectedParticipant.trip_type)}</Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="body2" color="textSecondary">
+                Selected Date
+              </Typography>
+              <Typography variant="body1">
+                {formatValue(selectedParticipant.selected_date, "date")}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="body2" color="textSecondary">
+                Companion Count
+              </Typography>
+              <Typography variant="body1">{formatValue(selectedParticipant.companions_count)}</Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="body2" color="textSecondary">
+                Total Price
+              </Typography>
+              <Typography variant="body1">
+                ${formatValue(selectedParticipant.total_price)}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="body2" color="textSecondary">
+                Created At
+              </Typography>
+              <Typography variant="body1">
+                {formatValue(selectedParticipant.created_at, "date")}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Fragment>
+      ) : (
+        <Typography variant="body1" color="textSecondary">
+          No participant details available.
+        </Typography>
+      )}
+    </Box>
+        </Drawer>
 
-                  <div className="details-list">
-                    <SimpleLabelValue
-                      label="Trip ID"
-                      value={selectedParticipant.trip_id || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Trip Name"
-                      value={selectedParticipant.trip_name || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Trip Type"
-                      value={selectedParticipant.trip_type || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Selected Date"
-                      value={
-                        moment(selectedParticipant.selected_date).format(
-                          "DD-MM-YYYY"
-                        ) || "-"
-                      }
-                    />
-                    <SimpleLabelValue
-                      label="Companion Count"
-                      value={selectedParticipant.companions_count || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Total Price"
-                      value={`$${selectedParticipant.total_price || "-"}`}
-                    />
-                    <SimpleLabelValue
-                      label="Created At"
-                      value={
-                        moment(selectedParticipant.created_at).format(
-                          "DD-MM-YYYY"
-                        ) || "-"
-                      }
-                    />
-                  </div>
-                </Fragment>
-              ) : (
-                <p>No participant details available.</p>
-              )}
-            </div>
-          </div>
-        </MySideDrawer>
-
-        <div className="pagination-container">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+      
       </div>
-    </Fragment>
   );
 };
 

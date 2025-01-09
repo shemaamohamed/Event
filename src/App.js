@@ -291,17 +291,13 @@ const App = () => {
                                         path="conference/details/:conferenceId"
                                         element={<ConferenceDetails />}
                                       />
-                                      <Route path="/all-speakers" element={<SpeakersComponent />} />
+                                      {/* <Route path="/all-speakers" element={<SpeakersComponent />} />
               <Route
                 path="/all-attendances"
                 element={<AttendanceComponent />}
 
-              />
-               <Route
-                path="/all-airports"
-                element={<AirportTransferBookingsComponent />}
-              />
-              <Route path="/all-sponsors" element={<SponsorsComponent />} />
+              /> */}
+              
               <Route path="*" element={<NotFound/>} />
               <Route
                                           path="/conference/speaker/:conferenceId"
@@ -333,12 +329,9 @@ const App = () => {
                                   )
 
                                 }
-                                      
-                                    <Route path="files/visa" element={<VisaFiles />} />
+                                    
+
   
-                                    <Route path="files/reservations" element={<ReservationsFiles />} />
-  
-                                    <Route path="flight/files" element={<FlightsFiles />} />
                                     <Route
                 path="/paper/form/:conferenceId"
                 element={<PaperSubmissionForm />}
@@ -354,7 +347,6 @@ const App = () => {
                                         path="conference/details/:conferenceId"
                                         element={<ConferenceDetails />}
                                       />
-                                      <Route path="trip/user/:tripId" element={<TripsStepperPage />} />
                                       <Route
                                         path="edit/speaker/data/:conferenceId/:userId"
                                         element={<EditSpeakerData />}
@@ -364,8 +356,34 @@ const App = () => {
                                         element={<EditAttendanceData />}
                                       />
                                       <Route path="reservation/form" element={<Reservation />} />
-                                      <Route path="flights" element={<FlightFormAdmin />} />
-                                      <Route path="flight/form" element={<FlightForm />} />
+                                        {/* files Admin */}
+                                      <Route path="/files/visa" element={<VisaFiles />} />
+  
+                                      <Route path="/files/reservations" element={<ReservationsFiles />} />
+                                      <Route path="/files/certificate" element={<CertificateComponent />} />
+                                      {/* //flights */}
+                                      <Route path="/flights" element={<FlightFormAdmin />} />
+                                      <Route path="/flight/form" element={<FlightForm />} />
+                                      <Route path="/flights/files" element={<FlightsFiles />} />
+                                      <Route path="/flights/enter/new" element={<EnterNewFlights />} />
+                                      {/* //trip */}
+                                      <Route path="/trip" element={<ViewTrip />} />
+                                      <Route path="/trip/user" element={<UsersList />} />
+                                      <Route path="/trip/user/:tripId" element={<TripsStepperPage />} />
+                                      <Route
+                                          path="/trip/participants/user"
+                                          element={<TripParticipantsComponent />}
+                                        />{" "}
+                                        {/* <Route
+                                          path="/trip/participants/user"
+                                          element={<TripParticipantsForUser />}
+                                        /> */}
+                                        <Route
+                                          path="/trip/participants/group"
+                                          element={<TripParticipantsComponentGroup />}
+                                        />
+
+
                                       
                                       <Route path="conferences/page" element={<HomePage />} />
                                       <Route path="about" element={<AboutUs />} />
@@ -373,8 +391,8 @@ const App = () => {
                                       <Route path="stepper/:mode" element={<ParentComponent />} />
                                       <Route path="stepper" element={<ParentComponent />} />
                                     
-                                      <Route path="trip" element={<ViewTrip />} />
-                                      <Route path="trip/user" element={<UsersList />} />
+                                     
+
                                       <Route path="view-user-trips" element={<ViewUserTrips />} />
                                       {/* //this route for view one trip for user not admin  */}
                                       <Route path="view/trip/:id" element={<ViewOneTripUser />} />
@@ -433,8 +451,18 @@ const App = () => {
                                       />
                                       <Route path="job" element={<CreateJob />} />
                                       <Route path="job/applicants" element={<JobApplicants />} />
-                                      <Route path="pending/users" element={<PendingUsersTable />} />
-                                      <Route path="flights/enter/new" element={<EnterNewFlights />} />
+
+                                      <Route path="/pending/users" element={<PendingUsersTable />} />
+                                      <Route path="/all-speakers" element={<SpeakersComponent />} />
+                                      <Route path="/all-speakers" element={<SpeakersComponent />} />
+                                      <Route
+                                        path="/all-attendances"
+                                        element={<AttendanceComponent />}
+
+                                      />
+                                      <Route path="/all-sponsors" element={<SponsorsComponent />} />
+
+
                                       {/* <Route path="/Attendance/profile" element={<AttendanceProfileForm />} /> */}
                                       <Route
                                         path="job/Applicants/:jobId"
@@ -484,7 +512,6 @@ const App = () => {
                                       <Route path="trans/form" element={<Transportation3 />} />
                                       <Route path="ticket/booking2" element={<TravelForm2 />} />
                                       <Route path="travel/hotel" element={<TravelFormHotel />} />
-                                      <Route path="room/prices" element={<RoomPriceForm />} />
                                       <Route path="admin/invoice/sponsor" element={<InvoicesS />} />
                                       
                                       <Route
@@ -501,22 +528,8 @@ const App = () => {
                                         path="group-trip/user/:tripId"
                                         element={<GroupTripRegistration />}
                                       /> */}
-                                      <Route
-                                          path="/trip/participants"
-                                          element={<TripParticipantsComponent />}
-                                        />{" "}
-                                        <Route
-                                          path="/user/trip/participants"
-                                          element={<TripParticipantsForUser />}
-                                        />
-                                        <Route
-                                          path="group/trip/participants"
-                                          element={<TripParticipantsComponentGroup />}
-                                        />
+                                      
                                         <Route path="*" element={<NotFound/>} />
-                                       <Route path="/certificate/files" element={<CertificateComponent />} />
-                                       <Route path="/flights/files" element={<FlightsFiles />} />
-                                       <Route path="/all-speakers" element={<SpeakersComponent />} />
                                        <Route
                                                           path="/table/zoom/speaker/:conferenceId"
                                                           element={<AddZoomLink />}
@@ -528,23 +541,22 @@ const App = () => {
                 element={<AddZoomLink />}
               />
               <Route path="/speaker/link" element={<SpeakerList />} />
-              <Route path="/reservations/room" element={<DataTable />} />
+              {/* reservations */}
+              <Route path="/reservations" element={<DataTable />} />
+              <Route path="/reservations/room/prices" element={<RoomPriceForm />} />
               <Route
                 path="/reservations/room"
                 element={<ReservationsComponent />}
               />
-              <Route
-                path="/trip/participants"
-                element={<TripParticipantsComponent />}
-              />{" "}
-              <Route
-                path="/user/trip/participants"
-                element={<TripParticipantsForUser />}
+
+              
+              
+              
+               <Route
+                path="/all-airports"
+                element={<AirportTransferBookingsComponent />}
               />
-              <Route
-                path="group/trip/participants"
-                element={<TripParticipantsComponentGroup />}
-              />
+            
                    <Route path="/view-visas" element={<VisasComponent />} />
                     <Route path="/certificate" element={<Certificate />} />
                     <Route path="//invoice/trip/:participantId/:name" element={<InvoiceTrip />} />
