@@ -1,11 +1,12 @@
 import React, { useState, useEffect, Fragment } from "react";
-import Table from "../../CoreComponent/Table";
-import Pagination from "../../CoreComponent/Pagination";
-import MySideDrawer from "../../CoreComponent/SideDrawer";
-import SimpleLabelValue from "../SimpleLabelValue";
 import httpService from "../../common/httpService";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
+import { Box, Card, CardContent, Divider, Drawer, Grid, IconButton, Menu, MenuItem, Paper, Typography } from "@mui/material";
+import { AttachMoney, CalendarToday, Cancel, CloseRounded } from "@mui/icons-material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { DataGrid } from "@mui/x-data-grid";
+import { CheckCircle } from "lucide-react";
 
 const VisasComponent = () => {
   const [visasData, setVisasData] = useState([]);
@@ -17,16 +18,20 @@ const VisasComponent = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const TOKEN = localStorage.getItem("token");
   const navigate = useNavigate();
-  const TABLE_HEADERS = [
-    { label: "ID", key: "id" },
-    { label: "User Name", key: "user_name" },
-    { label: "Arrival Date", key: "arrival_date" },
-    { label: "Departure Date", key: "departure_date" },
-    { label: "Visa Cost", key: "visa_cost" },
-    { label: "Status", key: "status" },
-    { label: "Created At", key: "created_at" },
-    { label: "Actions", key: "actions" },
-  ];
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [open, setOpen] = useState(false);
+  
+  const openMenu = (event, row) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedRow(row);
+  };
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+    setSelectedRow(null);
+  };
+  
 
   const DEFAULT_ERROR_MESSAGE = "Failed to fetch visas.";
 
@@ -64,7 +69,8 @@ const VisasComponent = () => {
     fetchVisas();
   }, []);
 
-  const tableData = visasData.map((visa) => ({
+  const rows = visasData.map((visa) => ({
+    ...visa,
     id: visa.id,
     user_name: visa.user_name,
     user_id: visa.user_id,
@@ -72,91 +78,296 @@ const VisasComponent = () => {
     departure_date: visa.departure_date,
     visa_cost: `$${visa.visa_cost}`,
     status: visa.status,
-    created_at: new Date(visa.created_at).toLocaleString(),
-    actions: (
-      <div className="all-button">
-        <button
-          className="view-details-button"
-          onClick={() => handleViewVisaDetails(visa)}
-        >
-          View Details
-        </button>
-        {visa.status === "pending" && (
-          <button
-            className="view-details-button"
-            onClick={() => {
-              navigate(`/admin/visa2/${visa?.user_id}`);
-            }}
-          >
-            Submit
-          </button>
-        )}
-      </div>
-    ),
+    created_at: visa.created_at,
+    actions: "actions",
   }));
+  const columns = [
+    {
+      field: "id",
+      headerName: "ID",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "user_name",
+      headerName: "User Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+
+    },{
+      field:"arrival_date",
+      headerName:"Arrival Date",
+      flex:1,
+      minWidth:230,
+      cellClassName:"centered-cell",
+    },{
+      field:"departure_date",
+      headerName:"Departure Date",
+      flex:1,
+      minWidth:230,
+      cellClassName:"centered-cell",
+    },{
+      field:"visa_cost",
+      headerName:"Visa Cost",
+      flex:1,
+      minWidth:230,
+      cellClassName:"centered-cell",
+    },{
+      field:"status",
+      headerName:"Status",
+      flex:1,
+      minWidth:230,
+      cellClassName:"centered-cell",
+    },{
+      field:"created_at",
+      headerName:"Created At",
+      flex:1,
+      minWidth:230,
+      cellClassName:"centered-cell",
+      renderCell: (params) => (
+        <>
+          <Typography>
+            {new Date(params.row.created_at).toLocaleString()}
+          </Typography>
+        </>
+      )
+
+    },{
+      field:"actions",
+      headerName:"Actions",
+      flex:1,
+      minWidth:230,
+      cellClassName:"centered-cell",
+      renderCell: (params) => (
+        <>
+        <IconButton onClick={(event) => openMenu(event, params.row)}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+            onClose={closeMenu}
+          >
+             <MenuItem 
+                       onClick={() => handleViewVisaDetails(params.row)}
+
+
+             >
+                        View Details
+
+            </MenuItem> 
+            {params.row.status === "pending" && (
+              <MenuItem
+                onClick={() => {
+                  navigate(`/admin/visa2/${params.row?.user_id}`);
+                }}
+              >
+                Submit
+              </MenuItem>
+            )}
+            
+          </Menu>
+        </>
+      ),
+    }
+    
+  ];
 
   return (
-    <Fragment>
-      <div className="visas-component">
-        <div className="table-container">
-          <div className="table-wrapper">
-            <Table headers={TABLE_HEADERS} data={tableData} />
-          </div>
-        </div>
+      <div className="visas-component" style={{
+        borderRadius: '8px',
+        width: '100%',
+        maxWidth: '1700px',
+        padding: '20px',
+      }}>
+        <Typography
+              variant="h6"
+              sx={{
+                color: '#c62828',
+                fontWeight: 'bold',
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                textAlign: 'center',
+              }}
+              >Visa</Typography>
+       <DataGrid
+                      rows={rows}
+                      columns={columns}
+                      getRowId={(row) => row.id}
+                      initialState={{
+                        pagination: {
+                          paginationModel: {
+                            pageSize: 8,
+                          },
+                        },
+                      }}
+                      pageSizeOptions={[8]}
+                      checkboxSelection
+                      disableRowSelectionOnClick
+                      autoHeight
+                      sx={{
+                        marginTop: "20px",
+                        "& .MuiDataGrid-virtualScroller": {
+                          overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                        },
+                      }}
+                    />
 
-        <MySideDrawer isOpen={isDrawerOpen} setIsOpen={setDrawerOpen}>
-          <div className="visa-details">
-            <div className="head">Visa Details</div>
-            {selectedVisa ? (
-              <div className="details-list">
-                <SimpleLabelValue
-                  label="User ID"
-                  value={selectedVisa.user_id || "-"}
-                />
-                <SimpleLabelValue
-                  label="Arrival Date"
-                  value={selectedVisa.arrival_date || "-"}
-                />
-                <SimpleLabelValue
-                  label="Departure Date"
-                  value={selectedVisa.departure_date || "-"}
-                />
-                <SimpleLabelValue
-                  label="Visa Cost"
-                  value={`$${selectedVisa.visa_cost || "-"}`}
-                />
-                <SimpleLabelValue
-                  label="Payment Required"
-                  value={selectedVisa.payment_required ? "Yes" : "No"}
-                />
-                <SimpleLabelValue
-                  label="Status"
-                  value={selectedVisa.status || "-"}
-                />
-                <SimpleLabelValue
-                  label="Payment Status"
-                  value={selectedVisa.payment_status || "-"}
-                />
-                <SimpleLabelValue
-                  label="Created At"
-                  value={new Date(selectedVisa.created_at).toLocaleString()}
-                />
-              </div>
-            ) : (
-              <p>No visa details available.</p>
-            )}
-          </div>
-        </MySideDrawer>
+        <Drawer open={isDrawerOpen} onClose={() => setDrawerOpen(false)}
+        anchor="right"
+        sx={{
+          //width
+          zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
+  
+          '& .MuiDrawer-paper': {
+              zIndex: (theme) => theme.zIndex.modal + 1,
+  
+  
+        width: 
+        {
+          xs: '100%',
+          sm: '50%',
+          md: '40%',
+          lg: '30%',
+          xl: '30%',
+        }, 
+      },
+  
+        }}
+          >
+              <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      padding: 2,
+                    }}
+                    >
+                      <IconButton onClick={() => setDrawerOpen(false)}>
+                       <CloseRounded /> 
+                      </IconButton>
+                    </div>
+                    <Card elevation={4} style={{ margin: "16px 0", borderRadius: "8px" }}>
+      <CardContent>
+        <Typography
+          variant="h5"
+          component="div"
+          style={{ fontWeight: "bold", marginBottom: "16px", textAlign: "center" ,color:"#c62828" }}
+        >
+          Visa Details
+        </Typography>
+        <Divider style={{ marginBottom: "16px" }} />
+        {selectedVisa ? (
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <Box display="flex" alignItems="center">
+                <CalendarToday color="primary" style={{ marginRight: "8px" }} />
+                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+                  User ID:
+                </Typography>
+              </Box>
+              <Typography variant="body1" style={{ marginLeft: "32px" }}>
+                {selectedVisa.user_id || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box display="flex" alignItems="center">
+                <CalendarToday color="primary" style={{ marginRight: "8px" }} />
+                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+                  Arrival Date:
+                </Typography>
+              </Box>
+              <Typography variant="body1" style={{ marginLeft: "32px" }}>
+                {selectedVisa.arrival_date || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box display="flex" alignItems="center">
+                <CalendarToday color="primary" style={{ marginRight: "8px" }} />
+                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+                  Departure Date:
+                </Typography>
+              </Box>
+              <Typography variant="body1" style={{ marginLeft: "32px" }}>
+                {selectedVisa.departure_date || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box display="flex" alignItems="center">
+                <AttachMoney color="success" style={{ marginRight: "8px" }} />
+                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+                  Visa Cost:
+                </Typography>
+              </Box>
+              <Typography variant="body1" style={{ marginLeft: "32px" }}>
+                {selectedVisa.visa_cost || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box display="flex" alignItems="center">
+                {selectedVisa.payment_required ? (
+                  <CheckCircle color="success" style={{ marginRight: "8px" }} />
+                ) : (
+                  <Cancel color="error" style={{ marginRight: "8px" }} />
+                )}
+                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+                  Payment Required:
+                </Typography>
+              </Box>
+              <Typography variant="body1" style={{ marginLeft: "32px" }}>
+                {selectedVisa.payment_required ? "Yes" : "No"}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box display="flex" alignItems="center">
+                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+                  Status:
+                </Typography>
+              </Box>
+              <Typography variant="body1" style={{ marginLeft: "32px" }}>
+                {selectedVisa.status || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} >
+              <Box display="flex" alignItems="center">
+                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+                  Payment Status:
+                </Typography>
+                <Typography variant="body1" style={{ marginLeft: "6px" }}>
+                {selectedVisa.payment_status || "-"}
+              </Typography>
+              </Box>
+              
+            </Grid>
+            <Grid item xs={12}>
+              <Box display="flex" alignItems="center"  >
+                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
+                  Created At:{' '}
+                  {selectedVisa.created_at
+                  ? new Date(selectedVisa.created_at).toLocaleString()
+                  : "-"}
+                </Typography>
+               
+              </Box>
+              
+            </Grid>
+          </Grid>
+        ) : (
+          <Typography
+            variant="body1"
+            color="textSecondary"
+            style={{ textAlign: "center" }}
+          >
+            No visa details available.
+          </Typography>
+        )}
+      </CardContent>
+    </Card>
 
-        <div className="pagination-container">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+        </Drawer>
+
+       
       </div>
-    </Fragment>
   );
 };
 

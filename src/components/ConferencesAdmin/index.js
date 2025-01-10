@@ -419,14 +419,17 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
         sx={{
           color: "#c62828",
           textAlign: "center",
-          backgroundColor:'#f1f1f1'
-
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
         }}
-        gutterBottom
-      >
+        >
         Add New Conference
       </Typography>
-      <div className="form-section">
+      <div className="form-section" style={{
+        overflowY:'auto'
+      }}>
         <Input
           label="Title"
           placeholder="Enter title"
@@ -565,8 +568,6 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
           committeeMembers={committeeMembers}
           setCommitteeMembers={setCommitteeMembers}
         />
-      </div>
-       
         <Button
           variant="contained"
           sx={{
@@ -583,6 +584,9 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
          className="submit-btn" onClick={handleSubmit}>
           Submit
         </Button>
+      </div>
+       
+        
     </Drawer>
   );
 };

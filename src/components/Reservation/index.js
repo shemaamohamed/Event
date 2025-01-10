@@ -5,6 +5,7 @@ import httpService from "../../common/httpService";
 import "./style.scss";
 import { useAuth } from "../../common/AuthContext";
 import { backendUrlImages } from "../../constant/config";
+import { Button, Grid, Typography } from "@mui/material";
 
 const ReservationDetails = ({ setDisabledButton }) => {
   const [reservations, setReservations] = useState([]);
@@ -169,35 +170,55 @@ const Reservation = () => {
   const [disabledBtn, setDisabledButton] = useState(true);
   return (
     <div className="all-reservation-form">
-      <div className="reservation-form-header-container">
-        <div className="title-container">Reservation Information Page</div>
-        <div className="reservation-actions">
-          <button
-            type="button"
-            className={`reservation-information-btn ${
-              disabledBtn && "disabled"
-            }`}
-            disabled={disabledBtn}
-            onClick={() => {
-              navigate("/stepper");
-            }}
-          >
-            Add Reservation Information
-          </button>
-          <button
-            type="button"
-            className={`reservation-information-btn ${
-              !disabledBtn && "disabled"
-            }`}
-            disabled={!disabledBtn}
-            onClick={() => {
-              navigate("/stepper/edit");
-            }}
-          >
-            Edit Reservation Information
-          </button>
-        </div>
-      </div>
+        <Grid container direction="column" spacing={2}>
+      {/* Header Section */}
+      <Grid item xs={12} >
+        <Typography
+          variant="h6"
+          sx={{
+            color: '#c62828',
+            fontWeight: 'bold',
+            fontSize: { xs: '1.3rem', sm: '2rem', md: '2rem' },
+            textAlign: 'center',
+          }}
+          className="title-container">
+          Reservation Information Page
+        </Typography>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Grid container spacing={2} justifyContent="center"
+        sx={{
+          padding:'5px'
+        }}
+        >
+          <Grid item xs={12} sm={6} md={3}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={`reservation-information-btn ${disabledBtn && "disabled"}`}
+              disabled={disabledBtn}
+              onClick={() => navigate("/stepper")}
+              fullWidth
+            >
+              Add Reservation Information
+            </Button>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Button
+              variant="contained"
+              color="error"
+              className={`reservation-information-btn ${!disabledBtn && "disabled"}`}
+              disabled={!disabledBtn}
+              onClick={() => navigate("/stepper/edit")}
+              fullWidth
+            >
+              Edit Reservation Information
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
       <ReservationDetails
         disabledBtn={disabledBtn}
         setDisabledButton={setDisabledButton}

@@ -355,7 +355,7 @@ const App = () => {
                                         path="edit/attendance/data/:conferenceId/:userId"
                                         element={<EditAttendanceData />}
                                       />
-                                      <Route path="reservation/form" element={<Reservation />} />
+                                      <Route path="/reservation/form" element={<Reservation />} />
                                         {/* files Admin */}
                                       <Route path="/files/visa" element={<VisaFiles />} />
   

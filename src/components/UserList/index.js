@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./style.scss";
 import AddDiscountForm from "./discountForm";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -107,6 +107,17 @@ const UsersList = () => {
 
   return (
     <div className="all-users-table">
+      <Typography
+              variant="h6"
+              sx={{
+                color: '#c62828',
+                fontWeight: 'bold',
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                textAlign: 'center',
+              }}
+              >
+                Trips Users Discount
+              </Typography>
      <DataGrid
         rows={rows}
         columns={columns}

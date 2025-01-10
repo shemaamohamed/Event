@@ -370,7 +370,7 @@ const FlightFormAdmin = () => {
            <CloseRounded /> 
           </IconButton>
         </div>
-        <UpdateDeadline data={selectedItem}  />
+        <UpdateDeadline data={selectedItem}  setOpen={setOpenUpdateForm} />
 
 
         </Drawer>

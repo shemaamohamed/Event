@@ -166,7 +166,7 @@ const ConferencesPage = () => {
             <Fragment key={conference.id}>
             <Card
               sx={{
-                maxWidth: 345,
+                width: 345,
                 margin: "20px auto",
                 boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
                 borderRadius: "12px",
@@ -348,24 +348,25 @@ const ConferencesPage = () => {
                  <CloseRounded /> 
                 </IconButton>
               </div>
+              
+        <Typography variant="h6"  gutterBottom
+        sx={{
+          color: "#c62828",
+          textAlign: "center",
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
+        }}
+        >
+          {selectedConference?.title}
+        </Typography>
       <Box
       sx={{
         overflowY: "auto"
       }}
       >
    
-        <Typography variant="h6"  gutterBottom
-        sx={{
-        
-          color: '#c62828',
-          fontSize: { xs: '2rem', sm: '1.5rem', md: '1.5rem' },
-          textAlign: 'center',
-          backgroundColor:'#f1f1f1'
-
-        }}
-        >
-          {selectedConference?.title}
-        </Typography>
 
         <Divider sx={{ marginBottom: "16px" }} />
 

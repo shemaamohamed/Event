@@ -109,15 +109,21 @@ const ExhibitionForm = ({ setIsOpen, getExhibitions }) => {
   };
 
   return (
-    <form className="exhibition-form-container" onSubmit={handleSubmit}>
-      <Typography variant="h5" component="h2" sx={{textAlign:"center",
-         color: "#c62828",
-        marginBottom:"20px",
-        backgroundColor:'#f1f1f1'
-
-
-
+    <>
+     <Typography variant="h5" component="h2" sx={{
+          color: "#c62828",
+          textAlign: "center",
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
         }}>Add New Exhibition</Typography>
+         <form className="exhibition-form-container" onSubmit={handleSubmit}
+    style={{
+      overflowY:'auto'
+    }}
+    >
+     
         <Select
           options={allConference}
           value={conferenceId}
@@ -221,6 +227,8 @@ const ExhibitionForm = ({ setIsOpen, getExhibitions }) => {
           Submit
         </Button>
     </form>
+    </>
+   
   );
 };
 
@@ -352,7 +360,7 @@ const Exhibitions = () => {
           <Fragment key={exhibition.id}>
           <Card
             sx={{
-              maxWidth: 345,
+              width: 345,
               margin: "20px auto",
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
               borderRadius: "12px",

@@ -45,7 +45,12 @@ const Step = ({
             stepNum
           )}
         </div>
-        <span className="stepTitle">{stepTitle}</span>
+        <span
+        style={{
+          textAlign:'center'
+
+        }}
+         className="stepTitle">{stepTitle}</span>
       </div>
       {!isLastElement && (
         <div

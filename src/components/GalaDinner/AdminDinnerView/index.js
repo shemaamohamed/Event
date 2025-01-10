@@ -3,7 +3,6 @@ import "./style.scss"; // تأكد من إضافة SCSS هنا
 import axios from "axios";
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
-import MySideDrawer from "../../../CoreComponent/SideDrawer";
 import { useParams } from "react-router-dom";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
 import { Drawer, IconButton, Menu, MenuItem, Typography } from "@mui/material";

@@ -12,6 +12,7 @@ import MainFlightFormUpdate from "./updateMainFlightForm";
 import { useAuth } from "../../common/AuthContext";
 import "./style.scss";
 import FlightsWithInvoices from "../FlightView";
+import { Button, Grid, Typography } from "@mui/material";
 
 const MainFlightForm = ({ setOpenForm, getFlightData }) => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -178,7 +179,6 @@ const MainFlightForm = ({ setOpenForm, getFlightData }) => {
 const FlightForm = () => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
-  const { userId } = useAuth();
   const [data, setData] = useState({});
   const [openFlight, setOpenFlight] = useState(false);
   const [openFlightUpdate, setOpenFlightUpdate] = useState(false);
@@ -248,54 +248,159 @@ const FlightForm = () => {
     window.open(url, "_blank");
   };
   return (
-    <div className="flight-form-page-container">
-      <div className="flight-form-header-container">
-        <div className="title-container">Flight Information Page</div>
-        <div className="flight-actions">
-          <button
+    <div 
+    style={{
+      borderRadius: '8px',
+      width: '100%',
+      maxWidth: '1700px',
+      padding: '20px',
+    }}
+    >
+       
+        <Grid container
+        spacing={1}
+        >
+           <Grid item xs={12}  >
+          <Typography
+          variant="h5"
+          gutterBottom
+          sx={{
+            color: '#c62828',
+            fontWeight: 'bold',
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '2rem' },
+            textAlign: 'center',
+          }}
+          >
+          Flight Information Page
+
+          </Typography>
+
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={3} >
+        <Button
             className={`${!Object.keys(data).length ? "disabled-btn" : ""}`}
             type="button"
             disabled={!Object.keys(data).length}
             onClick={() => {
               navigate(`/accept/flight/${flight_id}`);
             }}
+            sx={{
+              backgroundColor: '#c62828',
+      
+              marginTop: "20px",
+              width: "100%",
+              color: "#fff",
+
+              "&:hover": {
+                backgroundColor: "#e63946",
+                color: "#fff",
+              }
+            }}
           >
             Choose Accepted Flight
-          </button>
-          <button
+          </Button>
+          
+
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={3} >
+        <Button
             className={`${Object.keys(data).length ? "disabled-btn" : ""}`}
             type="button"
             onClick={() => navigate(`/flights/users`)}
             disabled={Object.keys(data).length}
+            variant="outlined"
+            sx={{
+      
+              marginTop: "20px",
+              color: "black",
+              width: "100%",
+              "&:hover": {
+                backgroundColor: "#e63946",
+                color: "#fff",
+              }
+            }}
           >
             Add Flight Information
-          </button>
-          <button
+          </Button>
+          
+
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={3} >
+        <Button
             className={`${!Object.keys(data).length ? "disabled-btn" : ""}`}
             type="button"
             onClick={() => navigate(`/flights/users/edit`)}
             disabled={!Object.keys(data).length}
+            sx={{
+              backgroundColor: '#c62828',// Modern vibrant red
+
+      
+              marginTop: "20px",
+              color: "#fff",
+              width: "100%",
+              "&:hover": {
+                backgroundColor: "#e63946",
+                color: "#fff",
+              }
+            }}
           >
             Edit Flight Information
-          </button>{" "}
-          <button
+          </Button>
+          
+
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={3} >
+        <Button
             type="button"
             onClick={() => {
               EmergencyButton();
             }}
+            sx={{
+              backgroundColor: '#c62828',// Modern vibrant red
+      
+              marginTop: "20px",
+              color: "#fff",
+              width: "100%",
+              "&:hover": {
+                backgroundColor: "#e63946",
+                color: "#fff",
+              }
+            }}
           >
             Emergency
-          </button>
-          <button
+          </Button>
+          
+
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={3} >
+        <Button
             type="button"
             onClick={() => {
               handelDelete();
             }}
+            sx={{
+              backgroundColor: '#c62828',// Modern vibrant red
+      
+              marginTop: "20px",
+              color: "#fff",
+              width: "100%",
+              "&:hover": {
+                backgroundColor: "#e63946",
+                color: "#fff",
+              }
+            }}
           >
             Delete
-          </button>
-        </div>
-      </div>
+          </Button>
+          
+
+        </Grid>
+        
+
+      </Grid>
+
+
+      
       <FlightsWithInvoices />
 
       {/* {Object.keys(data).length ? (

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import DateInput from "../../CoreComponent/Date";
 import Topics from "./topic.js";
 import "./style.scss";
+import { Button, Grid, Typography } from "@mui/material";
 
 const SpeakerProfileForm = () => {
   const { speakerData, registrationType } = useAuth();
@@ -164,113 +165,161 @@ const SpeakerProfileForm = () => {
 
   return (
     <div className="speaker-section-container">
-      <div className="speaker-profile-section-container">
-        <form onSubmit={handleUpdate} className="speaker-profile-form">
-          <div className="profile-container-img">
-            <div className="profile-section">
-              <img
-                src={`${backendUrlImages}${profileDetails.userImage}`}
-                alt="User Profile"
-                className="profile-image-speakerr"
-              />
-              <div className="profile-details">
-                <div className="profile-name">{profileDetails.userName}</div>
-                <div className="profile-bio">
-                  <div className="bio">{profileDetails.userBio}</div>
-                </div>
+    <div className="speaker-profile-section-container">
+      <form onSubmit={handleUpdate} className="speaker-profile-form">
+        <Grid container spacing={2}>
+          <Grid item xs={6} sx={{ textAlign: 'center' }}>
+            <img
+              src={`${backendUrlImages}${profileDetails.userImage}`}
+              alt="User Profile"
+              style={{
+                width: '100px',
+                height: '100px',
+                borderRadius: '50%',
+                marginRight: '1rem',
+                objectFit: 'cover',
+                border: '2px solid #ef233c',
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography
+              sx={{
+                color: '#c62828',
+                fontWeight: 'bold',
+                fontSize: { xs: '1.5rem', sm: '2rem', md: '2rem' },
+                textAlign: 'center',
+              }}
+            >
+              {profileDetails.userName}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+          <Typography
+  sx={{
+    whiteSpace: 'normal',
+      wordWrap: 'break-word'
+  }}
+  component="div"
+>
+  {profileDetails.userBio}
+</Typography>
+          </Grid>
+        </Grid>
+  
+        <div className="profile-files"
+        style={{
+          overflow:'hidden'
+        }}
+        >
+          <ImageUpload
+            required
+            label="Abstract"
+            allowedExtensions={["txt", "pdf", "doc", "docx"]}
+            inputValue={formFiles.abstract}
+            setInputValue={handleFileChange("abstract")}
+            className="image-upload"
+            placeholder="Abstract"
+           
+          />
+          <ImageUpload
+            required
+            label="Presentation File"
+            allowedExtensions={["ppt", "pptx"]}
+            inputValue={formFiles.presentationFile}
+            setInputValue={handleFileChange("presentationFile")}
+            className="image-upload"
+            placeholder="Presentation File"
+          />
+          <ImageUpload
+            required
+            label="Video"
+            allowedExtensions={["ppt", "pptx", "mp4"]}
+            inputValue={video}
+            setInputValue={setVideo}
+            className="image-upload"
+            placeholder="Video"
+          />
+          <DateInput
+            label="Arrival Date"
+            inputValue={arrivalDate}
+            setInputValue={setArrivalDate}
+            type="date"
+          />
+          <DateInput
+            label="Departure Date"
+            inputValue={departureDate}
+            setInputValue={setDepartureDate}
+            type="date"
+          />
+  
+          {online && (
+            <div className="attendance-option">
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: 'bold', textAlign: 'center', marginBottom: 2 }}
+              >
+                How would you like to attend the conference?
+              </Typography>
+              <div className="attendance-checkboxes">
+                <Checkbox
+                  label="In-Person"
+                  checkboxValue={attendanceOptions.inPerson}
+                  setCheckboxValue={(value) =>
+                    setAttendanceOptions((prev) => ({
+                      ...prev,
+                      inPerson: value,
+                    }))
+                  }
+                  className="attendance-checkbox"
+                />
+                <Checkbox
+                  label="Online"
+                  checkboxValue={attendanceOptions.onlineParticipation}
+                  setCheckboxValue={(value) =>
+                    setAttendanceOptions((prev) => ({
+                      ...prev,
+                      onlineParticipation: value,
+                    }))
+                  }
+                  className="attendance-checkbox"
+                />
               </div>
+              {attendanceOptions.onlineParticipation && (
+                <Typography
+                  sx={{ textAlign: 'center', color: '#555', marginTop: 2 }}
+                >
+                  You will be provided with the Zoom link one day before the event.
+                </Typography>
+              )}
             </div>
-          </div>
-
-          <div className="profile-files">
-            <ImageUpload
-              required
-              label="Abstract"
-              allowedExtensions={["txt", "pdf", "doc", "docx"]}
-              inputValue={formFiles.abstract}
-              setInputValue={handleFileChange("abstract")}
-              className="image-upload"
-              placeholder="Abstract"
-            />
-            <ImageUpload
-              required
-              label="Presentation File"
-              allowedExtensions={["ppt", "pptx"]}
-              inputValue={formFiles.presentationFile}
-              setInputValue={handleFileChange("presentationFile")}
-              className="image-upload"
-              placeholder="Presentation File"
-            />
-            <ImageUpload
-              required
-              label="Video"
-              allowedExtensions={["ppt", "pptx", "mp4"]}
-              inputValue={video}
-              setInputValue={setVideo}
-              className="image-upload"
-              placeholder="Video"
-            />
-            <DateInput
-              label="Arrival Date"
-              inputValue={arrivalDate}
-              setInputValue={setArrivalDate}
-              type="date"
-            />
-            <DateInput
-              label="Departure Date"
-              inputValue={departureDate}
-              setInputValue={setDepartureDate}
-              type="date"
-            />
-            {online && (
-              <div className="attendance-option">
-                <h3 className="attendance-title">
-                  How would you like to attend the conference?
-                </h3>
-                <div className="attendance-checkboxes">
-                  <Checkbox
-                    label="In-Person"
-                    checkboxValue={attendanceOptions.inPerson}
-                    setCheckboxValue={(value) =>
-                      setAttendanceOptions((prev) => ({
-                        ...prev,
-                        inPerson: value,
-                      }))
-                    }
-                    className="attendance-checkbox"
-                  />
-                  <Checkbox
-                    label="Online"
-                    checkboxValue={attendanceOptions.onlineParticipation}
-                    setCheckboxValue={(value) =>
-                      setAttendanceOptions((prev) => ({
-                        ...prev,
-                        onlineParticipation: value,
-                      }))
-                    }
-                    className="attendance-checkbox"
-                  />
-                </div>
-                {attendanceOptions.onlineParticipation && (
-                  <div className="notice">
-                    You will be provided with the Zoom link one day before the
-                    event.
-                  </div>
-                )}
-              </div>
-            )}
-            <Topics
-              topics={topics}
-              handleTopicChange={handleTopicChange}
-              handleRemoveTopic={handleRemoveTopic}
-              handleAddTopic={handleAddTopic}
-            />
-          </div>
-
-          <button className={`update-btn`}>Update Profile</button>
-        </form>
-      </div>
+          )}
+          <Topics
+            topics={topics}
+            handleTopicChange={handleTopicChange}
+            handleRemoveTopic={handleRemoveTopic}
+            handleAddTopic={handleAddTopic}
+          />
+        </div>
+  
+        <Button 
+        type="submit"
+        variant="contained"
+                    sx={{
+                      backgroundColor: '#c62828',// Modern vibrant red
+        
+                      marginTop: "20px",
+                      color: "#fff",
+                      width: "100%",
+                      "&:hover": {
+                        backgroundColor: "#e63946",
+                        color: "#fff",
+                      }
+                    }}>Update Profile</Button>
+      </form>
     </div>
+  </div>
+  
   );
 };
 

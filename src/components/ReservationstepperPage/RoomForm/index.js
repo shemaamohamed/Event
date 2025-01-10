@@ -6,9 +6,9 @@ import DateInput from "../../../CoreComponent/Date";
 import deleteIcon from "../../../icons/deleteIcon.svg";
 import { useStepper } from "../StepperContext";
 import SVG from "react-inlinesvg";
-import { getFromLocalStorage, saveToLocalStorage } from "..";
 import toast from "react-hot-toast";
 import "./style.scss";
+import { Button, Grid } from "@mui/material";
 
 const RoomForm = () => {
   const { currentStep, completeStep, rooms, setRooms } = useStepper();
@@ -68,18 +68,20 @@ const RoomForm = () => {
         </button>
       </div>
 
-      <form className="room-form-container">
-        {rooms.map((room, index) => (
-          <div className="room-form-stepper-container" key={index}>
-            <div className="delete-icon-container">
-              <SVG
-                className="delete-icon"
-                src={deleteIcon}
-                onClick={() => deleteRoom(index)}
-              />
-            </div>
+      <form >
+      {rooms.map((room, index) => (
+        <div className="room-form-stepper-container" key={index}>
+          <div className="delete-icon-container">
+            <SVG
+              className="delete-icon"
+              src={deleteIcon}
+              onClick={() => deleteRoom(index)}
+            />
+          </div>
 
-            <div className="room-form-stepper">
+          <Grid container spacing={2} >
+            {/* Room Type */}
+            <Grid item xs={12} md={6}>
               <Select
                 options={options}
                 value={room.roomType}
@@ -87,6 +89,10 @@ const RoomForm = () => {
                 label="Room Type"
                 required={true}
               />
+            </Grid>
+
+            {/* Occupant Name */}
+            <Grid item xs={12} md={6}>
               <Input
                 label="Occupant Name"
                 type="text"
@@ -96,6 +102,10 @@ const RoomForm = () => {
                 }
                 placeholder="Enter occupant name"
               />
+            </Grid>
+
+            {/* Special Requests */}
+            <Grid item xs={12} md={6}>
               <Input
                 label="Special Requests"
                 type="text"
@@ -105,6 +115,10 @@ const RoomForm = () => {
                 }
                 placeholder="Enter any special requests"
               />
+            </Grid>
+
+            {/* Late Check Out */}
+            <Grid item xs={12} md={6}>
               <div className="check-in-input-container">
                 <Checkbox
                   label="Late Check Out?"
@@ -114,6 +128,10 @@ const RoomForm = () => {
                   }
                 />
               </div>
+            </Grid>
+
+            {/* Check In Date */}
+            <Grid item xs={12} md={6}>
               <DateInput
                 label="Check In Date"
                 type="datetime-local"
@@ -122,6 +140,10 @@ const RoomForm = () => {
                   handleChange(index, "checkInDate", value)
                 }
               />
+            </Grid>
+
+            {/* Early Check In */}
+            <Grid item xs={12} md={6}>
               <div className="check-in-input-container">
                 <Checkbox
                   label="Early Check In?"
@@ -131,6 +153,10 @@ const RoomForm = () => {
                   }
                 />
               </div>
+            </Grid>
+
+            {/* Check Out Date */}
+            <Grid item xs={12} md={6}>
               <DateInput
                 label="Check Out Date"
                 type="datetime-local"
@@ -139,6 +165,10 @@ const RoomForm = () => {
                   handleChange(index, "checkOutDate", value)
                 }
               />
+            </Grid>
+
+            {/* Total Nights */}
+            <Grid item xs={12} md={6}>
               <Input
                 label="Total Nights"
                 type="text"
@@ -148,14 +178,29 @@ const RoomForm = () => {
                 }
                 placeholder="Enter Total Nights"
               />
-            </div>
-          </div>
-        ))}
-      </form>
+            </Grid>
+          </Grid>
+        </div>
+      ))}
+    </form>
       <div className="actions-section">
-        <button className="next-button" onClick={() => handleSubmit()}>
+        <Button
+        variant="contained"
+        sx={{
+          backgroundColor: '#c62828',// Modern vibrant red
+
+          marginTop: "20px",
+          color: "#fff",
+          width: "100%",
+
+          "&:hover": {
+            backgroundColor: "#e63946",
+            color: "#fff",
+          }
+        }}
+         className="next-button" onClick={() => handleSubmit()}>
           Next
-        </button>
+        </Button>
       </div>
     </div>
   );

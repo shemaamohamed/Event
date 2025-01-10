@@ -5,7 +5,7 @@ import Input from "../../../../CoreComponent/Input";
 import toast from "react-hot-toast";
 import "./style.scss";
 import httpService from "../../../../common/httpService";
-import { Button, Drawer, IconButton } from "@mui/material";
+import { Button, Drawer, IconButton, Typography } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
 
 const AirportTransferPrice = ({ isOpen, setIsOpen, selectedConference }) => {
@@ -108,6 +108,20 @@ const AirportTransferPrice = ({ isOpen, setIsOpen, selectedConference }) => {
         <CloseRounded />
       </IconButton>
     </div>
+    
+    <Typography variant="h6"  gutterBottom
+        sx={{
+          color: "#c62828",
+          textAlign: "center",
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
+        }}
+        >
+         Airport Transfer Price
+        </Typography>
+
         
         
           <form onSubmit={handleSubmit} className="price-airport-form9">

@@ -6,6 +6,8 @@ import Select from "../../../CoreComponent/Select/index";
 import MySideDrawer from "../../../CoreComponent/SideDrawer";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
 import "./style.scss";
+import { Drawer, IconButton } from "@mui/material";
+import { CloseRounded } from "@mui/icons-material";
 
 const EditTrip = ({ isOpen, setIsOpen, tripId }) => {
   const [trip, setTrip] = useState(null);
@@ -99,7 +101,44 @@ const EditTrip = ({ isOpen, setIsOpen, tripId }) => {
 
   return (
     <div className="edit-trip-form-container">
-      <MySideDrawer isOpen={isOpen} setIsOpen={setIsOpen}>
+      <Drawer open={isOpen} 
+      onClose={()=>{
+        setIsOpen(false);
+
+      }}
+      anchor="right"
+      sx={{
+        //width
+        zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
+  
+        '& .MuiDrawer-paper': {
+            zIndex: (theme) => theme.zIndex.modal + 1,
+  
+  
+      width: 
+      {
+        xs: '100%',
+        sm: '50%',
+        md: '40%',
+        lg: '30%',
+        xl: '30%',
+      }, 
+    },
+  
+      }}
+      >
+             <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          padding: 2,
+        }}
+        >
+        <IconButton onClick={() => setIsOpen(false)}>
+           <CloseRounded /> 
+          </IconButton>
+
+        </div>
         <CustomFormWrapper
           title="Edit Trip"
           handleSubmit={handleUpdateTripAndOptions}
@@ -218,7 +257,7 @@ const EditTrip = ({ isOpen, setIsOpen, tripId }) => {
             ))}
           </form>
         </CustomFormWrapper>
-      </MySideDrawer>
+      </Drawer>
     </div>
   );
 };

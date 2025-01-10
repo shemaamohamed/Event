@@ -5,6 +5,7 @@ import httpService from "../../../common/httpService";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../common/AuthContext";
 import { useStepper } from "../StepperContext";
+import { Button } from "@mui/material";
 
 const InvoiceForm = () => {
   const {
@@ -192,9 +193,23 @@ const InvoiceForm = () => {
       </div>
 
       <div className="actions-section">
-        <button className="next-button" onClick={submitReservation}>
+        <Button
+        variant="contained"
+        sx={{
+          backgroundColor: '#c62828',// Modern vibrant red
+
+          marginTop: "20px",
+          color: "#fff",
+          width: "100%",
+
+          "&:hover": {
+            backgroundColor: "#e63946",
+            color: "#fff",
+          }
+        }}
+         className="next-button" onClick={submitReservation}>
           Submit
-        </button>
+        </Button>
       </div>
     </div>
   );

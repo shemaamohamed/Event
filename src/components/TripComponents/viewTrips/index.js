@@ -10,6 +10,10 @@ import "./style.scss";
 import { useNavigate } from "react-router-dom";
 import EditTrip from "../EditTrip";
 import httpService from "../../../common/httpService";
+import { Button, Grid, IconButton, Menu, MenuItem } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+
 
 const headers = [
   { key: "id", label: "ID" },
@@ -29,7 +33,7 @@ const tripTypes = [
 
 const ViewTrip = () => {
   const navigate = useNavigate();
-  const [tripData, setTripData] = useState([]);
+  const [rows, setRows] = useState([]);
   const [tripName, setTripName] = useState("");
   const [tripType, setTripType] = useState("");
   const [isAddTrip, setAddTrip] = useState(false);
@@ -38,6 +42,18 @@ const ViewTrip = () => {
   const [viewOneTrip, setViewOneTrip] = useState(false);
   const [openEditTrip, setOpenEditTrip] = useState(true);
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+    const [selectedRow, setSelectedRow] = useState(null);
+    
+    const openMenu = (event, row) => {
+      setAnchorEl(event.currentTarget);
+      setSelectedRow(row);
+    };
+  
+    const closeMenu = () => {
+      setAnchorEl(null);
+      setSelectedRow(null);
+    };
   const BaseUrl = process.env.REACT_APP_BASE_URL;;
 
   const fetchTrips = async () => {
@@ -65,40 +81,9 @@ const ViewTrip = () => {
         onSuccess: (data) => {
           const newData = data?.trips?.map((item) => ({
             ...item,
-            actions: (
-              <div>
-                <button
-                  className="add-price-btn price2"
-                  onClick={() => {
-                    setAddPrice(true);
-                    setTripId(item?.id);
-                  }}
-                >
-                  Add Prices
-                </button>
-                <button
-                  className="add-price-btn view2"
-                  onClick={() => {
-                    setViewOneTrip(true);
-                    setTripId(item?.id);
-                  }}
-                >
-                  View
-                </button>
-                <button
-                  className="add-price-btn edit2"
-                  onClick={() => {
-                    setOpenEditTrip(true);
-                    setOpen(true);
-                    setTripId(item?.id);
-                  }}
-                >
-                  Edit
-                </button>
-              </div>
-            ),
+            actions: item.actions
           }));
-          setTripData(newData);
+          setRows(newData);
         },
         onError: (error) => {
           console.error("Error fetching trips:", error);
@@ -114,18 +99,114 @@ const ViewTrip = () => {
   useEffect(() => {
     fetchTrips();
   }, [tripType, tripName]);
+  const columns =[
+    {
+      field:"id",
+      headerName: "ID",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+
+    },
+    { field: "name", headerName: "Trip Name", flex: 1, minWidth: 230, cellClassName: "centered-cell", },
+    { field: "trip_type", headerName: "Trip Type", flex: 1, minWidth: 230, cellClassName: "centered-cell", },{
+      field: "description",
+      headerName: "Description",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "location",
+      headerName: "Location",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "trip_details",
+      headerName: "Trip Details",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell", 
+    },
+    { field: "actions", headerName: "Actions", flex: 0.2, minWidth: 230, cellClassName: "centered-cell", 
+      renderCell: (params) => (
+        <>
+        <IconButton onClick={(event) => openMenu(event, params.row)}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+            onClose={closeMenu}
+          >
+            {params.row.status === "pending" && (
+              <>
+               <MenuItem 
+                       onClick={() => {
+                        setAddPrice(true);
+                        setTripId(params.row?.id);
+                       }}
+
+
+             >
+                              Add Prices
+
+
+            </MenuItem> 
+            <MenuItem
+              onClick={() => {
+                setViewOneTrip(true);
+                setTripId(params.row?.id);
+              }}
+            >
+              View
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                setOpenEditTrip(true);
+                setOpen(true);
+                setTripId(params.row?.id);
+              }}>
+                                Edit
+
+              </MenuItem>
+              </>
+
+            )}
+            
+            
+            
+          </Menu>
+        </>
+      ),
+    },
+  ]
 
   return (
     <div className="trips-page-container">
-      <div className="trips-form-admin-header">
-        <div className="filters">
-          <Input
+      <Grid container spacing={2}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "20px",
+      }}
+      >
+        <Grid item xs={12} sm={6} md={4} >  
+          
+        <Input
             label="Trip Name"
             placeholder="Enter trip name"
             inputValue={tripName}
             setInputValue={setTripName}
             type="text"
           />
+        
+
+          </Grid>
+          <Grid item  xs={12} sm={6} md={4}>
           <Select
             options={tripTypes}
             value={tripType}
@@ -133,11 +214,45 @@ const ViewTrip = () => {
             label="Trip Type"
             placeholder="Select trip type"
           />
-        </div>
-        <button className="add-trips-btn" onClick={() => setAddTrip(true)}>
+          </Grid>
+          <Grid item  xs={12} sm={6} md={4}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop:{
+              xs:"0px",
+              sm:"0px",
+              md:"22px"
+            },
+          }}
+         
+          >
+          <Button
+          variant="outlined"
+          color="secondary"
+
+          onClick={() => setAddTrip(true)}
+
+
+          sx={{
+            borderColor: "#d32f2f",
+            color: "#d32f2f",
+            "&:hover": {
+              borderColor: "#b71c1c",
+              backgroundColor: "#ffebee",
+            },
+          }}
+           
+        
+        >
           Add new Trip
-        </button>
-      </div>
+        </Button>
+          </Grid>
+
+
+      </Grid>
+        
 
       <CreateTrip isOpen={isAddTrip} setIsOpen={setAddTrip} fetchTrips={fetchTrips} />
       <AddOption isOpen={isAddPrice} setIsOpen={setAddPrice} tripId={tripId} />
@@ -148,7 +263,28 @@ const ViewTrip = () => {
       />
 
       <EditTrip isOpen={open} setIsOpen={setOpen} tripId={tripId} />
-      <Table data={tripData} headers={headers} />
+        <DataGrid
+                            rows={rows}
+                            columns={columns}
+                            getRowId={(row) => row.id}
+                            initialState={{
+                              pagination: {
+                                paginationModel: {
+                                  pageSize: 8,
+                                },
+                              },
+                            }}
+                            pageSizeOptions={[8]}
+                            checkboxSelection
+                            disableRowSelectionOnClick
+                            autoHeight
+                            sx={{
+                              marginTop: "20px",
+                              "& .MuiDataGrid-virtualScroller": {
+                                overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                              },
+                            }}
+                          />
     </div>
   );
 };

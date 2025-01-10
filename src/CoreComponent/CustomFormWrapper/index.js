@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.scss";
+import { Typography } from "@mui/material";
 
 const CustomFormWrapper = ({
   title,
@@ -14,9 +15,15 @@ const CustomFormWrapper = ({
       flexDirection:'column',
       justifyContent:'center',
       alignItems:'center',
+      overflowY:'auto',
      
     }}>
-      <div className="information-header">{title}</div>
+      <Typography 
+      variant="h5"
+      color="#c62828"
+      textAlign={'center'}
+      >{title}</Typography>
+
       <div 
       style={{
         width:'100%',

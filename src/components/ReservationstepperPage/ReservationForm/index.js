@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useStepper } from "../StepperContext";
 import "./style.scss";
 import Select from "../../../CoreComponent/Select";
+import { Button, Grid } from "@mui/material";
 
 const ReservationForm = () => {
   const {
@@ -47,70 +48,104 @@ const ReservationForm = () => {
   };
 
   return (
-    <div>
-      <form className="reservation-form-container-stepper">
-        <Select
-          options={options}
-          value={roomType}
-          setValue={setRoomType}
-          label="Room Type"
-          required={true}
-        />
-        <DateInput
-          label="Check In Date"
-          type="datetime-local"
-          inputValue={checkInDate}
-          setInputValue={setCheckInDate}
-        />
-        <DateInput
-          label="Check Out Date"
-          type="datetime-local"
-          inputValue={checkOutDate}
-          setInputValue={setCheckOutDate}
-        />
-        <div className="check-in-input-container">
-          <Checkbox
-            label="Early Check In?"
-            checkboxValue={earlyCheckIn}
-            setCheckboxValue={setEarlyCheckIn}
-            icon={""}
-            errorMsg={""}
+    <>
+          <form >
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <Select
+            options={options}
+            value={roomType}
+            setValue={setRoomType}
+            label="Room Type"
+            required={true}
           />
-        </div>
+        </Grid>
 
-        <Input
-          label="Total Nights"
-          type="number"
-          inputValue={totalNights}
-          setInputValue={setTotalNights}
-          placeholder="Enter total nights"
-        />
-        <div className="check-in-input-container">
-          <Checkbox
-            label="Late Check Out?"
-            checkboxValue={lateCheckOut}
-            setCheckboxValue={setLateCheckOut}
-            icon={""}
-            errorMsg={""}
+        {/* Check In Date */}
+        <Grid item xs={12} sm={6}>
+          <DateInput
+            label="Check In Date"
+            type="datetime-local"
+            inputValue={checkInDate}
+            setInputValue={setCheckInDate}
           />
-        </div>
-      </form>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <DateInput
+            label="Check Out Date"
+            type="datetime-local"
+            inputValue={checkOutDate}
+            setInputValue={setCheckOutDate}
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <div className="check-in-input-container">
+            <Checkbox
+              label="Early Check In?"
+              checkboxValue={earlyCheckIn}
+              setCheckboxValue={setEarlyCheckIn}
+              icon={""}
+              errorMsg={""}
+            />
+          </div>
+        </Grid>
+
+        {/* Total Nights */}
+        <Grid item xs={12} sm={6}>
+          <Input
+            label="Total Nights"
+            type="number"
+            inputValue={totalNights}
+            setInputValue={setTotalNights}
+            placeholder="Enter total nights"
+          />
+        </Grid>
+
+        {/* Late Check Out */}
+        <Grid item xs={12} sm={6}>
+            <Checkbox
+              label="Late Check Out?"
+              checkboxValue={lateCheckOut}
+              setCheckboxValue={setLateCheckOut}
+              icon={""}
+              errorMsg={""}
+            />
+        </Grid>
+      </Grid>
+    </form>
       <div className="actions-section">
-        <button
+        <Button
           className={`next-button ${
             !checkInDate || !checkOutDate || !totalNights || !roomType
               ? "disabled"
               : ""
           }`}
+          variant="contained"
+          sx={{
+            backgroundColor: '#c62828',// Modern vibrant red
+
+            marginTop: "20px",
+            color: "#fff",
+            width: "100%",
+
+            "&:hover": {
+              backgroundColor: "#e63946",
+              color: "#fff",
+            }
+          }}
+         
           onClick={() => {
             handleSubmit();
           }}
           disabled={!checkInDate || !checkOutDate || !totalNights || !roomType}
         >
           Next
-        </button>
+        
+        </Button>
       </div>
-    </div>
+    </>
   );
 };
 

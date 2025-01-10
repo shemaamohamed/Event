@@ -11,6 +11,7 @@ import httpService from "../../../common/httpService";
 import "./style.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import DialogMessage from "../../DialogMessage";
+import { Button, Grid } from "@mui/material";
 
 const CompanionInformation = () => {
   const navigate = useNavigate();
@@ -203,131 +204,158 @@ const CompanionInformation = () => {
                 onClick={() => deleteCompanion(index)}
               />
             </div>
-            <form className="flight-form-stepper">
-              <Input
-                label="Name"
-                type="text"
-                inputValue={companion.name}
-                setInputValue={(value) =>
-                  handleCompanionChange(index, "name", value)
-                }
-                placeholder="Name"
-                required
-              />
-              <DateInput
-                label="Arrival Date"
-                inputValue={companion.arrivalDate}
-                setInputValue={(value) =>
-                  handleCompanionChange(index, "arrivalDate", value)
-                }
-                placeholder="Arrival Date"
-                required
-              />
-              <DateInput
-                label="Departure Date"
-                inputValue={companion.departureDate}
-                setInputValue={(value) =>
-                  handleCompanionChange(index, "departureDate", value)
-                }
-                placeholder="Departure Date"
-                required
-              />
-              <ImageUpload
-                errorMsg=""
-                required
-                label="Passport Image"
-                allowedExtensions={["jpg", "jpeg", "png", "gif"]}
-                inputValue={companion.passportImage}
-                setInputValue={(value) =>
-                  handleCompanionChange(index, "passportImage", value)
-                }
-              />
-              <Input
-                label="Departure Airport"
-                type="text"
-                inputValue={companion.departureAirport}
-                setInputValue={(value) =>
-                  handleCompanionChange(index, "departureAirport", value)
-                }
-                placeholder="Departure Airport"
-                required
-              />
-              <Input
-                label="Return Airport"
-                type="text"
-                inputValue={companion.returnAirport}
-                setInputValue={(value) =>
-                  handleCompanionChange(index, "returnAirport", value)
-                }
-                placeholder="Return Airport"
-                required
-              />
-              <Checkbox
-                label="Do you have specific flight time?"
-                checkboxValue={companion.specificFlightTime}
-                setCheckboxValue={(value) =>
-                  handleCompanionChange(index, "specificFlightTime", value)
-                }
-                icon=""
-                errorMsg=""
-              />
-              {companion.specificFlightTime && (
-                <Fragment>
-                  <Input
-                    label="Flight Time"
-                    type="time"
-                    inputValue={companion.flightTime}
-                    setInputValue={(value) =>
-                      handleCompanionChange(index, "flightTime", value)
-                    }
-                    placeholder="Flight Time"
-                    required
-                  />
-                  <Input
-                    label="Flight Number"
-                    type="text"
-                    inputValue={companion.flightNumber}
-                    setInputValue={(value) =>
-                      handleCompanionChange(index, "flightNumber", value)
-                    }
-                    placeholder="Flight Number"
-                    required
-                  />
-                </Fragment>
-              )}
-              <Input
-                label="Seat Number"
-                type="text"
-                inputValue={companion.seatNumber}
-                setInputValue={(value) =>
-                  handleCompanionChange(index, "seatNumber", value)
-                }
-                placeholder="Seat Number"
-              />
-              <Input
-                label="Other Requests"
-                type="text"
-                inputValue={companion.otherRequests}
-                setInputValue={(value) =>
-                  handleCompanionChange(index, "otherRequests", value)
-                }
-                placeholder="Other Requests"
-              />
-              <Checkbox
-                label="Do you want to upgrade from economy to business class?"
-                checkboxValue={companion.upgradeClass}
-                setCheckboxValue={(value) =>
-                  handleCompanionChange(index, "upgradeClass", value)
-                }
-                icon=""
-                errorMsg=""
-              />
-            </form>
+            <form >
+  <Grid container spacing={1}>
+    {/* Name Input */}
+    <Grid item xs={12} sm={6}  >
+      <Input
+        label="Name"
+        type="text"
+        inputValue={companion.name}
+        setInputValue={(value) => handleCompanionChange(index, 'name', value)}
+        placeholder="Name"
+        required
+      />
+    </Grid>
+
+    {/* Arrival Date Input */}
+    <Grid item xs={12} sm={6} >
+      <DateInput
+        label="Arrival Date"
+        inputValue={companion.arrivalDate}
+        setInputValue={(value) => handleCompanionChange(index, 'arrivalDate', value)}
+        placeholder="Arrival Date"
+        required
+      />
+    </Grid>
+
+    {/* Departure Date Input */}
+    <Grid item xs={12} sm={6}  >
+      <DateInput
+        label="Departure Date"
+        inputValue={companion.departureDate}
+        setInputValue={(value) => handleCompanionChange(index, 'departureDate', value)}
+        placeholder="Departure Date"
+        required
+      />
+    </Grid>
+
+    {/* Passport Image Upload */}
+    <Grid item xs={12} sm={6} >
+      <ImageUpload
+        errorMsg=""
+        required
+        label="Passport Image"
+        allowedExtensions={['jpg', 'jpeg', 'png', 'gif']}
+        inputValue={companion.passportImage}
+        setInputValue={(value) => handleCompanionChange(index, 'passportImage', value)}
+      />
+    </Grid>
+
+    {/* Departure Airport Input */}
+    <Grid item xs={12} sm={6}>
+      <Input
+        label="Departure Airport"
+        type="text"
+        inputValue={companion.departureAirport}
+        setInputValue={(value) => handleCompanionChange(index, 'departureAirport', value)}
+        placeholder="Departure Airport"
+        required
+      />
+    </Grid>
+
+    {/* Return Airport Input */}
+    <Grid item xs={12} sm={6}>
+      <Input
+        label="Return Airport"
+        type="text"
+        inputValue={companion.returnAirport}
+        setInputValue={(value) => handleCompanionChange(index, 'returnAirport', value)}
+        placeholder="Return Airport"
+        required
+      />
+    </Grid>
+
+    {/* Specific Flight Time Checkbox */}
+    <Grid item xs={12} sm={6}>
+      <Checkbox
+        label="Do you have specific flight time?"
+        checkboxValue={companion.specificFlightTime}
+        setCheckboxValue={(value) => handleCompanionChange(index, 'specificFlightTime', value)}
+        icon=""
+        errorMsg=""
+      />
+    </Grid>
+
+    {/* Flight Time and Flight Number (conditionally rendered) */}
+    {companion.specificFlightTime && (
+      <Fragment>
+        <Grid item xs={12} sm={6}>
+          <Input
+            label="Flight Time"
+            type="time"
+            inputValue={companion.flightTime}
+            setInputValue={(value) => handleCompanionChange(index, 'flightTime', value)}
+            placeholder="Flight Time"
+            required
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Input
+            label="Flight Number"
+            type="text"
+            inputValue={companion.flightNumber}
+            setInputValue={(value) => handleCompanionChange(index, 'flightNumber', value)}
+            placeholder="Flight Number"
+            required
+          />
+        </Grid>
+      </Fragment>
+    )}
+
+    {/* Seat Number Input */}
+    <Grid item xs={12} sm={6}>
+      <Input
+        label="Seat Number"
+        type="text"
+        inputValue={companion.seatNumber}
+        setInputValue={(value) => handleCompanionChange(index, 'seatNumber', value)}
+        placeholder="Seat Number"
+      />
+    </Grid>
+
+    {/* Other Requests Input */}
+    <Grid item xs={12} sm={6}>
+      <Input
+        label="Other Requests"
+        type="text"
+        inputValue={companion.otherRequests}
+        setInputValue={(value) => handleCompanionChange(index, 'otherRequests', value)}
+        placeholder="Other Requests"
+      />
+    </Grid>
+
+    {/* Upgrade Class Checkbox */}
+    <Grid item xs={12} sm={6}>
+      <Checkbox
+        label="Do you want to upgrade from economy to business class?"
+        checkboxValue={companion.upgradeClass}
+        setCheckboxValue={(value) => handleCompanionChange(index, 'upgradeClass', value)}
+        icon=""
+        errorMsg=""
+      />
+    </Grid>
+  </Grid>
+</form>
           </div>
         ))}
       </div>
       <div className="actions-section">
-        <button
+        <Button
+        variant="contained"
+            color="error"
+            fullWidth
+
           className={`next-button ${isSubmitDisabled ? "disabled" : ""}`}
           onClick={() => {
             handleSubmit();
@@ -335,7 +363,7 @@ const CompanionInformation = () => {
           disabled={isSubmitDisabled}
         >
           Submit
-        </button>
+        </Button>
       </div>
     </div>
   );

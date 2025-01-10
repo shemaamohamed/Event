@@ -7,6 +7,7 @@ import InvoiceForm from "./InvoiceForm";
 import "./style.scss";
 import PayForm from "./PayForm";
 import { useNavigate } from "react-router-dom";
+import { Grid } from "@mui/material";
 
 export const saveToLocalStorage = (key, value) => {
   try {
@@ -64,13 +65,47 @@ const ParentComponentContent = () => {
   }, []);
 
   return (
-    <div className="stepper-page-container">
-      <div className="stepper-section">
-                <div className="back-section" onClick={handleBackClick}>
-          <span className="icon">🔙</span> {/* Example icon */}
-          <span className="label">Back</span>
-        </div>
-        <div className="stepper-container-section">
+    
+    <div
+    style={{
+      padding: "20px",
+    }}
+     >
+      <Grid container spacing={2} alignItems="center" justifyContent="flex-start">
+        <Grid container>
+          <Grid item>
+          <div
+            style={{
+              cursor: 'pointer',
+              marginTop:'10px',
+              padding:'4px',
+              marginLeft:'10px'
+            }}
+            onClick={handleBackClick}
+          >
+            <span className="icon">🔙</span>
+            <span className="label">Back</span>
+          </div>
+            </Grid>
+       
+        </Grid>
+        {/* Back Button Section */}
+       
+        <Grid item xs={12} md={4} xl={3}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          border: "2px solid #ccc", // إضافة الحدود
+          borderRadius: "8px", // جعل الزوايا دائرية
+          padding: "20px", // إضافة مسافة داخلية
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // إضافة ظل خفيف للصندوق
+          height:{
+            xs: 'auto',
+            md: '40vh'
+          }
+        }}
+        >
           <Stepper
             stepperInfo={stepperInfo}
             completedSteps={completedSteps}
@@ -80,12 +115,21 @@ const ParentComponentContent = () => {
             direction="vertical"
             stepsGap="20px"
           />
-        </div>
-      </div>
-      <div className="current-step">
-        <div className="header-current-step">Reservation Form</div>
-        <div className="current-component">{componentsMap[currentStep]}</div>
-      </div>
+        </Grid>
+        
+        <Grid item xs={12} md={8} xl={9}>
+          <div
+            style={{
+              padding: '20px',
+            }}
+          >
+               <div className="header-current-step">Reservation Form</div>
+               <div className="current-component">{componentsMap[currentStep]}</div>
+          </div>
+        </Grid>
+      </Grid>
+          
+     
     </div>
   );
 };

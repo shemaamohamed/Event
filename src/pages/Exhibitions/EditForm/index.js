@@ -127,19 +127,27 @@ const EditExhibitionForm = ({ setIsOpen, getExhibitions, exhibitionData }) => {
   };
 
   return (
-    <form className="exhibition-form-container" onSubmit={handleSubmit}>
-      <Typography
+    <>
+     <Typography
         variant="h6"
         sx={{
           color: "#c62828",
           textAlign: "center",
-          backgroundColor:'#f1f1f1'
-
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
         }}
         gutterBottom
       >
         Edit Exhibition
       </Typography>
+      <form className="exhibition-form-container" onSubmit={handleSubmit}
+      style={{
+        overflowY:'auto'
+      }}
+      >
+     
         <Select
           options={allConference}
           value={conferenceId}
@@ -220,6 +228,8 @@ const EditExhibitionForm = ({ setIsOpen, getExhibitions, exhibitionData }) => {
           Submit
         </Button>
     </form>
+    </>
+    
   );
 };
 

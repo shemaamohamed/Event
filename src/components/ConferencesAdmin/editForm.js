@@ -403,20 +403,27 @@ const EditConferencesAdmin = ({
         <CloseRounded />
       </IconButton>
     </div>
-  
-    <Box sx={{ padding: 2 }}>
-      <Typography
+    <Typography
         variant="h6"
+        
         sx={{
           color: "#c62828",
           textAlign: "center",
-          backgroundColor:'#f1f1f1'
-
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
         }}
+      
         gutterBottom
       >
         Edit Conference
       </Typography>
+  
+    <Box sx={{ padding: 2 ,
+      overflowY:'auto'
+    }}>
+      
       <Input
         label="Title"
         placeholder="Enter title"
@@ -551,11 +558,7 @@ const EditConferencesAdmin = ({
         committeeMembers={committeeMembers}
         setCommitteeMembers={setCommitteeMembers}
       />
-    </Box>
-  
-    <div className="actions-section-container">
-      
-      <Button 
+       <Button 
       sx={{
         backgroundColor: '#c62828',// Modern vibrant red
 
@@ -571,7 +574,9 @@ const EditConferencesAdmin = ({
        onClick={handleSubmit}>
         Edit
       </Button>
-    </div>
+    </Box>
+  
+   
   </Drawer>
   
   );
