@@ -4,7 +4,7 @@ import doneIcon from "../../icons/doneIcon.svg";
 import SVG from "react-inlinesvg";
 
 import "./style.scss";
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 
 const DialogMessage = ({ isDialogOpen, setIsDialogOpen, message, onOk, onClose }) => {
   const handleOk = () => {
@@ -18,10 +18,8 @@ const DialogMessage = ({ isDialogOpen, setIsDialogOpen, message, onOk, onClose }
   };
 
   return (
-    <div className="dialog-message-container">
       <Dialog
         viewHeader={true}
-        header=""
         open={isDialogOpen}
         setOpen={setIsDialogOpen}
       >
@@ -63,25 +61,60 @@ const DialogMessage = ({ isDialogOpen, setIsDialogOpen, message, onOk, onClose }
           }}
           
           >
-          <Grid item xs={6}
-        
-           >
-          <button className="close" onClick={handleClose}>
-              Close
-            </button>
-            
-
-
-            </Grid>
-            <Grid item xs={6}
-          
-           >
-                      <button onClick={handleOk}>Ok</button>
-
-            
-
-
-            </Grid>
+         <Grid item xs={6}>
+    <Button
+      onClick={handleClose}
+      sx={{
+        cursor: "pointer",
+        width: "100%",
+        padding: "10px 20px",
+        fontSize: "16px",
+        fontWeight: "bold",
+        color: "#333",
+        backgroundColor: "transparent",
+        border: "1px solid #32cb00",
+        borderRadius: "5px",
+        textAlign: "center",
+        transition: "background-color 0.3s, color 0.3s",
+        "&:hover": {
+          color: "#ffffff",
+          backgroundColor: "#32cb00",
+        },
+        "&:active": {
+          color: "#ffffff",
+          backgroundColor: "#165a00",
+        },
+      }}
+    >
+      Close
+    </Button>
+  </Grid>
+  <Grid item xs={6}>
+    <Button
+      onClick={handleOk}
+      sx={{
+        cursor: "pointer",
+        width: "100%",
+        padding: "10px 20px",
+        fontSize: "16px",
+        fontWeight: "bold",
+        color: "#ffffff",
+        backgroundColor: "#32cb00",
+        border: "none",
+        borderRadius: "5px",
+        textAlign: "center",
+        transition: "background-color 0.3s, color 0.3s",
+        "&:hover": {
+          backgroundColor: "#71e54b",
+        },
+        "&:active": {
+          backgroundColor: "#165a00",
+        },
+      }}
+    >
+      Ok
+    </Button>
+  </Grid>
           </Grid>
         
         
@@ -89,7 +122,6 @@ const DialogMessage = ({ isDialogOpen, setIsDialogOpen, message, onOk, onClose }
 
         
       </Dialog>
-    </div>
   );
 };
 

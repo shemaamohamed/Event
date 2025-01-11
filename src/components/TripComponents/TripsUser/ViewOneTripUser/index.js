@@ -9,6 +9,7 @@ import axios from "axios";
 import Input from "../../../../CoreComponent/Input";
 import Dialog from "../../../../CoreComponent/Dialog";
 import Select from "../../../../CoreComponent/Select";
+import { Button, Grid, Typography } from "@mui/material";
 
 const GroupTripRegistration = ({ availableDates, setIsDialogOpen }) => {
   console.log({ availableDates });
@@ -126,129 +127,204 @@ const ViewOneTripUser = () => {
   }, []);
 
   return (
-    <div className="view-one-trip-for-user">
-      {tripData?.image_1 && (
-        <div className="slider">
-          <img
-            src={`${backendUrlImages}${tripData.image_1}`}
-            alt="Trip Image 1"
-          />
-        </div>
+    <Grid container spacing={2} justifyContent="center" alignItems={"center"}
+    sx={{
+      padding: "20px",
+    }}
+    > 
+     {tripData?.image_1 && (
+          <Grid item xs={12} md={5}>
+            <div className="slider">
+              <img
+                src={`${backendUrlImages}${tripData.image_1}`}
+                alt="Trip Image 1"
+                style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+              />
+            </div>
+          </Grid>
       )}
-
-      <div className="trip-name-section">
-        {tripData?.name && <h1>{tripData?.name}</h1>}
-
-        {tripData?.description && (
-          <div className="info-header">{tripData?.description}</div>
+      <Grid item xs={12} md={7}>
+      {tripData?.name && (
+          <Grid item xs={12}>
+            <Typography variant="h4" textAlign={'center'} gutterBottom padding={2}>
+              {tripData?.name}
+            </Typography>
+          </Grid>
         )}
 
-        {(tripData?.price_per_person > 0  ||
-          tripData?.price_for_two >0 ||
-          tripData?.price_for_three_or_more > 0) &&  (
+        {tripData?.description && (
+          <Grid item xs={12} padding={1}>
+            <Typography variant="body1" color="textSecondary">
+              {tripData?.description}
+            </Typography>
+          </Grid>
+        )}
+
+        {(tripData?.price_per_person > 0 ||
+          tripData?.price_for_two > 0 ||
+          tripData?.price_for_three_or_more > 0) && (
           <>
-            <h3>Price Information</h3>
-            <div className="additional-options-container">
+            <Grid item xs={12}>
+              <Typography variant="h6" padding={1}>Price Information</Typography>
+            </Grid>
+            <Grid item xs={12} container spacing={2}
+            padding={2}
+            >
               {tripData?.price_per_person && (
-                <SimpleLabelValue
-                  label="Price per person"
-                  value={` ${tripData?.price_per_person}$`}
-                />
+                <Grid item xs={12} sm={6}>
+                  <SimpleLabelValue
+                    label="Price per person"
+                    value={`$${tripData?.price_per_person}`}
+                  />
+                </Grid>
               )}
               {tripData?.price_for_two && (
-                <SimpleLabelValue
-                  label="Price for two"
-                  value={` ${tripData?.price_for_two}$`}
-                />
+                <Grid item xs={12} sm={6}>
+                  <SimpleLabelValue
+                    label="Price for two"
+                    value={`$${tripData?.price_for_two}`}
+                  />
+                </Grid>
               )}
               {tripData?.price_for_three_or_more && (
-                <SimpleLabelValue
-                  label="Price for three or more"
-                  value={` ${tripData?.price_for_three_or_more}$`}
-                />
+                <Grid item xs={12} sm={6}>
+                  <SimpleLabelValue
+                    label="Price for three or more"
+                    value={`$${tripData?.price_for_three_or_more}`}
+                  />
+                </Grid>
               )}
-            </div>
+            </Grid>
           </>
         )}
 
         {tripData?.additional_options?.length > 0 && (
           <>
-            <h3>Additional Options</h3>
-            <div className="additional-options-container">
+            <Grid item xs={12}>
+              <Typography variant="h6" padding={1}>Additional Options</Typography>
+            </Grid>
+            <Grid item xs={12} container spacing={2}
+                        padding={2}
+
+            >
               {tripData?.additional_options?.map((item) => (
-                <div key={item?.option_name}>
+                <Grid item xs={12} sm={6} key={item?.option_name}>
                   <SimpleLabelValue
                     label={item?.option_name}
-                    value={`${item?.price}$`}
+                    value={`$${item?.price}`}
                   />
-                </div>
+                </Grid>
               ))}
-            </div>
+            </Grid>
           </>
         )}
-
+        <Grid container spacing={2} justifyContent="center" alignItems={"center"} padding={2}>
         {tripData?.trip_type && (
-          <SimpleLabelValue label="Trip Type" value={tripData?.trip_type} />
+          <Grid item xs={12} sm={6}>
+            <SimpleLabelValue label="Trip Type" value={tripData?.trip_type} />
+          </Grid>
         )}
-        {tripData?.trip_type === "group" && tripData?.available_dates && (
-          <SimpleLabelValue
-            label="Available Dates"
-            value={tripData?.available_dates}
-          />
+         {tripData?.location && (
+          <Grid item xs={12 } sm={6}>
+            <SimpleLabelValue label="Location" value={tripData?.location} />
+          </Grid>
         )}
-        {tripData?.location && (
-          <SimpleLabelValue label="Location" value={tripData?.location} />
+          {tripData?.inclusions && (
+          <Grid item xs={12} sm={6}>
+            <SimpleLabelValue label="Inclusions" value={tripData?.inclusions} />
+          </Grid>
         )}
-        {tripData?.duration && (
-          <SimpleLabelValue
-            label="Duration"
-            value={`${tripData?.duration} days`}
-          />
-        )}
-        {tripData?.inclusions && (
-          <SimpleLabelValue label="Inclusions" value={tripData?.inclusions} />
-        )}
+
         {tripData?.group_price_per_person && (
-          <SimpleLabelValue
-            label="Group Price per person"
-            value={`${tripData?.group_price_per_person}$`}
-          />
+          <Grid item xs={12} sm={6}>
+            <SimpleLabelValue
+              label="Group Price per person"
+              value={`$${tripData?.group_price_per_person}`}
+            />
+          </Grid>
         )}
+
         {tripData?.group_price_per_speaker && (
-          <SimpleLabelValue
-            label="Group Price per speaker"
-            value={`${tripData?.group_price_per_speaker}$`}
-          />
+          <Grid item xs={12} sm={6}>
+            <SimpleLabelValue
+              label="Group Price per speaker"
+              value={`$${tripData?.group_price_per_speaker}`}
+            />
+          </Grid>
         )}
+        
+        {tripData?.duration && (
+          <Grid item xs={12} sm={6}>
+            <SimpleLabelValue label="Duration" value={`${tripData?.duration} days`} />
+          </Grid>
+        )}
+
+      
+
         {tripData?.trip_details && (
-          <SimpleLabelValue
-            label="Trip Details"
-            value={tripData?.trip_details}
-          />
+          <Grid item xs={12} >
+            <SimpleLabelValue
+              label="Trip Details"
+              value={tripData?.trip_details}
+            />
+          </Grid>
         )}
-{(tripData?.trip_type === "group" && (tripData?.group_accompanying_price ?? 0) > 0) ? (
-  <SimpleLabelValue
-    label="Group Accompanying Price"
-    value={`${tripData?.group_accompanying_price}$`}
-  />
-) : null}
+
+        {tripData?.trip_type === 'group' && tripData?.available_dates && (
+          <Grid item xs={12} sm={6}>
+            <SimpleLabelValue
+              label="Available Dates"
+              value={tripData?.available_dates}
+            />
+          </Grid>
+        )}
+
+       
 
 
+        {tripData?.trip_type === 'group' && (tripData?.group_accompanying_price ?? 0) > 0 && (
+          <Grid item xs={12} sm={6}>
+            <SimpleLabelValue
+              label="Group Accompanying Price"
+              value={`$${tripData?.group_accompanying_price}`}
+            />
+          </Grid>
+        )}
+          </Grid>
 
-        <button
-          className="register-trip-btn"
-          onClick={() => {
-            if (tripData?.trip_type === "group") {
-              setIsDialogOpen(true);
-              // navigate(`/group-trip/user/${id}`);
-            } else {
-              navigate(`/trip/user/${id}`);
-            }
-          }}
-        >
-          Register now
-        </button>
-      </div>
+      
+         <Grid item xs={12}>
+          <Button
+            variant="contained"
+            color="primary"
+            className="register-trip-btn"
+            onClick={() => {
+              if (tripData?.trip_type === 'group') {
+                setIsDialogOpen(true);
+                // navigate(`/group-trip/user/${id}`);
+              } else {
+                navigate(`/trip/user/${id}`);
+              }
+            }}
+             sx={{
+                                  color: "white",
+                                  cursor: "pointer",
+                                  backgroundColor: "#c62828",
+                                  "&:hover": {
+                                    backgroundColor: "#dc143c",
+                                  },
+                                }}
+            fullWidth
+          >
+            Register now
+          </Button>
+        </Grid>
+        </Grid>
+
+       
+
+       
+
       <Dialog
         viewHeader={true}
         header=""
@@ -263,7 +339,7 @@ const ViewOneTripUser = () => {
           />
         </div>
       </Dialog>
-    </div>
+    </Grid>
   );
 };
 

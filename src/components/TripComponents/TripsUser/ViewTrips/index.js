@@ -6,6 +6,7 @@ import "./style.scss";
 import { backendUrlImages } from "../../../../constant/config";
 import tripImage from "../../../../icons/tripImage.webp";
 import { useAuth } from "../../../../common/AuthContext";
+import { Box, Button, Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 
 const ViewUserTrips = () => {
   const navigate = useNavigate();
@@ -87,39 +88,80 @@ const ViewUserTrips = () => {
         </div>
       </div>
 
-      <div className="trip-cards">
+      <Grid container spacing={2}>
         {allTrips.length > 0 ? (
           allTrips.map((trip) => (
-            <div className="trip-card" key={trip.id}>
-              <img
-                src={`${backendUrlImages}${trip.image_1}`}
-                onError={(e) => {
-                  e.currentTarget.src = tripImage;
-                }}
-                className="trip-image"
-                alt="Trip"
-              />
+            <Grid item xs={12} sm={6} md={4} lg={3} key={trip.id}>
+                     <Card
+      sx={{
+        maxWidth: 345, 
+        margin: "20px auto", 
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", 
+        borderRadius: "8px", 
+        overflow: "hidden", 
+      }}
+      key={trip.id}
+    >
+      <CardMedia
+        component="img"
+        image={`${backendUrlImages}${trip.image_1}`}
+        onError={(e) => {
+          e.currentTarget.src = tripImage;
+        }}
+        alt="Trip"
+        sx={{
+          height: 180, 
+        }}
+      />
 
-              <div className="trip-info">
-                <div className="main-info">
-                  <div className="name">{trip.name}</div>
-                  <div className="desc">{trip.description}</div>
-                </div>
-                <div className="actions-btns">
-                  <button
-                    className="view"
-                    onClick={() => navigate(`/view/trip/${trip.id}`)}
-                  >
-                    Register for a Trip
-                  </button>
-                </div>
-              </div>
-            </div>
+      <CardContent>
+        <Box className="main-info" sx={{ marginBottom: "10px" }}>
+          <Typography
+            variant="h6"
+            component="div"
+            className="name"
+            sx={{
+              fontWeight: "bold",
+              marginBottom: "5px",
+            }}
+          >
+            {trip.name}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            className="desc"
+          >
+            {trip.description}
+          </Typography>
+        </Box>
+
+        <Box
+          className="actions-btns"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "10px",
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            className="view"
+            onClick={() => navigate(`/view/trip/${trip.id}`)}
+          >
+            Register for a Trip
+          </Button>
+        </Box>
+      </CardContent>
+    </Card>
+              </Grid>
+     
           ))
         ) : (
           <p className="no-trips-message">No trips available for this type.</p>
         )}
-      </div>
+      </Grid>
     </div>
   );
 };

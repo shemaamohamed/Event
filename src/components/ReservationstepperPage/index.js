@@ -7,7 +7,7 @@ import InvoiceForm from "./InvoiceForm";
 import "./style.scss";
 import PayForm from "./PayForm";
 import { useNavigate } from "react-router-dom";
-import { Grid } from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
 
 export const saveToLocalStorage = (key, value) => {
   try {
@@ -70,42 +70,58 @@ const ParentComponentContent = () => {
     style={{
       padding: "20px",
     }}
-     >
-      <Grid container spacing={2} alignItems="center" justifyContent="flex-start">
-        <Grid container>
-          <Grid item>
+  >
+    <Grid container spacing={2} alignItems="flex-start" justifyContent="flex-start">
+      {/* Back Button Section */}
+      <Grid
+        item
+        xs={12}
+        md={4}
+        xl={3}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent:"flex-start",
+          position: { xs: "relative", md: "sticky" },
+          top: "5px",
+          backgroundColor: "white",
+          zIndex:1,
+          
+          borderRadius: "8px",
+          padding: "20px",
+          height:{
+            xs: "auto",
+            md: "100vh",
+
+          },
+          flexShrink: 0, 
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", 
+        }}
+      >
+       
+      
+        <Grid item xs={12}>
+        <Grid item xs={12}>
           <div
             style={{
-              cursor: 'pointer',
-              marginTop:'10px',
-              padding:'4px',
-              marginLeft:'10px'
+              cursor: "pointer",
+              marginTop: "10px",
+              padding: "4px",
+              marginLeft: "10px",
             }}
             onClick={handleBackClick}
           >
             <span className="icon">🔙</span>
             <span className="label">Back</span>
           </div>
-            </Grid>
-       
         </Grid>
-        {/* Back Button Section */}
-       
-        <Grid item xs={12} md={4} xl={3}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          border: "2px solid #ccc", // إضافة الحدود
-          borderRadius: "8px", // جعل الزوايا دائرية
-          padding: "20px", // إضافة مسافة داخلية
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // إضافة ظل خفيف للصندوق
-          height:{
-            xs: 'auto',
-            md: '40vh'
-          }
-        }}
-        >
+        <Divider
+          sx={{
+            color: "black",
+            margin: "10px",
+            backgroundColor: "black",
+          }}
+        />
           <Stepper
             stepperInfo={stepperInfo}
             completedSteps={completedSteps}
@@ -116,21 +132,31 @@ const ParentComponentContent = () => {
             stepsGap="20px"
           />
         </Grid>
-        
-        <Grid item xs={12} md={8} xl={9}>
-          <div
-            style={{
-              padding: '20px',
+      </Grid>
+  
+      {/* Reservation Form Section */}
+      <Grid item xs={12} md={8} xl={9}>
+        <div
+          style={{
+            padding: "20px",
+          }}
+        >
+          <Typography
+            textAlign={"center"}
+            variant="h6"
+            sx={{
+              color: "#c62828",
+              fontWeight: "bold",
             }}
           >
-               <div className="header-current-step">Reservation Form</div>
-               <div className="current-component">{componentsMap[currentStep]}</div>
-          </div>
-        </Grid>
+            Reservation Form
+          </Typography>
+          <div className="current-component">{componentsMap[currentStep]}</div>
+        </div>
       </Grid>
-          
-     
-    </div>
+    </Grid>
+  </div>
+  
   );
 };
 

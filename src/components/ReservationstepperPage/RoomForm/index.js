@@ -68,9 +68,10 @@ const RoomForm = () => {
         </button>
       </div>
 
-      <form >
+      <form
+       >
       {rooms.map((room, index) => (
-        <div className="room-form-stepper-container" key={index}>
+        <div    key={index}>
           <div className="delete-icon-container">
             <SVG
               className="delete-icon"
@@ -79,7 +80,11 @@ const RoomForm = () => {
             />
           </div>
 
-          <Grid container spacing={2} >
+          <Grid container spacing={2}
+          sx={{
+            marginTop: "20px",
+          }}
+           >
             {/* Room Type */}
             <Grid item xs={12} md={6}>
               <Select
@@ -181,6 +186,7 @@ const RoomForm = () => {
             </Grid>
           </Grid>
         </div>
+        
       ))}
     </form>
       <div className="actions-section">

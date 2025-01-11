@@ -9,6 +9,7 @@ import {
   saveToLocalStorage,
   getFromLocalStorage,
 } from "../../../common/localStorage";
+import { Button, Grid } from "@mui/material";
 
 const SpeackerTripForm = () => {
   const { currentStep, completeStep } = useTripsStepper();
@@ -44,7 +45,9 @@ const SpeackerTripForm = () => {
   }, []);
   return (
     <div>
-      <form className="accommodation-form-steeper">
+  <form >
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={6}>
         <Input
           label="Accommodation Stars"
           placeholder="Enter star rating (1-5)"
@@ -53,7 +56,9 @@ const SpeackerTripForm = () => {
           type="number"
           required={true}
         />
+      </Grid>
 
+      <Grid item xs={12} sm={6}>
         <Input
           label="Nights Count"
           placeholder="Enter number of nights"
@@ -62,28 +67,45 @@ const SpeackerTripForm = () => {
           type="number"
           required={true}
         />
+      </Grid>
 
+      <Grid item xs={12} sm={6}>
         <DateInput
           label="Check-In Date"
           inputValue={checkInDate}
           setInputValue={setCheckInDate}
           required={true}
         />
+      </Grid>
 
+      <Grid item xs={12} sm={6}>
         <DateInput
           label="Check-Out Date"
           inputValue={checkOutDate}
           setInputValue={setCheckOutDate}
           required={true}
         />
-      </form>
+      </Grid>
+    </Grid>
+  </form>
 
-      <div className="actions-section">
-        <button className="next-button" onClick={handleSubmit}>
-          Next
-        </button>
-      </div>
-    </div>
+  <div className="actions-section">
+    <Button
+      variant="contained"
+
+      className="next-button"
+      onClick={handleSubmit}
+      fullWidth
+      sx={{
+        marginTop: "20px",
+        backgroundColor:'#cc0000',
+        width: '100%',
+      }}
+    >
+      Next
+    </Button>
+  </div>
+</div>
   );
 };
 export default SpeackerTripForm;

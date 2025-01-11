@@ -6,7 +6,7 @@ import { FlightStepperProvider, useFlightStepper } from "./StepperContext";
 import CompanionInformation from "./CompanionInformation";
 import { removeFromLocalStorage } from "../../common/localStorage";
 import { useNavigate } from "react-router-dom";
-import { Grid, Grid2 } from "@mui/material";
+import { Divider, Grid, Grid2, Typography } from "@mui/material";
 
 const FlightStepperPageContent = () => {
   const {
@@ -90,42 +90,62 @@ const FlightStepperPageContent = () => {
   }, []);
 
   return (
-
     <div
     style={{
       padding: "20px",
     }}
-    >
-      <Grid container spacing={2} alignItems="center" justifyContent="flex-start">
-         
-                <Grid item xs={12} md={4} xl={3} 
+  >
+    <Grid container spacing={2} alignItems="flex-start" justifyContent="flex-start">
+      {/* Back Button Section */}
+      <Grid
+        item
+        xs={12}
+        md={4}
+        xl={3}
         sx={{
-         
-          border: "2px solid #ccc", 
-          borderRadius: "8px", 
-          padding: "20px", 
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", 
-        
+          display: "flex",
+          flexDirection: "column",
+          justifyContent:"flex-start",
+          position: { xs: "relative", md: "sticky" },
+          top: "5px",
+          backgroundColor: "white",
+          zIndex:1,
+          
+          borderRadius: "8px",
+          padding: "20px",
+          height:{
+            xs: "auto",
+            md: "100vh",
+
+          },
+          flexShrink: 0, 
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", 
         }}
-        >
-          <Grid container
+      >
+       
+      
+        <Grid item xs={12}>
+        <Grid item xs={12}>
+          <div
+            style={{
+              cursor: "pointer",
+              marginTop: "10px",
+              padding: "4px",
+              marginLeft: "10px",
+            }}
+            onClick={handleBackClick}
           >
-                  <Grid item>
-                  <div
-                    style={{
-                      cursor: 'pointer',
-                      marginTop:'10px',
-                      padding:'4px',
-                      marginLeft:'10px'
-                    }}
-                    onClick={handleBackClick}
-                  >
-                    <span className="icon">🔙</span>
-                    <span className="label">Back</span>
-                  </div>
-                    </Grid>
-               
-                </Grid>
+            <span className="icon">🔙</span>
+            <span className="label">Back</span>
+          </div>
+        </Grid>
+        <Divider
+          sx={{
+            color: "black",
+            margin: "10px",
+            backgroundColor: "black",
+          }}
+        />
           <Stepper
             stepperInfo={stepperInfo}
             completedSteps={completedSteps}
@@ -135,25 +155,33 @@ const FlightStepperPageContent = () => {
             direction="vertical"
             stepsGap="20px"
           />
-          
         </Grid>
-          
-        <Grid item  xs={12} md={8} xl={9}>
-          <div
-            style={{
-              padding: '20px',
+      </Grid>
+  
+      <Grid item xs={12} md={8} xl={9}>
+        <div
+          style={{
+            padding: "20px",
+          }}
+        >
+          <Typography
+            textAlign={"center"}
+            variant="h6"
+            sx={{
+              color: "#c62828",
+              fontWeight: "bold",
             }}
           >
-            <div className="header-current-step">Title</div>
+            Title
+          </Typography>
             <div className="current-component">{componentsMap[currentStep]}</div>
-          </div>
-        </Grid>
-        </Grid>
-        
-     
-       
-      
-    </div>
+          
+        </div>
+      </Grid>
+    </Grid>
+  </div>
+
+
   );
     
 };

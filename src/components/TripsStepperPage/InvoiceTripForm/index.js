@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import SimpleLabelValue from "../../../components/SimpleLabelValue";
+import { Grid, Typography, Button } from '@mui/material'
 import {
+
   getFromLocalStorage,
   saveToLocalStorage,
 } from "../../../common/localStorage";
@@ -68,81 +70,85 @@ const InvoiceTripForm = () => {
   };
 
   return (
-    <div className="invoice-trips-container-stepper">
-      {accommodationData && (
-        <div>
-          <div className="header-invoice-trips">Accommodation Details</div>
-
-          <div className="accommodation-data-container">
-            <SimpleLabelValue
-              label="Check-in Date"
-              value={accommodationData.check_in_date}
-            />
-            <SimpleLabelValue
-              label="Check-out Date"
-              value={accommodationData.check_out_date}
-            />
-            <SimpleLabelValue
-              label="Accommodation Stars"
-              value={accommodationData.accommodation_stars}
-            />
-            <SimpleLabelValue
-              label="Nights Count"
-              value={accommodationData.nights_count}
-            />{" "}
-          </div>
-        </div>
-      )}
-
-      {participantsData.length > 0 && (
-        <div className="participants-data-container">
-          {participantsData.map((participant, index) => (
-            <div key={participant.id}>
-              <div className="header-invoice-trips Participants">
-                Participants {index + 1}
-              </div>
-              <div className="participant-section">
-                <SimpleLabelValue label="Name" value={participant.name} />
-                <SimpleLabelValue
-                  label="Nationality"
-                  value={participant.nationality.label}
-                />
-                <SimpleLabelValue
-                  label="Phone Number"
-                  value={participant.phone_number}
-                />
-                <SimpleLabelValue
-                  label="WhatsApp Number"
-                  value={participant.whatsapp_number}
-                />
-                <SimpleLabelValue
-                  label="Is Companion"
-                  value={participant.is_companion ? "Yes" : "No"}
-                />
-                <SimpleLabelValue
-                  label="Include Accommodation"
-                  value={participant.include_accommodation.label}
-                />
-                <SimpleLabelValue
-                  label="Accommodation Stars"
-                  value={participant.accommodation_stars}
-                />
-                <SimpleLabelValue
-                  label="Nights Count"
-                  value={participant.nights_count}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="actions-section">
-        <button className="next-button" onClick={handleSubmit}>
-          Next
-        </button>
+    <div >
+    {accommodationData && (
+      <div>
+        <Typography variant="h6" className="header-invoice-trips" gutterBottom  >
+          Accommodation Details
+        </Typography>
+  
+        <Grid container spacing={2} className="accommodation-data-container">
+          <Grid item xs={12} sm={6} >
+            <SimpleLabelValue label="Check-in Date" value={accommodationData.check_in_date} />
+          </Grid>
+          <Grid item xs={12} sm={6} >
+            <SimpleLabelValue label="Check-out Date" value={accommodationData.check_out_date} />
+          </Grid>
+          <Grid item xs={12} sm={6} >
+            <SimpleLabelValue label="Accommodation Stars" value={accommodationData.accommodation_stars} />
+          </Grid>
+          <Grid item xs={12} sm={6} >
+            <SimpleLabelValue label="Nights Count" value={accommodationData.nights_count} />
+          </Grid>
+        </Grid>
       </div>
+    )}
+  
+    {participantsData.length > 0 && (
+      <div >
+        {participantsData.map((participant, index) => (
+          <div key={participant.id}>
+            <Typography variant="h6" className="header-invoice-trips" gutterBottom >
+              Participants {index + 1}
+            </Typography>
+            <Grid container spacing={2} className="participant-section">
+              <Grid item xs={12} sm={6}>
+                <SimpleLabelValue label="Name" value={participant.name} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <SimpleLabelValue label="Nationality" value={participant.nationality.label} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <SimpleLabelValue label="Phone Number" value={participant.phone_number} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <SimpleLabelValue label="WhatsApp Number" value={participant.whatsapp_number} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <SimpleLabelValue label="Is Companion" value={participant.is_companion ? "Yes" : "No"} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <SimpleLabelValue label="Include Accommodation" value={participant.include_accommodation.label} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <SimpleLabelValue label="Accommodation Stars" value={participant.accommodation_stars} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <SimpleLabelValue label="Nights Count" value={participant.nights_count} />
+              </Grid>
+            </Grid>
+          </div>
+        ))}
+      </div>
+    )}
+  
+    <div className="actions-section">
+      <Button
+        variant="contained"
+        sx={{
+          marginTop: "20px",
+          backgroundColor:'#cc0000',
+          width: '100%',
+        }}
+        
+        className="next-button"
+        onClick={handleSubmit}
+        fullWidth
+      >
+        Next
+      </Button>
     </div>
+  </div>
   );
 };
 

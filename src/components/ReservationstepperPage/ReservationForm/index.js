@@ -51,7 +51,7 @@ const ReservationForm = () => {
     <>
           <form >
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} >
           <Select
             options={options}
             value={roomType}
@@ -62,7 +62,7 @@ const ReservationForm = () => {
         </Grid>
 
         {/* Check In Date */}
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} >
           <DateInput
             label="Check In Date"
             type="datetime-local"
@@ -71,7 +71,7 @@ const ReservationForm = () => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} >
           <DateInput
             label="Check Out Date"
             type="datetime-local"
@@ -92,16 +92,7 @@ const ReservationForm = () => {
           </div>
         </Grid>
 
-        {/* Total Nights */}
-        <Grid item xs={12} sm={6}>
-          <Input
-            label="Total Nights"
-            type="number"
-            inputValue={totalNights}
-            setInputValue={setTotalNights}
-            placeholder="Enter total nights"
-          />
-        </Grid>
+       
 
         {/* Late Check Out */}
         <Grid item xs={12} sm={6}>
@@ -112,6 +103,16 @@ const ReservationForm = () => {
               icon={""}
               errorMsg={""}
             />
+        </Grid>
+         {/* Total Nights */}
+         <Grid item xs={12} >
+          <Input
+            label="Total Nights"
+            type="number"
+            inputValue={totalNights}
+            setInputValue={setTotalNights}
+            placeholder="Enter total nights"
+          />
         </Grid>
       </Grid>
     </form>

@@ -11,7 +11,6 @@ import { useDemoRouter } from "@toolpad/core/internal";
 const demoTheme = createTheme({
   palette: {
     mode: "light",
-    
     text: {
       primary: "#333333",
       secondary: "#555555",
@@ -83,141 +82,137 @@ function ToolbarActions() {
 const AdminLayoutBasic = () => {
   const { isAdmin, registrationType } = useAuth();
   const isSpeaker = registrationType === "speaker";
-  const isSponsor =registrationType==="sponsor";
+  const isSponsor = registrationType === "sponsor";
+  const isAttendance = registrationType === "attendance";
+  const isGroup = registrationType === "group_registration";
+
   const navigate = useNavigate();
   const location = useLocation();
   const router = useDemoRouter('/admin');
 
-
   const menuItems = {
-    
     speaker: [
       { title: "Visa", icon: "🛂", segment: "visa" },
       { title: "Flight", icon: "✈️", segment: "flight/form" },
       { title: "Airport Transfer", icon: "🚐", segment: "airport/transfer" },
       { title: "Reservation", icon: "🏨", segment: "reservation/form" },
       { title: "All Trips", icon: "🗺️", segment: "view-user-trips" },
+      { title: "My Trips", icon: "🗺️", segment: "user/trip/participants" },
       { title: "Gala Dinner", icon: "🍽️", segment: "gala/dinner" },
       { title: "Profile", icon: "👤", segment: "speaker/profile" },
     ],
     admin: [
       { title: "Conferences", icon: "🎓", segment: "conferences/page" },
       { title: "Exhibitions", icon: "🏢", segment: "exhibitions" },
-  
       { title: "Gala Dinner", icon: "🍷", segment: "gala" },
       { title: "Messages", icon: "💬", segment: "msgs" },
-   
       { title: "Users", icon: "👥", segment: "pending/users" },
-      { title:"All Speakers", icon: "🎤", segment: "all-speakers" },
-      {title:"All Attendances", icon: "📅", segment: "all-attendances" },
+      { title: "All Speakers", icon: "🎤", segment: "all-speakers" },
+      { title: "All Attendances", icon: "📅", segment: "all-attendances" },
       { title: "All Sponsors", icon: "🤝", segment: "all-sponsors" },
-      
-
-
       { title: "Group Registration Table", icon: "📊", segment: "admin/excel/table" },
       { title: "Add Clients", icon: "➕", segment: "add/client" },
-      {
-        title:"Airport Transfer Bookings",
-        icon: "✈️",
-        segment:  "all-airports",
-      },
-      { title:"Visas" ,icon:"👨‍👩‍👧‍👦", segment:"view-visas"},
-      { title: "Reservations", icon: "🏨", segment: ["reservations"],
-        children: [
-          { title: "Reservations", segment: "" },
-          { title: "Reservation Room Prices", segment: "room/prices" },
-        ],
-       },
-     
-      
-      {
-        title:'Flights',
-        icon: "🛩️",
-        segment: [ "flights"],
-        children: [
-          { title: "Flight Admin", segment: "" },
-          { title: "Flight Files", segment: "files" },
-          {title: "Enter new flights", segment: "enter/new" },
-        ],
-
-      },
-      {
-        title:'Job',
-        icon: "🛠️",
-        segment: [ "job"],
-        children: [
-          { title: "Create Job", segment: "" },
-          { title: "Job Applicants", segment: "applicants" },
-        ],
-      },
-      {
-        title:'Sponsor',
-        icon: "📦",
-        segment: [ "sponsor"],
-        children: [
-          { title: "Sponsorship Packages", segment: "add/table" },
-          { title: "Sponsorship Option", segment: "option/form" },
-          { title: "Booth Cost", segment: "booth/cost" },
-          { title: "Upload Floor Plan", segment: "upload/floor" },
-        ],
-      },{
-        title:'Files',
-        icon: "📁",
-        segment: [ "files"],
-        children: [
-          { title: "Visa Files", segment: "visa" },
-          { title: "Reservations Files", segment: "reservations" },
-          {title: "Certificate Files", segment: "certificate" },
-        ],
-      },{
-        title:'Trip',
-        icon: "🧳",
-        segment: [ "trip"],
-        children: [
-          { title: "All Trips", segment: "" },
-          { title: " Trips Users Discount", segment: "user" },
-          {title: "Private Trip Participants", segment: "participants/user" },
-          {title: "Group Trip Participants", segment: "participants/group" },
-
-        ],
-      }
-
-
+      { title: "Airport Transfer Bookings", icon: "✈️", segment: "all-airports" },
+      { title: "Visas", icon: "👨‍👩‍👧‍👦", segment: "view-visas" },
+      { title: "Reservations", icon: "🏨", segment: ["reservations"], children: [
+        { title: "Reservations", segment: "" },
+        { title: "Reservation Room Prices", segment: "room/prices" },
+      ] },
+      { title: 'Flights', icon: "🛩️", segment: ["flights"], children: [
+        { title: "Flight Admin", segment: "" },
+        { title: "Flight Files", segment: "files" },
+        { title: "Enter new flights", segment: "enter/new" },
+      ] },
+      { title: 'Job', icon: "🛠️", segment: ["job"], children: [
+        { title: "Create Job", segment: "" },
+        { title: "Job Applicants", segment: "applicants" },
+      ] },
+      { title: 'Sponsor', icon: "📦", segment: ["sponsor"], children: [
+        { title: "Sponsorship Packages", segment: "add/table" },
+        { title: "Sponsorship Option", segment: "option/form" },
+        { title: "Booth Cost", segment: "booth/cost" },
+        { title: "Upload Floor Plan", segment: "upload/floor" },
+      ] },
+      { title: 'Files', icon: "📁", segment: ["files"], children: [
+        { title: "Visa Files", segment: "visa" },
+        { title: "Reservations Files", segment: "reservations" },
+        { title: "Certificate Files", segment: "certificate" },
+      ] },
+      { title: 'Trip', icon: "🧳", segment: ["trip"], children: [
+        { title: "All Trips", segment: "" },
+        { title: "Trips Users Discount", segment: "user" },
+        { title: "Private Trip Participants", segment: "participants/user" },
+        { title: "Group Trip Participants", segment: "participants/group" },
+      ] }
     ],
+    attendance:[
+      { title: "Visa", icon: "🛂", segment: "visa" },
+      { title: "Flight", icon: "✈️", segment: "flight/form" },
+      { title: "Airport Transfer", icon: "🚐", segment: "airport/transfer" },
+      { title: "Reservation", icon: "🏨", segment: "reservation/form" },
+      { title: "All Trips", icon: "🗺️", segment: "view-user-trips" },
+      { title: "My Trips", icon: "🗺️", segment: "user/trip/participants" },
+    ]
   };
 
-  function getNavigationItems(isAdmin, isSpeaker) {
+  function getNavigationItems(isAdmin, isSpeaker, isSponsor) {
     let items = [];
-    if (isSpeaker && !isAdmin) {
+    if (isSpeaker && !isAdmin && !isSponsor) {
       items = [...menuItems.speaker];
     }
-    if (isAdmin) {
+    if (isAdmin && !isSponsor) {
       items = [...menuItems.admin];
+    }if(isAttendance && !isAdmin  && !isSponsor){
+      items=[...menuItems.attendance]
+
     }
     return items;
   }
 
-  const NAVIGATION = getNavigationItems(isAdmin, isSpeaker);
+  const NAVIGATION = getNavigationItems(isAdmin, isSpeaker, isSponsor);
 
   return (
     <AppProvider
-    navigation={NAVIGATION}
-    router={{
-      router,
-      navigate,
-      pathname: location.pathname,
-      searchParams: new URLSearchParams(location.search),
-    }}
-    theme={demoTheme}
-    disableColorScheme={true}
-    branding={{
-      title: "",
-      homeUrl: "/",
-      logo: <img src="/image/logo.png" alt="Logo" height={40} />,
-    }}
-  >
-    {!isSponsor ? (
-      <DashboardLayout
+      navigation={NAVIGATION}
+      router={{
+        router,
+        navigate,
+        pathname: location.pathname,
+        searchParams: new URLSearchParams(location.search),
+      }}
+      theme={demoTheme}
+      disableColorScheme={true}
+      branding={{
+        title: "",
+        homeUrl: "/",
+        logo: <img src="/image/logo.png" alt="Logo" height={40} />,
+      }}
+    >
+      {isSponsor || isGroup ? (
+         <DashboardLayout
+         slots={{
+           toolbarActions: ToolbarActions,
+         }}
+         sx={{
+           '& .MuiDrawer-root': {
+             display: 'none', // إخفاء الـ Drawer بأكمله
+           },
+           '& .MuiDrawer-paper': {
+             display: 'none', // إخفاء الـ Drawer Paper إذا كان جزءًا منفصلًا
+           },
+           '& .MuiIconButton-root[aria-label="Expand navigation menu"]': {
+             display: 'none', // إخفاء زر توسيع القائمة
+           },
+           '& .MuiSvgIcon-root': {
+             display: 'none', // إخفاء الـ Icon داخل الزر
+           },
+         }}
+       >
+         <Outlet />
+       </DashboardLayout>
+      
+      ) : (
+        <DashboardLayout
         slots={{
           toolbarActions: ToolbarActions,
         }}
@@ -250,20 +245,9 @@ const AdminLayoutBasic = () => {
       >
         <Outlet />
       </DashboardLayout>
-    ) : (
-      <DashboardLayout
-      defaultSidebarCollapsed={true}
-
-        slots={{
-          toolbarActions: ToolbarActions,
-        }}
        
-      >
-        <Outlet />
-      </DashboardLayout>
-    )}
-  </AppProvider>
-  
+      )}
+    </AppProvider>
   );
 };
 

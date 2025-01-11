@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss"; // تأكد من إضافة SCSS هنا
 import axios from "axios";
-import toast from "react-hot-toast";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
@@ -23,8 +22,6 @@ const SpeakerTable = () => {
   const { conferenceId } = useParams();
   const [anchorEl, setAnchorEl] = useState(null);
     const [selectedRow, setSelectedRow] = useState(null);
-    const [open, setOpen] = useState(false);
-      const [selectedUser, setSelectedUser] = useState(null);
     
     const openMenu = (event, row) => {
       setAnchorEl(event.currentTarget);

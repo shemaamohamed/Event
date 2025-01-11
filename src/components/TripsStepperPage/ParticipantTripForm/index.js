@@ -13,6 +13,7 @@ import {
 import { useTripsStepper } from "../StepperContext";
 import "./style.scss";
 import DateInput from "../../../CoreComponent/Date";
+import { Button, Grid } from "@mui/material";
 
 const ParticipantTripForm = () => {
   const intialValue = {
@@ -71,109 +72,148 @@ const ParticipantTripForm = () => {
     }
   }, []);
   return (
-    <div className="participant-form-container-stepper">
-      <div className="add-button-container">
-        <button className="add-button-participant" onClick={addParticipant}>
-          Add Participant
-        </button>
-      </div>
-      <div className="all-participants-contaoner">
-        {participants?.map((participant) => (
-          <div key={participant.id} className="participant-member">
-            <div className="delete-button-participant">
-              <SVG
-                className="delete-icon"
-                src={deleteIcon}
-                onClick={() => deleteParticipant(participant.id)}
-              />{" "}
-            </div>
-            <div className="participant-member-one">
-              <Input
-                label="Name"
-                placeholder="Enter name"
-                inputValue={participant.name}
-                setInputValue={(value) =>
-                  handleInputChange(participant.id, "name", value)
-                }
-                className="name-input"
-              />
-              <Select
-                options={nationalitiesOptions}
-                value={participant.nationality}
-                setValue={(value) =>
-                  handleInputChange(participant.id, "nationality", value)
-                }
-                label="Nationality"
-              />
-
-              <PhoneNumberInput
-                label="Phone Number"
-                placeholder="Enter phone number"
-                phone={participant.phone_number}
-                setPhone={(value) =>
-                  handleInputChange(participant.id, "phone_number", value)
-                }
-              />
-
-              <PhoneNumberInput
-                label="WhatsApp Number"
-                placeholder="Enter WhatsApp number"
-                phone={participant.whatsapp_number}
-                setPhone={(value) =>
-                  handleInputChange(participant.id, "whatsapp_number", value)
-                }
-              />
-
-              <DateInput
-                label="Check-In Date"
-                inputValue={participant.check_in_date}
-                setInputValue={(value) =>
-                  handleInputChange(participant.id, "check_in_date", value)
-                }
-                required={true}
-              />
-              <DateInput
-                label="Check-Out Date"
-                inputValue={participant.check_out_date}
-                setInputValue={(value) =>
-                  handleInputChange(participant.id, "check_out_date", value)
-                }
-                required={true}
-              />
-              <Input
-                label="Accommodation Stars"
-                placeholder="Enter accommodation stars"
-                inputValue={participant.accommodation_stars}
-                setInputValue={(value) =>
-                  handleInputChange(
-                    participant.id,
-                    "accommodation_stars",
-                    value
-                  )
-                }
-                className="stars-input"
-              />
-
-              <Input
-                label="Nights Count"
-                placeholder="Enter nights count"
-                inputValue={participant.nights_count}
-                setInputValue={(value) =>
-                  handleInputChange(participant.id, "nights_count", value)
-                }
-                className="nights-input"
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="actions-section">
-        <button className="next-button" onClick={handleSubmit}>
-          Next
-        </button>
-      </div>
+    <div>
+    <div className="add-button-container" style={{marginBottom:'20px'}}>
+      <button
+        variant="contained"
+        color="primary"
+        className="add-button-participant"
+        onClick={addParticipant}
+      >
+        Add Participant
+      </button>
     </div>
+  
+    <Grid container spacing={1} alignItems="center">
+
+      {participants?.map((participant) => (
+        <div key={participant.id} style={{marginTop:'20px'}}>
+            <Grid item xs={12}  sx={{display: "flex", justifyContent: "flex-end"}}>
+              <div className="delete-button-participant">
+                <SVG
+                  className="delete-icon"
+                  src={deleteIcon}
+                  onClick={() => deleteParticipant(participant.id)}
+                />
+              </div>
+            </Grid>
+  
+            <Grid item xs={12} >
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={6}>
+                  <Input
+                    label="Name"
+                    placeholder="Enter name"
+                    inputValue={participant.name}
+                    setInputValue={(value) =>
+                      handleInputChange(participant.id, "name", value)
+                    }
+                    className="name-input"
+                  />
+                </Grid>
+  
+                <Grid item xs={12} sm={6}>
+                  <Select
+                    options={nationalitiesOptions}
+                    value={participant.nationality}
+                    setValue={(value) =>
+                      handleInputChange(participant.id, "nationality", value)
+                    }
+                    label="Nationality"
+                  />
+                </Grid>
+  
+                <Grid item xs={12} sm={6}>
+                  <PhoneNumberInput
+                    label="Phone Number"
+                    placeholder="Enter phone number"
+                    phone={participant.phone_number}
+                    setPhone={(value) =>
+                      handleInputChange(participant.id, "phone_number", value)
+                    }
+                  />
+                </Grid>
+  
+                <Grid item xs={12} sm={6}>
+                  <PhoneNumberInput
+                    label="WhatsApp Number"
+                    placeholder="Enter WhatsApp number"
+                    phone={participant.whatsapp_number}
+                    setPhone={(value) =>
+                      handleInputChange(participant.id, "whatsapp_number", value)
+                    }
+                  />
+                </Grid>
+  
+                <Grid item xs={12} sm={6}>
+                  <DateInput
+                    label="Check-In Date"
+                    inputValue={participant.check_in_date}
+                    setInputValue={(value) =>
+                      handleInputChange(participant.id, "check_in_date", value)
+                    }
+                    required={true}
+                  />
+                </Grid>
+  
+                <Grid item xs={12} sm={6}>
+                  <DateInput
+                    label="Check-Out Date"
+                    inputValue={participant.check_out_date}
+                    setInputValue={(value) =>
+                      handleInputChange(participant.id, "check_out_date", value)
+                    }
+                    required={true}
+                  />
+                </Grid>
+  
+                <Grid item xs={12} sm={6}>
+                  <Input
+                    label="Accommodation Stars"
+                    placeholder="Enter accommodation stars"
+                    inputValue={participant.accommodation_stars}
+                    setInputValue={(value) =>
+                      handleInputChange(participant.id, "accommodation_stars", value)
+                    }
+                    className="stars-input"
+                  />
+                </Grid>
+  
+                <Grid item xs={12} sm={6}>
+                  <Input
+                    label="Nights Count"
+                    placeholder="Enter nights count"
+                    inputValue={participant.nights_count}
+                    setInputValue={(value) =>
+                      handleInputChange(participant.id, "nights_count", value)
+                    }
+                    className="nights-input"
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+        </div>
+      ))}
+    </Grid>
+  
+    <div className="actions-section">
+      <Button
+        variant="contained"
+        className="next-button"
+        onClick={handleSubmit}
+        fullWidth
+        sx={{
+          marginTop: "20px",
+          width: '100%',
+          backgroundColor:'#cc0000',
+
+        }}
+      >
+        Next
+      </Button>
+    </div>
+  </div>
+  
   );
 };
 export default ParticipantTripForm;

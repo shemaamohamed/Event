@@ -1,12 +1,16 @@
 import React, { useState, useEffect, Fragment } from "react";
-import Table from "../../CoreComponent/Table";
-import Pagination from "../../CoreComponent/Pagination";
-import MySideDrawer from "../../CoreComponent/SideDrawer";
 import SimpleLabelValue from "../SimpleLabelValue";
 import httpService from "../../common/httpService";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Grid, Button } from '@mui/material';
+
+
 import "./style.scss";
 import Invoce from "./invoice";
 import { useNavigate } from "react-router-dom";
+import { Drawer, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import { CloseRounded } from "@mui/icons-material";
 
 const TripParticipantsForUser = () => {
   const [participantsData, setParticipantsData] = useState([]);
@@ -18,21 +22,23 @@ const TripParticipantsForUser = () => {
   const [participantIds, setparticipantIds] = useState([]);
   const [selectedParticipantDetails, setSelectedParticipantDetails] =
     useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+ const [selectedRow, setSelectedRow] = useState(null);
+        
+  const openMenu = (event, row) => {
+          setAnchorEl(event.currentTarget);
+          setSelectedRow(row);
+        };
+      
+  const closeMenu = () => {
+          setAnchorEl(null);
+          setSelectedRow(null);
+        };
 const navigate = useNavigate()
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const TOKEN = localStorage.getItem("token");
 
-  const TABLE_HEADERS = [
-    { label: "ID", key: "id" },
-    { label: "Trip Name", key: "tripName" },
-    { label: "Description", key: "description" },
-    { label: "Price Per Person", key: "price_per_person" },
-    { label: "Location", key: "location" },
-    { label: "Duration", key: "duration" },
-    { label: "Price for Two", key: "price_for_two" },
-    { label: "Companions", key: "companions" },
-    { label: "Actions", key: "actions" },
-  ];
+
 
   const fetchParticipants = async (page = 1) => {
     try {
@@ -65,7 +71,7 @@ const navigate = useNavigate()
     }
   };
   function getParticipantIds(data) {
-    console.log(data);
+    console.log(data.mainUser);
 
     // Check if mainUser and companions are arrays before mapping
     const mainUserIds = Array.isArray(data.mainUser)
@@ -81,9 +87,6 @@ const navigate = useNavigate()
     return { participant_ids: participantIds };
   }
 
-  const handlePageChange = (page) => {
-    fetchParticipants(page);
-  };
 
   const handleViewDetails = (participant) => {
     setSelectedParticipantDetails(participant);
@@ -94,204 +97,371 @@ const navigate = useNavigate()
     fetchParticipants();
   }, []);
 
-  const tableData = participantsData.map((participant) => ({
-    id: participant.id,
-    tripName: participant.tripName,
-    description: participant.description,
-    price_per_person: participant.price_per_person,
-    location: participant.location,
-    duration: participant.duration,
-    price_for_two: participant.price_for_two,
-    available_dates: participant.available_dates,
-    companions: participant.companions.length,
-    mainUser: participant.mainUser,
-    actions: (
-      <div>
-        <button
-          className="view-details-button"
-          onClick={() => {
-            console.log(getParticipantIds(participant));
+  const row = participantsData.map((participant) => ({
+    ...participant,
 
-            handleViewDetails(participant);
-          }}
-        >
-          View Details
-        </button>
-        {/* <button
-          className="view-details-button"
-          onClick={() => {
-            setparticipantIds(getParticipantIds(participant));
-            setInvoiveOpen(true)
-          }}
-        >
-          View Invoice
-        </button> */}
+    
+    actions: participant?.actions,
+  }));
+  const columns=[
+    {
+    field:'id',
+    headerName:'ID',
+    minWidth: 230,
+    flex:1,
+    cellClassName: "centered-cell",
+
+  },
+   {
+    field:'tripName',
+    headerName:'Trip Name',
+    minWidth: 250,
+    flex:1,
+    cellClassName: "centered-cell",
+  },
+  {
+    field:'description',
+    headerName:'Description',
+    minWidth: 250,
+    flex:1,
+    cellClassName: "centered-cell",
+  },
+  {
+    field:'price_per_person',
+    headerName:'Price Per Person',
+    minWidth: 250,
+
+    flex:1,
+    cellClassName: "centered-cell",
+  },
+  {
+    field:'location',
+    headerName:'Location',
+    minWidth: 250,
+
+    flex:1,
+    cellClassName: "centered-cell",
+  },
+  {
+    field:'duration',
+    headerName:'Duration',
+    minWidth: 250,
+
+    flex:1,
+    cellClassName: "centered-cell",
+  },
+  {
+    field:'price_for_two',
+    headerName:'Price For Two',
+    minWidth: 250,
+
+    flex:1,
+    cellClassName: "centered-cell",
+  },
+
+  {
+    field:'companions',
+    headerName:'Companions',
+    minWidth: 250,
+    flex:1,
+    cellClassName: "centered-cell",
+    renderCell: (params) => (
+      <div>
+        {params.row.companions.length}
       </div>
     ),
-  }));
+  },
+  {
+    field:'actions',
+    headerName:'Actions',
+    minWidth: 250,
+    flex:1,
+    cellClassName: "centered-cell",
+    renderCell: (params) => (
+      <>
+        <IconButton onClick={(event) => openMenu(event, params.row)}>
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+          onClose={closeMenu}
+        >
+           <MenuItem 
+                                onClick={() => {
+
+                                  
+                                  handleViewDetails(params.row);}}
+
+           >
+             View Details
+          </MenuItem> 
+          
+        </Menu>
+      </>
+    ),
+  },
+   
+ 
+  ]
 
   return (
-    <Fragment>
-      <div className="participants-component2">
-        <div className="table-container">
-          <Table headers={TABLE_HEADERS} data={tableData} />
-        </div>
+    <>
+      <div
+      style={{
+        padding: "20px",
+      }}
+      >
+          <Typography
+      variant="h6"
+      sx={{
+        color: '#c62828',
+        fontWeight: 'bold',
+        fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+        textAlign: 'center',
+      }}
+      >
+        My Trips
+      </Typography>
+         <DataGrid
+                      rows={row}
+                      columns={columns}
+                      getRowId={(row) => row.id}
+                      initialState={{
+                        pagination: {
+                          paginationModel: {
+                            pageSize: 8,
+                          },
+                        },
+                      }}
+                      pageSizeOptions={[8]}
+                      checkboxSelection
+                      disableRowSelectionOnClick
+                      autoHeight
+                      sx={{
+                        marginTop: "20px",
+                        "& .MuiDataGrid-virtualScroller": {
+                          overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                        },
+                      }}
+                    />
 
-        <MySideDrawer isOpen={isDrawerOpen} setIsOpen={setDrawerOpen}>
-          {selectedParticipantDetails ? (
-            <div className="participant-details">
-              <div className="head">Trip Details</div>
-              <div className="details-list">
-                <SimpleLabelValue
-                  label="Name"
-                  value={selectedParticipantDetails.tripName || "-"}
-                />
-                <SimpleLabelValue
-                  label="Description"
-                  value={selectedParticipantDetails.description || "-"}
-                />
-                <SimpleLabelValue
-                  label="Location"
-                  value={selectedParticipantDetails.location || "-"}
-                />
-                <SimpleLabelValue
-                  label="Price Per Person"
-                  value={`$${selectedParticipantDetails.price_per_person}`}
-                />
-                <SimpleLabelValue
-                  label="Duration"
-                  value={selectedParticipantDetails.duration || "-"}
-                />
-                <SimpleLabelValue
-                  label="Price for Two"
-                  value={`$${selectedParticipantDetails.price_for_two}`}
-                />
-                <SimpleLabelValue
-                  label="Price for Three or More"
-                  value={`$${selectedParticipantDetails?.price_for_three_or_more}`}
-                />
-                <SimpleLabelValue
-                  label="Available Dates"
-                  value={selectedParticipantDetails?.available_dates
-                    ?.split(",")
-                    ?.map((date, index) => (
-                      <div key={index}>{date}</div>
-                    ))}
-                />
-              </div>
+        <Drawer open={isDrawerOpen} onClose={() => setDrawerOpen(false)} anchor="right"
+      
+      sx={{
+        //width
+        zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
 
-              <div className="head">You</div>
+        '& .MuiDrawer-paper': {
+            zIndex: (theme) => theme.zIndex.modal + 1,
 
-              {selectedParticipantDetails?.mainUser?.map((user, index) => (
-                <Fragment>
-                  <div className="head2">Main User </div>
 
-                  <div key={index} className="details-list">
-                    <SimpleLabelValue label="Name" value={user.name || "-"} />
-                    <SimpleLabelValue
-                      label="Phone"
-                      value={user.phone_number || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="WhatsApp"
-                      value={user.whatsapp_number || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Nationality"
-                      value={user.nationality || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Check-In Date"
-                      value={user.check_in_date || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Check-Out Date"
-                      value={user.check_out_date || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Nights Count"
-                      value={user.nights_count || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Accommodation Stars"
-                      value={`${user.accommodation_stars} stars`}
-                    />
-                  </div>
-                  <burtton className="view-invoice-button" onClick={()=>{
-                    navigate((`/invoice/trip/${user?.id}/${user?.name}`))
-                  }}>
-                    View Invoice
-                  </burtton>
-                </Fragment>
-              ))}
-              <div className="head">Companions</div>
+      width: 
+      {
+        xs: '100%',
+        sm: '50%',
+        md: '50%',
+        lg: '40%',
+        xl: '40%',
+      }, 
+    },
 
-              {selectedParticipantDetails.companions.map((companion, index) => (
-                <Fragment>
-                  <div className="head2">Companions {index + 1}</div>
-                  <div key={index} className="details-list">
-                    <SimpleLabelValue
-                      label="Name"
-                      value={companion.name || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Phone"
-                      value={companion.phone_number || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="WhatsApp"
-                      value={companion.whatsapp_number || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Nationality"
-                      value={companion.nationality || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Check-In Date"
-                      value={companion.check_in_date || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Check-Out Date"
-                      value={companion.check_out_date || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Nights Count"
-                      value={companion.nights_count || "-"}
-                    />
-                    <SimpleLabelValue
-                      label="Accommodation Stars"
-                      value={`${companion?.accommodation_stars} stars`}
-                    />
-                    <SimpleLabelValue
-                      label="Total Price"
-                      value={`${companion?.invoice?.total_price || "-"}`}
-                    />
-                  </div>
-                  <burtton className="view-invoice-button" onClick={()=>{
-                    navigate((`/invoice/trip/${companion?.id}/${companion?.name}`))
-                  }}>
-                    View Invoice
-                  </burtton>
-                </Fragment>
-              ))}
-            </div>
-          ) : (
-            <p>No participant details available.</p>
-          )}
-        </MySideDrawer>
+      }}>
+         <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  padding: 2,
+                }}
+                >
+                  <IconButton onClick={() => setDrawerOpen(false)}>
+                   <CloseRounded /> 
+                  </IconButton>
+                </div>
+               { selectedParticipantDetails ? (
+   <Grid container spacing={3} className="participant-details" padding={2}>
+   {/* Trip Details */}
+   <Grid item xs={12}>
+     <Typography variant="h6" className="head"
+     sx={{
+        
+      color: '#c62828',
+      backgroundColor:'#f1f1f1',
 
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+      textAlign: 'center',
+    }}
+     >
+       Trip Details
+     </Typography>
+   </Grid>
+   <Grid item xs={12} container spacing={2}>
+     <Grid item xs={12} sm={6}>
+       <SimpleLabelValue label="Name" value={selectedParticipantDetails.tripName || '-'} />
+     </Grid>
+     <Grid item xs={12} sm={6}>
+       <SimpleLabelValue label="Description" value={selectedParticipantDetails.description || '-'} />
+     </Grid>
+     <Grid item xs={12} sm={6}>
+       <SimpleLabelValue label="Location" value={selectedParticipantDetails.location || '-'} />
+     </Grid>
+     <Grid item xs={12} sm={6}>
+       <SimpleLabelValue label="Price Per Person" value={`$${selectedParticipantDetails.price_per_person || '-'}`} />
+     </Grid>
+     <Grid item xs={12} sm={6}>
+       <SimpleLabelValue label="Duration" value={selectedParticipantDetails.duration || '-'} />
+     </Grid>
+     <Grid item xs={12} sm={6}>
+       <SimpleLabelValue label="Price for Two" value={`$${selectedParticipantDetails.price_for_two || '-'}`} />
+     </Grid>
+     <Grid item xs={12} sm={6}>
+       <SimpleLabelValue label="Price for Three or More" value={`$${selectedParticipantDetails.price_for_three_or_more || '-'}`} />
+     </Grid>
+     <Grid item xs={12}>
+       <SimpleLabelValue
+         label="Available Dates"
+         value={selectedParticipantDetails.available_dates
+           ?.split(',')
+           ?.map((date, index) => (
+             <Typography key={index} component="span">
+               {date}
+             </Typography>
+           ))}
+       />
+     </Grid>
+   </Grid>
+ 
+   {/* Main User Details */}
+   <Grid item xs={12}>
+     <Typography variant="h6" className="head"  sx={{
+        
+        color: '#c62828',
+        backgroundColor:'#f1f1f1',
+  
+        textAlign: 'center',
+      }}>
+       You
+     </Typography>
+   </Grid>
+   {selectedParticipantDetails?.mainUser?.map((user, index) => (
+     <Fragment key={index}>
+       <Grid item xs={12}>
+         <Typography variant="subtitle1" className="head2">
+           Main User
+         </Typography>
+       </Grid>
+       <Grid item xs={12} container spacing={2}>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Name" value={user.name || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Phone" value={user.phone_number || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="WhatsApp" value={user.whatsapp_number || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Nationality" value={user.nationality || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Check-In Date" value={user.check_in_date || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Check-Out Date" value={user.check_out_date || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Nights Count" value={user.nights_count || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Accommodation Stars" value={`${user.accommodation_stars} stars`} />
+         </Grid>
+       </Grid>
+       <Grid item xs={12}>
+         <Button
+            variant="outlined"
+           color="error"
+           onClick={() => navigate(`/invoice/trip/${user?.id}/${user?.name}`)}
+         >
+           View Invoice
+         </Button>
+       </Grid>
+     </Fragment>
+   ))}
+ 
+   {/* Companions Details */}
+   <Grid item xs={12}>
+     <Typography variant="h6" className="head"  sx={{
+        
+        color: '#c62828',
+        backgroundColor:'#f1f1f1',
+  
+        textAlign: 'center',
+      }}>
+       Companions
+     </Typography>
+   </Grid>
+   {selectedParticipantDetails?.companions?.map((companion, index) => (
+     <Fragment key={index}>
+       <Grid item xs={12}>
+         <Typography variant="subtitle1" className="head2">
+           Companion {index + 1}
+         </Typography>
+       </Grid>
+       <Grid item xs={12} container spacing={2}>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Name" value={companion.name || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Phone" value={companion.phone_number || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="WhatsApp" value={companion.whatsapp_number || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Nationality" value={companion.nationality || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Check-In Date" value={companion.check_in_date || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Check-Out Date" value={companion.check_out_date || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Nights Count" value={companion.nights_count || '-'} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Accommodation Stars" value={`${companion.accommodation_stars} stars`} />
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <SimpleLabelValue label="Total Price" value={`$${companion.invoice?.total_price || '-'}`} />
+         </Grid>
+       </Grid>
+       <Grid item xs={12}>
+         <Button
+           variant="outlined"
+           color="error"
+           onClick={() => navigate(`/invoice/trip/${companion?.id}/${companion?.name}`)}
+         >
+           View Invoice
+         </Button>
+       </Grid>
+     </Fragment>
+   ))}
+ </Grid>
+ 
+  ) : (
+    <Typography>No participant details available.</Typography>
+  )
+}
+        </Drawer>
+
+     
       </div>
       <Invoce
         isInvoiveOpen={isInvoiveOpen}
         setInvoiveOpen={setInvoiveOpen}
         participantId={participantIds}
       />
-    </Fragment>
+    </>
   );
 };
 

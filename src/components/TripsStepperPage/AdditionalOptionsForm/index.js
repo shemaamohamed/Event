@@ -8,6 +8,7 @@ import {
   getFromLocalStorage,
 } from "../../../common/localStorage";
 import httpService from "../../../common/httpService";
+import { Button, Grid, Typography } from "@mui/material";
 
 const AdditionalOptionsForm = () => {
   const { currentStep, completeStep, tripId } = useTripsStepper();
@@ -88,31 +89,33 @@ const AdditionalOptionsForm = () => {
   }, []);
 
   return (
-    <div>
-      {discountedOptions.length > 0 && (
-        <div className="discount-note">
-          <p className="discount-title">
-            <strong>Note:</strong> This discount is exclusively available for
-            speakers.
-          </p>
-          <ul className="discount-list">
-            {discountedOptions.map((option) => (
-              <li key={option.id} className="discount-item">
-                {option.option_name} -{" "}
-                <span className="discount-price">Price: $0</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+<div>
+  {discountedOptions.length > 0 && (
+    <div className="discount-note">
+      <Typography variant="h6" className="discount-title" fontWeight="bold">
+        Note: This discount is exclusively available for speakers.
+      </Typography>
+      <Grid container spacing={2} className="discount-list">
+        {discountedOptions.map((option) => (
+          <Grid item xs={12} key={option.id} className="discount-item">
+            <Typography variant="body1">
+              {option.option_name} -{" "}
+              <span className="discount-price">Price: $0</span>
+            </Typography>
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  )}
 
-      <form
-        className="additional-options-stepper-container"
-        onSubmit={handleSubmit}
-      >
-        {options?.map((option) => (
+  <form
+    className="additional-options-stepper-container"
+    onSubmit={handleSubmit}
+  >
+    <Grid container spacing={2}>
+      {options?.map((option) => (
+        <Grid item xs={12} sm={6} key={option.id}>
           <Checkbox
-            key={option.id}
             label={`${option.option_name} ($${option.price})`}
             checkboxValue={
               !!selectedOptions?.find(
@@ -123,16 +126,34 @@ const AdditionalOptionsForm = () => {
             required={false}
             icon={null}
           />
-        ))}
-        {!options?.length && <div>No Options Available</div>}
-      </form>
+        </Grid>
+      ))}
+    </Grid>
+    {!options?.length && (
+      <Grid item xs={12}>
+        <Typography variant="body2" color="textSecondary">
+          No Options Available
+        </Typography>
+      </Grid>
+    )}
+  </form>
 
-      <div className="actions-section">
-        <button className="next-button" onClick={handleSubmit}>
-          Next
-        </button>
-      </div>
-    </div>
+  <div className="actions-section">
+    <Button
+      variant="contained"
+      className="next-button"
+      onClick={handleSubmit}
+      fullWidth
+      sx={{
+        marginTop: "20px",
+        backgroundColor:'#cc0000',
+        width: '100%',
+      }}
+    >
+      Next
+    </Button>
+  </div>
+</div>
   );
 };
 

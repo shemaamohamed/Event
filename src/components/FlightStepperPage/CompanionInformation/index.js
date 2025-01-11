@@ -11,7 +11,7 @@ import httpService from "../../../common/httpService";
 import "./style.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import DialogMessage from "../../DialogMessage";
-import { Button, Grid } from "@mui/material";
+import { Button, Divider, Grid } from "@mui/material";
 
 const CompanionInformation = () => {
   const navigate = useNavigate();
@@ -194,9 +194,12 @@ const CompanionInformation = () => {
           Add Companion
         </button>
       </div>
-      <div className="flight-form-container">
+      <div>
         {companions.map((companion, index) => (
-          <div className="flight-form-stepper-container" key={index}>
+          <>
+           <div style={{
+            marginTop:'10px',
+          }} key={index}>
             <div className="delete-icon-container">
               <SVG
                 className="delete-icon"
@@ -348,6 +351,15 @@ const CompanionInformation = () => {
   </Grid>
 </form>
           </div>
+           <Divider
+           sx={{
+             color: "black",
+             margin: "10px",
+             backgroundColor: "black",
+           }}
+         />
+          </>
+         
         ))}
       </div>
       <div className="actions-section">
@@ -355,6 +367,10 @@ const CompanionInformation = () => {
         variant="contained"
             color="error"
             fullWidth
+            sx={{
+              marginTop:'10px'
+
+            }}
 
           className={`next-button ${isSubmitDisabled ? "disabled" : ""}`}
           onClick={() => {

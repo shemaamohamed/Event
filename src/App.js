@@ -324,7 +324,7 @@ const App = () => {
                                    
                                       {
                                   isLoggedIn && limit &&isSponsor &&(
-                                    <Route path="sponsor/section" element={<SponsorSection />} />
+                                    <Route path="/sponsor/section" element={<SponsorSection />} />
 
                                   )
 
@@ -374,6 +374,10 @@ const App = () => {
                                           path="/trip/participants/user"
                                           element={<TripParticipantsComponent />}
                                         />{" "}
+                                        <Route
+                path="/user/trip/participants"
+                element={<TripParticipantsForUser />}
+              />
                                         {/* <Route
                                           path="/trip/participants/user"
                                           element={<TripParticipantsForUser />}
