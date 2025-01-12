@@ -8,7 +8,7 @@ import { useStepper } from "../StepperContext";
 import SVG from "react-inlinesvg";
 import toast from "react-hot-toast";
 import "./style.scss";
-import { Button, Grid } from "@mui/material";
+import { Button, Divider, Grid } from "@mui/material";
 
 const RoomForm = () => {
   const { currentStep, completeStep, rooms, setRooms } = useStepper();
@@ -185,6 +185,13 @@ const RoomForm = () => {
               />
             </Grid>
           </Grid>
+          <Divider
+              sx={{
+                color: "black",
+                marginTop: "10px",
+                backgroundColor: "black",
+              }}
+            />
         </div>
         
       ))}

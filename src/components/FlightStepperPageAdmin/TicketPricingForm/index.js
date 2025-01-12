@@ -1,5 +1,6 @@
 import React from "react";
 import Input from "../../../CoreComponent/Input/index";
+import { Divider, Grid } from "@mui/material";
 
 const TicketPricingForm = ({ ticketPricing, setTicketPricing }) => {
   const handleChange = (value, name) => {
@@ -10,7 +11,16 @@ const TicketPricingForm = ({ ticketPricing, setTicketPricing }) => {
   };
 
   return (
-    <div className="ticket-pricing-form-container">
+    <>
+      <Divider
+              sx={{
+                color: "black",
+                marginTop: "20px",
+                backgroundColor: "black",
+              }}
+            />
+    <Grid container spacing={2} marginTop={2}>
+    <Grid item xs={12} sm={6}>
       <Input
         label="Business Class Upgrade Cost"
         placeholder="Enter Business Class Upgrade Cost"
@@ -22,6 +32,8 @@ const TicketPricingForm = ({ ticketPricing, setTicketPricing }) => {
         name="business_class_upgrade_cost"
         required={true}
       />
+    </Grid>
+    <Grid item xs={12} sm={6}>
       <Input
         label="Reserved Seat Cost"
         placeholder="Enter Reserved Seat Cost"
@@ -31,6 +43,8 @@ const TicketPricingForm = ({ ticketPricing, setTicketPricing }) => {
         name="reserved_seat_cost"
         required={true}
       />
+    </Grid>
+    <Grid item xs={12} sm={6}>
       <Input
         label="Other Additional Costs"
         placeholder="Enter Other Additional Costs"
@@ -40,7 +54,10 @@ const TicketPricingForm = ({ ticketPricing, setTicketPricing }) => {
         name="other_additional_costs"
         required={true}
       />
-    </div>
+    </Grid>
+  </Grid>
+    </>
+    
   );
 };
 export default TicketPricingForm;

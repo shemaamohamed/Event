@@ -226,16 +226,33 @@ const ReservationsComponent = () => {
                        <CloseRounded /> 
                       </IconButton>
                     </div>
+                    <Typography
+        variant="h6"
+        
+        sx={{
+          color: "#c62828",
+          textAlign: "center",
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
+        }}
+      
+        gutterBottom
+      >
+                  Room Details
+
+      </Typography>
 
                     <Box sx={{ padding: 2, overflowY: "auto" }}>
-        <Typography variant="h6" component="div" sx={{ marginBottom: 2 }}>
-          Room Details
-        </Typography>
+                   
+        
         {selectedRooms.length > 0 ? (
           <List>
             {selectedRooms.map((room, index) => (
               <Box key={room.id} sx={{ marginBottom: 3 }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" ,          color: "#c62828",
+ }} >
                   Room {index + 1}
                 </Typography>
                 <Box sx={{ padding: 2, border: "1px solid #ddd", borderRadius: 2 }}>
@@ -246,7 +263,7 @@ const ReservationsComponent = () => {
                   <SimpleLabelValue label="Total Nights" value={room.total_nights || "-"} />
                 </Box>
                 <Divider sx={{ marginY: 2 }} />
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" ,          color: "#c62828",}}>
                   Invoices
                 </Typography>
                 {room.reservation_invoices &&

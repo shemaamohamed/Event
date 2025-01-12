@@ -84,7 +84,6 @@ const AdminLayoutBasic = () => {
   const isSpeaker = registrationType === "speaker";
   const isSponsor = registrationType === "sponsor";
   const isAttendance = registrationType === "attendance";
-  const isGroup = registrationType === "group_registration";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -155,21 +154,21 @@ const AdminLayoutBasic = () => {
     ]
   };
 
-  function getNavigationItems(isAdmin, isSpeaker, isSponsor) {
+  function getNavigationItems(isAdmin, isSpeaker) {
     let items = [];
-    if (isSpeaker && !isAdmin && !isSponsor) {
+    if (isSpeaker && !isAdmin ) {
       items = [...menuItems.speaker];
     }
-    if (isAdmin && !isSponsor) {
+    if (isAdmin ) {
       items = [...menuItems.admin];
-    }if(isAttendance && !isAdmin  && !isSponsor){
+    }if(isAttendance && !isAdmin ){
       items=[...menuItems.attendance]
 
     }
     return items;
   }
 
-  const NAVIGATION = getNavigationItems(isAdmin, isSpeaker, isSponsor);
+  const NAVIGATION = getNavigationItems(isAdmin, isSpeaker);
 
   return (
     <AppProvider
@@ -188,30 +187,7 @@ const AdminLayoutBasic = () => {
         logo: <img src="/image/logo.png" alt="Logo" height={40} />,
       }}
     >
-      {isSponsor || isGroup ? (
-         <DashboardLayout
-         slots={{
-           toolbarActions: ToolbarActions,
-         }}
-         sx={{
-           '& .MuiDrawer-root': {
-             display: 'none', // إخفاء الـ Drawer بأكمله
-           },
-           '& .MuiDrawer-paper': {
-             display: 'none', // إخفاء الـ Drawer Paper إذا كان جزءًا منفصلًا
-           },
-           '& .MuiIconButton-root[aria-label="Expand navigation menu"]': {
-             display: 'none', // إخفاء زر توسيع القائمة
-           },
-           '& .MuiSvgIcon-root': {
-             display: 'none', // إخفاء الـ Icon داخل الزر
-           },
-         }}
-       >
-         <Outlet />
-       </DashboardLayout>
-      
-      ) : (
+      {
         <DashboardLayout
         slots={{
           toolbarActions: ToolbarActions,
@@ -246,7 +222,7 @@ const AdminLayoutBasic = () => {
         <Outlet />
       </DashboardLayout>
        
-      )}
+      }
     </AppProvider>
   );
 };

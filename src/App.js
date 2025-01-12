@@ -153,6 +153,11 @@ const App = () => {
   const { isAdmin, registrationType, isLoggedIn } = useAuth();
   const isSponsor = registrationType === "sponsor";
   const limit =localStorage.getItem("tokenTimestamp");
+  const isAttendance = registrationType === "attendance";
+  const isGroup = registrationType === "group_registration";
+  const isOther =registrationType===null;
+  const isSpeaker = registrationType === "speaker";
+
   // Listen for showLoader and hideLoader events
   useEffect(() => {
     const handleShowLoader = () => setShowLoader(true);
@@ -209,9 +214,11 @@ const App = () => {
          
 
           <div >
-            <Routes className="main">
-              {
-                !isLoggedIn&&!limit &&(
+           { 
+              
+                ((!isLoggedIn && !limit) || 
+                (( isSponsor|| isGroup ||isOther) && isLoggedIn && limit && !isAdmin) )&&(
+                  <Routes >
                   <Route path='/' element={<UserLayout/>}>
                   <Route path="/" element={<Home />} />
               <Route path="/other" element={<RegisterOther />} />
@@ -296,7 +303,14 @@ const App = () => {
                 path="/all-attendances"
                 element={<AttendanceComponent />}
 
-              /> */}
+              /> */}                         
+                {/* //group */}
+                    <Route path="add/excel" element={<ExcelUpload />} />
+
+                {/* //sponsor */}
+                    <Route path="/sponsor/section" element={<SponsorSection />} />
+
+
               
               <Route path="*" element={<NotFound/>} />
               <Route
@@ -312,23 +326,21 @@ const App = () => {
 
 
               </Route>
+              </Routes>
+
 
                 )
               }
               
                                 
                                 {
-                                  isLoggedIn && limit &&(
+                                  isLoggedIn && limit&& ( isAdmin ||isAttendance ||isSpeaker ) &&(
+                                    <Routes>
+
 
                                     <Route path="/" element={<AdminLayoutBasic/>} >
                                    
-                                      {
-                                  isLoggedIn && limit &&isSponsor &&(
-                                    <Route path="/sponsor/section" element={<SponsorSection />} />
-
-                                  )
-
-                                }
+                                  
                                     
 
   
@@ -412,7 +424,6 @@ const App = () => {
                                       <Route path="transportation" element={<Transportation />} />
                                       <Route path="speaker/profile" element={<SpeakerProfileForm />} />
                                       <Route path="admin/visa" element={<AdminVisa />} />
-                                      <Route path="add/excel" element={<ExcelUpload />} />
                                       <Route
                                         path="group/update/admin/:register_id"
                                         element={<AdminGroupComponent />}
@@ -571,6 +582,7 @@ const App = () => {
 
 
           </Route>
+          </Routes>
 
                                   )
                                 }
@@ -578,7 +590,6 @@ const App = () => {
                     
                      
                       
-                    </Routes>
             {!noNavRoute.includes(location.pathname) &&
               !location.pathname.includes("/registerPage") &&
               !location.pathname.includes("/other") &&

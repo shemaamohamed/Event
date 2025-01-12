@@ -360,19 +360,23 @@ const PendingUsersTable = () => {
        padding: 2,
         
        }}>
-        <Typography variant="h6" 
-        sx={{
+       <Typography
+        variant="h6"
         
-          color: '#c62828',
-          backgroundColor:'#f1f1f1',
-
-          textAlign: 'center',
+        sx={{
+          color: "#c62828",
+          textAlign: "center",
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
         }}
+      
+        gutterBottom
+      >
+                  User Details
 
-        textAlign={"center"}
-        gutterBottom>
-          User Details
-        </Typography>
+      </Typography>
         <Divider sx={{ mb: 2 }} />
         {selectedUser ? (
           <Grid container spacing={2}>

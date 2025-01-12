@@ -13,7 +13,7 @@ import {
 import { useTripsStepper } from "../StepperContext";
 import "./style.scss";
 import DateInput from "../../../CoreComponent/Date";
-import { Button, Grid } from "@mui/material";
+import { Button, Divider, Grid } from "@mui/material";
 
 const ParticipantTripForm = () => {
   const intialValue = {
@@ -192,6 +192,13 @@ const ParticipantTripForm = () => {
                 </Grid>
               </Grid>
             </Grid>
+            <Divider
+              sx={{
+                color: "black",
+                marginTop: "10px",
+                backgroundColor: "black",
+              }}
+            />
         </div>
       ))}
     </Grid>

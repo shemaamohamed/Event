@@ -120,17 +120,18 @@ const ActiveRegistrations = () => {
         cellClassName: "centered-cell",
         renderCell: (params) => (
           <span>
-            {params.row.value === "No File" ? (
-              params.row.value
-            ) : (
+            {params.value? (
               <a
-                href={`https://mayazin.co/backend/storage/app/public/${params.value}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: 'none', color: 'blue' }}
-              >
-                View Excel
-              </a>
+              href={`https://mayazin.co/backend/storage/app/public/${params.value}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none', color: 'blue' }}
+            >
+              View Excel
+            </a>
+            ) : (
+              "No File" 
+              
             )}
           </span>
         ),
@@ -157,13 +158,7 @@ const ActiveRegistrations = () => {
     organization_name: row.organization_name,
     contact_person:row.contact_person,
     number_of_doctors: row.number_of_doctors,
-    excel_file: row.excel_file? (
-     
-     `${row.excel_file}`
-    ) : (
-      "No File"
-    )
-    ,
+    excel_file: row.excel_file,
     update_deadline: row.update_deadline,
     };
   });

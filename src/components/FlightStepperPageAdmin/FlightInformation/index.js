@@ -2,6 +2,8 @@ import React, { Fragment, useEffect, useState } from "react";
 import Input from "../../../CoreComponent/Input/index";
 import Checkbox from "../../../CoreComponent/Checkbox/index";
 import DateInput from "../../../CoreComponent/Date/index";
+import { Grid, Button, Divider } from "@mui/material";
+
 import toast from "react-hot-toast";
 import deleteIcon from "../../../icons/deleteIcon.svg";
 import SVG from "react-inlinesvg";
@@ -18,31 +20,64 @@ import { useNavigate } from "react-router-dom";
 
 const FlightDetails = ({ data }) => {
   return (
-    <div className="view-main-user-flight">
+    <div >
+  <Grid container spacing={2}>
+    <Grid item xs={12} sm={6}>
       <SimpleLabelValue
         label="Departure Airport"
         value={data?.departure_airport}
       />
-      <SimpleLabelValue label="Arrival Airport" value={data?.arrival_airport} />
-      <SimpleLabelValue label="Departure Date" value={data?.departure_date} />
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <SimpleLabelValue
+        label="Arrival Airport"
+        value={data?.arrival_airport}
+      />
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <SimpleLabelValue
+        label="Departure Date"
+        value={data?.departure_date}
+      />
+    </Grid>
+    <Grid item xs={12} sm={6}>
       <SimpleLabelValue label="Arrival Date" value={data?.arrival_date} />
+    </Grid>
+    <Grid item xs={12} sm={6}>
       <SimpleLabelValue label="Flight Number" value={data?.flight_number} />
-      <SimpleLabelValue label="Seat Preference" value={data?.seat_preference} />
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <SimpleLabelValue
+        label="Seat Preference"
+        value={data?.seat_preference}
+      />
+    </Grid>
+    <Grid item xs={12} sm={6}>
       <SimpleLabelValue
         label="Upgrade Class"
-        value={data?.upgrade_class ? "yes" : "No"}
+        value={data?.upgrade_class ? "Yes" : "No"}
       />
+    </Grid>
+    <Grid item xs={12} sm={6}>
       <SimpleLabelValue label="Ticket Count" value={data?.ticket_count} />
+    </Grid>
+    <Grid item xs={12} sm={6}>
       <SimpleLabelValue
         label="Additional Requests"
         value={data?.additional_requests}
       />
+    </Grid>
+    <Grid item xs={12} sm={6}>
       <SimpleLabelValue label="Passenger Name" value={data?.passenger_name} />
+    </Grid>
+    <Grid item xs={12} sm={6}>
       <SimpleLabelValue
         label="Specific Flight Time"
         value={data?.specific_flight_time}
       />
-    </div>
+    </Grid>
+  </Grid>
+</div>
   );
 };
 
@@ -205,145 +240,192 @@ const FlightInformation = ({ member, index }) => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       <FlightDetails data={member} />
       <TicketPricingForm
         id={member?.flight_id}
         ticketPricing={ticketPricing}
         setTicketPricing={setTicketPricing}
       />
+      <Divider
+                    sx={{
+                      color: "black",
+                      marginTop: "20px",
+                      backgroundColor: "black",
+                    }}
+                  />
       {/* <div>please add Trips for {member?.passenger_name}</div> */}
-      <div className="add-flight-btn-container">
-        <button type="button" onClick={handleAddTrip}>
+      <div className="add-button-container" style={{marginBottom:'20px'}} >
+        <button
+           variant="contained"
+           color="primary"
+           className="add-button-participant"
+          onClick={handleAddTrip}
+        >
           Add Trip
         </button>
       </div>
       <div>
-        <div className="room-form-container">
+        <Grid container spacing={3} >
           {trips.map((trip, index) => (
-            <div className="flight-admin" key={index}>
-              <div className="delete-icon-container">
-                <SVG
-                  className="delete-icon"
-                  src={deleteIcon}
-                  onClick={() => handleDeleteTrip(index)}
-                />
+            <>
+             
+            <Grid item xs={12} key={index}>
+              <div style={{marginTop:'20px'}} >
+                <div className="delete-icon-container">
+                  <SVG
+                    className="delete-icon"
+                    src={deleteIcon}
+                    onClick={() => handleDeleteTrip(index)}
+                  />
+                </div>
+                <Grid container spacing={1} >
+                  <Grid item xs={12} sm={6} md={4}>
+                    <DateInput
+                      label="Departure Date"
+                      placeholder="Enter departure date"
+                      inputValue={trip.departure_date}
+                      setInputValue={(value) => {
+                        const updatedTrips = [...trips];
+                        updatedTrips[index].departure_date = value;
+                        setTrips(updatedTrips);
+                      }}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Input
+                      label="Departure Time"
+                      placeholder="Enter departure time"
+                      inputValue={trip.departure_time}
+                      setInputValue={(value) => {
+                        const updatedTrips = [...trips];
+                        updatedTrips[index].departure_time = value;
+                        setTrips(updatedTrips);
+                      }}
+                      type="time"
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Input
+                      label="Price"
+                      placeholder="Enter price"
+                      inputValue={trip.price}
+                      setInputValue={(value) => {
+                        const updatedTrips = [...trips];
+                        updatedTrips[index].price = value;
+                        setTrips(updatedTrips);
+                      }}
+                      type="number"
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Input
+                      label="Departure Flight Number"
+                      inputValue={trip.departure_flight_number}
+                      setInputValue={(value) => {
+                        const updatedTrips = [...trips];
+                        updatedTrips[index].departure_flight_number = value;
+                        setTrips(updatedTrips);
+                      }}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Input
+                      label="Departure Airport"
+                      inputValue={trip.departure_airport}
+                      setInputValue={(value) => {
+                        const updatedTrips = [...trips];
+                        updatedTrips[index].departure_airport = value;
+                        setTrips(updatedTrips);
+                      }}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Input
+                      label="Arrival Flight Number"
+                      inputValue={trip.arrival_flight_number}
+                      setInputValue={(value) => {
+                        const updatedTrips = [...trips];
+                        updatedTrips[index].arrival_flight_number = value;
+                        setTrips(updatedTrips);
+                      }}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <DateInput
+                      label="Arrival Date"
+                      inputValue={trip.arrival_date}
+                      setInputValue={(value) => {
+                        const updatedTrips = [...trips];
+                        updatedTrips[index].arrival_date = value;
+                        setTrips(updatedTrips);
+                      }}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Input
+                      label="Arrival Time"
+                      inputValue={trip.arrival_time}
+                      setInputValue={(value) => {
+                        const updatedTrips = [...trips];
+                        updatedTrips[index].arrival_time = value;
+                        setTrips(updatedTrips);
+                      }}
+                      type="time"
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Input
+                      label="Arrival Airport"
+                      inputValue={trip.arrival_airport}
+                      setInputValue={(value) => {
+                        const updatedTrips = [...trips];
+                        updatedTrips[index].arrival_airport = value;
+                        setTrips(updatedTrips);
+                      }}
+                      required
+                    />
+                  </Grid>
+                </Grid>
+                <Divider
+              sx={{
+                color: "black",
+                marginTop: "10px",
+                backgroundColor: "black",
+              }}
+            />
               </div>
-              <div className="room-form-stepper">
-                <DateInput
-                  label="Departure Date"
-                  placeholder="Enter departure date"
-                  inputValue={trip.departure_date}
-                  setInputValue={(value) => {
-                    const updatedTrips = [...trips];
-                    updatedTrips[index].departure_date = value;
-                    setTrips(updatedTrips);
-                  }}
-                  required={true}
-                />
-                <Input
-                  label="Departure Time"
-                  placeholder="Enter departure time"
-                  inputValue={trip.departure_time}
-                  setInputValue={(value) => {
-                    const updatedTrips = [...trips];
-                    updatedTrips[index].departure_time = value;
-                    setTrips(updatedTrips);
-                  }}
-                  type="time"
-                  required={true}
-                />
-                <Input
-                  label="Price"
-                  placeholder="Enter price"
-                  inputValue={trip.price}
-                  setInputValue={(value) => {
-                    const updatedTrips = [...trips];
-                    updatedTrips[index].price = value;
-                    setTrips(updatedTrips);
-                  }}
-                  type="number"
-                  required={true}
-                />
-              <Input
-                  label="Departure Flight Number"
-                  inputValue={trip.departure_flight_number}
-                  setInputValue={(value) => {
-                    const updatedTrips = [...trips];
-                    updatedTrips[index].departure_flight_number = value;
-                    setTrips(updatedTrips);
-                  }}
-                  required
-                />
-                <Input
-                  label="Departure Airport"
-                  inputValue={trip.departure_airport}
-                  setInputValue={(value) => {
-                    const updatedTrips = [...trips];
-                    updatedTrips[index].departure_airport = value;
-                    setTrips(updatedTrips);
-                  }}
-                  required
-                />
-                <Input
-                  label="Arrival Flight Number"
-                  inputValue={trip.arrival_flight_number}
-                  setInputValue={(value) => {
-                    const updatedTrips = [...trips];
-                    updatedTrips[index].arrival_flight_number = value;
-                    setTrips(updatedTrips);
-                  }}
-                  required
-                />
-                <DateInput
-                  label="Arrival Date"
-                  inputValue={trip.arrival_date}
-                  setInputValue={(value) => {
-                    const updatedTrips = [...trips];
-                    updatedTrips[index].arrival_date = value;
-                    setTrips(updatedTrips);
-                  }}
-                  required
-                />
-                <Input
-                  label="Arrival Time"
-                  inputValue={trip.arrival_time}
-                  setInputValue={(value) => {
-                    const updatedTrips = [...trips];
-                    updatedTrips[index].arrival_time = value;
-                    setTrips(updatedTrips);
-                  }}
-                  type="time"
-                  required
-                />
-                <Input
-                  label="Arrival Airport"
-                  inputValue={trip.arrival_airport}
-                  setInputValue={(value) => {
-                    const updatedTrips = [...trips];
-                    updatedTrips[index].arrival_airport = value;
-                    setTrips(updatedTrips);
-                  }}
-                  required
-                />
-              </div>
-            </div>
+            </Grid>
+            
+            </>
+            
           ))}
-        </div>
-
+        </Grid>
         <div className="actions-section">
-          <button
-            className={`next-button ${false ? "disabled" : ""}`}
-            onClick={() => {
-              handleSubmit();
-            }}
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
             disabled={false}
+            fullWidth
+            sx={{
+              marginTop: "20px",
+              backgroundColor:'#cc0000',
+              width: '100%',
+            }}
           >
             Submit
-          </button>
+          </Button>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 
