@@ -9,7 +9,7 @@ import TextArea from "../../CoreComponent/TextArea";
 import SVG from "react-inlinesvg";
 import deleteIcon from "../../icons/deleteIcon.svg";
 import toast from "react-hot-toast";
-import { FormControl, InputLabel, Select, MenuItem, Drawer, IconButton, Typography, Button } from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem, Drawer, IconButton, Typography, Button, Box } from "@mui/material";
 import { countriesOptions } from "../../constant";
 import { CloseRounded } from "@mui/icons-material";
 
@@ -74,12 +74,13 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
               allowedExtensions={["jpg", "jpeg", "png"]}
               required={false}
             />
-            
+            <Box>
             <FormControl fullWidth
-            sx={{
-              marginTop: "8px",
+              sx={{
+                marginTop: "8px",
+                height:'auto'
 
-            }}
+              }}
             >
               <InputLabel id={`country-label-${member.id}`}>Country</InputLabel>
               <Select
@@ -92,6 +93,7 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
                     style: {
                       maxHeight: 200,
                       overflowY: "auto",
+                      zIndex:1000,
                     },
                   },
                 }}
@@ -103,6 +105,11 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
                 ))}
               </Select>
             </FormControl>
+
+            </Box>
+
+
+          
           </div>
 
           <Button
@@ -273,6 +280,7 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
   const [scientificProgram, setScientificProgram] = useState(null);
   const [visaCost, setVisaCost] = useState("");
   const [companionDinnerPrice, setCompanionDinnerPrice] = useState("");
+  const [logo, setLogo] = useState("");
 
   const [entries, setEntries] = useState([
     { id: Date.now(), price_type: "", price: "", description: "" },
@@ -359,6 +367,8 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
     formData.append("location", location);
     // formData.append("status", status.value);
     formData.append("image", image);
+    formData.append("logo", logo);
+
     formData.append("first_announcement_pdf", firstAnnouncement);
     formData.append("second_announcement_pdf", secondAnnouncement);
     formData.append("conference_brochure_pdf", brochure);
@@ -394,7 +404,7 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
       open={true}
       onClose={() => setIsOpen(false)}
       sx={{
-        zIndex: (theme) => theme.zIndex.modal + 1, 
+        zIndex: (theme) => theme.zIndex.modal ,
 
         "& .MuiDrawer-paper": {
           width: { xs: "100%", sm: "100%", md: "50%" },
@@ -404,17 +414,17 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
       }}
     >
       <div
-      style={{
-        display: "flex",
-        justifyContent: "flex-end",
-        padding: 2,
-      }}
-    >
-      <IconButton onClick={() => setIsOpen(false)}>
-        <CloseRounded />
-      </IconButton>
-    </div>
-    <Typography
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: 2,
+        }}
+      >
+        <IconButton onClick={() => setIsOpen(false)}>
+          <CloseRounded />
+        </IconButton>
+      </div>
+      <Typography
         variant="h6"
         sx={{
           color: "#c62828",
@@ -424,11 +434,11 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
           borderRadius: 1,
           marginBottom: 2,
         }}
-        >
+      >
         Add New Conference
       </Typography>
       <div className="form-section" style={{
-        overflowY:'auto'
+        overflowY: 'auto'
       }}>
         <Input
           label="Title"
@@ -478,13 +488,19 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
           label="Status"
           errorMsg={""}
         /> */}
-
+        <ImageUpload
+          label="Upload Logo"
+          inputValue={logo}
+          setInputValue={setLogo}
+          allowedExtensions={["jpg", "jpeg", "png"]}
+        />
         <ImageUpload
           label="Upload Image"
           inputValue={image}
           setInputValue={setImage}
           allowedExtensions={["jpg", "jpeg", "png"]}
         />
+
 
         <ImageUpload
           label="First Announcement PDF"
@@ -581,12 +597,12 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
               color: "#fff",
             }
           }}
-         className="submit-btn" onClick={handleSubmit}>
+          className="submit-btn" onClick={handleSubmit}>
           Submit
         </Button>
       </div>
-       
-        
+
+
     </Drawer>
   );
 };

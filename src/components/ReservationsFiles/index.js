@@ -24,14 +24,14 @@ const ReservationsFiles = () => {
     setSelectedUser(user);
     setDialogOpen(true);
   };
-
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
   const getData = () => {
     // الحصول على التوكن من الـ localStorage أو من الـ context أو من أي مصدر آخر
     const token = localStorage.getItem("token"); // إذا كنت تخزن التوكن في الـ localStorage
 
     if (token) {
       axios
-        .get("http://127.0.0.1:8000/api/reservation/approved", {
+        .get(`${BaseUrl}/reservation/approved`, {
           headers: {
             Authorization: `Bearer ${token}`, // تمرير التوكن مع الهيدر
           },
@@ -48,7 +48,6 @@ const ReservationsFiles = () => {
       console.error("Token is missing or expired.");
     }
   };
-
   const handleSubmit = (id) => {
     // الحصول على التوكن من الـ localStorage أو من الـ context أو من أي مصدر آخر
     const token = localStorage.getItem("token"); // إذا كنت تخزن التوكن في الـ localStorage
@@ -62,7 +61,7 @@ const ReservationsFiles = () => {
 
         // إرسال طلب POST لتحميل الملف
         axios
-          .post(`http://127.0.0.1:8000/api/add/confirmation/${id}`, formData, {
+          .post(`${BaseUrl}/add/confirmation/${id}`, formData, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

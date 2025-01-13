@@ -110,7 +110,7 @@ const LoginPage = () => {
         width: "100%",
       }}>
         <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-        <form onSubmit={handleLogin} className="login-form">
+        <form onSubmit={handleLogin} >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12} lg={10} xl={10}>
               <Typography variant="h4" sx={{
@@ -160,6 +160,34 @@ const LoginPage = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={12} lg={10} xl={10}
               sx={{
+                paddingTop:'4px !important',
+
+              }}
+              >
+              <Typography variant="body1" sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                textDecoration: "none",
+
+                
+              }}>
+                 {' '}<span
+                style={{
+                color: "#c62828",
+                cursor: "pointer",
+
+                }}
+              onClick={() => {
+                navigate("/forgetpassword");
+              }}
+            >
+              forget password
+            </span>
+              </Typography>
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={10} xl={10}
+              sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -181,7 +209,7 @@ const LoginPage = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: "10px",
+                marginTop: "2px",
                 textDecoration: "none",
                 
               }}>
@@ -199,6 +227,7 @@ const LoginPage = () => {
             </span>
               </Typography>
               </Grid>
+              
           </Grid>
 
         </form>

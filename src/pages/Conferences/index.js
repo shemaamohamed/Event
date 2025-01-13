@@ -1,4 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
+import axios from "axios";
+
 import MySideDrawer from "../../CoreComponent/SideDrawer";
 import SimpleLabelValue from "../../components/SimpleLabelValue";
 import Input from "../../CoreComponent/Input";
@@ -15,10 +17,10 @@ import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import DownloadIcon from "@mui/icons-material/Download";
 
-
 import "./style.scss";
 import { Avatar, Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Drawer, Grid, IconButton, Typography } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
+import toast from "react-hot-toast";
 
 const ConferencesPage = () => {
   const navigate = useNavigate();
@@ -89,6 +91,27 @@ const ConferencesPage = () => {
   useEffect(() => {
     getConference();
   }, [conferenceName, currentPage, status]);
+
+  const handleDelete = async (id) => {
+    const token = localStorage.getItem("token");
+    
+    try {
+      const response = await axios.delete(`${BaseUrl}/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      // عرض رسالة نجاح بعد الحذف
+      toast.success("Conference has been successfully deleted.");
+      getConference();
+      // يمكن إضافة خطوات أخرى هنا بعد الحذف، مثل تحديث الواجهة أو إعادة تحميل البيانات
+  
+    } catch (error) {
+      console.error("Failed to delete the conference:", error);
+      toast.error("Failed to delete the conference. Please try again later.");
+    }
+  };
   
 
   return (
@@ -290,6 +313,22 @@ const ConferencesPage = () => {
                   }}
                 >
                       Add Zoom Link
+                </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={() => {
+                    handleDelete(conference.id)
+                  }}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#ff7632",
+                    "&:hover": {
+                      backgroundColor: "#ff7632",
+                    },
+                  }}
+                >
+                      Delete
                 </Button>
               </CardActions>
             </Card>

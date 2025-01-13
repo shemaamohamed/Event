@@ -3,7 +3,7 @@ import SimpleLabelValue from "../SimpleLabelValue";
 import httpService from "../../common/httpService";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Grid, Button } from '@mui/material';
-
+import axios from "axios";
 
 import "./style.scss";
 import Invoce from "./invoice";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Drawer, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { CloseRounded } from "@mui/icons-material";
+import toast from "react-hot-toast";
 
 const TripParticipantsForUser = () => {
   const [participantsData, setParticipantsData] = useState([]);
@@ -92,7 +93,34 @@ const navigate = useNavigate()
     setSelectedParticipantDetails(participant);
     setDrawerOpen(true);
   };
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const handleDelete = (tripId) => {
+    // استرجاع التوكن من localStorage
+    const token = localStorage.getItem("token");
+  
+    // التأكد من وجود التوكن
+    if (!token) {
+      toast.error("You must be logged in to delete the trip.");
+      return;
+    }
+  
+    // إرسال طلب DELETE باستخدام axios مع التوكن في الهيدر
+    axios.delete(`${BaseUrl}/myTrip/${tripId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,  // تمرير التوكن في الهيدر
+      }
+    })
+    .then((response) => {
+      toast.success("Trip deleted successfully!");
 
+    })
+    .catch((error) => {
+      // التعامل مع الأخطاء
+      console.error(error);
+      toast.error("An error occurred while deleting the trip.");
+    });
+  };
+  
   useEffect(() => {
     fetchParticipants();
   }, []);
@@ -196,7 +224,15 @@ const navigate = useNavigate()
            >
              View Details
           </MenuItem> 
-          
+          <MenuItem 
+                                onClick={() => {
+
+                                  
+                                  handleDelete(params.row.id);}}
+
+           >
+Delete         
+ </MenuItem> 
         </Menu>
       </>
     ),

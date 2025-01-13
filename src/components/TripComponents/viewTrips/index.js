@@ -13,6 +13,7 @@ import httpService from "../../../common/httpService";
 import { Button, Grid, IconButton, Menu, MenuItem } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import toast from "react-hot-toast";
 
 
 const headers = [
@@ -95,7 +96,39 @@ const ViewTrip = () => {
       console.error("Error fetching trips:", error);
     }
   };
-
+  const handleDelete = (tripId) => {
+    const token = localStorage.getItem("token");
+  
+    // تأكد من أن التوكن موجود
+    if (!token) {
+      toast.error("You need to be logged in to delete the trip.");
+      return;
+    }
+  
+    const confirmation = window.confirm("Are you sure you want to delete this trip?");
+    
+    if (confirmation) {
+      // إرسال طلب DELETE باستخدام axios مع التوكن في الرأس
+      axios.delete(`${BaseUrl}/trip/${tripId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`  // تمرير التوكن في الهيدر
+        }
+      })
+      .then((response) => {
+        // عرض رسالة Toast عند الحذف بنجاح
+        toast.success("Trip deleted successfully!");
+        fetchTrips();
+        // يمكنك تحديث الواجهة هنا إذا لزم الأمر (مثل إزالة الرحلة من القائمة)
+      })
+      .catch((error) => {
+        // التعامل مع الأخطاء
+        console.error(error);
+        toast.error("An error occurred while deleting the trip.");
+      });
+    }
+  };
+  
+  
   useEffect(() => {
     fetchTrips();
   }, [tripType, tripName]);
@@ -163,6 +196,7 @@ const ViewTrip = () => {
             >
               View
             </MenuItem>
+
             <MenuItem
               onClick={() => {
                 setOpenEditTrip(true);
@@ -172,6 +206,13 @@ const ViewTrip = () => {
                                 Edit
 
               </MenuItem>
+              <MenuItem
+              onClick={() => {
+                handleDelete(params.row?.id);
+              }}
+            >
+              Delete
+            </MenuItem>
               </>
 
             )}

@@ -143,6 +143,8 @@ import AdminLayoutBasic from './AdminLayout';
 import OverViewDashboard from './components/OverViewDashboard/index';
 import GroupTripRegistration from './components/GroupTripRegistration/index';
 import ClientsSlide from "./components/ClientsSlide";
+import ForgetPassword from "./pages/login/forgetpassword";
+import ForgetPassword2 from "./pages/login/forgotpassword2";
 
 
 
@@ -220,7 +222,13 @@ const App = () => {
                 (( isSponsor|| isGroup ||isOther) && isLoggedIn && limit && !isAdmin) )&&(
                   <Routes >
                   <Route path='/' element={<UserLayout/>}>
+
                   <Route path="/" element={<Home />} />
+                  <Route path="/forgetpassword" element={<ForgetPassword />} />
+                  <Route path="/resetpassword" element={<ForgetPassword2 />} />
+
+
+
               <Route path="/other" element={<RegisterOther />} />
             <Route path="/registertype" element={<RegisterType />} />
                           {/* register */}

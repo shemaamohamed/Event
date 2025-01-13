@@ -23,6 +23,8 @@ const RoomPriceForm = () => {
   const [tripleLateCheckOutPrice, setTripleLateCheckOutPrice] = useState("");
   const [allConference, setAllConference] = useState([]);
   const [conferenceId, setConferenceId] = useState("");
+  const [hotelName, setHotelName] = useState("");
+
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -39,6 +41,7 @@ const RoomPriceForm = () => {
         },
         data: {
           conference_id: conferenceId?.value,
+          hotel_name: hotelName,
           single_base_price: singleBasePrice,
           single_companion_price: singleCompanionPrice,
           single_early_check_in_price: singleEarlyCheckInPrice,
@@ -55,19 +58,19 @@ const RoomPriceForm = () => {
         onSuccess: (data) => {
           toast.success(data.success);
         },
-       
+
       });
     } catch (error) {
       toast.error(error?.response?.data?.error || "An error occurred while adding room prices.");
-    } 
+    }
   };
 
   // Check if all fields are filled
   const isFormValid =
-    singleBasePrice && 
+    singleBasePrice &&
     doubleBasePrice &&
     tripleBasePrice &&
-    conferenceId?.value 
+    conferenceId?.value
 
   const getConference = () => {
     const url = `${BaseUrl}/conferences/all`;
@@ -102,19 +105,19 @@ const RoomPriceForm = () => {
     <div className="prices-form-room">
       <div className="room-prices-form">
         <form onSubmit={handleRegister2} className="form-container">
-        <Typography variant="h6" 
-        sx={{
-        
-          color: '#c62828',
-          backgroundColor:'#f1f1f1',
+          <Typography variant="h6"
+            sx={{
 
-          textAlign: 'center',
-        }}
+              color: '#c62828',
+              backgroundColor: '#f1f1f1',
 
-        textAlign={"center"}
-        gutterBottom>
-          Room Price Form
-        </Typography>
+              textAlign: 'center',
+            }}
+
+            textAlign={"center"}
+            gutterBottom>
+            Room Price Form
+          </Typography>
 
           <div className="input-group">
             <Select
@@ -125,12 +128,20 @@ const RoomPriceForm = () => {
               placeholder="Select..."
             />
             <Input
+              label="Hotel Name"
+              placeholder="Enter Hotel Name"
+              inputValue={hotelName}
+              setInputValue={setHotelName}
+            // required={true}
+            />
+            <Input
               label="Single Base Price"
               placeholder="Enter single base price"
               inputValue={singleBasePrice}
               setInputValue={setSingleBasePrice}
               required={true}
             />
+
             {/* <Input
               label="Single Companion Price"
               placeholder="Enter single companion price"

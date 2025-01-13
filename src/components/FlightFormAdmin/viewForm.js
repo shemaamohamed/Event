@@ -4,12 +4,17 @@ import "./style.scss";
 
 const FlightDetails = ({ data }) => {
   const getValueOrDefault = (value) => (value ? value : "-");
+  console.log(data);
 
   return (
     <div className="view-form-flight-details-admin">
       <div className="header">{getValueOrDefault(data.passenger_name)}</div>
       <div className="view-section">
         <SimpleLabelValue label="Flight ID" value={getValueOrDefault(data.flight_id)} />
+        <SimpleLabelValue label="Conference Name
+" value={getValueOrDefault(data.conference_name
+        )} />
+
         <SimpleLabelValue label="Passenger Name" value={getValueOrDefault(data.passenger_name)} />
         <SimpleLabelValue
           label="Departure Airport"

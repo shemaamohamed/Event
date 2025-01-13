@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
-import MySideDrawer from "../../../CoreComponent/SideDrawer";
 import Input from "../../../CoreComponent/Input";
 import Select from "../../../CoreComponent/Select";
 import DateInput from "../../../CoreComponent/Date";
@@ -10,7 +9,7 @@ import toast from "react-hot-toast";
 import SVG from "react-inlinesvg";
 import "./style.scss";
 import { deleteIcon } from "../../../icons";
-import { Drawer, IconButton } from "@mui/material";
+import { Drawer, IconButton, Typography } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
 
 const AvailableDatesManager = ({ availableDates, setAvailableDates }) => {
@@ -225,14 +224,27 @@ const CreateTrip = ({ isOpen, setIsOpen, fetchTrips }) => {
       
          
         <CustomFormWrapper
-          title="Create a New Trip"
           handleSubmit={handleSubmit}
           setOpenForm={setIsOpen}
         >
           
+          
           <form  style={{
             marginTop:'30vh'
           }}>
+             <Typography
+        variant="h6"
+        sx={{
+          color: "#c62828",
+          textAlign: "center",
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
+        }}
+      >
+        Create a New Trip
+      </Typography>
             <Select
               options={allConference}
               value={conferenceId}
