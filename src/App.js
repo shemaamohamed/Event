@@ -270,7 +270,6 @@ const App = () => {
                 path="/corporate_meetings"
                 element={<CorporateMeetings />}
               />
-                            <Route path="/certification" element={<Certification />} />
 
               <Route path="/concept_creation" element={<ConceptCreation />} />
               <Route path="/ser" element={<Conference />} />
@@ -359,6 +358,8 @@ const App = () => {
                                         path="conference/details/:conferenceId"
                                         element={<ConferenceDetails />}
                                       />
+                                                                  <Route path="/certification" element={<Certification />} />
+
                                       <Route
                                         path="edit/speaker/data/:conferenceId/:userId"
                                         element={<EditSpeakerData />}

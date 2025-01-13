@@ -230,7 +230,9 @@ const CreateTrip = ({ isOpen, setIsOpen, fetchTrips }) => {
           setOpenForm={setIsOpen}
         >
           
-          <form className="trip-form-container7">
+          <form  style={{
+            marginTop:'30vh'
+          }}>
             <Select
               options={allConference}
               value={conferenceId}
