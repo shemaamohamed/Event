@@ -291,6 +291,10 @@ const App = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/conferences" element={<AllConferencesPage />} />
               <Route
+                                        path="conference/details/:conferenceId"
+                                        element={<ConferenceDetails />}
+                                      />
+              <Route
                 path="/conference/details/:conferenceId"
                 element={<OnePage />}
               />
@@ -301,10 +305,7 @@ const App = () => {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/up/event" element={<UpcomingConferences2 />} />
               
-              <Route
-                                        path="conference/details/:conferenceId"
-                                        element={<ConferenceDetails />}
-                                      />
+              
                                       {/* <Route path="/all-speakers" element={<SpeakersComponent />} />
               <Route
                 path="/all-attendances"

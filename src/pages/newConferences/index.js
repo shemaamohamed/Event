@@ -1,292 +1,227 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  Box,
+  Tab,
+  Tabs,
+  Typography,
+  Paper,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Container,
+  Grid,
+} from "@mui/material";
 import image from "./file.png";
-// ** utils & components
 import { backendUrlImages } from "../../constant/config";
 import httpService from "../../common/httpService";
 import PaperSubmissionForm from "../../components/abstract/abstractUser";
 import Speakers4 from "../../components/SpeakerProduct";
 import Home from "../HomeR";
 import Welcome from "../../components/UI/Welcome";
-import { useNavigate } from "react-router-dom";
-// ** styles
-import "./style.scss";
-import TemporaryDrawer from "./Drawer";
 import ClientsSlide from "../../components/ClientsSlide";
 
 const ConferenceDetails = () => {
-  const navigate =useNavigate()
+  const navigate = useNavigate();
   const { conferenceId } = useParams();
-  const [selectedSection, setSelectedSection] = useState("overview");
+  const [selectedTab, setSelectedTab] = useState(0);
   const [data, setData] = useState({});
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
-  const getConferenceData = async () => {
-    const getAuthToken = () => localStorage.getItem("token");
-
+  const fetchConferenceData = async () => {
+    const token = localStorage.getItem("token");
     const response = await httpService({
       method: "GET",
       url: `${BaseUrl}/con/id/${conferenceId}`,
-      headers: { Authorization: `Bearer ${getAuthToken()}` },
+      headers: { Authorization: `Bearer ${token}` },
     });
     setData(response);
   };
 
   useEffect(() => {
-    getConferenceData();
+    fetchConferenceData();
   }, []);
 
-  const sections = {
-    overview: "Conference Overview",
-    home: "Home",
-    Welcome: "Welcome",
-    Abstract: "Abstract",
-    Speakers: "Speakers",
-    topics: "Scientific Topics",
-    pricing: "Registration",
-    committee: "Committee Members",
-    firstAnnouncement: "First Announcement Document",
-    secondAnnouncement: "Second Announcement Document",
-    brochure: "Conference Brochure",
-    scientificProgram: "Scientific Program Document",
-    sponsor:"Sponsor"
-  };
-const token = localStorage.getItem("token")
+  const sections = [
+    { label: "Conference Overview", component: "overview" },
+    { label: "Home", component: "home" },
+    { label: "Welcome", component: "Welcome" },
+    { label: "Abstract", component: "Abstract" },
+    { label: "Speakers", component: "Speakers" },
+    { label: "Scientific Topics", component: "topics" },
+    { label: "Registration", component: "pricing" },
+    { label: "Committee Members", component: "committee" },
+    { label: "First Announcement Document", component: "firstAnnouncement"  ,url:"first_announcement_pdf_url"},
+    { label: "Second Announcement Document", component: "secondAnnouncement" ,url:"second_announcement_pdf_url" },
+    { label: "Conference Brochure", component: "brochure"  ,url:"conference_brochure_pdf_url"},
+    { label: "Scientific Program Document", component: "scientificProgram" ,url:"conference_scientific_program_pdf_url" },
+    { label: "Sponsor", component: "sponsor" },
+  ];
+
+  const renderDocumentContent = (url, label) => (
+    <Paper elevation={3} sx={{ padding: 3, textAlign: "center" }}>
+      {url ? (
+        <>
+          <img src={image} alt="Document Icon" width="100px" />
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            {label}
+          </Typography>
+          <Typography variant="body1" sx={{ mt: 1, mb: 2 }}>
+            This document contains important details about {label}. Please
+            download it for more information.
+          </Typography>
+          <Button variant="contained" href={url} download sx={{ mt: 2 }}>
+            Download {label}
+          </Button>
+        </>
+      ) : (
+        <Typography variant="body1" color="text.secondary">
+          No document is currently available for this section.
+        </Typography>
+      )}
+    </Paper>
+  );
+
   const renderContent = () => {
     const { conference, scientific_topics, prices, committee_members } = data;
-    // const renderDocumentContent = (url, label) => {
-    //   const token = localStorage.getItem("token"); // التحقق من وجود التوكن في الـ localStorage
-    
-    //   return (
-    //     <div className="document-section">
-    //       {url ? (
-    //         token ? ( // تحقق من وجود التوكن
-    //           <>
-    //             <div className="document-preview">
-    //               <img src={image} alt="Document Icon" width={"100px"} />
-    //             </div>
-    //             <div className="document-info">
-    //               <h3>{label}</h3>
-    //               <p className="desc">
-    //                 This document contains important details about {label}. Please
-    //                 download it for more information.
-    //               </p>
-    //               <a href={url} download className="btn-download">
-    //                 Download {label}
-    //               </a>
-    //             </div>
-    //           </>
-    //         ) : (
-    //           <div className="no-token">
-    //             <p>You must be logged in to download this document.</p>
-    //           </div>
-    //         )
-    //       ) : (
-    //         <div className="no-document">
-    //           <div className="document-preview">
-    //             <img src="/path/to/no-document-icon.png" alt="Document Icon" />
-    //           </div>
-    //           <div className="document-info">
-    //             <h3>{label}</h3>
-    //             <p>No document is currently available for this section.</p>
-    //           </div>
-    //         </div>
-    //       )}
-    //     </div>
-    //   );
-    // };
-    
-    const renderDocumentContent = (url, label) => (
-      <div className="document-section">
-        {url ? (
-          <>
-            <div className="document-preview">
-              <img src={image} alt="Document Icon" width={"100px"} />
-            </div>
-            <div className="document-info">
-              <h3>{label}</h3>
-              <p className="desc">
-                This document contains important details about {label}. Please
-                download it for more information.
-              </p>
-              <a href={url} download className="btn-download">
-                Download {label}
-              </a>
-            </div>
-          </>
-        ) : (
-          <div className="no-document">
-            <div className="document-preview">
-              <img src="/path/to/no-document-icon.png" alt="Document Icon" />
-            </div>
-            <div className="document-info">
-              <h3>{label}</h3>
-              <p>No document is currently available for this section.</p>
-            </div>
-          </div>
-        )}
-      </div>
-    );
 
-    switch (selectedSection) {
+    switch (sections[selectedTab].component) {
       case "home":
-        return (
-          <div className="content">
-            <Home />
-          </div>
-        );
-        case "sponsor":
-          return (
-            <div className="content">
-              <ClientsSlide />
-            </div>
-          );
+        return <Home />;
+      case "sponsor":
+        return <ClientsSlide />;
       case "Welcome":
-        return (
-          <div className="content">
-            <Welcome />
-          </div>
-        );
+        return <Welcome />;
       case "overview":
         return (
-          <div className="image-with-content">
-            <div className="content">
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
               {data?.image_url ? (
                 <img
-                  className="img-conference"
-                  src={`${backendUrlImages}${(data?.image_url).replace(
+                  src={`${backendUrlImages}${data?.image_url.replace(
                     "https://panel.mayazin.co/storage",
                     ""
                   )}`}
                   alt="Conference"
+                  width="100%"
+                  style={{ borderRadius: 8 }}
                 />
               ) : (
-                <p>No image available.</p>
+                <Typography variant="body1" color="text.secondary">
+                  No image available.
+                </Typography>
               )}
-            </div>
-            <div className="content">
-              <h2>{conference?.title}</h2>
-              <p>{conference?.description}</p>
-              <div className="info-grid">
-                <div>
-                  <strong>Location:</strong> {conference?.location}
-                </div>
-              </div>
-            </div>
-          </div>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h4">{conference?.title}</Typography>
+              <Typography variant="body1" sx={{ mt: 2 }}>
+                {conference?.description}
+              </Typography>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                <strong>Location:</strong> {conference?.location}
+              </Typography>
+            </Grid>
+          </Grid>
         );
       case "Abstract":
-        return (
-          <div className="content">
-            <PaperSubmissionForm conferenceId={conferenceId} />
-          </div>
-        );
+        return <PaperSubmissionForm conferenceId={conferenceId} />;
       case "Speakers":
-        return (
-          <div className="content">
-            <Speakers4 conferenceId={conferenceId} />
-          </div>
-        );
+        return <Speakers4 conferenceId={conferenceId} />;
       case "topics":
         return (
-          <div className="content">
+          <Box>
             {scientific_topics?.map((topic) => (
-              <div key={topic.id} className="card">
-                <h3>{topic?.title}</h3>
-             {   topic?.description &&   <p>{topic?.description }</p>}
-              </div>
+              <Card key={topic.id} sx={{ mb: 2 }}>
+                <CardContent>
+                  <Typography variant="h6">{topic?.title}</Typography>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    {topic?.description}
+                  </Typography>
+                </CardContent>
+              </Card>
             ))}
-          </div>
+          </Box>
         );
       case "pricing":
         return (
-          <div className="content">
+          <Box>
             {prices?.map((price) => (
-              <div key={price.id} className="card">
-                <h3>{price?.price_type}</h3>
-                <p>
-                  <strong>Price:</strong> {price?.price}
-                </p>
-                <p>{price?.description}</p>
-              </div>
+              <Card key={price.id} sx={{ mb: 2 }}>
+                <CardContent>
+                  <Typography variant="h6">{price?.price_type}</Typography>
+                  <Typography variant="body1" sx={{ mt: 1 }}>
+                    <strong>Price:</strong> {price?.price}
+                  </Typography>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    {price?.description}
+                  </Typography>
+                </CardContent>
+              </Card>
             ))}
-           {!token &&  <button className="btn-download" onClick={()=>{
-              navigate("/registertype")
-            }}>Register?</button>}
-          </div>
+            {!localStorage.getItem("token") && (
+              <Button
+                variant="contained"
+                onClick={() => navigate("/registertype")}
+                sx={{ mt: 3 }}
+              >
+                Register
+              </Button>
+            )}
+          </Box>
         );
       case "committee":
         return (
-          <div className="content">
+          <Box>
             {committee_members?.map((member) => (
-              <div key={member.id} className="card">
-                <img
-                  src={`${backendUrlImages}${member?.committee_image}`}
+              <Card key={member.id} sx={{ mb: 2 }}>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={`${backendUrlImages}${member?.committee_image}`}
                   alt={member?.name}
                 />
-                <h3>{member?.name}</h3>
-              </div>
+                <CardContent>
+                  <Typography variant="h6">{member?.name}</Typography>
+                </CardContent>
+              </Card>
             ))}
-          </div>
-        );
-      case "visa":
-        return (
-          <div className="content">
-            <p>
-              <strong>Visa Price:</strong> {conference?.visa_price}
-            </p>
-          </div>
+          </Box>
         );
       case "firstAnnouncement":
-        return renderDocumentContent(
-          `${backendUrlImages}${(data?.first_announcement_pdf_url).replace(
-            "https://panel.mayazin.co/storage",
-            ""
-          )}`,
-          "First Announcement"
-        );
       case "secondAnnouncement":
-        return renderDocumentContent(
-          `${backendUrlImages}${(data?.second_announcement_pdf_url).replace(
-            "https://panel.mayazin.co/storage",
-            ""
-          )}`,
-          "Second Announcement"
-        );
       case "brochure":
-        return renderDocumentContent(
-          `${backendUrlImages}${(data?.conference_brochure_pdf_url).replace(
-            "https://panel.mayazin.co/storage",
-            ""
-          )}`,
-          "Brochure"
-        );
       case "scientificProgram":
         return renderDocumentContent(
-          `${backendUrlImages}${(data?.conference_scientific_program_pdf_url).replace(
+          `${backendUrlImages}${data[`${sections[selectedTab].url}`]?.replace(
             "https://panel.mayazin.co/storage",
             ""
           )}`,
-          "Scientific Program"
+          sections[selectedTab].label
         );
       default:
-        return (
-          <div className="content">
-            <p>Section not found.</p>
-          </div>
-        );
+        return <Typography variant="body1">Section not found.</Typography>;
     }
   };
 
   return (
-    <div className="conference-detailss">
-      <TemporaryDrawer
-        sections={Object.entries(sections)}
-        selectedSection={selectedSection}
-        setSelectedSection={setSelectedSection}
-      />
-      <div className="main-content">{renderContent()}</div>
-    </div>
+    <Container>
+      <Box sx={{ mb: 3, display: "flex", alignItems: "center" }}>
+        <Tabs
+          value={selectedTab}
+          onChange={(e, newValue) => setSelectedTab(newValue)}
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
+          
+        >
+          {sections.map((section, index) => (
+            <Tab key={index} label={section.label} />
+          ))}
+        </Tabs>
+      </Box>
+      <Box>{renderContent()}</Box>
+    </Container>
   );
 };
 
