@@ -21,41 +21,34 @@ const AddClient = () => {
   };
 
   // Handler for form submission
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!image) {
       setError("Please select an image to upload.");
       return;
     }
-
+  
     const formData = new FormData();
     formData.append("image", image);
-
-    try {
-      const token = localStorage.getItem("token");
-      const BaseUrl = process.env.REACT_APP_BASE_URL;
-
-      const response = await axios.post(
-        `${BaseUrl}/clients`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        toast.success("Client created successfully!");
-
-        setSuccess(true);
-        setImage(null);
-        setError(null);
-      }
-    } catch (error) {
-      setError("An error occurred while uploading the image.");
-    }
+  
+    const token = localStorage.getItem("token");
+    const BaseUrl = process.env.REACT_APP_BASE_URL;
+  
+    axios
+      .post(`${BaseUrl}/clients`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+          toast.success("Client created successfully!");
+        
+      })
+      .catch((error) => {
+        setError("An error occurred while uploading the image.");
+      });
   };
+  
 
   return (
     <div className="add-client">

@@ -3,6 +3,7 @@ import axios from "axios";
 import DateInput from "../../../CoreComponent/Date";
 import "./style.scss";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
+import toast from "react-hot-toast";
 
 const UpdateDeadline = ({ data, setOpen }) => {
   const [adminUpdateDeadline, setAdminUpdateDeadline] = useState("");
@@ -29,8 +30,7 @@ const UpdateDeadline = ({ data, setOpen }) => {
         }
       )
       .then((response) => {
-        setOpen(false);
-      })
+toast.success("Updated Successfully")      })
       .catch((error) => {
         if (error.response) {
           console.error("Error data:", error.response.data);
@@ -46,7 +46,7 @@ const UpdateDeadline = ({ data, setOpen }) => {
 
   return (
     <CustomFormWrapper
-      title="Gala Dinner Details"
+      title="Enter Admin Update Deadline"
       handleSubmit={handleSubmit}
       setOpenForm={setOpen}
       noActions={false}

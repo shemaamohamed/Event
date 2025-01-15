@@ -86,7 +86,7 @@ const SponsorshipTable2 = () => {
       non_residential_reg: formData.nonResidentialReg, // Required: Number of non-residential registrations
       residential_reg: formData.residentialReg, // Required: Number of residential registrations
       conference_id: con, // Required: The selected conference ID
-      video_show_between_sessions :videoShow.value || null
+      video_show_between_sessions: videoShow?.value || "no"  // بدل null إلى "no" أو قيمة افتراضية أخرى
     };
 
     axios

@@ -8,6 +8,8 @@ import Input from "../../CoreComponent/Input"; // Assuming you have this custom 
 
 const FloorPlanUploader = () => {
   const [file, setFile] = useState("");
+  const [agreementFile, setAgreementFile] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [allConference, setAllConference] = useState([]);
@@ -52,6 +54,8 @@ const FloorPlanUploader = () => {
     const formData = new FormData();
 
     formData.append("floor_plan", file);
+    formData.append("agreement_page", agreementFile);
+
     formData.append("conference_id", conferenceId.value);
     formData.append("shell_scheme_price_per_sqm", shellSchemePrice);
     formData.append("space_only_stand_depth", standDepth);
@@ -94,6 +98,12 @@ const FloorPlanUploader = () => {
         setInputValue={setFile}
         allowedExtensions={["pdf"]}
       />
+            <ImageUpload
+        label="Agreement Page"
+        inputValue={agreementFile}
+        setInputValue={setAgreementFile}
+        allowedExtensions={["jpeg", "png", "jpg","pdf"]}
+        />
 
       {/* إدخال السعر لكل متر مربع */}
       <div className="input-group">

@@ -168,7 +168,38 @@ const VisaPage = () => {
     fetchData();
   }, []);
   console.log(visaPrice);
+const handleDelete=async()=>{
 
+    try {
+      const token = localStorage.getItem('token'); // تأكد من وجود التوكن في `localStorage`
+  
+      // التأكد من وجود التوكن
+      if (!token) {
+        toast.error('Token is missing. Please log in again.');
+        return;
+      }
+  
+      const response = await axios.delete(`${BaseUrl}/delete/visa/n`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // إضافة التوكن في الهيدر
+        },
+      });
+  
+      if (response.status === 200) {
+        toast.success('Visa request deleted successfully!');
+        // يمكنك إضافة المزيد من الإجراءات هنا (مثل إعادة التوجيه أو تحديث الواجهة)
+      }
+    } catch (error) {
+      if (error.response) {
+        // إذا كان هناك استجابة من السيرفر
+        toast.error(error.response.data.error || 'An error occurred while deleting the visa request.');
+      } else {
+        // إذا لم تكن هناك استجابة من السيرفر
+        toast.error('An error occurred. Please try again later.');
+      }
+    }
+
+}
   return (
     <div className="visa-page-container">
       {!visaData &&
@@ -285,6 +316,18 @@ const VisaPage = () => {
             >
               Next
             </button>
+
+
+            <button
+              className="next-button"
+              onClick={() => {
+                handleDelete();
+              }}
+            >
+              Delete
+            </button>
+
+
           </div>
         </Fragment>
       )}

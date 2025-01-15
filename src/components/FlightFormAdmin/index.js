@@ -13,10 +13,11 @@ import UpdateTicket from "./SetTicket";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../CoreComponent/Pagination";
 import ViewInvoice from "./ViewInvoice";
-import { Drawer, IconButton, Menu, MenuItem } from "@mui/material";
+import { Drawer, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DataGrid } from "@mui/x-data-grid";
+import { backendUrlImages } from "../../constant/config";
 
 
 
@@ -41,6 +42,8 @@ const FlightFormAdmin = () => {
   };
   const headers = [
     { key: "user_name", label: "Passenger Name" },
+    { key: "passportImage", label: "Passport Image" },
+
     { key: "departure_airport", label: "Departure Airport" },
     { key: "arrival_airport", label: "Arrival Airport" },
     // { key: "departure_date", label: "Departure Date" },
@@ -115,6 +118,41 @@ const FlightFormAdmin = () => {
       minWidth: 230,
       cellClassName: "centered-cell",
     },
+    {
+      field: "passportImage",
+      headerName: "Passport Image",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        <div style={{ textAlign: "center" }}>
+          {params.row.passportImage ? (
+            <Typography
+              variant="body2"
+              color="primary"
+              style={{
+                cursor: "pointer",
+                textDecoration: "underline", // لإظهار النص كرابط
+              }}
+              onClick={() => {
+                const imageUrl = `${ backendUrlImages }${params.row.passportImage}`; // بناء الرابط الكامل للصورة
+                const link = document.createElement("a");
+                link.href = imageUrl; // رابط الصورة
+                link.download = params.row.passportImage; // تعيين اسم الصورة عند التنزيل
+                link.click(); // تنفيذ التنزيل
+              }}
+            >
+              Download Image
+            </Typography>
+          ) : (
+            <Typography variant="body2" color="textSecondary">
+              No Image
+            </Typography>
+          )}
+        </div>
+      ),
+    },
+    
 
     {
       field: "departure_airport",

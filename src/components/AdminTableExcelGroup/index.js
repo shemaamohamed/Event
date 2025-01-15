@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import "./style.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
+import { backendUrlImages } from "../../constant/config";
 
 const ActiveRegistrations = () => {
   const [registrationsData, setRegistrationsData] = useState([]);
@@ -122,7 +123,7 @@ const ActiveRegistrations = () => {
           <span>
             {params.value? (
               <a
-              href={`https://mayazin.co/backend/storage/app/public/${params.value}`}
+              href={`${backendUrlImages}${params.value}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{ textDecoration: 'none', color: 'blue' }}

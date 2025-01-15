@@ -131,6 +131,13 @@ const AdminLayoutBasic = () => {
         { title: "Sponsorship Option", segment: "option/form" },
         { title: "Booth Cost", segment: "booth/cost" },
         { title: "Upload Floor Plan", segment: "upload/floor" },
+        { title: "Booth Size Table", segment: "size/edit" },
+        { title: "Sponsorships Table", segment: "sponsorships/edit" },
+        { title: "Sponsorships Option Table", segment: "SponsorShipOption/edit" },
+        // ayat
+        { title: "Floor Plan Edit", segment: "floor/edit" },
+
+
       ] },
       { title: 'Files', icon: "📁", segment: ["files"], children: [
         { title: "Visa Files", segment: "visa" },

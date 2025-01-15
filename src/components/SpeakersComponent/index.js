@@ -55,7 +55,11 @@ const SpeakersComponent = () => {
   const rows = usersData.map((user) => ({
     ...user,
     name: user?.user?.name,
-    email: user?.user?.email,
+        email: user?.user?.email,
+
+        biography: user?.user?.biography,
+    image: user?.user?.image,
+
     abstract: user.abstract,
     presentation_file: user.presentation_file ,
     video: user.video ,
@@ -83,6 +87,41 @@ const SpeakersComponent = () => {
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
+    },
+    {
+      field: "biography",
+      headerName: "Biography",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "image",
+      headerName: "Image",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => {
+        const imageUrl = 
+          `${backendUrlImages}${params.row.image}`
+          // Placeholder if no image is available
+        return (
+          <div style={{ textAlign: "center" }}>
+            <a href={imageUrl} download={params.row.image ? params.row.image : null}>
+              <img
+                src={imageUrl}
+                alt={params.row.name}
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  borderRadius: "50%",
+                  objectFit: "cover", // Makes sure the image fits the circle
+                }}
+              />
+            </a>
+          </div>
+        );
+      },
     },
     {
       field: "abstract",

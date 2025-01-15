@@ -7,6 +7,7 @@ import { AttachMoney, CalendarToday, Cancel, CloseRounded } from "@mui/icons-mat
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DataGrid } from "@mui/x-data-grid";
 import { CheckCircle } from "lucide-react";
+import { backendUrlImages } from "../../constant/config";
 
 const VisasComponent = () => {
   const [visasData, setVisasData] = useState([]);
@@ -74,6 +75,7 @@ const VisasComponent = () => {
     id: visa.id,
     user_name: visa.user_name,
     user_id: visa.user_id,
+    passport_image:visa?.passport_image,
     arrival_date: visa.arrival_date,
     departure_date: visa.departure_date,
     visa_cost: `$${visa.visa_cost}`,
@@ -97,6 +99,38 @@ const VisasComponent = () => {
       cellClassName: "centered-cell",
 
     },{
+      field: "passport_image",
+      headerName: "Passport Image",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        <div style={{ textAlign: "center" }}>
+          {params.row.passport_image ? (
+            <Typography
+              variant="body2"
+              color="primary"
+              style={{ cursor: "pointer", textDecoration: "underline" }}
+              onClick={() => {
+                const imageUrl = `${backendUrlImages}${params.row.passport_image}`;
+                const link = document.createElement("a");
+                link.href = imageUrl;
+                link.download = params.row.passport_image; // يعين اسم الصورة عند التنزيل
+                link.click(); // تنفيذ عملية التنزيل
+              }}
+            >
+              Download Image
+            </Typography>
+          ) : (
+            <Typography variant="body2" color="textSecondary">
+              No Image
+            </Typography>
+          )}
+        </div>
+      ),
+    }
+    
+    ,{
       field:"arrival_date",
       headerName:"Arrival Date",
       flex:1,

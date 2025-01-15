@@ -4,8 +4,11 @@ import forgotpasswordImg from "../../icons/forgotpassword.svg";
 import "./style.scss";
 import { Button, Container, Grid, Grid2, TextField, Typography } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
-
+import toast from 'react-hot-toast';
+import axios from 'axios';
 const ForgetPassword = () => {
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+
     const [email, setEmail] = useState('');
       const navigate = useNavigate();
     
@@ -24,7 +27,21 @@ const ForgetPassword = () => {
         // Handle the form submission logic here
         console.log('Email submitted:', email);
     };
-
+    const handleReset = (e) => {
+      e.preventDefault(); // منع إرسال النموذج وتحديث الصفحة
+  
+      axios.post(`${BaseUrl}/forgot-password`, { email: email })
+          .then(response => {
+              console.log("Password reset link sent:", response.data);
+              toast.success("Password reset link sent");
+              // هنا يمكنك توجيه المستخدم إلى صفحة تحتوي على رابط إعادة تعيين كلمة المرور (مثل صفحة لإدخال التوكن وكلمة المرور الجديدة)
+          })
+          .catch(error => {
+              console.error("Error:", error);
+              toast.error("Failed to send reset link");
+          });
+  };
+  
     return (
         <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" ,marginTop: '32px'}}>
         <Grid container sx={{
@@ -73,11 +90,11 @@ const ForgetPassword = () => {
                                 color: "#ffffff",
                                 width: "100%",
                               }}
-                              onClick={() => {
-                                navigate("/resetpassword");
+                              onClick={(e) => {
+                               handleReset(e)
                               }}
                               >
-                                Login
+                                Reset Password
                               </Button>
                               
                               </Grid>

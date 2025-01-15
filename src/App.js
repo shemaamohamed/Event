@@ -145,6 +145,13 @@ import GroupTripRegistration from './components/GroupTripRegistration/index';
 import ClientsSlide from "./components/ClientsSlide";
 import ForgetPassword from "./pages/login/forgetpassword";
 import ForgetPassword2 from "./pages/login/forgotpassword2";
+import Size from "./components/SponsorAdmin/BoothSize";
+import Sponsorships from "./components/SponsorAdmin/Sponsorships";
+import SponsorShipOption from "./components/SponsorAdmin/SponsorShipOption";
+import EditFloor from "./components/SponsorAdmin/EditFloorPlan";
+import ForgotPassword2 from "./pages/login/forgotpassword2";
+import SuccessVerification from "./pages/login/SuccessVerification";
+import FailedVerification from "./pages/login/failedverification";
 
 
 
@@ -225,7 +232,6 @@ const App = () => {
 
                   <Route path="/" element={<Home />} />
                   <Route path="/forgetpassword" element={<ForgetPassword />} />
-                  <Route path="/resetpassword" element={<ForgetPassword2 />} />
 
 
 
@@ -250,6 +256,8 @@ const App = () => {
                 path="/registerPage/:type"
                 element={<SelectConferences />}
               />
+              <Route path="/reset-password/:token" element={<ForgotPassword2 />} />
+
                <Route
                 path="register/sponsor/:conferenceId"
                 element={<RegisterSponsorPage />}
@@ -289,6 +297,9 @@ const App = () => {
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/about" element={<AboutUs />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/successverification" element={<SuccessVerification/>}/>
+              <Route path="/failedverification" element={<FailedVerification/>}/>
+
               <Route path="/conferences" element={<AllConferencesPage />} />
               <Route
                                         path="conference/details/:conferenceId"
@@ -480,6 +491,8 @@ const App = () => {
                                       <Route path="/pending/users" element={<PendingUsersTable />} />
                                       <Route path="/all-speakers" element={<SpeakersComponent />} />
                                       <Route path="/all-speakers" element={<SpeakersComponent />} />
+                                     
+
                                       <Route
                                         path="/all-attendances"
                                         element={<AttendanceComponent />}
@@ -585,7 +598,11 @@ const App = () => {
                    <Route path="/view-visas" element={<VisasComponent />} />
                     <Route path="/certificate" element={<Certificate />} />
                     <Route path="//invoice/trip/:participantId/:name" element={<InvoiceTrip />} />
-
+                    <Route path="sponsor/size/edit" element={<Size />} />
+                    <Route path="sponsor/Sponsorships/edit" element={<Sponsorships />} />
+                    <Route path="sponsor/SponsorShipOption/edit" element={<SponsorShipOption />} />
+                    <Route path="sponsor/floor/edit" element={<EditFloor />} />
+                    <Route path="reset/password" element={<ForgotPassword2 />} />
 
                                         <Route path="*" element={<NotFound/>} />
 

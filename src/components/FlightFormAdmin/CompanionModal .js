@@ -5,6 +5,7 @@ import CustomFormWrapper from "../../CoreComponent/CustomFormWrapper";
 import "./CompanionModal.scss";
 import { Drawer, IconButton } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
+import { backendUrlImages } from "../../constant/config";
 
 const FlightDetails = ({ flights }) => {
   console.log({ flights });
@@ -17,10 +18,23 @@ const FlightDetails = ({ flights }) => {
         <div>
           <div className="head"> companion {index + 1} </div>
           <div key={flight.flight_id} className="FlightDetails-section">
-            <SimpleLabelValue
-              label="Passport Image"
-              value={flight.passport_image ? "Available" : "Not Provided"}
-            />
+          <SimpleLabelValue
+  label="Passport Image"
+  value={
+    flight?.passportImage ? (
+      <a
+        href={`${backendUrlImages}${flight?.passportImage}`}
+        download
+        style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+      >
+        Available (Click to download)
+      </a>
+    ) : (
+      "Not Provided"
+    )
+  }
+/>
+
             <SimpleLabelValue
               label="Departure Airport"
               value={flight.departure_airport || "-"}

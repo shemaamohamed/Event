@@ -75,8 +75,7 @@ const GalaDinner = ({ isOpen, setIsOpen }) => {
           },
         }
       );
-      console.log("Response:", response.data);
-      toast.success(response?.data?.message);
+      toast.success("Dinner created successfully");
     } catch (error) {
       console.error("There was an error submitting the dinner details!", error);
       toast.error(error?.response?.data?.message || "An error occurred. Please try again.");

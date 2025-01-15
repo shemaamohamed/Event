@@ -11,6 +11,7 @@ import { Box, Card, CardContent, Drawer, Grid, IconButton, Menu, MenuItem, Typog
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DataGrid } from "@mui/x-data-grid";
 import { CloseRounded } from "@mui/icons-material";
+import { backendUrlImages } from "../../constant/config";
 
 const SponsorsComponent = () => {
   const [sponsorsData, setSponsorsData] = useState([]);
@@ -305,8 +306,51 @@ const SponsorsComponent = () => {
                 
               </Grid>
              
-            
-              
+ {/* Links to backendUrlImages before simple values */}
+ <Grid item xs={6}>
+  <Typography
+    variant="body2"
+    color="primary"
+    onClick={() => window.open(`${backendUrlImages}${selectedSponsor.first_advertisement}`, "_blank")}
+    style={{ cursor: "pointer", textDecoration: "underline" }}
+  >
+    {selectedSponsor.first_advertisement ? "First Advertisement" : "-"}
+  </Typography>
+</Grid>
+
+<Grid item xs={6}>
+  <Typography
+    variant="body2"
+    color="primary"
+    onClick={() => window.open(`${backendUrlImages}${selectedSponsor.second_advertisement}`, "_blank")}
+    style={{ cursor: "pointer", textDecoration: "underline" }}
+  >
+    {selectedSponsor.second_advertisement ? "Second Advertisement" : "-"}
+  </Typography>
+</Grid>
+
+<Grid item xs={6}>
+  <Typography
+    variant="body2"
+    color="primary"
+    onClick={() => window.open(`${backendUrlImages}${selectedSponsor.logo}`, "_blank")}
+    style={{ cursor: "pointer", textDecoration: "underline" }}
+  >
+    {selectedSponsor.logo ? "Logo" : "-"}
+  </Typography>
+</Grid>
+
+<Grid item xs={6}>
+  <Typography
+    variant="body2"
+    color="primary"
+    onClick={() => window.open(`${backendUrlImages}${selectedSponsor.contract_signature}`, "_blank")}
+    style={{ cursor: "pointer", textDecoration: "underline" }}
+  >
+    {selectedSponsor.contract_signature ? "Contract Signature" : "-"}
+  </Typography>
+</Grid>
+
              
               
               
@@ -360,7 +404,30 @@ const SponsorsComponent = () => {
                 </Grid>
                 
                
-                
+                <Grid item xs={6}>
+                      <SimpleLabelValue
+                        label="First Advertisement"
+                        value={selectedSponsor.first_advertisement || "-"}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <SimpleLabelValue
+                        label="Second Advertisement"
+                        value={selectedSponsor.second_advertisement || "-"}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <SimpleLabelValue
+                        label="Logo"
+                        value={selectedSponsor.logo || "-"}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <SimpleLabelValue
+                        label="Contract Signature"
+                        value={selectedSponsor.contract_signature || "-"}
+                      />
+                    </Grid>
                 
               </Grid>
             </CardContent>

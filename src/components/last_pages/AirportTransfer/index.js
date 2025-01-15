@@ -55,6 +55,31 @@ const AirportTransferForm = () => {
   } = formData;
 
   const BaseUrl = process.env.REACT_APP_BASE_URL;
+const handleDelete =()=>{
+  const token = localStorage.getItem('token');  // احصل على التوكن من localStorage
+
+  // تحقق إذا كان التوكن موجودًا
+  if (!token) {
+    toast.error("Token not found. Please log in again.");
+    return;
+  }
+
+  try {
+    // إرسال طلب DELETE إلى الخادم مع التوكن في الهيدر
+    const response =  axios.delete(`${BaseUrl}/user/airport/delete`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // في حال نجاح الطلب، أظهر توست برسالة نجاح
+    toast.success('Airport transfer booking has been deleted successfully.');
+  } catch (error) {
+    // في حال حدوث خطأ، أظهر توست برسالة خطأ
+    const errorMessage = error.response?.data?.message || "An error occurred while deleting the booking.";
+    toast.error(errorMessage);
+  }
+};
 
   const handleChange = (field) => (value) => {
     setFormData((prevData) => ({ ...prevData, [field]: value }));
@@ -280,6 +305,8 @@ const AirportTransferForm = () => {
                     >
                       Edit
                     </button>
+                    <button className="pay-btn" onClick={()=>handleDelete()}>Delete</button>
+
                   </div>
                 ) : (
                   <p>No invoice available</p>
