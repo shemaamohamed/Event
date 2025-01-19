@@ -48,6 +48,7 @@ const ViewTrip = () => {
     
     const openMenu = (event, row) => {
       setAnchorEl(event.currentTarget);
+      
       setSelectedRow(row);
     };
   
@@ -164,8 +165,11 @@ const ViewTrip = () => {
       cellClassName: "centered-cell", 
     },
     { field: "actions", headerName: "Actions", flex: 0.2, minWidth: 230, cellClassName: "centered-cell", 
+      
       renderCell: (params) => (
+        
         <>
+        
         <IconButton onClick={(event) => openMenu(event, params.row)}>
             <MoreVertIcon />
           </IconButton>

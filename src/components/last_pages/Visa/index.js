@@ -168,38 +168,44 @@ const VisaPage = () => {
     fetchData();
   }, []);
   console.log(visaPrice);
-const handleDelete=async()=>{
-
+  const handleDelete = async () => {
     try {
-      const token = localStorage.getItem('token'); // تأكد من وجود التوكن في `localStorage`
-  
+      const token = localStorage.getItem("token"); // تأكد من وجود التوكن في `localStorage`
+
       // التأكد من وجود التوكن
       if (!token) {
-        toast.error('Token is missing. Please log in again.');
+        toast.error("Token is missing. Please log in again.");
         return;
       }
-  
+
       const response = await axios.delete(`${BaseUrl}/delete/visa/n`, {
         headers: {
           Authorization: `Bearer ${token}`, // إضافة التوكن في الهيدر
         },
       });
-  
+
       if (response.status === 200) {
-        toast.success('Visa request deleted successfully!');
+        toast.success("Visa request deleted successfully!");
+        // setShowVisaForm(true)
+        window.location.reload()
         // يمكنك إضافة المزيد من الإجراءات هنا (مثل إعادة التوجيه أو تحديث الواجهة)
       }
     } catch (error) {
       if (error.response) {
         // إذا كان هناك استجابة من السيرفر
-        toast.error(error.response.data.error || 'An error occurred while deleting the visa request.');
+        toast.error(
+          error.response.data.error ||
+            "An error occurred while deleting the visa request."
+        );
       } else {
         // إذا لم تكن هناك استجابة من السيرفر
-        toast.error('An error occurred. Please try again later.');
+        toast.error("An error occurred. Please try again later.");
       }
     }
-
-}
+  };
+  useEffect(() => {
+    console.log(visaData);
+  }, [visaData]);
   return (
     <div className="visa-page-container">
       {!visaData &&
@@ -254,13 +260,13 @@ const handleDelete=async()=>{
           </div>
           <button
             type="submit"
-            className={`submit-btn ${!arrivalDate ||!departureDate || !passportImage ? "disabled" : ""}`}
-            disabled={!arrivalDate ||!departureDate || !passportImage ? true : false}
-
+            className={`submit-btn ${!arrivalDate || !departureDate || !passportImage ? "disabled" : ""}`}
+            disabled={
+              !arrivalDate || !departureDate || !passportImage ? true : false
+            }
           >
             Submit
           </button>
-
         </form>
       )}
 
@@ -282,7 +288,10 @@ const handleDelete=async()=>{
               />
             )}
             <SimpleLabelValue label="Status" value={visaData.status} />
-            <SimpleLabelValue label="Visa Cost" value={visaData.visa_cost} />
+            <SimpleLabelValue
+              label="Visa Cost (USD)"
+              value={visaData.visa_cost}
+            />
 
             {visaData.updated_at_by_admin && (
               <SimpleLabelValue
@@ -305,9 +314,11 @@ const handleDelete=async()=>{
             )}
           </div>
           <div className="actions-section">
-            <button className="next-button" onClick={() => { }}>
-              Pay
-            </button>{" "}
+            {visaData.visa_cost !== "0.00" && (
+              <button className="next-button" onClick={() => {}}>
+                Pay
+              </button>
+            )}
             <button
               className="next-button"
               onClick={() => {
@@ -317,7 +328,6 @@ const handleDelete=async()=>{
               Next
             </button>
 
-
             <button
               className="next-button"
               onClick={() => {
@@ -326,8 +336,6 @@ const handleDelete=async()=>{
             >
               Delete
             </button>
-
-
           </div>
         </Fragment>
       )}

@@ -96,7 +96,7 @@ const TripParticipantsComponentGroup = () => {
     { field: "user_email", headerName: "User Email", flex: 1, minWidth: 200 , cellClassName: "centered-cell"},
     { field: "selected_date", headerName: "Selected Date", flex: 1, minWidth: 200 , cellClassName: "centered-cell" },
     { field: "companions_count", headerName: "Companions Count", flex: 1, minWidth: 200 , cellClassName: "centered-cell"},
-    { field: "total_price", headerName: "Total Price", flex: 1, minWidth: 200 , cellClassName: "centered-cell" },
+    { field: "total_price", headerName: "Total Price (USD)", flex: 1, minWidth: 200 , cellClassName: "centered-cell" },
     { field: "created_at", headerName: "Created At", flex: 1, minWidth: 200 , cellClassName: "centered-cell"},
     { field: "actions", headerName: "Actions", flex: 1, minWidth: 200 , cellClassName: "centered-cell",
       renderCell: (params) => (
@@ -247,7 +247,7 @@ const TripParticipantsComponentGroup = () => {
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Typography variant="body2" color="textSecondary">
-                Total Price
+                Total Price(USD)
               </Typography>
               <Typography variant="body1">
                 ${formatValue(selectedParticipant.total_price)}

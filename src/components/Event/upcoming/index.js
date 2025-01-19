@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './style.scss';
-import Card from '../../CardEvent';
 import { backendUrlImages } from '../../../constant/config';
+import Cardd from '../../CardEvent';
+import { Grid } from '@mui/material';
 
 const UpcomingConferences2 = () => {
   const [conferences, setConferences] = useState([]);
@@ -40,23 +41,21 @@ const UpcomingConferences2 = () => {
     }}
     >
       <h2 className="section-title">Upcoming Event</h2>
-      <div className="card-container">
-        {conferences.map((conference) => (
-          <Card
-            key={conference.id}
-            // src={`${backendUrlImages}${conference.imageUrl}`}
-            imageUrl={`${backendUrlImages}${conference?.image}`} 
-
+      <Grid container spacing={4} justifyContent="center">
+      {conferences.map((conference) => (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={conference.id}>
+          <Cardd
+            imageUrl={`${backendUrlImages}${conference?.image}`}
             title={conference.title}
             description={conference.description}
-            // seeMoreLink={`/conference/${conference.id}`}
             seeMoreLink={`/conference/details/${conference.id}`}
             galleryLink={conference.galleryLink}
             buttonText="Read More"
             galleryButtonText="Explore Gallery"
           />
-        ))}
-      </div>
+        </Grid>
+      ))}
+    </Grid>
     </div>
   );
 };

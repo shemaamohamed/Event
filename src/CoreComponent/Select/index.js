@@ -16,8 +16,8 @@ const Select = ({
   const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef(null);
 
-  const filteredOptions = options.filter((option) =>
-    option.label.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredOptions = options?.filter((option) =>
+    option?.label?.toLowerCase()?.includes(searchQuery?.toLowerCase())
   );
 
   const handleOptionClick = (option) => {
@@ -36,7 +36,6 @@ const Select = ({
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsOpen(false);
-
 
       const isValueFromTheOptions = options?.find(
         (item) => item?.value === value?.value && item?.label === value?.label
@@ -84,7 +83,7 @@ const Select = ({
 
       {isOpen && (
         <div className="dropdown-options">
-          {filteredOptions.length > 0 ? (
+          {filteredOptions && filteredOptions?.length > 0 ? (
             filteredOptions.map((option, index) => (
               <div
                 key={index}

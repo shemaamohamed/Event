@@ -56,7 +56,7 @@ const InvoiceTrip = () => {
                 value={`$${participant.options_price}`}
               />
               <SimpleLabelValue
-                label="Total Price"
+                label="Total Price(USD)"
                 value={`$${participant.total_price}`}
               />
               <SimpleLabelValue

@@ -19,10 +19,11 @@ const ForgotPassword2 = () => {
       setError('Passwords do not match!');
       return;
     }
+    const BaseUrl = process.env.REACT_APP_BASE_URL;
 
     try {
       // إرسال الطلب إلى API الخاصة بإعادة تعيين كلمة المرور
-      const response = await axios.post('http://127.0.0.1:8000/api/reset-password', {
+      const response = await axios.post(`${BaseUrl}/reset-password`, {
         email: email,           // إرسال البريد الإلكتروني من المستخدم
         password: newPassword,  // كلمة المرور الجديدة
         password_confirmation: confirmPassword,  // تأكيد كلمة المرور

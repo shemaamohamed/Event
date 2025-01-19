@@ -27,7 +27,7 @@ const PayForm = () => {
                   className="invoice-detail"
                 />
                 <SimpleLabelValue
-                  label="Total Price"
+                  label="Total Price(USD)"
                   value={invoice.total_price}
                   className="invoice-detail"
                 />

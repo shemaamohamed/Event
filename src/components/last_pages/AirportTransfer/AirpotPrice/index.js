@@ -126,7 +126,7 @@ const AirportTransferPrice = ({ isOpen, setIsOpen, selectedConference }) => {
         
           <form onSubmit={handleSubmit} className="price-airport-form9">
             <Input
-              label="From Airport Price"
+              label="From Airport Price (USD)"
               inputValue={fromAirportPrice}
               setInputValue={setFromAirportPrice}
               placeholder="Enter price"
@@ -135,7 +135,7 @@ const AirportTransferPrice = ({ isOpen, setIsOpen, selectedConference }) => {
               required
             />
             <Input
-              label="To Airport Price"
+              label="To Airport Price (USD)"
               inputValue={toAirportPrice}
               setInputValue={setToAirportPrice}
               placeholder="Enter price"
@@ -144,7 +144,7 @@ const AirportTransferPrice = ({ isOpen, setIsOpen, selectedConference }) => {
               required
             />
             <Input
-              label="Round Trip Price"
+              label="Round Trip Price (USD) "
               inputValue={roundTripPrice}
               setInputValue={setRoundTripPrice}
               placeholder="Enter price"

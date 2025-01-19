@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback, Fragment } from "react";
 import httpService from "../../../common/httpService";
 import Select from "../../../CoreComponent/Select";
@@ -12,10 +11,22 @@ import ImageUpload from "../../../CoreComponent/ImageUpload";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import axios from "axios";
-import { Avatar, Box, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemText, Menu, MenuItem, Typography } from "@mui/material";
-import { DataGrid } from '@mui/x-data-grid';
+import {
+  Avatar,
+  Box,
+  Divider,
+  Drawer,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { CloseRounded } from "@mui/icons-material";
-
 
 const PendingUsersTable = () => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -31,6 +42,8 @@ const PendingUsersTable = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [conferences, setConferences] = useState([]);
+  const [conferenceId, setConferenceId] = useState(null);
   const openMenu = (event, row) => {
     setAnchorEl(event.currentTarget);
     setSelectedRow(row);
@@ -47,31 +60,35 @@ const PendingUsersTable = () => {
     { value: "rejected", label: "Rejected" },
     { value: "all", label: "All" },
   ];
-     
+  console.log(selectedUser);
+
   const handleDelete = (userId) => {
     const token = localStorage.getItem("token"); // ضع التوكن الخاص بك هنا
 
-    axios.delete(`${BaseUrl}/delete/user/${userId}`, {
+    axios
+      .delete(`${BaseUrl}/delete/user/${userId}`, {
         headers: {
-            Authorization: `Bearer ${token}` // تمرير التوكن هنا
-        }
-    })
-    .then(response => {
+          Authorization: `Bearer ${token}`, // تمرير التوكن هنا
+        },
+      })
+      .then((response) => {
         console.log("User deleted successfully:", response.data);
-
-    })
-    .catch(error => {
-        console.error("Error deleting user:", error.response ? error.response.data : error.message);
-    });
-};
+      })
+      .catch((error) => {
+        console.error(
+          "Error deleting user:",
+          error.response ? error.response.data : error.message
+        );
+      });
+  };
 
   const getAuthToken = () => localStorage.getItem("token");
-
-  const fetchPendingUsers = useCallback(async () => {
+  
+  const fetchPendingUsers = async () => {
     const url = `${BaseUrl}/users?status=${
       status?.value || "all"
-    }&page=${currentPage}`;
-
+    }&page=${currentPage}&conference_id=${conferenceId?.value || null}`;
+  
     try {
       const response = await httpService({
         method: "GET",
@@ -79,100 +96,88 @@ const PendingUsersTable = () => {
         headers: { Authorization: `Bearer ${getAuthToken()}` },
         showLoader: true,
       });
-
-
-   
-    
-
-
-
+  
       const usersWithActions = response?.data?.map((user) => {
         return {
           ...user,
           name: user?.name || user?.company_name,
-        
         };
       });
-
+  
       setPendingUsers(usersWithActions);
       setTotalPages(response.pagination?.total_pages);
       setCurrentPage(response.pagination?.current_page);
     } catch (err) {
       toast.error("Failed to fetch users.");
     }
-  }, [status, currentPage, navigate]);
-
+  };
+  
   useEffect(() => {
     fetchPendingUsers();
-  }, [fetchPendingUsers]);
+  }, [status, currentPage, conferenceId]);
+  
 
   const columns = [
     {
       field: "name",
-      headerName:  "Name",
+      headerName: "Name",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
     },
     {
       field: "email",
-      headerName:  "Email",
+      headerName: "Email",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
-      
     },
     {
       field: "phone_number",
-      headerName:  "Phone Number",
+      headerName: "Phone Number",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
     },
     {
-        field: "whatsapp_number",
-        headerName:  "WhatsApp Number",
-        flex: 1,
-        minWidth: 230,
-        cellClassName: "centered-cell",
-      },
-      {
-        field: "specialization",
-        headerName:  "Specialization",
-        flex: 1,
-        minWidth: 230,
-        cellClassName: "centered-cell",
-      },
-      {
-        field: "country_of_residence",
-        headerName:  "Country of Residence",
-        flex: 1,
-        minWidth: 230,
-        cellClassName: "centered-cell",
-      },
+      field: "whatsapp_number",
+      headerName: "WhatsApp Number",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "specialization",
+      headerName: "Specialization",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "country_of_residence",
+      headerName: "Country of Residence",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
     {
       field: "registration_type",
       headerName: "Registration Type",
       flex: 1,
       minWidth: 150,
       cellClassName: "centered-cell",
-      
-      
     },
     {
-        field: "status",
-        headerName: "Status",
-        flex: 1,
-        minWidth: 150,
-        cellClassName: "centered-cell",
-
-    }
-  
-        ,
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+      minWidth: 150,
+      cellClassName: "centered-cell",
+    },
 
     {
       field: "actions",
-      headerName:  "Actions",
+      headerName: "Actions",
       flex: 0.2,
       minWidth: 90,
       cellClassName: "centered-cell",
@@ -186,54 +191,62 @@ const PendingUsersTable = () => {
             open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
             onClose={closeMenu}
           >
-             <MenuItem onClick={() => {
-                setSelectedUser(params.row);
-                setIsDrawerOpen(true)
-
-             }}>
-               view
-            </MenuItem> 
             <MenuItem
-                className={`view-btn ${
-                    params.row?.status !== "pending" && "disabled-btn"
-                  } `}
-                  onClick={() => {
-                    if (params.row?.registration_type === "speaker") {
-                      navigate(
-                        `/edit/speaker/data/${params.row.conferences?.[0]?.id}/${params.row.id}`
-                      );
-                    } else if (params.row?.registration_type === "attendance") {
-                      navigate(
-                        `/edit/attendance/data/${params.row.conference_id}/${params.row.id}`
-                      );
-                    } else if (params.row?.registration_type === "sponsor") {
-                      const sponsor = {
-                        user_id: params.row?.id,
-                        conference_id: params.row?.conference_id,
-                        company_name: params.row?.company_name,
-                        contact_person: params.row?.contact_person,
-                        company_address: params.row?.company_address,
-                        registration_type:params.row?.registration_type,
-                      };
-                      setSponsorData(sponsor);
-                      setIsDialogOpen(true);
-                    } else if (params.row?.registration_type === "group_registration") {
-                      navigate(`/group/update/admin/${params.row.id}`);
-                    } else if (!params.row?.registration_type) {
-                      navigate(`/adminForm/${params.row.id}`);
-                    }
-                  }}
-                  disabled={params.row?.status !== "pending"}
+              onClick={() => {
+                setSelectedUser(params.row);
+                setIsDrawerOpen(true);
+              }}
             >
-                                Submit
-
+              view
             </MenuItem>
-            <MenuItem onClick={() => {
-              handleDelete(params.row.id)
-
-             }}>
-                Delete
-            </MenuItem> 
+            <MenuItem
+              className={`view-btn ${
+                params.row?.status !== "pending" && "disabled-btn"
+              } `}
+              onClick={() => {
+                if (
+                  params.row?.isFromAbstract === 1 &&
+                  params.row?.registration_type === "speaker"
+                ) {
+                  navigate(`/abs/${params.row.id}/${params.row.conference_id}`);
+                } else if (params.row?.registration_type === "speaker") {
+                  navigate(
+                    `/edit/speaker/data/${params.row.conferences?.[0]?.id}/${params.row.id}`
+                  );
+                } else if (params.row?.registration_type === "attendance") {
+                  navigate(
+                    `/edit/attendance/data/${params.row.conference_id}/${params.row.id}`
+                  );
+                } else if (params.row?.registration_type === "sponsor") {
+                  const sponsor = {
+                    user_id: params.row?.id,
+                    conference_id: params.row?.conference_id,
+                    company_name: params.row?.company_name,
+                    contact_person: params.row?.contact_person,
+                    company_address: params.row?.company_address,
+                    registration_type: params.row?.registration_type,
+                  };
+                  setSponsorData(sponsor);
+                  setIsDialogOpen(true);
+                } else if (
+                  params.row?.registration_type === "group_registration"
+                ) {
+                  navigate(`/group/update/admin/${params.row.id}`);
+                } else if (!params.row?.registration_type) {
+                  navigate(`/adminForm/${params.row.id}`);
+                }
+              }}
+              disabled={params.row?.status !== "pending"}
+            >
+              Submit
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleDelete(params.row.id);
+              }}
+            >
+              Delete
+            </MenuItem>
           </Menu>
         </>
       ),
@@ -243,19 +256,17 @@ const PendingUsersTable = () => {
     return {
       ...row,
       id: row.id,
-      name: row.name, 
-      email: row.email, 
-      phone_number: row.phone_number, 
-      whatsapp_number: row.whatsapp_number, 
+      name: row.name,
+      email: row.email,
+      phone_number: row.phone_number,
+      whatsapp_number: row.whatsapp_number,
       specialization: row.specialization,
-      country_of_residence: row.country_of_residence, 
-      registration_type: row.registration_type, 
-      status: row.status, 
-      actions: row.actions, 
+      country_of_residence: row.country_of_residence,
+      registration_type: row.registration_type,
+      status: row.status,
+      actions: row.actions,
     };
   });
-
-  
 
   const approveSponsor = async () => {
     try {
@@ -270,20 +281,42 @@ const PendingUsersTable = () => {
       toast.error("Something went wrong, please try again.");
     }
   };
-
+  const fetchConferences = async () => {
+    try {
+      const response = await httpService({
+        method: "GET",
+        url: `${BaseUrl}/conferences/all`,
+        onSuccess: (data) => {
+          setConferences(data.data); // تأكد من أنك تحفظ البيانات بشكل صحيح
+        },
+      });
+    } catch (error) {}
+  };
+  useEffect(() => {
+    fetchConferences();
+  }, []);
   return (
     <div className="pending-users-container">
       <Typography
-              variant="h6"
-              sx={{
-                color: '#c62828',
-                fontWeight: 'bold',
-                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-                textAlign: 'center',
-              }}
-            >
-              All Users
-            </Typography>
+        variant="h6"
+        sx={{
+          color: "#c62828",
+          fontWeight: "bold",
+          fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+          textAlign: "center",
+        }}
+      >
+        All Users
+      </Typography>
+      <Select
+        label="Select Conference"
+        options={conferences.map((item) => ({
+          label: item.title,
+          value: item.id,
+        }))}
+        value={conferenceId}
+        setValue={setConferenceId}
+      />
       <DialogMessage
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}
@@ -295,196 +328,244 @@ const PendingUsersTable = () => {
         options={statusOptions}
         value={status}
         setValue={setStatus}
-        label="Visa Status"
+        label="Status"
       />
-     <DataGrid
+      <DataGrid
         getRowId={(row) => row.id}
         rows={rows}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 8,
-                        },
-                      },
-                    }}
-                    pageSizeOptions={[8]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                    autoHeight
-                    sx={{
-                      marginTop: "20px",
-                      "& .MuiDataGrid-virtualScroller": {
-                        overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
-                      },
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 8,
+            },
+          },
         }}
-        
+        pageSizeOptions={[8]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        autoHeight
+        sx={{
+          marginTop: "20px",
+          "& .MuiDataGrid-virtualScroller": {
+            overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+          },
+        }}
       />
 
-     
-     
-      <Drawer anchor="right"
-      
-      sx={{
-        //width
-        zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
+      <Drawer
+        anchor="right"
+        sx={{
+          //width
+          zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
 
-        '& .MuiDrawer-paper': {
+          "& .MuiDrawer-paper": {
             zIndex: (theme) => theme.zIndex.modal + 1,
 
-
-      width: 
-      {
-        xs: '100%',
-        sm: '50%',
-        md: '50%',
-        lg: '40%',
-        xl: '40%',
-      }, 
-    },
-
-      }}
-       open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-        <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: 2,
+            width: {
+              xs: "100%",
+              sm: "50%",
+              md: "50%",
+              lg: "40%",
+              xl: "40%",
+            },
+          },
         }}
+        open={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: 2,
+          }}
         >
           <IconButton onClick={() => setIsDrawerOpen(false)}>
-           <CloseRounded /> 
+            <CloseRounded />
           </IconButton>
         </div>
-      <Box sx={{
-       padding: 2,
-        
-       }}>
-       <Typography
-        variant="h6"
-        
-        sx={{
-          color: "#c62828",
-          textAlign: "center",
-          backgroundColor: "#f1f1f1",
-          padding: 1,
-          borderRadius: 1,
-          marginBottom: 2,
-        }}
-      
-        gutterBottom
-      >
-                  User Details
+        <Box
+          sx={{
+            padding: 2,
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#c62828",
+              textAlign: "center",
+              backgroundColor: "#f1f1f1",
+              padding: 1,
+              borderRadius: 1,
+              marginBottom: 2,
+            }}
+            gutterBottom
+          >
+            User Details
+          </Typography>
+          <Divider sx={{ mb: 2 }} />
+          {selectedUser ? (
+            <Grid container spacing={2}>
+              {/* Basic Details */}
+              <Grid item xs={12} sm={6}>
+                <List>
+                  <ListItem>
+                    <ListItemText
+                      primary="Name"
+                      secondary={selectedUser.name || "-"}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Email"
+                      secondary={selectedUser.email || "-"}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Phone Number"
+                      secondary={selectedUser.phone_number || "-"}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="WhatsApp Number"
+                      secondary={selectedUser.whatsapp_number || "-"}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Nationality"
+                      secondary={selectedUser.nationality || "-"}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Country of Residence"
+                      secondary={selectedUser.country_of_residence || "-"}
+                    />
+                  </ListItem>
+                </List>
+              </Grid>
 
-      </Typography>
-        <Divider sx={{ mb: 2 }} />
-        {selectedUser ? (
-          <Grid container spacing={2}>
-          {/* Basic Details */}
-          <Grid item xs={12} sm={6}>
-            <List>
-              <ListItem>
-                <ListItemText primary="Name" secondary={selectedUser.name || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Email" secondary={selectedUser.email || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Phone Number" secondary={selectedUser.phone_number || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="WhatsApp Number" secondary={selectedUser.whatsapp_number || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Nationality" secondary={selectedUser.nationality || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Country of Residence" secondary={selectedUser.country_of_residence || "-"} />
-              </ListItem>
-            </List>
-          </Grid>
-        
-          <Grid item xs={12} sm={6}>
-            <List>
-              <ListItem>
-                <ListItemText primary="Status" secondary={selectedUser.status || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Registration Type" secondary={selectedUser.registration_type || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Biography" secondary={selectedUser.biography || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Company Name" secondary={selectedUser.company_name || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Contact Person" secondary={selectedUser.contact_person || "-"} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Company Address" secondary={selectedUser.company_address || "-"} />
-              </ListItem>
-            </List>
-          </Grid>
-        
-          {/* Conferences */}
-          <Grid item xs={12}>
-            <List>
-              <ListItem>
-                <ListItemText
-                  primary="Conferences"
-                  secondary={
-                    selectedUser.conferences?.length
-                      ? selectedUser.conferences
-                          .map(
-                            (conference) =>
-                              `${conference.title} (Location: ${conference.location}, Status: ${conference.status})`
-                          )
-                          .join(", ")
-                      : "-"
-                  }
-                />
-              </ListItem>
-            </List>
-          </Grid>
-        
-          {/* Papers */}
-          {selectedUser.papers?.length
-            ? selectedUser.papers.map((paper, index) => (
-                <Grid container key={index} spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <List>
-                      <ListItem>
-                        <ListItemText primary="Paper Title" secondary={paper.title} />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText
-                          primary="Abstract"
-                          secondary={
-                            <Avatar
-                              src={`${backendUrlImages}${paper.file_path}`}
-                              alt="Abstract"
-                              variant="square"
-                              sx={{ width: 100, height: 100 }}
+              <Grid item xs={12} sm={6}>
+                <List>
+                  <ListItem>
+                    <ListItemText
+                      primary="Status"
+                      secondary={selectedUser.status || "-"}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Registration Type"
+                      secondary={selectedUser.registration_type || "-"}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Biography"
+                      secondary={selectedUser.biography || "-"}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Company Name"
+                      secondary={selectedUser.company_name || "-"}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Contact Person"
+                      secondary={selectedUser.contact_person || "-"}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="Company Address"
+                      secondary={selectedUser.company_address || "-"}
+                    />
+                  </ListItem>
+                </List>
+              </Grid>
+
+              {/* Conferences */}
+              <Grid item xs={12}>
+                <List>
+                  <ListItem>
+                    <ListItemText
+                      primary="Conferences"
+                      secondary={
+                        selectedUser.conferences?.length
+                          ? selectedUser.conferences
+                              .map(
+                                (conference) =>
+                                  `${conference.title} (Location: ${conference.location}, Status: ${conference.status})`
+                              )
+                              .join(", ")
+                          : "-"
+                      }
+                    />
+                  </ListItem>
+                </List>
+              </Grid>
+
+              {/* Papers */}
+              {selectedUser.papers?.length
+                ? selectedUser.papers.map((paper, index) => (
+                    <Grid container key={index} spacing={2}>
+                      <Grid item xs={12} sm={6}>
+                        <List>
+                          <ListItem>
+                            <ListItemText
+                              primary="Paper Title"
+                              secondary={
+                                <a
+                                  href={`${backendUrlImages}${paper[0]?.file_path}`} // مسار الملف الذي سيتم تنزيله
+                                  download={paper.title} // اسم الملف الذي سيتم تنزيله
+                                  style={{
+                                    textDecoration: "none",
+                                    color: "inherit",
+                                  }}
+                                >
+                                  {paper.title}
+                                </a>
+                              }
                             />
-                          }
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText primary="Paper Status" secondary={paper.status} />
-                      </ListItem>
-                    </List>
-                  </Grid>
-                </Grid>
-              ))
-            : null}
-        </Grid>
-        
-        ) : (
-          <Typography>No user selected.</Typography>
-        )}
-      </Box>
-    </Drawer>
+                          </ListItem>
+
+                          <ListItem>
+                            <ListItemText
+                              primary="Abstract"
+                              secondary={
+                                <Typography
+                                  variant="body2"
+                                  sx={{ whiteSpace: "pre-line" }}
+                                >
+                                  {paper.abstract}{" "}
+                                  {/* Assuming "paper.abstract" contains the abstract text */}
+                                </Typography>
+                              }
+                            />
+                          </ListItem>
+                          <ListItem>
+                            <ListItemText
+                              primary="Paper Status"
+                              secondary={paper.status}
+                            />
+                          </ListItem>
+                        </List>
+                      </Grid>
+                    </Grid>
+                  ))
+                : null}
+            </Grid>
+          ) : (
+            <Typography>No user selected.</Typography>
+          )}
+        </Box>
+      </Drawer>
     </div>
   );
 };

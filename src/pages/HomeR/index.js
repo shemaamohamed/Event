@@ -13,6 +13,8 @@ const Home = () => {
   const [allConferences, setAllConferences] = useState([]);
   const navigate = useNavigate();
 
+ 
+
   const getConference = () => {
     const BaseUrl = process.env.REACT_APP_BASE_URL;
     const url = `${BaseUrl}/con/upcoming`;

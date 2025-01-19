@@ -1,0 +1,117 @@
+.container88 {
+    max-width: 800px;
+    // margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    // box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+ 
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  textarea.textarea-field {
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.3s ease;
+  
+    &:focus {
+      border-color: #4a90e2;
+    }
+  }
+  
+  label {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  button {
+    padding: 12px 20px;
+    background-color: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #357ab7;
+    }
+  
+    &:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button:active {
+    transform: scale(0.98);
+  }
+  
+  /* ImageUpload Component Styling */
+  input[type="file"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+  
+    &:focus {
+      border-color: #4a90e2;
+    }
+  }
+  
+  input[type="file"]:disabled {
+    cursor: not-allowed;
+  }
+  
+  /* Custom form controls */
+  .CustomLabel {
+    font-size: 14px;
+    color: #666;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  input[type="file"]:hover {
+    border-color: #4a90e2;
+  }
+}
+  

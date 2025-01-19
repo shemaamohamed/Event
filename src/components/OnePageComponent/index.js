@@ -64,7 +64,10 @@ const OnePage = () => {
   
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} sx={{
+      marginTop:'30vh',
+      padding:'20px'
+    }}>
     <Grid item xs={12} sm={3} md={2}
       sx={{ display: { xs: 'block', sm: 'none' }, textAlign: 'right' }}
     >

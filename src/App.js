@@ -187,6 +187,10 @@ import MarketingVideoProduction from './pages/innerPages/MarketingVideoProductio
 import ComprehensiveMarketingServices from './pages/innerPages/ComprehensiveMarketingServices';
 import AdditionalConferenceExhibitionServices from './pages/innerPages/AdditionalConferenceExhibitionServices';
 import FooterV1 from './components/footer/FooterV1';
+import CreateWorkshop from './components/CreateWorkshop/index';
+import DinnerAdmin from './components/DinnerAdmin/index';
+import GroupTripParticipantsForUser from './components/TripParticipantsForUserGroup/index';
+import ConferenceWelcomeMessageForm from './components/welcomComponents/ConferenceWelcomeMessageForm/index';
 
 
 
@@ -397,14 +401,15 @@ const App = () => {
               }
               
                                 
-                                {
+              {
                                   isLoggedIn && limit&& ( isAdmin ||isAttendance ||isSpeaker ) &&(
                                     <Routes>
 
 
                                     <Route path="/" element={<AdminLayoutBasic/>} >
                                    
-                                  
+                                   
+
                                     
 
   
@@ -414,9 +419,10 @@ const App = () => {
               />
   
   
-  
+  <Route path="/admin/workshop" element={<CreateWorkshop/>} />
+
                                       <Route path="exhibitions" element={<Exhibitions />} />
-  
+                                      <Route path="/dinner/admin" element={<DinnerAdmin />} />
                                       <Route path="adminForm/:userId" element={<AdminForm />} />
                                       <Route path="test" element={<SpeakerUpdateForm />} />
                                       <Route
@@ -456,10 +462,24 @@ const App = () => {
                 path="/user/trip/participants"
                 element={<TripParticipantsForUser />}
               />
+                                          <Route
+                path="/user/group/trip/participants"
+                element={<GroupTripParticipantsForUser />}
+
+                
+              />
+
+<Route
+                path="/conference/welcome/message/form/:id"
+                element={<ConferenceWelcomeMessageForm />}
+
+                
+              />
                                         {/* <Route
                                           path="/trip/participants/user"
                                           element={<TripParticipantsForUser />}
                                         /> */}
+
                                         <Route
                                           path="/trip/participants/group"
                                           element={<TripParticipantsComponentGroup />}
@@ -489,6 +509,7 @@ const App = () => {
                                       <Route path="hotel/booking" element={<HotelBooking />} />
                                       <Route path="transportation" element={<Transportation />} />
                                       <Route path="speaker/profile" element={<SpeakerProfileForm />} />
+                                      
                                       <Route path="admin/visa" element={<AdminVisa />} />
                                       <Route
                                         path="group/update/admin/:register_id"
@@ -534,7 +555,6 @@ const App = () => {
                                       <Route path="job/applicants" element={<JobApplicants />} />
 
                                       <Route path="/pending/users" element={<PendingUsersTable />} />
-                                      <Route path="/all-speakers" element={<SpeakersComponent />} />
                                       <Route path="/all-speakers" element={<SpeakersComponent />} />
                                      
 
@@ -590,7 +610,6 @@ const App = () => {
                                         path="sponsor/upload/floor"
                                         element={<FloorPlanUploader />}
                                       />
-                                      <Route path="sponsor/invoice" element={<SponsorInvoice />} />
                                       <Route path="trip/form" element={<TripForm />} />
                                       <Route path="trans/form" element={<Transportation3 />} />
                                       <Route path="ticket/booking2" element={<TravelForm2 />} />

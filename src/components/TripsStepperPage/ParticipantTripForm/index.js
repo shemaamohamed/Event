@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import Input from "../../../CoreComponent/Input";
 import Select from "../../../CoreComponent/Select";
 import PhoneNumberInput from "../../../CoreComponent/PhoneNumber";
@@ -27,7 +27,7 @@ const ParticipantTripForm = () => {
     accommodation_stars: "",
     nights_count: "",
   };
-  const { currentStep, completeStep } = useTripsStepper();
+  const { currentStep, completeStep, noViewAccommodation } = useTripsStepper();
   const [participants, setParticipants] = useState([intialValue]);
   const addParticipant = () => {
     setParticipants([
@@ -39,9 +39,9 @@ const ParticipantTripForm = () => {
         phone_number: "",
         whatsapp_number: "",
         is_companion: true,
-        include_accommodation: false,
-        accommodation_stars: "",
-        nights_count: "",
+        include_accommodation: noViewAccommodation ? false : false,
+        accommodation_stars: noViewAccommodation ? 1 : "",
+        nights_count: noViewAccommodation ? 0 : "",
       },
     ]);
   };
@@ -73,22 +73,25 @@ const ParticipantTripForm = () => {
   }, []);
   return (
     <div>
-    <div className="add-button-container" style={{marginBottom:'20px'}}>
-      <button
-        variant="contained"
-        color="primary"
-        className="add-button-participant"
-        onClick={addParticipant}
-      >
-        Add Participant
-      </button>
-    </div>
-  
-    <Grid container spacing={1} alignItems="center">
+      <div className="add-button-container" style={{ marginBottom: "20px" }}>
+        <button
+          variant="contained"
+          color="primary"
+          className="add-button-participant"
+          onClick={addParticipant}
+        >
+          Add Participant
+        </button>
+      </div>
 
-      {participants?.map((participant) => (
-        <div key={participant.id} style={{marginTop:'20px'}}>
-            <Grid item xs={12}  sx={{display: "flex", justifyContent: "flex-end"}}>
+      <Grid container spacing={1} alignItems="center">
+        {participants?.map((participant) => (
+          <div key={participant.id} style={{ marginTop: "20px" }}>
+            <Grid
+              item
+              xs={12}
+              sx={{ display: "flex", justifyContent: "flex-end" }}
+            >
               <div className="delete-button-participant">
                 <SVG
                   className="delete-icon"
@@ -97,8 +100,8 @@ const ParticipantTripForm = () => {
                 />
               </div>
             </Grid>
-  
-            <Grid item xs={12} >
+
+            <Grid item xs={12}>
               <Grid container spacing={1}>
                 <Grid item xs={12} sm={6}>
                   <Input
@@ -111,7 +114,7 @@ const ParticipantTripForm = () => {
                     className="name-input"
                   />
                 </Grid>
-  
+
                 <Grid item xs={12} sm={6}>
                   <Select
                     options={nationalitiesOptions}
@@ -122,7 +125,7 @@ const ParticipantTripForm = () => {
                     label="Nationality"
                   />
                 </Grid>
-  
+
                 <Grid item xs={12} sm={6}>
                   <PhoneNumberInput
                     label="Phone Number"
@@ -133,18 +136,22 @@ const ParticipantTripForm = () => {
                     }
                   />
                 </Grid>
-  
+
                 <Grid item xs={12} sm={6}>
                   <PhoneNumberInput
                     label="WhatsApp Number"
                     placeholder="Enter WhatsApp number"
                     phone={participant.whatsapp_number}
                     setPhone={(value) =>
-                      handleInputChange(participant.id, "whatsapp_number", value)
+                      handleInputChange(
+                        participant.id,
+                        "whatsapp_number",
+                        value
+                      )
                     }
                   />
                 </Grid>
-  
+
                 <Grid item xs={12} sm={6}>
                   <DateInput
                     label="Check-In Date"
@@ -155,7 +162,7 @@ const ParticipantTripForm = () => {
                     required={true}
                   />
                 </Grid>
-  
+
                 <Grid item xs={12} sm={6}>
                   <DateInput
                     label="Check-Out Date"
@@ -166,30 +173,41 @@ const ParticipantTripForm = () => {
                     required={true}
                   />
                 </Grid>
-  
-                <Grid item xs={12} sm={6}>
-                  <Input
-                    label="Accommodation Stars"
-                    placeholder="Enter accommodation stars"
-                    inputValue={participant.accommodation_stars}
-                    setInputValue={(value) =>
-                      handleInputChange(participant.id, "accommodation_stars", value)
-                    }
-                    className="stars-input"
-                  />
-                </Grid>
-  
-                <Grid item xs={12} sm={6}>
-                  <Input
-                    label="Nights Count"
-                    placeholder="Enter nights count"
-                    inputValue={participant.nights_count}
-                    setInputValue={(value) =>
-                      handleInputChange(participant.id, "nights_count", value)
-                    }
-                    className="nights-input"
-                  />
-                </Grid>
+                {!noViewAccommodation && (
+                  <Fragment>
+                    <Grid item xs={12} sm={6}>
+                      <Input
+                        label="Accommodation Stars"
+                        placeholder="Enter accommodation stars"
+                        inputValue={participant.accommodation_stars}
+                        setInputValue={(value) =>
+                          handleInputChange(
+                            participant.id,
+                            "accommodation_stars",
+                            value
+                          )
+                        }
+                        className="stars-input"
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                      <Input
+                        label="Trip duration in days"
+                        placeholder="Enter nights count"
+                        inputValue={participant.nights_count}
+                        setInputValue={(value) =>
+                          handleInputChange(
+                            participant.id,
+                            "nights_count",
+                            value
+                          )
+                        }
+                        className="nights-input"
+                      />
+                    </Grid>
+                  </Fragment>
+                )}
               </Grid>
             </Grid>
             <Divider
@@ -199,28 +217,26 @@ const ParticipantTripForm = () => {
                 backgroundColor: "black",
               }}
             />
-        </div>
-      ))}
-    </Grid>
-  
-    <div className="actions-section">
-      <Button
-        variant="contained"
-        className="next-button"
-        onClick={handleSubmit}
-        fullWidth
-        sx={{
-          marginTop: "20px",
-          width: '100%',
-          backgroundColor:'#cc0000',
+          </div>
+        ))}
+      </Grid>
 
-        }}
-      >
-        Next
-      </Button>
+      <div className="actions-section">
+        <Button
+          variant="contained"
+          className="next-button"
+          onClick={handleSubmit}
+          fullWidth
+          sx={{
+            marginTop: "20px",
+            width: "100%",
+            backgroundColor: "#cc0000",
+          }}
+        >
+          Next
+        </Button>
+      </div>
     </div>
-  </div>
-  
   );
 };
 export default ParticipantTripForm;

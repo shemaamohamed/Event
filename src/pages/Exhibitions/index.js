@@ -253,6 +253,29 @@ const Exhibitions = () => {
     setExhibitionData(exhibition);
   };
 
+  // تأكد من أنك قد حصلت على التوكن من المكان المناسب (مثل LocalStorage أو من الـ Auth)
+  const token = localStorage.getItem('token');  // قم بتغيير هذا إذا كان التوكن مخزنًا في مكان آخر
+  
+  
+  const handleDeleteClick = (id) => {
+    // تأكيد الحذف من المستخدم
+    if (window.confirm('Are you sure you want to delete this exhibition?')) {
+      // إرسال طلب حذف باستخدام axios مع تمرير التوكن في headers
+      axios.delete(`${BaseUrl}/exhibitions/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // تمرير التوكن باستخدام Authorization header
+        }
+      })
+        .then(response => {
+         toast.success('Exhibition deleted successfully!');
+         getExhibitions();
+        })
+        .catch(error => {
+          toast.error('There was an error deleting the exhibition.');
+        });
+    }
+  };
+  
   const getExhibitions = async () => {
     try {
       await httpService({
@@ -388,7 +411,7 @@ const Exhibitions = () => {
               >
                 {exhibition.title}
               </Typography>
-              <Typography
+              {/* <Typography
                 variant="body2"
                 color="text.secondary"
                 sx={{ marginBottom: "4px" }}
@@ -397,7 +420,7 @@ const Exhibitions = () => {
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 <strong>Place:</strong> {exhibition.place}
-              </Typography>
+              </Typography> */}
             </CardContent>
             <CardActions
               sx={{
@@ -444,6 +467,34 @@ const Exhibitions = () => {
                 Edit
               </Button>
               
+
+
+
+
+
+              <Button
+                variant="outlined"
+                size="medium"
+                color="secondary"
+                    onClick={() => {
+                      handleDeleteClick(exhibition.id);
+                    }}
+                sx={{
+                  width: "100%",
+                  borderColor: "#d32f2f",
+                  color: "#d32f2f",
+                  "&:hover": {
+                    borderColor: "#b71c1c",
+                    backgroundColor: "#ffebee",
+                  },
+                }}
+              >
+                DELETE
+              </Button>
+
+
+
+
             </CardActions>
           </Card>
         </Fragment>

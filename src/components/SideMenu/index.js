@@ -177,6 +177,9 @@ function SideMenu() {
         { label: "Exhibitions", icon: "🏢", path: "/exhibitions" },
         { label: "Trips", icon: "🧳", path: "/create/trip" },
         { label: "Gala Dinner", icon: "🍷", path: "/gala" },
+        { label: "Dinner Detail", icon: "🍷", path: "/dinner/admin" },
+        { label: "Create Workshop", icon: "🍷", path: "/workshop/admin" },
+
         { label: "Create Job", icon: "🛠️", path: "/job" },
         { label: "Messages", icon: "💬", path: "/msgs" },
         { label: "Job Applicants", icon: "📋", path: "/applicants/job/admin" },

@@ -10,29 +10,29 @@ const CustomFormWrapper = ({
   noActions = false,
 }) => {
   return (
-    <div style={{
-      display:'flex',
-      flexDirection:'column',
-      justifyContent:'center',
-      alignItems:'center',
-      overflowY:'auto',
-     
-    }}>
-      <Typography 
-      variant="h5"
-      color="#c62828"
-      textAlign={'center'}
-      >{title}</Typography>
-
-      <div 
+    <div
       style={{
-        width:'100%',
-        padding:'20px',
+        // display: "flex",
+        // flexDirection: "column",
+        // justifyContent:'start',
+        // alignItems:'center',
+        overflowY: "auto",
       }}
-      >{children}</div>
+    >
+      <Typography variant="h5" color="#c62828" textAlign={"center"}>
+        {title}
+      </Typography>
+
+      <div
+        style={{
+          width: "100%",
+          padding: "20px",
+        }}
+      >
+        {children}
+      </div>
       {!noActions && (
         <div className="actions-section-container">
-         
           <button
             className="submit-btn"
             type="submit"

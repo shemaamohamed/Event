@@ -227,7 +227,7 @@ const RegisterPage = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: "32px",
+        marginTop: "20vh",
       }}
     >
       <DialogMessage

@@ -9,8 +9,10 @@ export const AdminFlightStepperProvider = ({ children }) => {
   const [completedSteps, setCompletedSteps] = useState([]);
   const [passportImage, setPassportImage] = useState(null);
   const [flightMembers, setFlightMembers] = useState([]);
+  const [alltrips, setAllTrips] = useState([]);
+
   const { flight_id } = useParams();
-  const BaseUrl = process.env.REACT_APP_BASE_URL;;
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   const getFlightData = async () => {
     const getAuthToken = () => localStorage.getItem("token");
@@ -32,7 +34,6 @@ export const AdminFlightStepperProvider = ({ children }) => {
   useEffect(() => {
     getFlightData();
   }, []);
-
   return (
     <AdminFlightStepperContext.Provider
       value={{
@@ -43,6 +44,8 @@ export const AdminFlightStepperProvider = ({ children }) => {
         passportImage,
         setPassportImage,
         flightMembers,
+        alltrips,
+        setAllTrips,
       }}
     >
       {children}

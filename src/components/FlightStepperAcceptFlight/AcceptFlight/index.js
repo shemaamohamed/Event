@@ -10,6 +10,7 @@ import {
 import DialogMessage from "../../DialogMessage";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { backendUrlImages } from "../../../constant/config";
 
 const AcceptFlight = ({ member, index }) => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -169,12 +170,13 @@ const AcceptFlight = ({ member, index }) => {
             >
               {flight.available_id !== 0 ? (
                 <Fragment>
-                  <div className="flight-card__detail">
-                    <span>Departure Date:</span> {flight.departure_date}
-                  </div>
-                  <div className="flight-card__detail">
-                    <span>Departure Time:</span> {flight.departure_time}
-                  </div>
+                  <a
+                    href={`${backendUrlImages}${flight?.flightFile}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Flight Information
+                  </a>
                   <div className="flight-card__detail">
                     <span>Price:</span> {flight.price}$
                   </div>

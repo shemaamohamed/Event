@@ -330,6 +330,22 @@ const ConferencesPage = () => {
                 >
                       Delete
                 </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={() => {
+                    navigate(`/conference/welcome/message/form/${conference.id}`)
+                  }}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#ff7632",
+                    "&:hover": {
+                      backgroundColor: "#ff7632",
+                    },
+                  }}
+                >
+                      Add Welcome Message
+                </Button>
               </CardActions>
             </Card>
           </Fragment>

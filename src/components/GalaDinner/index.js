@@ -53,6 +53,7 @@ const DinnerDetails = () => {
       .then((response) => {
         getDinnerInvoice()
         toast.success("Attendance canceled successfully!");
+        window.location.reload();
 
       })
       .catch((error) => {});

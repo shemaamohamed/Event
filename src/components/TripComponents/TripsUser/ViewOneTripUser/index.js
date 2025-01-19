@@ -14,7 +14,7 @@ import { Button, Grid, Typography } from "@mui/material";
 const GroupTripRegistration = ({ availableDates, setIsDialogOpen }) => {
   console.log({ availableDates });
   function convertStringToObjects(input) {
-    return input.split(",").map((date) => ({
+    return input?.split(",").map((date) => ({
       label: date,
       value: date,
     }));
@@ -68,7 +68,7 @@ const GroupTripRegistration = ({ availableDates, setIsDialogOpen }) => {
 
       {submitted ? (
         <div className="result">
-          <h3>Total Price: {totalPrice} $</h3>
+          <h3>Total Price (USD): {totalPrice} $</h3>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="registration-form">

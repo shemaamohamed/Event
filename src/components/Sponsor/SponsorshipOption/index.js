@@ -51,7 +51,7 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
       setFloorPlanUrl(response?.data.data[0].floor_plan);
       setAgreementFile(response?.data.data[0].agreement_page);
 
-    } catch (error) {}
+    } catch (error) { }
   };
   useEffect(() => {
     if (myConferenceId) {
@@ -65,7 +65,7 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
     link.download = 'agreement-form.pdf'; // تحديد اسم الملف عند التحميل
     link.click();
   };
-  
+
   return (
     <div className="booth-package">
       <div className="booth-package-header7">Standard Booth Package</div>
@@ -114,10 +114,10 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
               className="view-floor-plans-btn"
               download
             >
-              <button className="view-floor-plans-button" onClick={()=>{
+              <button className="view-floor-plans-button" onClick={() => {
                 handleDownload()
               }}>
-              View and Sign Form
+                View and Sign Form
               </button>
             </a>
           )}
@@ -174,7 +174,7 @@ const BoothCostTable = ({
       onShellSchemePriceChange(
         response?.data.data[0].shell_scheme_price_per_sqm
       ); // تمرير السعر
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -338,7 +338,7 @@ const SponsorSection = () => {
 
       // إرسال الـ POST request باستخدام Axios
       const response = await axios.post(
-        `${BaseUrl}/sponsor/add/adv`, 
+        `${BaseUrl}/sponsor/add/adv`,
         formData,
         {
           headers: {
@@ -350,6 +350,9 @@ const SponsorSection = () => {
       // إذا كانت العملية ناجحة، عرض توست
       if (response.status === 200) {
         toast.success('Agreement submitted successfully!');
+        setViewSubmit(true);
+        setIsPopupOpen(false);
+
       }
     } catch (error) {
       // في حالة حدوث خطأ، عرض رسالة خطأ
@@ -463,7 +466,7 @@ const SponsorSection = () => {
     } catch (error) {
       toast.error(
         error.response.data.message ||
-          "Failed to submit data. Please try again."
+        "Failed to submit data. Please try again."
       );
     }
   };
@@ -554,67 +557,67 @@ const SponsorSection = () => {
             </div>
           )}
 
-{isPopupOpen && (
-        <div className="agreement-popup">
-          <div className="popup-content">
-            <h3>Agreement for Sponsorship</h3>
-            <p>
-              By signing this agreement, you confirm your commitment to sponsor the event. Please upload the necessary documents below.
-            </p>
-            
-            <div className="input-fields">
-              <div className="file-upload">
-                <label htmlFor="first_advertisement">First Advertisement (PDF)</label>
-                <input
-                  id="first_advertisement"
-                  type="file"
-                  accept=".pdf"
-                  onChange={(e) => setFirstAdvertisement(e.target.files[0])}
-                />
-              </div>
-              <div className="file-upload">
-                <label htmlFor="second_advertisement">Second Advertisement (PDF)</label>
-                <input
-                  id="second_advertisement"
-                  type="file"
-                  accept=".pdf"
-                  onChange={(e) => setSecondAdvertisement(e.target.files[0])}
-                />
-              </div>
-              <div className="file-upload">
-                <label htmlFor="logo">Logo (Image)</label>
-                <input
-                  id="logo"
-                  type="file"
-                  accept=".jpg,.jpeg,.png"
-                  onChange={(e) => setLogo(e.target.files[0])}
-                />
-              </div>
-              <div className="file-upload">
-                <label htmlFor="contract_signature">Contract Signature (PDF)</label>
-                <input
-                  id="contract_signature"
-                  type="file"
-                  accept=".pdf"
-                  onChange={(e) => setContractSignature(e.target.files[0])}
-                />
-              </div>
-            </div>
+          {isPopupOpen && (
+            <div className="agreement-popup">
+              <div className="popup-content">
+                <h3>Agreement for Sponsorship</h3>
+                <p>
+                  By signing this agreement, you confirm your commitment to sponsor the event. Please upload the necessary documents below.
+                </p>
 
-            <div className="popup-buttons">
-              <button onClick={handleSignAgreement2} className="btn-sign">
-                Sign Agreement
-              </button>
-              <button
-                onClick={() => setIsPopupOpen(false)}
-                className="btn-cancel"
-              >
-                Cancel
-              </button>
+                <div className="input-fields">
+                  <div className="file-upload">
+                    <label htmlFor="first_advertisement">First Advertisement (PDF)</label>
+                    <input
+                      id="first_advertisement"
+                      type="file"
+                      accept=".pdf"
+                      onChange={(e) => setFirstAdvertisement(e.target.files[0])}
+                    />
+                  </div>
+                  <div className="file-upload">
+                    <label htmlFor="second_advertisement">Second Advertisement (PDF)</label>
+                    <input
+                      id="second_advertisement"
+                      type="file"
+                      accept=".pdf"
+                      onChange={(e) => setSecondAdvertisement(e.target.files[0])}
+                    />
+                  </div>
+                  <div className="file-upload">
+                    <label htmlFor="logo">Logo (Image)</label>
+                    <input
+                      id="logo"
+                      type="file"
+                      accept=".jpg,.jpeg,.png"
+                      onChange={(e) => setLogo(e.target.files[0])}
+                    />
+                  </div>
+                  <div className="file-upload">
+                    <label htmlFor="contract_signature">Contract Signature (PDF)</label>
+                    <input
+                      id="contract_signature"
+                      type="file"
+                      accept=".pdf"
+                      onChange={(e) => setContractSignature(e.target.files[0])}
+                    />
+                  </div>
+                </div>
+
+                <div className="popup-buttons">
+                  <button onClick={handleSignAgreement2} className="btn-sign">
+                    Sign Agreement
+                  </button>
+                  <button
+                    onClick={() => setIsPopupOpen(false)}
+                    className="btn-cancel"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
         </div>
       )}
     </div>

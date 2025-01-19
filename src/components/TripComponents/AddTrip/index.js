@@ -11,6 +11,7 @@ import "./style.scss";
 import { deleteIcon } from "../../../icons";
 import { Drawer, IconButton, Typography } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
+import Checkbox from "../../../CoreComponent/Checkbox";
 
 const AvailableDatesManager = ({ availableDates, setAvailableDates }) => {
   const [dateInputs, setDateInputs] = useState([""]);
@@ -80,6 +81,7 @@ const CreateTrip = ({ isOpen, setIsOpen, fetchTrips }) => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const [allConference, setAllConference] = useState([]);
   const [conferenceId, setConferenceId] = useState(0);
+  const [noViewAccommodation, setNoViewAccommodation] = useState(false);
 
   const getConference = () => {
     const url = `${BaseUrl}/conferences/all`;
@@ -119,6 +121,7 @@ const CreateTrip = ({ isOpen, setIsOpen, fetchTrips }) => {
     setDuration(0);
     setAvailableDates("");
     setTripDetails("");
+    setNoViewAccommodation(false);
     setConferenceId(0);
     setAllConference([]); // If you want to reset all conference data as well
   };
@@ -133,6 +136,7 @@ const CreateTrip = ({ isOpen, setIsOpen, fetchTrips }) => {
     formData.append("conference_id", conferenceId.id);
 
     formData.append("trip_type", tripType);
+    formData.append("no_view_accommodation", noViewAccommodation ? 1 : 0);
     formData.append("name", name);
     formData.append("description", description);
     formData.append("additional_info", additionalInfo);
@@ -187,64 +191,60 @@ const CreateTrip = ({ isOpen, setIsOpen, fetchTrips }) => {
   }, [tripType]);
   return (
     <div>
-      <Drawer open={isOpen} onClose={()=>{setIsOpen(false)}}
-      anchor="right"
-      sx={{
-        //width
-        zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
-  
-        '& .MuiDrawer-paper': {
+      <Drawer
+        open={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        anchor="right"
+        sx={{
+          //width
+          zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
+
+          "& .MuiDrawer-paper": {
             zIndex: (theme) => theme.zIndex.modal + 1,
-  
-  
-      width: 
-      {
-        xs: '100%',
-        sm: '50%',
-        md: '40%',
-        lg: '30%',
-        xl: '30%',
-      }, 
-    },
-  
-      }}
+
+            width: {
+              xs: "100%",
+              sm: "50%",
+              md: "40%",
+              lg: "30%",
+              xl: "30%",
+            },
+          },
+        }}
       >
         <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: 2,
-        }}
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: 2,
+          }}
         >
-        <IconButton onClick={() => setIsOpen(false)}>
-           <CloseRounded /> 
+          <IconButton onClick={() => setIsOpen(false)}>
+            <CloseRounded />
           </IconButton>
-
         </div>
-      
-         
-        <CustomFormWrapper
-          handleSubmit={handleSubmit}
-          setOpenForm={setIsOpen}
-        >
-          
-          
-          <form  style={{
-            marginTop:'30vh'
-          }}>
-             <Typography
-        variant="h6"
-        sx={{
-          color: "#c62828",
-          textAlign: "center",
-          backgroundColor: "#f1f1f1",
-          padding: 1,
-          borderRadius: 1,
-          marginBottom: 2,
-        }}
-      >
-        Create a New Trip
-      </Typography>
+
+        <CustomFormWrapper handleSubmit={handleSubmit} setOpenForm={setIsOpen}>
+          <form
+            style={{
+              marginTop: "30vh",
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                color: "#c62828",
+                textAlign: "center",
+                backgroundColor: "#f1f1f1",
+                padding: 1,
+                borderRadius: 1,
+                marginBottom: 2,
+              }}
+            >
+              Create a New Trip
+            </Typography>
             <Select
               options={allConference}
               value={conferenceId}
@@ -292,6 +292,12 @@ const CreateTrip = ({ isOpen, setIsOpen, fetchTrips }) => {
               allowedExtensions={["jpg", "png", "jpeg"]}
               inputValue={image2}
               setInputValue={setImage2}
+            />
+            <Checkbox
+              label="No View Accommodation?"
+              checkboxValue={noViewAccommodation}
+              setCheckboxValue={setNoViewAccommodation}
+              className="form-checkbox"
             />
 
             {tripType === "private" && (

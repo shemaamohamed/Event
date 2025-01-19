@@ -112,7 +112,7 @@ const navigate = useNavigate()
     })
     .then((response) => {
       toast.success("Trip deleted successfully!");
-
+      fetchParticipants();
     })
     .catch((error) => {
       // التعامل مع الأخطاء
@@ -468,7 +468,7 @@ Delete
            <SimpleLabelValue label="Accommodation Stars" value={`${companion.accommodation_stars} stars`} />
          </Grid>
          <Grid item xs={12} sm={6}>
-           <SimpleLabelValue label="Total Price" value={`$${companion.invoice?.total_price || '-'}`} />
+           <SimpleLabelValue label="Total Price(USD)" value={`$${companion.invoice?.total_price || '-'}`} />
          </Grid>
        </Grid>
        <Grid item xs={12}>

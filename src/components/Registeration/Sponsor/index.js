@@ -136,7 +136,7 @@ const RegisterSponsorPage = () => {
 
   return (
     <Container
-    sx={{ display: "flex", justifyContent: "center", alignItems: "center" ,marginTop: '32px'}}
+    sx={{ display: "flex", justifyContent: "center", alignItems: "center" ,marginTop: '20vh'}}
 
     >
       <DialogMessage

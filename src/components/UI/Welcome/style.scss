@@ -1,121 +1,163 @@
-/* style.scss */
 $primary-color: #e74c3c; /* Red color */
 $secondary-color: #2c3e50; /* Dark gray */
 $light-bg-color: #ecf0f1; /* Light gray background */
 $highlight-color: #c0392b; /* Darker red */
-.welcome-container-section {
-  height: calc(100vh - 60px);
+$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 
-  overflow: overlay;
+$max-width: 1200px; /* Max container width */
+
+
+.welcome-container-section2 {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
 
   &::-webkit-scrollbar {
     width: 3px;
   }
 
   &::-webkit-scrollbar-track {
-    background: var(--scrollbar-track-color);
+    background: #f1f1f1;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb-color);
+    background: $primary-color;
     border-radius: 50px;
   }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover-color);
+
+.welcome-container {
+  max-width: $max-width;
+  width: 100%;
+  padding: 3rem 2rem;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: $box-shadow;
+}
+
+.welcome-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h3 {
+    font-size: 2.5rem;
+    color: $primary-color;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    max-width: 80%;
+    margin: 0 auto;
+    color: $secondary-color;
+    font-weight: 300;
   }
 }
-.welcome-container {
-  font-family: "Arial", sans-serif;
-  padding: 2rem;
-  background-color: $light-bg-color;
-  color: $secondary-color;
 
-  .welcome-header {
-    text-align: center;
-    margin-bottom: 2rem;
+.welcome-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  margin-bottom: 3rem;
 
-    h3 {
-      color: #c0392b;
-      //   font-size: 3rem;
-      color: $primary-color;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+  .welcome-image {
+    flex: 1;
+    border-radius: 15px;
+    box-shadow: $box-shadow;
+    background-size: cover;
+    background-position: center;
+    position: relative;
 
-    h4 {
-      //   font-size: 1.5rem;
-      line-height: 1.6;
-      max-width: 80%;
-      margin: 0 auto;
-      color: $secondary-color;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+      box-shadow: $box-shadow;
     }
   }
 
+  .welcome-description {
+    flex: 1;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: $box-shadow;
+    text-align: left;
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: $secondary-color;
+      text-align: justify;
+
+      strong {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+.topics-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+
+  img {
+    max-width: 200px;
+    margin: 1rem;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    color: $primary-color;
+    text-align: center;
+    margin: 1.5rem 0;
+  }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
   .welcome-content {
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 2rem;
+  }
 
-    .welcome-image {
-      flex: 1;
-      background-size: cover;
-      background-position: center;
-      height: 350px;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
+  .welcome-image {
+    height: 250px;
+  }
 
-    .welcome-description {
-      flex: 1;
-      background-color: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  .welcome-description {
+    padding: 1.5rem;
+  }
+}
 
-      p {
-        font-size: 1.1rem;
-        line-height: 1.8;
-        margin-bottom: 1.5rem;
-        color: $secondary-color;
+@media screen and (max-width: 480px) {
+  .welcome-header h3 {
+    font-size: 2rem;
+  }
 
-        strong {
-          color: $primary-color;
-        }
-      }
-
-      p:last-child {
-        margin-bottom: 0;
-      }
-    }
+  .welcome-header h4 {
+    font-size: 1rem;
   }
 
   .topics-section {
-    margin-top: 3rem;
-
-    h3 {
-      font-size: 2rem;
-      color: $primary-color;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      text-align: center;
-
-      li {
-        font-size: 1.2rem;
-        color: $secondary-color;
-        margin: 0.8rem 0;
-        transition: color 0.3s ease;
-
-        &:hover {
-          color: $highlight-color;
-        }
-      }
+    margin-top: 2rem;
+    img {
+      max-width: 150px;
     }
   }
+}
 }

@@ -135,7 +135,7 @@ const RoomPriceForm = () => {
             // required={true}
             />
             <Input
-              label="Single Base Price"
+              label="Single Base Price (USD)"
               placeholder="Enter single base price"
               inputValue={singleBasePrice}
               setInputValue={setSingleBasePrice}
@@ -151,7 +151,7 @@ const RoomPriceForm = () => {
             /> */}
 
             <Input
-              label="Double Base Price"
+              label="Double Base Price (USD)"
               placeholder="Enter double base price"
               inputValue={doubleBasePrice}
               setInputValue={setDoubleBasePrice}
@@ -166,7 +166,7 @@ const RoomPriceForm = () => {
             /> */}
 
             <Input
-              label="Triple Base Price"
+              label="Triple Base Price (USD)"
               placeholder="Enter triple base price"
               inputValue={tripleBasePrice}
               setInputValue={setTripleBasePrice}

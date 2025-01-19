@@ -87,11 +87,12 @@ const SpeakerProfileForm = () => {
         url: `${BaseUrl}/speakers/user/update`,
         headers: { Authorization: `Bearer ${token}` },
         data: formData,
-        // withToast: true, // Display toast notifications
         showLoader: true, // Show a loader during the request
       });
       toast.success("Profile Uploaded Successfully");
-    } catch (error) {}
+    } catch (error) {
+      // Handle error
+    }
   };
 
   const toggleAttendanceOptions = useCallback(() => {
@@ -140,16 +141,14 @@ const SpeakerProfileForm = () => {
       setDepartureDate(response?.data?.speaker?.departure_date);
       setVideo(response?.data?.speaker?.video);
       setOnline(response?.data?.speaker?.is_online_approved);
-      console.log(online);
 
       setAttendanceOptions({
         showOnlineOption: response?.data?.speaker?.is_online_approved,
         inPerson: !response?.data?.speaker?.online_participation,
         onlineParticipation: response?.data?.speaker?.online_participation,
       });
-      console.log(response?.data?.speaker?.online_participation);
     } catch (error) {
-      // console.error("Error fetching speaker info:", error);
+      // Handle error
     }
   };
 
@@ -165,161 +164,158 @@ const SpeakerProfileForm = () => {
 
   return (
     <div className="speaker-section-container">
-    <div className="speaker-profile-section-container">
-      <form onSubmit={handleUpdate} className="speaker-profile-form">
-        <Grid container spacing={2}>
-          <Grid item xs={6} sx={{ textAlign: 'center' }}>
-            <img
-              src={`${backendUrlImages}${profileDetails.userImage}`}
-              alt="User Profile"
-              style={{
-                width: '100px',
-                height: '100px',
-                borderRadius: '50%',
-                marginRight: '1rem',
-                objectFit: 'cover',
-                border: '2px solid #ef233c',
-              }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <Typography
-              sx={{
-                color: '#c62828',
-                fontWeight: 'bold',
-                fontSize: { xs: '1.5rem', sm: '2rem', md: '2rem' },
-                textAlign: 'center',
-              }}
-            >
-              {profileDetails.userName}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-          <Typography
-  sx={{
-    whiteSpace: 'normal',
-      wordWrap: 'break-word'
-  }}
-  component="div"
->
-  {profileDetails.userBio}
-</Typography>
-          </Grid>
-        </Grid>
-  
-        <div className="profile-files"
-        style={{
-          overflow:'hidden'
-        }}
-        >
-          <ImageUpload
-            required
-            label="Abstract"
-            allowedExtensions={["txt", "pdf", "doc", "docx"]}
-            inputValue={formFiles.abstract}
-            setInputValue={handleFileChange("abstract")}
-            className="image-upload"
-            placeholder="Abstract"
-           
-          />
-          <ImageUpload
-            required
-            label="Presentation File"
-            allowedExtensions={["ppt", "pptx"]}
-            inputValue={formFiles.presentationFile}
-            setInputValue={handleFileChange("presentationFile")}
-            className="image-upload"
-            placeholder="Presentation File"
-          />
-          <ImageUpload
-            required
-            label="Video"
-            allowedExtensions={["ppt", "pptx", "mp4"]}
-            inputValue={video}
-            setInputValue={setVideo}
-            className="image-upload"
-            placeholder="Video"
-          />
-          <DateInput
-            label="Arrival Date"
-            inputValue={arrivalDate}
-            setInputValue={setArrivalDate}
-            type="date"
-          />
-          <DateInput
-            label="Departure Date"
-            inputValue={departureDate}
-            setInputValue={setDepartureDate}
-            type="date"
-          />
-  
-          {online && (
-            <div className="attendance-option">
+      <div className="speaker-profile-section-container">
+        <form onSubmit={handleUpdate} className="speaker-profile-form">
+          <Grid container spacing={2}>
+            <Grid item xs={6} sx={{ textAlign: 'center' }}>
+              <img
+                src={`${backendUrlImages}${profileDetails.userImage}`}
+                alt="User Profile"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                  marginRight: '1rem',
+                  objectFit: 'cover',
+                  border: '2px solid #ef233c',
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
               <Typography
-                variant="h6"
-                sx={{ fontWeight: 'bold', textAlign: 'center', marginBottom: 2 }}
+                sx={{
+                  color: '#c62828',
+                  fontWeight: 'bold',
+                  fontSize: { xs: '1.5rem', sm: '2rem', md: '2rem' },
+                  textAlign: 'center',
+                }}
               >
-                How would you like to attend the conference?
+                {profileDetails.userName}
               </Typography>
-              <div className="attendance-checkboxes">
-                <Checkbox
-                  label="In-Person"
-                  checkboxValue={attendanceOptions.inPerson}
-                  setCheckboxValue={(value) =>
-                    setAttendanceOptions((prev) => ({
-                      ...prev,
-                      inPerson: value,
-                    }))
-                  }
-                  className="attendance-checkbox"
-                />
-                <Checkbox
-                  label="Online"
-                  checkboxValue={attendanceOptions.onlineParticipation}
-                  setCheckboxValue={(value) =>
-                    setAttendanceOptions((prev) => ({
-                      ...prev,
-                      onlineParticipation: value,
-                    }))
-                  }
-                  className="attendance-checkbox"
-                />
-              </div>
-              {attendanceOptions.onlineParticipation && (
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                sx={{
+                  whiteSpace: 'normal',
+                  wordWrap: 'break-word'
+                }}
+                component="div"
+              >
+                {profileDetails.userBio}
+              </Typography>
+            </Grid>
+          </Grid>
+
+          <div className="profile-files" style={{ overflow: 'hidden' }}>
+            <ImageUpload
+              required
+              label="Abstract"
+              allowedExtensions={["txt", "pdf", "doc", "docx"]}
+              inputValue={formFiles.abstract}
+              setInputValue={handleFileChange("abstract")}
+              className="image-upload"
+              placeholder="Abstract"
+            />
+            <ImageUpload
+              required
+              label="Presentation File"
+              allowedExtensions={["ppt", "pptx"]}
+              inputValue={formFiles.presentationFile}
+              setInputValue={handleFileChange("presentationFile")}
+              className="image-upload"
+              placeholder="Presentation File"
+            />
+            <ImageUpload
+              required
+              label="Video"
+              allowedExtensions={["ppt", "pptx", "mp4"]}
+              inputValue={video}
+              setInputValue={setVideo}
+              className="image-upload"
+              placeholder="Video"
+            />
+
+            <DateInput
+              label="Arrival Date"
+              inputValue={arrivalDate}
+              setInputValue={setArrivalDate}
+              type="date"
+            />
+            <DateInput
+              label="Departure Date"
+              inputValue={departureDate}
+              setInputValue={setDepartureDate}
+              type="date"
+            />
+
+            {online && (
+              <div className="attendance-option">
                 <Typography
-                  sx={{ textAlign: 'center', color: '#555', marginTop: 2 }}
+                  variant="h6"
+                  sx={{ fontWeight: 'bold', textAlign: 'center', marginBottom: 2 }}
                 >
-                  You will be provided with the Zoom link one day before the event.
+                  How would you like to attend the conference?
                 </Typography>
-              )}
-            </div>
-          )}
-          <Topics
-            topics={topics}
-            handleTopicChange={handleTopicChange}
-            handleRemoveTopic={handleRemoveTopic}
-            handleAddTopic={handleAddTopic}
-          />
-        </div>
-  
-        <Button 
-        type="submit"
-        variant="contained"
-                    sx={{
-                      backgroundColor: '#c62828',// Modern vibrant red
-        
-                      marginTop: "20px",
-                      color: "#fff",
-                      width: "100%",
-                      "&:hover": {
-                        backgroundColor: "#e63946",
-                        color: "#fff",
-                      }
-                    }}>Update Profile</Button>
-      </form>
+                <div className="attendance-checkboxes">
+                  <Checkbox
+                    label="In-Person"
+                    checkboxValue={attendanceOptions.inPerson}
+                    setCheckboxValue={(value) =>
+                      setAttendanceOptions((prev) => ({
+                        ...prev,
+                        inPerson: value,
+                      }))
+                    }
+                    className="attendance-checkbox"
+                  />
+                  <Checkbox
+                    label="Online"
+                    checkboxValue={attendanceOptions.onlineParticipation}
+                    setCheckboxValue={(value) =>
+                      setAttendanceOptions((prev) => ({
+                        ...prev,
+                        onlineParticipation: value,
+                      }))
+                    }
+                    className="attendance-checkbox"
+                  />
+                </div>
+                {attendanceOptions.onlineParticipation && (
+                  <Typography
+                    sx={{ textAlign: 'center', color: '#555', marginTop: 2 }}
+                  >
+                    You will be provided with the Zoom link one day before the event.
+                  </Typography>
+                )}
+              </div>
+            )}
+            <Topics
+              topics={topics}
+              handleTopicChange={handleTopicChange}
+              handleRemoveTopic={handleRemoveTopic}
+              handleAddTopic={handleAddTopic}
+            />
+          </div>
+
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              backgroundColor: '#c62828',
+              marginTop: "20px",
+              color: "#fff",
+              width: "100%",
+              "&:hover": {
+                backgroundColor: "#e63946",
+                color: "#fff",
+              }
+            }}
+          >
+            Update Profile
+          </Button>
+        </form>
+      </div>
     </div>
-  </div>
-  
   );
 };
 

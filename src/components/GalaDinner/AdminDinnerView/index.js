@@ -16,22 +16,24 @@ const SpeakerTable = () => {
 
   const [speakers, setSpeakers] = useState([]);
   const [selectedSpeaker, setSelectedSpeaker] = useState({});
+  // const [selectedUser, setSelectedUser] = useState({});
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
   const { conferenceId } = useParams();
   const [anchorEl, setAnchorEl] = useState(null);
-    const [selectedRow, setSelectedRow] = useState(null);
-    
-    const openMenu = (event, row) => {
-      setAnchorEl(event.currentTarget);
-      setSelectedRow(row);
-    };
-  
-    const closeMenu = () => {
-      setAnchorEl(null);
-      setSelectedRow(null);
-    };
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const openMenu = (event, row) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedRow(row);
+  };
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+    setSelectedRow(null);
+  };
 
   useEffect(() => {
     const fetchSpeakers = async () => {
@@ -46,6 +48,7 @@ const SpeakerTable = () => {
         );
         setSpeakers(response.data.data);
         console.log(response.data.data);
+        const speakers = response.data.data
       } catch (error) {
         // toast.success("no speakers data");
       } finally {
@@ -58,32 +61,35 @@ const SpeakerTable = () => {
 
   const openModal = (speaker) => {
     setSelectedSpeaker(speaker);
+    console.log(selectedSpeaker);
+
     console.log(speaker);
     setModalIsOpen(true);
+
   };
   const columns = [
     {
       field: "companion_name",
-      headerName:  "Companion Name",
+      headerName: "Companion Name",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
     },
     {
       field: "companion_price",
-      headerName:  "Companion Price",
+      headerName: "Companion Price",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
-      
+
     },
-   
-  
-        
+
+
+
 
     {
       field: "actions",
-      headerName:  "Actions",
+      headerName: "Actions",
       flex: 0.2,
       minWidth: 90,
       cellClassName: "centered-cell",
@@ -97,13 +103,13 @@ const SpeakerTable = () => {
             open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
             onClose={closeMenu}
           >
-             <MenuItem 
-                                 onClick={() => openModal(params.row.speaker)}
+            <MenuItem
+              onClick={() => openModal(params.row.speaker)}
 
-             >
-               view
-            </MenuItem> 
-            
+            >
+              view
+            </MenuItem>
+
           </Menu>
         </>
       ),
@@ -111,29 +117,29 @@ const SpeakerTable = () => {
   ];
   const rows = speakers.map((row) => {
     return {
-      
-conference_id: row.conference_id,
-      companion_name: row.companion_name, 
-      companion_price: row.companion_price, 
-      actions: row.actions, 
+
+      conference_id: row.conference_id,
+      companion_name: row.companion_name,
+      companion_price: row.companion_price,
+      actions: row.actions,
       speaker: row.speaker,
     };
   });
 
-  
+
 
 
   return (
 
     <div className="speaker-table">
       <Typography
-      variant="h6"
-      sx={{
-        color: '#c62828',
-        fontWeight: 'bold',
-        fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-        textAlign: 'center',
-      }}
+        variant="h6"
+        sx={{
+          color: '#c62828',
+          fontWeight: 'bold',
+          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+          textAlign: 'center',
+        }}
       >Dinner Speakers List</Typography>
 
       {loading ? (
@@ -141,62 +147,62 @@ conference_id: row.conference_id,
       ) : speakers.length === 0 ? (
         <div>No speakers available</div> // Show this when there are no speakers
       ) : (
-       <DataGrid
-               rows={rows}
-               columns={columns}
-               getRowId={(row) => row.conference_id}
-               initialState={{
-                 pagination: {
-                   paginationModel: {
-                     pageSize: 8,
-                   },
-                 },
-               }}
-               pageSizeOptions={[8]}
-               checkboxSelection
-               disableRowSelectionOnClick
-               autoHeight
-               sx={{
-                 marginTop: "20px",
-                 "& .MuiDataGrid-virtualScroller": {
-                   overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
-                 },
-               }}
-             />
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          getRowId={(row) => row.conference_id}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 8,
+              },
+            },
+          }}
+          pageSizeOptions={[8]}
+          checkboxSelection
+          disableRowSelectionOnClick
+          autoHeight
+          sx={{
+            marginTop: "20px",
+            "& .MuiDataGrid-virtualScroller": {
+              overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+            },
+          }}
+        />
       )}
 
-      <Drawer 
-      anchor="right"
-      sx={{
-        //width
-        zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
+      <Drawer
+        anchor="right"
+        sx={{
+          //width
+          zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
 
-        '& .MuiDrawer-paper': {
+          '& .MuiDrawer-paper': {
             zIndex: (theme) => theme.zIndex.modal + 1,
 
 
-      width: 
-      {
-        xs: '100%',
-        sm: '50%',
-        md: '40%',
-        lg: '30%',
-        xl: '30%',
-      }, 
-    },
+            width:
+            {
+              xs: '100%',
+              sm: '50%',
+              md: '40%',
+              lg: '30%',
+              xl: '30%',
+            },
+          },
 
-      }}
-
-      open={modalIsOpen} onClose={() => setModalIsOpen(false)}>
-         <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: 2,
         }}
+
+        open={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            padding: 2,
+          }}
         >
           <IconButton onClick={() => setModalIsOpen(false)}>
-           <CloseRounded /> 
+            <CloseRounded />
           </IconButton>
         </div>
         <CustomFormWrapper
@@ -205,6 +211,22 @@ conference_id: row.conference_id,
         >
           {selectedSpeaker && (
             <div className="modal-content9">
+                         <p>
+                <strong>Name:</strong>
+                {speakers[0]?.user?.name}
+              </p>
+              <p>
+                <strong>Email:</strong>{" "}
+                {speakers[0]?.user?.email}
+              </p>
+              <p>
+                <strong>Phone Number:</strong>{" "}
+                {speakers[0]?.user?.phone_number}
+              </p>
+              <p>
+                <strong>WhatsApp Number:</strong>{" "}
+                {speakers[0]?.user?.whatsapp_number}
+              </p>
               <p>
                 <strong>Topics:</strong> {selectedSpeaker.topics || "N/A"}
               </p>
@@ -236,6 +258,7 @@ conference_id: row.conference_id,
                 <strong>Free Trip:</strong>{" "}
                 {selectedSpeaker.free_trip ? "Yes" : "No"}
               </p>
+       
             </div>
           )}
         </CustomFormWrapper>

@@ -90,12 +90,7 @@ const EditFloor = () => {
     useEffect(() => {
         fetchData();
     }, [conferenceId]);
-    useEffect(() => {
-        if (conferenceId) {
-            fetchData(); // تأكد من وجود conferenceId قبل جلب البيانات
-        }
-    }, [conferenceId]);
-    
+ 
     const columns = [
         {
             field: "floor_plan",
@@ -276,13 +271,13 @@ const EditFloor = () => {
             <Box sx={{ marginBottom: '20px' }}>
 
 
-                <Select
+                {/* <Select
                     options={allConference || []}
                     value={conferenceId}
                     setValue={setConferenceId}
                     label="Conference Id"
                     errorMsg={""}
-                />
+                /> */}
             </Box>
                 <DataGrid
                     rows={floorData}

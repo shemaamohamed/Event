@@ -230,7 +230,7 @@ const PriceForm = ({ entries, setEntries }) => {
           />
 
           <Input
-            label="Price"
+            label="Price (USD)"
             placeholder="Enter Price"
             inputValue={entry.price}
             setInputValue={(value) =>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Input from "../../../CoreComponent/Input";
 import DateInput from "../../../CoreComponent/Date";
 import Checkbox from "../../../CoreComponent/Checkbox";
@@ -12,8 +12,7 @@ import {
 import { Button, Grid } from "@mui/material";
 
 const SpeackerTripForm = () => {
-  const { currentStep, completeStep } = useTripsStepper();
-  // const [includeAccommodation, setIncludeAccommodation] = useState(false);
+  const { currentStep, completeStep, noViewAccommodation } = useTripsStepper();
   const [accommodationStars, setAccommodationStars] = useState();
   const [nightsCount, setNightsCount] = useState();
   const [checkInDate, setCheckInDate] = useState("");
@@ -24,8 +23,8 @@ const SpeackerTripForm = () => {
 
     const formData = {
       // include_accommodation: includeAccommodation,
-      accommodation_stars: accommodationStars,
-      nights_count: nightsCount,
+      accommodation_stars: noViewAccommodation ? 1 : accommodationStars,
+      nights_count: noViewAccommodation ? 0 : nightsCount,
       check_in_date: checkInDate,
       check_out_date: checkOutDate,
       is_companion: false,
@@ -45,67 +44,70 @@ const SpeackerTripForm = () => {
   }, []);
   return (
     <div>
-  <form >
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={6}>
-        <Input
-          label="Accommodation Stars"
-          placeholder="Enter star rating (1-5)"
-          inputValue={accommodationStars}
-          setInputValue={setAccommodationStars}
-          type="number"
-          required={true}
-        />
-      </Grid>
+      <form>
+        <Grid container spacing={2}>
+          {!noViewAccommodation && (
+            <Fragment>
+              <Grid item xs={12} sm={6}>
+                <Input
+                  label="Accommodation Stars"
+                  placeholder="Enter star rating (1-5)"
+                  inputValue={accommodationStars}
+                  setInputValue={setAccommodationStars}
+                  type="number"
+                  required={true}
+                />
+              </Grid>
 
-      <Grid item xs={12} sm={6}>
-        <Input
-          label="Nights Count"
-          placeholder="Enter number of nights"
-          inputValue={nightsCount}
-          setInputValue={setNightsCount}
-          type="number"
-          required={true}
-        />
-      </Grid>
+              <Grid item xs={12} sm={6}>
+                <Input
+                  label="Trip duration in days"
+                  placeholder="Enter number of nights"
+                  inputValue={nightsCount}
+                  setInputValue={setNightsCount}
+                  type="number"
+                  required={true}
+                />
+              </Grid>
+            </Fragment>
+          )}
 
-      <Grid item xs={12} sm={6}>
-        <DateInput
-          label="Check-In Date"
-          inputValue={checkInDate}
-          setInputValue={setCheckInDate}
-          required={true}
-        />
-      </Grid>
+          <Grid item xs={12} sm={6}>
+            <DateInput
+              label="Check-In Date"
+              inputValue={checkInDate}
+              setInputValue={setCheckInDate}
+              required={true}
+            />
+          </Grid>
 
-      <Grid item xs={12} sm={6}>
-        <DateInput
-          label="Check-Out Date"
-          inputValue={checkOutDate}
-          setInputValue={setCheckOutDate}
-          required={true}
-        />
-      </Grid>
-    </Grid>
-  </form>
+          <Grid item xs={12} sm={6}>
+            <DateInput
+              label="Check-Out Date"
+              inputValue={checkOutDate}
+              setInputValue={setCheckOutDate}
+              required={true}
+            />
+          </Grid>
+        </Grid>
+      </form>
 
-  <div className="actions-section">
-    <Button
-      variant="contained"
-
-      className="next-button"
-      onClick={handleSubmit}
-      fullWidth
-      sx={{
-        marginTop: "20px",
-        backgroundColor:'#cc0000',
-        width: '100%',
-      }}
-    >
-      Next
-    </Button>
-  </div>
-</div>
+      <div className="actions-section">
+        <Button
+          variant="contained"
+          className="next-button"
+          onClick={handleSubmit}
+          fullWidth
+          sx={{
+            marginTop: "20px",
+            backgroundColor: "#cc0000",
+            width: "100%",
+          }}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
   );
 };
 export default SpeackerTripForm;

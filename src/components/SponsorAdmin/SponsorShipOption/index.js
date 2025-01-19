@@ -67,8 +67,8 @@ const SponsorShipOption = () => {
 
     const fetchData = async () => {
         const url = conferenceId
-            ? `http://127.0.0.1:8000/api/sponsorship/options?conference_id=${conferenceId?.value}`
-            : `http://127.0.0.1:8000/api/sponsorship/options`;
+            ? `${BaseUrl}/sponsorship/options?conference_id=${conferenceId?.value}`
+            : `${BaseUrl}/sponsorship/options`;
 
         const token = localStorage.getItem("token");
 

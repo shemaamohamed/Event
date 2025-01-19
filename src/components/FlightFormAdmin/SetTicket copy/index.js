@@ -45,7 +45,7 @@ const ViewInvoice = ({ data, setOpen }) => {
         <div>
           <SimpleLabelValue label="Invoice ID" value={invoice.id || "-"} />
           <SimpleLabelValue label="Flight ID" value={invoice.flight_id || "-"} />
-          <SimpleLabelValue label="Total Price" value={invoice.total_price || "-"} />
+          <SimpleLabelValue label="Total Price(USD) " value={invoice.total_price || "-"} />
           <SimpleLabelValue label="Status" value={invoice.status || "-"} />
           <SimpleLabelValue label="Created At" value={invoice.created_at || "-"} />
           <SimpleLabelValue label="Updated At" value={invoice.updated_at || "-"} />

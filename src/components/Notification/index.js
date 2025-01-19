@@ -283,6 +283,20 @@ const NotificationDropdown = () => {
                 ) {
                   navigate(`/enter/new/flights`);
                 }
+                else if (
+                  notification?.message?.includes(
+                    "has signed a contract"
+                  )
+                ) {
+                  navigate(`/all-sponsors`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "has requested to become an admin"
+                  )
+                ) {
+                  navigate(`/pending/users`);
+                }
               }}
             >
               <div className="notification-content">

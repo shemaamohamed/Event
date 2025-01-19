@@ -25,7 +25,7 @@ const TripTypeOptions = [
 const AirportTransferForm = () => {
   const { userId } = useAuth();
   const [id, setId] = useState(0);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     tripType: "",
@@ -36,6 +36,8 @@ const AirportTransferForm = () => {
     flightNumber: "",
     companionName: "",
     hasCompanion: false,
+    fromLocation: "",
+    toLocation: "",
   });
 
   const [invoiceData, setInvoiceData] = useState(null);
@@ -52,34 +54,39 @@ const AirportTransferForm = () => {
     flightNumber,
     companionName,
     hasCompanion,
+    fromLocation,
+    toLocation,
   } = formData;
 
   const BaseUrl = process.env.REACT_APP_BASE_URL;
-const handleDelete =()=>{
-  const token = localStorage.getItem('token');  // احصل على التوكن من localStorage
+  const handleDelete = () => {
+    const token = localStorage.getItem("token"); // احصل على التوكن من localStorage
 
-  // تحقق إذا كان التوكن موجودًا
-  if (!token) {
-    toast.error("Token not found. Please log in again.");
-    return;
-  }
+    // تحقق إذا كان التوكن موجودًا
+    if (!token) {
+      toast.error("Token not found. Please log in again.");
+      return;
+    }
 
-  try {
-    // إرسال طلب DELETE إلى الخادم مع التوكن في الهيدر
-    const response =  axios.delete(`${BaseUrl}/user/airport/delete`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      // إرسال طلب DELETE إلى الخادم مع التوكن في الهيدر
+      const response = axios.delete(`${BaseUrl}/user/airport/delete`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    // في حال نجاح الطلب، أظهر توست برسالة نجاح
-    toast.success('Airport transfer booking has been deleted successfully.');
-  } catch (error) {
-    // في حال حدوث خطأ، أظهر توست برسالة خطأ
-    const errorMessage = error.response?.data?.message || "An error occurred while deleting the booking.";
-    toast.error(errorMessage);
-  }
-};
+      // في حال نجاح الطلب، أظهر توست برسالة نجاح
+      toast.success("Airport transfer booking has been deleted successfully.");
+      window.location.reload()
+    } catch (error) {
+      // في حال حدوث خطأ، أظهر توست برسالة خطأ
+      const errorMessage =
+        error.response?.data?.message ||
+        "An error occurred while deleting the booking.";
+      toast.error(errorMessage);
+    }
+  };
 
   const handleChange = (field) => (value) => {
     setFormData((prevData) => ({ ...prevData, [field]: value }));
@@ -105,6 +112,8 @@ const handleDelete =()=>{
           departure_date: departureDate,
           departure_time: departureTime,
           flight_number: flightNumber,
+          from_location: fromLocation,
+          to_location: toLocation,
           companion_name: hasCompanion ? companionName : null,
         },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -114,7 +123,7 @@ const handleDelete =()=>{
       setInvoiceData(invoice); // Store the invoice data
       setOpen(true);
       toast.success("Request submitted successfully.");
-      navigate("/home")
+      getBooking();
     } catch (error) {
       toast.error("An error occurred while submitting the request.");
     }
@@ -145,6 +154,8 @@ const handleDelete =()=>{
           flightNumber: data2?.flight_number,
           companionName: data2?.companion_name,
           hasCompanion: !!data2?.companion_name,
+          fromLocation: data2?.from_location || "",
+          toLocation: data2?.to_location || "",
         });
       })
       .catch((err) => {});
@@ -209,7 +220,21 @@ const handleDelete =()=>{
               placeholder="Enter Flight Number"
               required
             />
+            <Input
+              label="From Location"
+              inputValue={formData.fromLocation}
+              setInputValue={handleChange("fromLocation")}
+              placeholder="Enter from location"
+              required
+            />
 
+            <Input
+              label="To Location"
+              inputValue={formData.toLocation}
+              setInputValue={handleChange("toLocation")}
+              placeholder="Enter to location"
+              required
+            />
             <Checkbox
               label="Do you have a companion?"
               checkboxValue={hasCompanion}
@@ -277,6 +302,14 @@ const handleDelete =()=>{
                     label="Flight Number"
                     value={booking.flight_number}
                   />
+                  <SimpleLabelValue
+                    label="From Location"
+                    value={booking.from_location}
+                  />
+                  <SimpleLabelValue
+                    label="To Location"
+                    value={booking.to_location}
+                  />
                 </div>
                 {/* {booking.speaker && (
                 <p><strong>Speaker: </strong>{booking.speaker.accommodation_status ? "Yes" : "No"}</p>
@@ -288,15 +321,16 @@ const handleDelete =()=>{
                 {booking.invoice ? (
                   <div className="invoice-details-list">
                     <SimpleLabelValue
-                      label="Total Price"
+                      label="Total Price (USD)"
                       value={booking.invoice.total_price}
                     />
                     <SimpleLabelValue
                       label="Status"
                       value={booking.invoice.status}
                     />
-
-                    <button className="pay-btn">Pay Now</button>
+                    {booking.invoice.total_price !== "0.00" ? (
+                      <button className="pay-btn">Pay Now</button>
+                    ) : null}{" "}
                     <button
                       className="pay-btn"
                       onClick={() => {
@@ -305,8 +339,9 @@ const handleDelete =()=>{
                     >
                       Edit
                     </button>
-                    <button className="pay-btn" onClick={()=>handleDelete()}>Delete</button>
-
+                    <button className="pay-btn" onClick={() => handleDelete()}>
+                      Delete
+                    </button>
                   </div>
                 ) : (
                   <p>No invoice available</p>

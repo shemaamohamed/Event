@@ -6,6 +6,7 @@ import ImageUpload from "../../CoreComponent/ImageUpload";
 import { backendUrlImages } from "../../constant/config";
 import { DataGrid } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
+import Select from "../../CoreComponent/Select";
 
 const SpeakersComponent = () => {
   const [usersData, setUsersData] = useState([]);
@@ -15,6 +16,8 @@ const SpeakersComponent = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [userIdForUpload, setUserIdForUpload] = useState(0);
   const [file, setFile] = useState(null);
+  const [conferences, setConferences] = useState([]);
+  const [conferenceId, setConferenceId] = useState(null);
 
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const token = localStorage.getItem("token");
@@ -25,7 +28,7 @@ const SpeakersComponent = () => {
       const response = await httpService({
         method: "GET",
         url: `${BaseUrl}/speakers`,
-        params: { page },
+        params: { page, conference_id: conferenceId?.value || null },
         headers: { Authorization: `Bearer ${token}` },
         onSuccess: (data) => {
           setUsersData(data.speakers || []);
@@ -55,14 +58,14 @@ const SpeakersComponent = () => {
   const rows = usersData.map((user) => ({
     ...user,
     name: user?.user?.name,
-        email: user?.user?.email,
+    email: user?.user?.email,
 
-        biography: user?.user?.biography,
+    biography: user?.user?.biography,
     image: user?.user?.image,
 
     abstract: user.abstract,
-    presentation_file: user.presentation_file ,
-    video: user.video ,
+    presentation_file: user.presentation_file,
+    video: user.video,
     topics: user.topics,
     online_participation: user.online_participation ? "Yes" : "No",
     is_online_approved: user.is_online_approved ? "Yes" : "No",
@@ -72,14 +75,13 @@ const SpeakersComponent = () => {
     airport_pickup: user.airport_pickup ? "Yes" : "No",
     free_trip: user.free_trip ? "Yes" : "No",
   }));
-  const column= [
+  const column = [
     {
       field: "name",
       headerName: "Name",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
-      
     },
     {
       field: "email",
@@ -102,12 +104,14 @@ const SpeakersComponent = () => {
       minWidth: 230,
       cellClassName: "centered-cell",
       renderCell: (params) => {
-        const imageUrl = 
-          `${backendUrlImages}${params.row.image}`
-          // Placeholder if no image is available
+        const imageUrl = `${backendUrlImages}${params.row.image}`;
+        // Placeholder if no image is available
         return (
           <div style={{ textAlign: "center" }}>
-            <a href={imageUrl} download={params.row.image ? params.row.image : null}>
+            <a
+              href={imageUrl}
+              download={params.row.image ? params.row.image : null}
+            >
               <img
                 src={imageUrl}
                 alt={params.row.name}
@@ -129,7 +133,7 @@ const SpeakersComponent = () => {
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
-      renderCell: (params) => (
+      renderCell: (params) =>
         params.row.abstract ? (
           <a
             href={`${backendUrlImages}${params.row.abstract}`}
@@ -140,8 +144,7 @@ const SpeakersComponent = () => {
           </a>
         ) : (
           "No Abstract"
-        )
-      ),
+        ),
     },
     {
       field: "presentation_file",
@@ -149,21 +152,18 @@ const SpeakersComponent = () => {
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
-      renderCell: (params) => (
+      renderCell: (params) =>
         params.row.presentation_file ? (
           <a
             href={`${backendUrlImages}${params.row.presentation_file}`}
             target="_blank"
             rel="noopener noreferrer"
           >
-          View Presentation
+            View Presentation
           </a>
         ) : (
           "No Presentation"
-
-        )
-      ),
-      
+        ),
     },
     {
       field: "video",
@@ -171,7 +171,7 @@ const SpeakersComponent = () => {
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
-      renderCell: (params) => (
+      renderCell: (params) =>
         params.row.video ? (
           <a
             href={`${backendUrlImages}${params.row.video}`}
@@ -182,9 +182,7 @@ const SpeakersComponent = () => {
           </a>
         ) : (
           "No Video"
-        )
-      
-      ),  
+        ),
     },
     {
       field: "topics",
@@ -192,17 +190,14 @@ const SpeakersComponent = () => {
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
-      renderCell: (params) => (
+      renderCell: (params) =>
         params.row.topics ? (
-          <div>
-            {JSON.parse(params.row.topics).join(", ")}
-          </div>
+          <div>{JSON.parse(params.row.topics).join(", ")}</div>
         ) : (
           "No Topics"
-        )
-      ),
+        ),
     },
-    
+
     {
       field: "online_participation",
       headerName: "Online Participation",
@@ -276,90 +271,112 @@ const SpeakersComponent = () => {
 
     setDialogOpen(false);
   };
-
+  const fetchConferences = async () => {
+    try {
+      const response = await httpService({
+        method: "GET",
+        url: `${BaseUrl}/conferences/all`,
+        onSuccess: (data) => {
+          setConferences(data.data); // تأكد من أنك تحفظ البيانات بشكل صحيح
+        },
+        onError: (error) =>
+          setErrorMsg(error?.message || "Failed to fetch conferences."),
+      });
+    } catch (error) {
+      setErrorMsg("Failed to fetch conferences.");
+    }
+  };
+  useEffect(() => {
+    fetchConferences();
+  }, []);
   useEffect(() => {
     fetchSpeakers();
-  }, []);
-
+  }, [conferenceId]);
   return (
     <div
-    style={{
-      borderRadius: '8px',
-      width: '100%',
-      maxWidth: '1700px',
-      // height: 'calc(100vh - 80px)',
-      padding: '20px',
-    }}
-    
+      style={{
+        borderRadius: "8px",
+        width: "100%",
+        maxWidth: "1700px",
+        // height: 'calc(100vh - 80px)',
+        padding: "20px",
+      }}
     >
       <Typography
-              variant="h6"
-              sx={{
-                color: '#c62828',
-                fontWeight: 'bold',
-                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-                textAlign: 'center',
-              }}
-            >
-              All Speakers
-            </Typography>
-       <DataGrid
-          rows={rows}
-          columns={column}
-          getRowId={(row) => row.email}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 7,
-              },
+        variant="h6"
+        sx={{
+          color: "#c62828",
+          fontWeight: "bold",
+          fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+          textAlign: "center",
+        }}
+      >
+        All Speakers
+      </Typography>
+      <Select
+        label="Select Conference"
+        options={conferences.map((item) => ({
+          label: item.title,
+          value: item.id,
+        }))}
+        value={conferenceId}
+        setValue={setConferenceId}
+      />
+      <DataGrid
+        rows={rows}
+        columns={column}
+        getRowId={(row) => row.email}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 7,
             },
-          }}
-          pageSizeOptions={[7]}
-          checkboxSelection
-          disableRowSelectionOnClick
-          autoHeight
-          sx={{
-            marginTop: "20px",
-            "& .MuiDataGrid-virtualScroller": {
-              overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
-            },
-          }}
-        />
+          },
+        }}
+        pageSizeOptions={[7]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        autoHeight
+        sx={{
+          marginTop: "20px",
+          "& .MuiDataGrid-virtualScroller": {
+            overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+          },
+        }}
+      />
 
-        {isDialogOpen && (
-          <Dialog
-            viewHeader={true}
-            header="Upload Certificate File"
-            open={isDialogOpen}
-            setOpen={setDialogOpen}
-            className="dialog-file"
-          >
-            <div className="dialog-content">
-              <ImageUpload
-                required
-                label="Certificate File"
-                allowedExtensions={["pdf", "jpg", "jpeg", "png"]}
-                inputValue={file}
-                setInputValue={setFile}
-                className="image-upload"
-                placeholder="Choose a file"
-              />
-              <div className="dialog-actions">
-                <button className="save-button" onClick={handleFileUpload}>
-                  Save
-                </button>
-                <button
-                  className="cancel-button"
-                  onClick={() => setDialogOpen(false)}
-                >
-                  Cancel
-                </button>
-              </div>
+      {isDialogOpen && (
+        <Dialog
+          viewHeader={true}
+          header="Upload Certificate File"
+          open={isDialogOpen}
+          setOpen={setDialogOpen}
+          className="dialog-file"
+        >
+          <div className="dialog-content">
+            <ImageUpload
+              required
+              label="Certificate File"
+              allowedExtensions={["pdf", "jpg", "jpeg", "png"]}
+              inputValue={file}
+              setInputValue={setFile}
+              className="image-upload"
+              placeholder="Choose a file"
+            />
+            <div className="dialog-actions">
+              <button className="save-button" onClick={handleFileUpload}>
+                Save
+              </button>
+              <button
+                className="cancel-button"
+                onClick={() => setDialogOpen(false)}
+              >
+                Cancel
+              </button>
             </div>
-          </Dialog>
-        )}
-
-       
+          </div>
+        </Dialog>
+      )}
     </div>
   );
 };

@@ -103,7 +103,7 @@ const FlightsWithInvoices = () => {
           <SimpleLabelValue label="Invoice ID" value={flight?.invoice?.id || "-"} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <SimpleLabelValue label="Total Price" value={flight?.invoice?.total_price || "-"} />
+          <SimpleLabelValue label="Total Price (USD)" value={flight?.invoice?.total_price || "-"} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <SimpleLabelValue label="Status" value={flight?.invoice?.status || "-"} />

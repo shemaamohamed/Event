@@ -10,15 +10,15 @@ import httpService from "../../../common/httpService";
 import toast from "react-hot-toast";
 import { Button, Drawer, IconButton } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
+import ImageUpload from "../../../CoreComponent/ImageUpload";
 
 const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
   const [trips, setTrips] = useState([
     {
-      departure_date: "",
-      departure_time: "",
       price: "",
-      is_free: false,
+      is_free: 0,
       flight_id: flight_id,
+      flightFile: null, // New state for flight file
     },
   ]);
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -27,11 +27,10 @@ const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
     setTrips([
       ...trips,
       {
-        departure_date: "",
-        departure_time: "",
         price: "",
-        is_free: false,
+        is_free: 0,
         flight_id: flight_id,
+        flightFile: null, // Initialize flightFile
       },
     ]);
   };
@@ -43,224 +42,135 @@ const AddTripForm = ({ isOpen, setIsOpen, flight_id, main_user_id }) => {
 
   const handleSave = async () => {
     const token = localStorage.getItem("token");
-
-    // Format trips data for the API
-    const formattedTrips = trips.map((trip) => ({
-      flight_id: flight_id,
-      // main_user_id: main_user_id,
-      data: [
-        {
-          departure_date: trip.departure_date,
-          departure_time: trip.departure_time,
-          price: trip.price,
-          is_free: trip.is_free,
-          departure_flight_number: trip.departure_flight_number, // الحقل الجديد
-          departure_airport: trip.departure_airport, // الحقل الجديد
-          arrival_flight_number: trip.arrival_flight_number, // الحقل الجديد
-          arrival_airport: trip.arrival_airport, // الحقل الجديد
-          arrival_date: trip.arrival_date, // الحقل الجديد
-          arrival_time: trip.arrival_time, // الحقل الجديد
-        },
-      ],
-    }));
-
-    const response = await httpService({
-      method: "POST",
-      url: `${BaseUrl}/available-flights/all`,
-      headers: { Authorization: `Bearer ${token}` },
-      data: { flights: formattedTrips },
-      showLoader: false,
-      withToast: true,
-      onSuccess: () => {
-        toast.success("Trip Added successfully!");
-      },
+  
+    // Create a FormData instance
+    const formData = new FormData();
+  
+    // Iterate over each trip and append the relevant data to FormData
+    trips.forEach((trip, index) => {
+      // Append flight_id and data fields for each trip
+      formData.append(`flights[${index}][flight_id]`, flight_id);
+  
+      formData.append(`flights[${index}][data][0][price]`, trip.price);
+      formData.append(`flights[${index}][data][0][is_free]`, trip.is_free);
+  
+      // Append the flightFile if it exists
+      if (trip.flightFile) {
+        formData.append(`flights[${index}][data][0][flightFile]`, trip.flightFile);
+      }
     });
-    setTrips([]);
-    setIsOpen(false);
-    console.log({ response });
-
+  
+    try {
+      // Make the request using FormData
+      const response = await httpService({
+        method: "POST",
+        url: `${BaseUrl}/available-flights/all`,
+        headers: { Authorization: `Bearer ${token}` },
+        data: formData,
+        showLoader: false,
+        withToast: true,
+        onSuccess: () => {
+          toast.success("Trip Added successfully!");
+        },
+      });
+  
+      setTrips([]); // Clear trips state after successful save
+      setIsOpen(false); // Close the drawer
+      console.log({ response });
+    } catch (error) {
+      console.error("Error saving trips:", error);
+    }
   };
   
+  
+
   return (
-    <Drawer anchor="right"
-      
-  sx={{
-    zIndex: (theme) => theme.zIndex.modal + 1, 
-
-    '& .MuiDrawer-paper': {
+    <Drawer
+      anchor="right"
+      sx={{
         zIndex: (theme) => theme.zIndex.modal + 1,
-
-
-  width: 
-  {
-    xs: '100%',
-    sm: '50%',
-    md: '30%',
-    lg: '20%',
-    xl: '20%',
-  }, 
-},
-
-  }}
-   open={isOpen} onClose={() => setIsOpen(false)}>
-    <div
-    style={{
-      display: 'flex',
-      justifyContent: 'flex-end',
-      padding: 2,
-    }}
+        "& .MuiDrawer-paper": {
+          zIndex: (theme) => theme.zIndex.modal + 1,
+          width: {
+            xs: "100%",
+            sm: "50%",
+            md: "30%",
+            lg: "20%",
+            xl: "20%",
+          },
+        },
+      }}
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
     >
-      <IconButton onClick={() => setIsOpen(false)}>
-       <CloseRounded /> 
-      </IconButton>
-    </div>
-    <CustomFormWrapper
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: 2,
+        }}
+      >
+        <IconButton onClick={() => setIsOpen(false)}>
+          <CloseRounded />
+        </IconButton>
+      </div>
+      <CustomFormWrapper
         handleSubmit={() => {
           handleSave();
         }}
         setOpenForm={setIsOpen}
         noActions={false}
       >
-          <div className="add-trip-btn-container">
-            <Button
-              className="add-trip-btn"
-              type="button"
-              onClick={handleAddTrip}
-            >
-              + Add Trip
-            </Button>
-          </div>
-          <div >
-            {trips.map((trip, index) => (
-              <div  key={index}>
-                <div className="trip-card-header">
-                  <SVG
-                    className="delete-icon"
-                    src={deleteIcon}
-                    onClick={() => handleDeleteTrip(index)}
-                  />
-                </div>
-                <div>
-                  <DateInput
-                    label="Departure Date"
-                    placeholder="Enter departure date"
-                    inputValue={trip.departure_date}
-                    setInputValue={(value) => {
-                      const updatedTrips = [...trips];
-                      updatedTrips[index].departure_date = value;
-                      setTrips(updatedTrips);
-                    }}
-                    required={true}
-                  />
-                  <Input
-                    label="Departure Time"
-                    placeholder="Enter departure time"
-                    inputValue={trip.departure_time}
-                    setInputValue={(value) => {
-                      const updatedTrips = [...trips];
-                      updatedTrips[index].departure_time = value;
-                      setTrips(updatedTrips);
-                    }}
-                    type="time"
-                    required={true}
-                  />
-                  <Input
-                    label="Price"
-                    placeholder="Enter price"
-                    inputValue={trip.price}
-                    setInputValue={(value) => {
-                      const updatedTrips = [...trips];
-                      updatedTrips[index].price = value;
-                      setTrips(updatedTrips);
-                    }}
-                    type="number"
-                    required={true}
-                  />
-                  {/* <div className="free-trip-checkbox">
-                    <Checkbox
-                      // label="Is Free?"
-                      checkboxValue={trip.is_free}
-                      setCheckboxValue={(value) => {
-                        const updatedTrips = [...trips];
-                        updatedTrips[index].is_free = value;
-                        setTrips(updatedTrips);
-                      }}
-                      icon={""}
-                      errorMsg={""}
-                    />
-                  </div> */}
-                            <Input
-            label="Departure Flight Number"
-            inputValue={trip.departure_flight_number}
-            setInputValue={(value) => {
-              const updatedTrips = [...trips];
-              updatedTrips[index].departure_flight_number = value;
-              setTrips(updatedTrips);
-            }}
-            required
-          />
-          <Input
-            label="Departure Airport"
-            inputValue={trip.departure_airport}
-            setInputValue={(value) => {
-              const updatedTrips = [...trips];
-              updatedTrips[index].departure_airport = value;
-              setTrips(updatedTrips);
-            }}
-            required
-          />
-          <Input
-            label="Arrival Flight Number"
-            inputValue={trip.arrival_flight_number}
-            setInputValue={(value) => {
-              const updatedTrips = [...trips];
-              updatedTrips[index].arrival_flight_number = value;
-              setTrips(updatedTrips);
-            }}
-            required
-          />
-          <DateInput
-            label="Arrival Date"
-            inputValue={trip.arrival_date}
-            setInputValue={(value) => {
-              const updatedTrips = [...trips];
-              updatedTrips[index].arrival_date = value;
-              setTrips(updatedTrips);
-            }}
-            required
-          />
-          <Input
-            label="Arrival Time"
-            inputValue={trip.arrival_time}
-            setInputValue={(value) => {
-              const updatedTrips = [...trips];
-              updatedTrips[index].arrival_time = value;
-              setTrips(updatedTrips);
-            }}
-            type="time"
-            required
-          />
-          <Input
-            label="Arrival Airport"
-            inputValue={trip.arrival_airport}
-            setInputValue={(value) => {
-              const updatedTrips = [...trips];
-              updatedTrips[index].arrival_airport = value;
-              setTrips(updatedTrips);
-            }}
-            required
-          />
-
-                </div>
+        <div className="add-trip-btn-container">
+          <Button
+            className="add-trip-btn"
+            type="button"
+            onClick={handleAddTrip}
+          >
+            + Add Trip
+          </Button>
+        </div>
+        <div>
+          {trips.map((trip, index) => (
+            <div key={index}>
+              <div className="trip-card-header">
+                <SVG
+                  className="delete-icon"
+                  src={deleteIcon}
+                  onClick={() => handleDeleteTrip(index)}
+                />
               </div>
-            ))}
-          </div>
+              <div>
+                <Input
+                  label="Price"
+                  placeholder="Enter price"
+                  inputValue={trip.price}
+                  setInputValue={(value) => {
+                    const updatedTrips = [...trips];
+                    updatedTrips[index].price = value;
+                    setTrips(updatedTrips);
+                  }}
+                  type="number"
+                  required={true}
+                />
+              </div>
+              <ImageUpload
+                label="Upload Flight File"
+                required={false}
+                allowedExtensions={["jpg", "jpeg", "png", "pdf"]} 
+                inputValue={trip.flightFile}
+                setInputValue={(file) => {
+                  const updatedTrips = [...trips];
+                  updatedTrips[index].flightFile = file;
+                  setTrips(updatedTrips);
+                }}
+                existingFile={null} 
+              />
+            </div>
+          ))}
+        </div>
       </CustomFormWrapper>
-
-
     </Drawer>
-
-    
   );
 };
 

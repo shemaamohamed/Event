@@ -18,17 +18,86 @@ import { backendUrlImages } from "../../constant/config";
 import httpService from "../../common/httpService";
 import PaperSubmissionForm from "../../components/abstract/abstractUser";
 import Speakers4 from "../../components/SpeakerProduct";
+import Home from "../HomeR";
 import Welcome from "../../components/UI/Welcome";
 import ClientsSlide from "../../components/ClientsSlide";
-import Home1 from "../homePages/Home1";
-
+import "./style.scss"
 const ConferenceDetails = () => {
   const navigate = useNavigate();
   const { conferenceId } = useParams();
   const [selectedTab, setSelectedTab] = useState(0);
   const [data, setData] = useState({});
-  const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const [spo, setSpo] = useState([]);
+  const [work, setWork] = useState([]);
 
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const [info, setInfo] = useState(null);
+
+  const getWelcomeData = async () => {
+    const getAuthToken = () => localStorage.getItem("token");
+
+    try {
+      await httpService({
+        method: "GET",
+        url: `${BaseUrl}/conferences/${conferenceId}/welcome-message`,
+        headers: { Authorization: `Bearer ${getAuthToken()}` },
+        showLoader: true,
+
+        onSuccess: (data) => {
+          console.log({ hedaya: data });
+          setInfo(data)
+
+        }
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+  const getSponsor = async () => {
+    const getAuthToken = () => localStorage.getItem("token");
+
+    try {
+      await httpService({
+        method: "GET",
+        url: `${BaseUrl}/logo/spo/${conferenceId}`,
+        headers: { Authorization: `Bearer ${getAuthToken()}` },
+        showLoader: true,
+
+        onSuccess: (data) => {
+          console.log({ ayat: data });
+          setSpo(data?.data)
+
+        }
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+  const getWorkShop = async () => {
+    const getAuthToken = () => localStorage.getItem("token");
+
+    try {
+      await httpService({
+        method: "GET",
+        url: `${BaseUrl}/workshops/${conferenceId}`,
+        headers: { Authorization: `Bearer ${getAuthToken()}` },
+        showLoader: true,
+
+        onSuccess: (data) => {
+          console.log({ leen: data });
+          setWork(data?.data)
+
+        }
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+  useEffect(() => {
+    getSponsor();
+    getWelcomeData();
+    getWorkShop()
+  }, [])
   const fetchConferenceData = async () => {
     const token = localStorage.getItem("token");
     const response = await httpService({
@@ -45,18 +114,20 @@ const ConferenceDetails = () => {
 
   const sections = [
     { label: "Conference Overview", component: "overview" },
-    // { label: "Home", component: "home" },
+    { label: "Home", component: "home" },
     { label: "Welcome", component: "Welcome" },
     { label: "Abstract", component: "Abstract" },
     { label: "Speakers", component: "Speakers" },
     { label: "Scientific Topics", component: "topics" },
     { label: "Registration", component: "pricing" },
     { label: "Committee Members", component: "committee" },
-    { label: "First Announcement Document", component: "firstAnnouncement"  ,url:"first_announcement_pdf_url"},
-    { label: "Second Announcement Document", component: "secondAnnouncement" ,url:"second_announcement_pdf_url" },
-    { label: "Conference Brochure", component: "brochure"  ,url:"conference_brochure_pdf_url"},
-    { label: "Scientific Program Document", component: "scientificProgram" ,url:"conference_scientific_program_pdf_url" },
+    { label: "First Announcement Document", component: "firstAnnouncement", url: "first_announcement_pdf_url" },
+    { label: "Second Announcement Document", component: "secondAnnouncement", url: "second_announcement_pdf_url" },
+    { label: "Conference Brochure", component: "brochure", url: "conference_brochure_pdf_url" },
+    { label: "Scientific Program Document", component: "scientificProgram", url: "conference_scientific_program_pdf_url" },
     { label: "Sponsor", component: "sponsor" },
+    { label: "WorkShop", component: "WorkShop" },
+
   ];
 
   const renderDocumentContent = (url, label) => (
@@ -87,22 +158,52 @@ const ConferenceDetails = () => {
     const { conference, scientific_topics, prices, committee_members } = data;
 
     switch (sections[selectedTab].component) {
-      // case "home":
-      //   return <Home1 />;
+      case "home":
+        return <Home />;
       case "sponsor":
-        return <ClientsSlide />;
+        return (
+          <div>
+            {
+              spo?.map((item) => {
+                return (
+                  <img src={`${backendUrlImages}${item}`} />
+                )
+              })
+            }
+          </div>
+        );
       case "Welcome":
         return <Welcome />;
+        case "WorkShop":
+          return(
+          <div>
+{
+  work?.map((item)=>{
+    return(
+      <div className="workshop-container999">
+      {work?.map((item, index) => (
+        <div key={index} className="workshop-card">
+          <div className="workshop-description">
+            <p>{item?.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+  
+    )
+  })
+}
+          </div>
+          
+          )
       case "overview":
         return (
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               {data?.image_url ? (
                 <img
-                  src={`${backendUrlImages}${data?.image_url.replace(
-                    "https://panel.mayazin.co/storage",
-                    ""
-                  )}`}
+                  src={`${backendUrlImages}conference_logos/${info?.conference_logo}`}
                   alt="Conference"
                   width="100%"
                   style={{ borderRadius: 8 }}
@@ -205,10 +306,13 @@ const ConferenceDetails = () => {
   };
 
   return (
-    <Container style={{
-      padding:'20px',
-    marginTop:'15vh'
-    }}>
+    <Container
+    sx={{
+      marginTop:'15vh',
+      padding:'20px'
+
+    }} 
+    >
       <Box sx={{ mb: 3, display: "flex", alignItems: "center" }}>
         <Tabs
           value={selectedTab}
@@ -216,7 +320,7 @@ const ConferenceDetails = () => {
           variant="scrollable"
           scrollButtons="auto"
           allowScrollButtonsMobile
-          
+
         >
           {sections.map((section, index) => (
             <Tab key={index} label={section.label} />

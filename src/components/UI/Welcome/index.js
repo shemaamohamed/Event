@@ -1,10 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 import welcomeImage from "./welcome.jpeg"; // Import the image properly
+import httpService from "../../../common/httpService";
+import { useParams } from "react-router-dom";
+import { backendUrlImages } from "../../../constant/config";
 
 const Welcome = () => {
+  const BaseUrl = process.env.REACT_APP_BASE_URL;;
+  const { conferenceId } = useParams();
+  const [info, setInfo] = useState(null);
+
+  const getWelcomeData = async () => {
+    const getAuthToken = () => localStorage.getItem("token");
+
+    try {
+      await httpService({
+        method: "GET",
+        url: `${BaseUrl}/conferences/${conferenceId}/welcome-message`,
+        headers: { Authorization: `Bearer ${getAuthToken()}` },
+        showLoader: true,
+
+        onSuccess: (data) => {
+          console.log({ hedaya: data });
+          setInfo(data)
+          // const tt= {
+          //       "id": 1,
+          //       "conference_id": 2,
+          //       "welcome_message": "yyyyyyyyyyyyyyyy",
+          //       "president_image": "ENka8iils4HAFOzbpCsfxai0uJertLGedlVr8GPS.jpg",
+          //       "conference_logo": "7gEwG452456Qxb8r1MXdNt8fz7nPtSBf6LniJ2iO.jpg",
+          //       "cooperating_associations_logo": "hYDKWgD8V2Lf1Q9n23051LsX8Kw06yS2tEye7dtD.jpg",
+          //       "created_at": "2025-01-19T15:15:51.000000Z",
+          //       "updated_at": "2025-01-19T15:15:51.000000Z"
+          // }
+        }
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+  useEffect(() => {
+    getWelcomeData()
+  }, [])
   return (
-    <div className="welcome-container-section">
+    <div className="welcome-container-section2">
       <div className="welcome-container">
         <div className="welcome-header">
           <h3>Welcome to the Conference!</h3>
@@ -20,25 +59,18 @@ const Welcome = () => {
         <div className="welcome-content">
           <div
             className="welcome-image"
-            style={{ backgroundImage: `url(${welcomeImage})` }} // Set background image correctly
-          ></div>
+          // style={{ backgroundImage: `url(${welcomeImage})` }} // Set background image correctly
+          >
+            <img src={`${backendUrlImages}conference_images/${info?.president_image}`} />
+
+
+          </div>
 
           <div className="welcome-description">
             <p>
-              This conference is designed to provide a comprehensive overview
-              of the latest developments and trends in various fields. It will
-              feature a diverse range of topics and sessions, aimed at fostering
-              collaboration and advancing knowledge across industries.
+              {info?.welcome_message}
             </p>
-            <p>
-              We hope you will find the conference both enriching and inspiring,
-              and that the interactions with distinguished speakers and fellow
-              participants will stimulate creative exchanges and new ideas.
-            </p>
-            <p>
-              Thank you for being part of this exciting event, and we look
-              forward to welcoming you to an unforgettable experience.
-            </p>
+
             <p>
               <strong>Chairman of the Conference</strong>
             </p>
@@ -46,15 +78,13 @@ const Welcome = () => {
         </div>
 
         <div className="topics-section">
-          <h3>Topics</h3>
-          <ul>
-            <li>Innovation and Research</li>
-            <li>Technology and Trends</li>
-            <li>Global Collaboration</li>
-            <li>Future Prospects</li>
-            <li>Industry Challenges</li>
-            <li>Networking Opportunities</li>
-          </ul>
+          <img src={`${backendUrlImages}conference_logos/${info?.conference_logo
+            }`} />
+          <h1>In collaboration with</h1>
+          <img src={`${backendUrlImages}cooperating_associations_logo/${info?.
+            cooperating_associations_logo
+
+            }`} />
         </div>
       </div>
     </div>

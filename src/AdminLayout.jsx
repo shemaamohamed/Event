@@ -97,6 +97,8 @@ const AdminLayoutBasic = () => {
       { title: "Reservation", icon: "🏨", segment: "reservation/form" },
       { title: "All Trips", icon: "🗺️", segment: "view-user-trips" },
       { title: "My Trips", icon: "🗺️", segment: "user/trip/participants" },
+      { title: "Group Trips", icon: "🗺️", segment: "user/group/trip/participants" },
+
       { title: "Gala Dinner", icon: "🍽️", segment: "gala/dinner" },
       { title: "Profile", icon: "👤", segment: "speaker/profile" },
     ],
@@ -104,6 +106,9 @@ const AdminLayoutBasic = () => {
       { title: "Conferences", icon: "🎓", segment: "conferences/page" },
       { title: "Exhibitions", icon: "🏢", segment: "exhibitions" },
       { title: "Gala Dinner", icon: "🍷", segment: "gala" },
+      { title: "Dinner Detail", icon: "🍷", segment: "dinner/admin" },
+      { title: "Create Workshop", icon: "🍷", segment: "admin/workshop" },
+
       { title: "Messages", icon: "💬", segment: "msgs" },
       { title: "Users", icon: "👥", segment: "pending/users" },
       { title: "All Speakers", icon: "🎤", segment: "all-speakers" },

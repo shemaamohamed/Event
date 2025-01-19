@@ -13,6 +13,7 @@ const EditAbstractData = () => {
 
   const statusOptions = [
     { value: "accepted", label: "Accepted" },
+
     { value: "rejected", label: "Rejected" },
   ]
 //   const { conferenceId, userId } = useParams();
@@ -29,12 +30,18 @@ const EditAbstractData = () => {
   const [roomType, setRoomType] = useState("");
   // const [onlineLink, setOnlineLink] = useState(""); // حالة جديدة لتتبع الرابط
   const [numberOfNights, setNumberOfNights] = useState(0);
+  const [typeOfSpeaker, setTypeOfSpeaker] = useState(null)
 
   const options = [
     { value: "single", label: "Single" },
     { value: "double", label: "Double" },
     { value: "triple", label: "Triple" },
   ];
+  const options3 = [
+    { value: "oral presentation", label: "Oral Presentation" },
+    { value: "poster", label: "Poster" },
+  ];
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const getAuthToken = () => localStorage.getItem("token");
@@ -57,7 +64,7 @@ const EditAbstractData = () => {
           is_visa_payment_required: isVisaPaymentRequired ? 1 : 0, 
           paper_status: paperStatus.value, // إضافة status
           // link: isOnlineApproved ? onlineLink : null, // إرسال الرابط فقط إذا تمت الموافقة
-
+          type:typeOfSpeaker?.value
         },
         // withToast: true,
         onSuccess: (data) => {
@@ -150,10 +157,14 @@ const EditAbstractData = () => {
         label="Paper Status"
       />
   
-          {/* <option value="accepted">Accepted</option>
-          <option value="rejected">Rejected</option>
-    */}
-    
+{ paperStatus?.value === "accepted" && <Select
+          options={options3}
+          value={typeOfSpeaker}
+          setValue={setTypeOfSpeaker}
+          label="Accept As"
+          placeholder="Select..."
+        />
+    }
       <button type="submit" className="submit-btn">
         Submit
       </button>

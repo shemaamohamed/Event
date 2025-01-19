@@ -1,23 +1,25 @@
 import React from 'react';
-import { HashLink as Link } from 'react-router-hash-link'
-import SocialShare from '../others/SocialShare';
 
-const SingleTeamV1 = ({ speaker }) => {
-    const { id, thumb, name, designation } = speaker
+const SingleTeamV1 = ({ team }) => {
+    const {  image, name, role } = team
 
     return (
         <>
-            <div className="inner-box">
+            <div className="inner-box" style={{
+                width:'320px',
+                height:'300px'
+
+            }}>
                 <div className="image-box">
-                    <figure className="image"><Link to={`/speakers-detail/${id}#`}><img src={`../images/resource/${thumb}`} alt="image" /></Link></figure>
+                    <figure className="image" 
+                    
+                    ><img src={image} alt="name" /></figure>
                 </div>
                 <div className="info-box">
                     <div className="inner">
-                        <h4 className="name"><Link to={`/speakers-detail/${id}#`}>{name}</Link></h4>
-                        <span className="designation">{designation}</span>
-                        <ul className="social-links social-icon-colored">
-                            <SocialShare />
-                        </ul>
+                        <h4 className="name">{name}</h4>
+                        <span className="designation">{role}</span>
+                        
                     </div>
                 </div>
             </div>

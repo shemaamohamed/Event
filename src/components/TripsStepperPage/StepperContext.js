@@ -10,6 +10,8 @@ export const TripsStepperProvider = ({ children }) => {
   const [invoice, setInvoice] = useState([]);
   const [completedSteps, setCompletedSteps] = useState([]);
   const { tripId } = useParams();
+  const [noViewAccommodation, setNoViewAccommodation] = useState({});
+
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   const completeStep = (stepIndex) => {
@@ -29,6 +31,9 @@ export const TripsStepperProvider = ({ children }) => {
 
         showLoader: true,
       });
+      console.log(response?.trip?.no_view_accommodation);
+
+      setNoViewAccommodation(response?.trip?.no_view_accommodation);
       saveToLocalStorage(
         "additionalOptions",
         response?.trip?.additional_options
@@ -50,6 +55,7 @@ export const TripsStepperProvider = ({ children }) => {
         tripId,
         invoice,
         setInvoice,
+        noViewAccommodation,
       }}
     >
       {children}

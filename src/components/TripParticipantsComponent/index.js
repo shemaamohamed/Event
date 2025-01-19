@@ -146,7 +146,7 @@ const TripParticipantsComponent = () => {
     },
     {
       field: "total_price",
-      headerName: "Total Price",
+      headerName: "Total Price (USD)",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
@@ -365,7 +365,7 @@ const TripParticipantsComponent = () => {
 
               <Grid item xs={6}>
                 <Typography variant="body1" fontWeight="bold">
-                  Total Price:
+                  Total Price(USD):
                 </Typography>
               </Grid>
               <Grid item xs={6}>
@@ -477,7 +477,7 @@ const TripParticipantsComponent = () => {
 
                   <Grid item xs={6}>
                     <Typography variant="body1" fontWeight="bold">
-                      Total Price:
+                      Total Price(USD):
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>

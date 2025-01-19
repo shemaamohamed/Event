@@ -284,7 +284,7 @@ const ReservationsComponent = () => {
                         label="Additional Price"
                         value={invoice.additional_price || "-"}
                       />
-                      <SimpleLabelValue label="Total Price" value={invoice.total || "-"} />
+                      <SimpleLabelValue label="Total Price (USD)" value={invoice.total || "-"} />
                       {/* <SimpleLabelValue label="Status" value={invoice.status || "-"} /> */}
                       <SimpleLabelValue
                         label="Confirmation PDF"

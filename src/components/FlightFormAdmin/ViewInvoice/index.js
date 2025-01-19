@@ -47,7 +47,7 @@ const ViewInvoice = ({ data }) => {
               value={invoice.flight_id || "-"}
             />
             <SimpleLabelValue
-              label="Total Price"
+              label="Total Price(USD)"
               value={invoice.total_price || "-"}
             />
             <SimpleLabelValue label="Status" value={invoice.status || "-"} />

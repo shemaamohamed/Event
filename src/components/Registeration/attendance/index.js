@@ -90,7 +90,12 @@ const RegisterAttendancePage = () => {
     getConference();
   }, []);
   return (
-    <Container className="register-attendance-page">
+    <Container className="register-attendance-page"
+    sx={{
+      padding:'20px',
+      marginTop:'20vh'
+    }}
+    >
       <DialogMessage
         isDialogOpen={isDialogOpen}
         setIsDialogOpen={setIsDialogOpen}

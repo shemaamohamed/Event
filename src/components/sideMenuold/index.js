@@ -116,6 +116,9 @@ function SideMenu() {
               { label: "Flight Admin", path: "/flights" },
 
               { label: "Gala Dinner", path: "/gala" },
+              { label: "Dinner Detail", icon: "🍷", path: "/dinner/admin" },
+              { label: "Create Workshop", icon: "🍷", path: "/workshop/admin" },
+
               { label: "Create Job", path: "/job" },
               { label: "Messages", path: "/msgs" },
               { label: "Job Applicants", path: "/applicants/job/admin" },

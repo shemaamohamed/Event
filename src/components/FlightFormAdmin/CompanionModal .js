@@ -18,22 +18,26 @@ const FlightDetails = ({ flights }) => {
         <div>
           <div className="head"> companion {index + 1} </div>
           <div key={flight.flight_id} className="FlightDetails-section">
-          <SimpleLabelValue
-  label="Passport Image"
-  value={
-    flight?.passportImage ? (
-      <a
-        href={`${backendUrlImages}${flight?.passportImage}`}
-        download
-        style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
-      >
-        Available (Click to download)
-      </a>
-    ) : (
-      "Not Provided"
-    )
-  }
-/>
+            <SimpleLabelValue
+              label="Passport Image"
+              value={
+                flight?.passportImage ? (
+                  <a
+                    href={`${backendUrlImages}${flight?.passportImage}`}
+                    download
+                    style={{
+                      cursor: "pointer",
+                      color: "blue",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    Available (Click to download)
+                  </a>
+                ) : (
+                  "Not Provided"
+                )
+              }
+            />
 
             <SimpleLabelValue
               label="Departure Airport"
@@ -96,6 +100,20 @@ const FlightDetails = ({ flights }) => {
               label="Base Ticket Price"
               value={flight.base_ticket_price || "Not Set"}
             />
+            <SimpleLabelValue
+              label="Accepted Flights"
+              value={
+                <p>
+                  <a
+                    href={`${backendUrlImages}${flight.flightFile}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                {flight.flightFile ? "View File" : "-"}
+                </a>
+                </p>
+              }
+            />
           </div>{" "}
         </div>
       ))}
@@ -104,38 +122,37 @@ const FlightDetails = ({ flights }) => {
 };
 const CompanionModal = ({ isOpen, setIsOpen, companions, headers }) => {
   return (
-    < >
-        <Drawer anchor="right"
-      
-      sx={{
-        //width
-        zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
+    <>
+      <Drawer
+        anchor="right"
+        sx={{
+          //width
+          zIndex: (theme) => theme.zIndex.modal + 1, // Ensure it's above modals and other high-priority elements
 
-        '& .MuiDrawer-paper': {
+          "& .MuiDrawer-paper": {
             zIndex: (theme) => theme.zIndex.modal + 1,
 
-
-      width: 
-      {
-        xs: '100%',
-        sm: '50%',
-        md: '50%',
-        lg: '40%',
-        xl: '40%',
-      }, 
-    },
-
-      }}
-       open={isOpen} onClose={() => setIsOpen(false)}>
-        <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: 2,
+            width: {
+              xs: "100%",
+              sm: "50%",
+              md: "50%",
+              lg: "40%",
+              xl: "40%",
+            },
+          },
         }}
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: 2,
+          }}
         >
           <IconButton onClick={() => setIsOpen(false)}>
-           <CloseRounded /> 
+            <CloseRounded />
           </IconButton>
         </div>
         <CustomFormWrapper
@@ -146,12 +163,8 @@ const CompanionModal = ({ isOpen, setIsOpen, companions, headers }) => {
         >
           <FlightDetails flights={companions} />
         </CustomFormWrapper>
-
-
-        </Drawer>
-      <MySideDrawer isOpen={isOpen} setIsOpen={setIsOpen}>
-        
-      </MySideDrawer>
+      </Drawer>
+      <MySideDrawer isOpen={isOpen} setIsOpen={setIsOpen}></MySideDrawer>
     </>
   );
 };

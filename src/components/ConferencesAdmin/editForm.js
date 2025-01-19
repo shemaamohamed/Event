@@ -127,8 +127,8 @@ const PriceForm = ({ entries, setEntries }) => {
           />
 
           <Input
-            label="Price"
-            placeholder="Enter Price"
+            label="Price (USD)"
+            placeholder="Enter Price (USD)"
             inputValue={entry.price}
             setInputValue={(value) =>
               handleInputChange(entry.id, "price", value)

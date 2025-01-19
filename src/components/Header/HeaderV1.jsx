@@ -4,10 +4,10 @@ import SearchPopup from '../others/SearchPopup';
 import HeaderTopV1 from './HeaderTopV1';
 import HeaderTopV2 from './HeaderTopV2';
 import MainMenu from './MainMenu';
-import ColorsPalate from '../others/ColorsPalate';
 import { useAuth } from '../../common/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import NotificationDropdown from "../Notification";
+import ColorsPalate from './../others/ColorsPalate';
 
 
 const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, parentMenu }) => {
@@ -51,14 +51,21 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
 
     const handleOpenMenu = (event) => {
         event.preventDefault();
-        setOpenMenu(!openMenu)
-        document.querySelector(".page-wrapper").classList.add("no-color-palate")
+        setOpenMenu(!openMenu);
+        const pageWrapper = document.querySelector(".page-wrapper");
+        if (pageWrapper) {
+            pageWrapper.classList.add("no-color-palate");
+        }
     }
-
+    
     const handleCloseMenu = () => {
-        setOpenMenu(false)
-        document.querySelector(".page-wrapper").classList.remove("no-color-palate")
+        setOpenMenu(false);
+        const pageWrapper = document.querySelector(".page-wrapper");
+        if (pageWrapper) {
+            pageWrapper.classList.remove("no-color-palate");
+        }
     }
+    
 
     const toggleMenu = (e) => {
         e.preventDefault();
@@ -108,9 +115,9 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                                 </div>
                             </nav>
                             <div className="outer-box d-none d-lg-block">
-                                <div className="search-box-outer">
+                                {/* <div className="search-box-outer">
                                     <div className="search-box-btn"><span className={`flaticon-search`} onClick={searchOpen}></span></div>
-                                </div>
+                                </div> */}
 
 
                                 {isLoggedIn ? (
@@ -134,10 +141,10 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
 
                                 </div>
                                 
-                                <div className="btn-box">
+                                 <div className="btn-box">
                                 <Link to="/login" className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
 
-                                </div>
+                                </div> 
                 </>
               )}
                                 
@@ -152,13 +159,46 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                         <nav className="menu-box">
                             <div className="nav-logo"><Link to="/#"><img src="/images/logo-2.png" alt="image" /></Link></div>
                             <MainMenu toggleMultiMenu={toggleMultiMenu} toggleMenu={toggleMenu} parentMenu={parentMenu} />
+                            {isLoggedIn ? (
+                                  <>
+                                                    <NotificationDropdown />
+
+                                  <div className="btn-box" onClick={() => {
+                      logout();
+                      navigate("/login");
+                    }}>
+                                <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
+
+                                </div>
+                                  </>
+               
+              ) : (
+                <>
+                <div className="btn-box" style={{
+                    marginTop:'3vh',
+                    justifyContent:'center',
+                    display:'flex'
+                }}>
+                <Link  style={{
+                    marginRight:'2px'
+                }}to="/registertype" className="theme-btn btn-style-one"><span className="btn-title">Register</span></Link>
+                <Link to="/login" className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
+
+
+
+                                </div>
+                                
+                                 
+                </>
+              )}
                         </nav>
                         <div className="close-btn" onClick={handleCloseMenu} ><span className="icon flaticon-cancel-music"></span></div>
                     </div>
                 </div>
             </header>
-            <SearchPopup openSearch={openSearch} searchClose={searchClose} />
+            {/* <SearchPopup openSearch={openSearch} searchClose={searchClose} /> */}
             {/* <ColorsPalate /> */}
+
         </>
     );
 };
