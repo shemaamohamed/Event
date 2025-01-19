@@ -52,7 +52,13 @@ const TourSlider = () => {
   );
 
   return (
-    <div className="tour-slider">
+    <div className="tour-slider"
+    style={{
+      padding:'20px',
+      marginTop:'15vh'
+    }}
+
+    >
       <h1 className="tour-slider-heading">Tourist Attractions in Jordan</h1>
       {destinations.map((destination, index) => (
         <DestinationCard key={index} destination={destination} />

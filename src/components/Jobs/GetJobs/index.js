@@ -82,7 +82,10 @@ const JobList = () => {
   };
 
   return (
-    <div className="job-list">
+    <div className="job-list" style={{
+      padding:'20px',
+    marginTop:'15vh'
+    }}>
       <h2>Available Jobs</h2>
       {error && <p className="error-message">{error}</p>}
       <div className="job-cards">

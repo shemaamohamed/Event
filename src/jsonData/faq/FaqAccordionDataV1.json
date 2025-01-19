@@ -1,0 +1,75 @@
+[
+    {
+      "id": 1,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqOne",
+      "dataTarget": "collapseOne",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseOne",
+      "title": "How can I register for the congress?",
+      "collapseClass": "",
+      "ariaLabelled": "faqOne",
+      "text": "To register:\n1. Log in to the attendance portal.\n2. Complete all required fields to build your profile, including your username and password.\n3. Select the congress you wish to attend by clicking on its name.\n4. Continue filling out the registration form.\n5. Submit the form and proceed to payment."
+    },
+    {
+      "id": 2,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqTwo",
+      "dataTarget": "collapseTwo",
+      "ariaExpanded": "true",
+      "ariaControls": "collapseTwo",
+      "title": "How can I know if my registration is going well?",
+      "collapseClass": "show",
+      "ariaLabelled": "faqTwo",
+      "text": "After completing your registration, you will receive an email within 24 hours confirming your registration and notifying you that your profile is now active."
+    },
+    {
+      "id": 3,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqThree",
+      "dataTarget": "collapseThree",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseThree",
+      "title": "How can I pay the registration fees?",
+      "collapseClass": "",
+      "ariaLabelled": "faqThree",
+      "text": "After filling in the required details, the website will take you to the payment page. You can pay through AMEX, VISA CARDS, MASTER CARD, and PAYPAL."
+    },
+    {
+      "id": 4,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqFour",
+      "dataTarget": "collapseFour",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseFour",
+      "title": "What is included in the registration?",
+      "collapseClass": "",
+      "ariaLabelled": "faqFour",
+      "text": "Conference Bag and Badge, Lunches and Coffee Breaks, Scientific Program, Access to Exhibition, CME Certificate."
+    },
+    {
+      "id": 5,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqFive",
+      "dataTarget": "collapseFive",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseFive",
+      "title": "How can I get the Badge and the Certificate?",
+      "collapseClass": "",
+      "ariaLabelled": "faqFive",
+      "text": "You will receive a barcode in your email. You can show it at the entrance to get your Badge."
+    },
+    {
+      "id": 6,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqSix",
+      "dataTarget": "collapseSix",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseSix",
+      "title": "Can you please guide me on your website to do the required registration?",
+      "collapseClass": "",
+      "ariaLabelled": "faqSix",
+      "text": "You can download the guides video [Link containing video]."
+    }
+  ]
+  

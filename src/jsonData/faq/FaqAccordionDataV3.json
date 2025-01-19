@@ -1,0 +1,123 @@
+[
+    {
+      "id": 1,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqOne",
+      "dataTarget": "collapseOne",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseOne",
+      "title": "How can I submit my abstract?",
+      "collapseClass": "",
+      "ariaLabelled": "faqOne",
+      "text": "Go to your profile, upload, or write your abstract."
+    },
+    {
+      "id": 2,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqTwo",
+      "dataTarget": "collapseTwo",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseTwo",
+      "title": "When will I get the abstract confirmation?",
+      "collapseClass": "",
+      "ariaLabelled": "faqTwo",
+      "text": "You will receive a confirmation email or notification on your profile."
+    },
+    {
+      "id": 3,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqThree",
+      "dataTarget": "collapseThree",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseThree",
+      "title": "How can I know if my abstract has been accepted?",
+      "collapseClass": "",
+      "ariaLabelled": "faqThree",
+      "text": "After submitting your abstract, you will receive a notification confirming that it is under review by the congress scientific committee."
+    },
+    {
+      "id": 4,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqFour",
+      "dataTarget": "collapseFour",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseFour",
+      "title": "If my abstract is accepted as a poster, how can I know the exact dimensions?",
+      "collapseClass": "",
+      "ariaLabelled": "faqFour",
+      "text": "The dimensions for the poster are 50 cm x 70 cm."
+    },
+    {
+      "id": 5,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqFive",
+      "dataTarget": "collapseFive",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseFive",
+      "title": "What is the language for the abstract submission?",
+      "collapseClass": "",
+      "ariaLabelled": "faqFive",
+      "text": "All abstracts must be submitted in English using the online submission form on the website."
+    },
+    {
+      "id": 6,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqSix",
+      "dataTarget": "collapseSix",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseSix",
+      "title": "What is the structure for the abstract?",
+      "collapseClass": "",
+      "ariaLabelled": "faqSix",
+      "text": "- The title must be brief, concise, and in CAPITAL LETTERS.\n- Authors: Please enter your name and your colleagues’ names as you wish them to appear in the Final Program.\n- The abstract text should have a maximum of 200 words."
+    },
+    {
+      "id": 7,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqSeven",
+      "dataTarget": "collapseSeven",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseSeven",
+      "title": "I have sent my abstract, but I want to make a modification; what should I do?",
+      "collapseClass": "",
+      "ariaLabelled": "faqSeven",
+      "text": "You must inform us one month in advance by using the abstract modification button in your profile."
+    },
+    {
+      "id": 8,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqEight",
+      "dataTarget": "collapseEight",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseEight",
+      "title": "How can I know the exact deadlines for abstract submission?",
+      "collapseClass": "",
+      "ariaLabelled": "faqEight",
+      "text": "You will receive an email with all the required information and deadlines."
+    },
+    {
+      "id": 9,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqNine",
+      "dataTarget": "collapseNine",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseNine",
+      "title": "If my abstract is accepted, will I receive a certificate?",
+      "collapseClass": "",
+      "ariaLabelled": "faqNine",
+      "text": "Yes, you will receive an abstract certificate after the congress ends, which will be sent to your email."
+    },
+    {
+      "id": 10,
+      "accordionParent": "faqAccordion",
+      "accordionId": "faqTen",
+      "dataTarget": "collapseTen",
+      "ariaExpanded": "false",
+      "ariaControls": "collapseTen",
+      "title": "Can you please guide me on your website to do the required registration?",
+      "collapseClass": "",
+      "ariaLabelled": "faqTen",
+      "text": "You can download the guides video [Link containing video]."
+    }
+  ]
+  

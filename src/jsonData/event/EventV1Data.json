@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "tabId": "tab1",
+        "tabClass": "active show",
+        "icon1": "icon icon_profile",
+        "icon2": "icon icon_phone",
+        "icon3": "icon icon_mail",
+        "list1":"Event Consultant",
+        "list2": "+962 79 960 2002",
+        "list3": "info@eventscons.com",
+        "infoList": ""
+    },
+    {
+        "id": 2,
+        "tabId": "tab2",
+        "tabClass": "",
+        "icon": "icon fa fa-map-marker-alt",
+            "title": "Rawhi Al Katabi Commercial Complex, Al Wakalat St 7, Amman, Jordan",
+            "text": "Event Consultant is located at the Rawhi Al Katabi Commercial Complex on Al Wakalat Street, in the heart of Amman, Jordan. Our office is easily accessible and strategically positioned to provide convenient services to clients across the region. Feel free to visit us for any inquiries or to discuss your upcoming events.",
+        
+        "infoList": "d-none"
+    },
+    {
+        "id": 3,
+        "tabId": "tab3",
+        "tabClass": "",
+        "icon": "icon fa fa-directions",
+            "title": "How to get there",
+            "text": "Event Consultant's office is conveniently located at the Rawhi Al Katabi Commercial Complex, Al Wakalat Street, Amman, Jordan. To reach us, you can take public transport or drive via major routes, with easy access to parking. If you need specific directions, please contact us, and we'll be happy to guide you.",
+        
+        "infoList": "d-none"
+    }
+]

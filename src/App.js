@@ -1,10 +1,28 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css"
+import 'react-toastify/dist/ReactToastify.css'
+import 'react-modal-video/css/modal-video.css'
+import 'photoswipe/dist/photoswipe.css'
+
+import '../src/assets/css/color-switcher-design.css'
+import '../src/assets/css/flaticon.css'
+import '../src/assets/css/elegent-icon.css'
+import '../src/assets/css/fontawesome-all.css'
+import '../src/assets/css/animate.css'
+import '../src/assets/css/style.css'
+import '../src/assets/css/responsive.css'
+
+import Preloader from './components/others/Preloader';
+import ScrollUpBtn from './components/others/ScrollUpBtn';
 import React, { Fragment, useEffect, useState } from "react";
+
 import { Routes, Route, useLocation } from "react-router-dom";
 // import { ToastContainer } from "react-toastify";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import HomePage from "./pages/home";
-import AboutUs from "./pages/aboutUs";
 import RegisterType from "./pages/RegisterType";
 import FlightForm from "./components/FlightForm";
 import FlightFormAdmin from "./components/FlightFormAdmin";
@@ -24,19 +42,10 @@ import AddScientificPaper from "./components/SceintificPaper";
 import VisaPage from "./components/last_pages/Visa";
 import AboutUsEvent from "./components/UI/AboutUs";
 import toast, { Toaster } from "react-hot-toast";
-import OurTeams from "./components/UI/OurTeam";
-import ManagementConsulting from "./components/UI/ManagementConsulting";
-import Planning from "./components/UI/EventPlanning";
-import SocialEvents from "./components/UI/SocialEvents";
-import MediaCampaign from "./components/UI/MediaCampaign";
-import LogisticSecretarial from "./components/UI/LogisticSecretarial";
+
 import TourSlider from "./components/UI/TourAndTourism";
-import Expositions from "./components/UI/Expositions";
-import Workshops from "./components/UI/Workshop";
-import Seminars from "./components/UI/Seminars";
-import CorporateMeetings from "./components/UI/CorporateMeetings";
-import ConceptCreation from "./components/UI/ConceptCreation";
-import Conference from "./components/UI/Conference/ConferenceData";
+
+import Conferencee from "./components/UI/Conference/ConferenceData";
 import ContactUs from "./components/UI/ContactUs";
 import TopNavbar from "./components/UI/NavigationBar";
 import Audiovisuals from "./components/UI/Audiovisuals";
@@ -123,7 +132,6 @@ import FlightsFiles from "./components/FlightsFiles";
 import SpeakersComponent from "./components/SpeakersComponent";
 import AddZoomLink from "./components/AddZoomLink";
 import { useAuth } from "./common/AuthContext";
-import Footer from "./components/UI/Footer";
 import SpeakerList from "./components/SpeakerList";
 import DataTable from "./components/ReservationAdminData";
 import ReservationsComponent from "./components/ReservationAdminData";
@@ -145,6 +153,7 @@ import GroupTripRegistration from './components/GroupTripRegistration/index';
 import ClientsSlide from "./components/ClientsSlide";
 import ForgetPassword from "./pages/login/forgetpassword";
 import ForgetPassword2 from "./pages/login/forgotpassword2";
+import ErrorPage from './pages/innerPages/ErrorPage';
 import Size from "./components/SponsorAdmin/BoothSize";
 import Sponsorships from "./components/SponsorAdmin/Sponsorships";
 import SponsorShipOption from "./components/SponsorAdmin/SponsorShipOption";
@@ -152,6 +161,32 @@ import EditFloor from "./components/SponsorAdmin/EditFloorPlan";
 import ForgotPassword2 from "./pages/login/forgotpassword2";
 import SuccessVerification from "./pages/login/SuccessVerification";
 import FailedVerification from "./pages/login/failedverification";
+
+import Teams from './pages/innerPages/Speakers';
+import Home1 from './pages/homePages/Home1';
+import ClientV1 from './components/client/ClientV1';
+import AboutUs from './pages/innerPages/AboutUs';
+import Pricing from './pages/innerPages/Pricing';
+import Contact from './pages/innerPages/Contact';
+import Faq from './pages/innerPages/Faq';
+import Gallery from './pages/innerPages/Gallery';
+import Expositions from './pages/innerPages/Expositions';
+import Conference from './pages/innerPages/Conference';
+import Workshops from './pages/innerPages/Workshops';
+import Seminars from './pages/innerPages/Seminars';
+import CorporateMeetings from './pages/innerPages/CorporateMeetings';
+import MediaCampaign from './pages/innerPages/MediaCampaign';
+import LogisticSecretarial from './pages/innerPages/LogisticSecretarial';
+import SocialEvents from './pages/innerPages/SocialEvents';
+import ManagementConsulting from './pages/innerPages/ManagementConsulting';
+import ConceptCreation from './pages/innerPages/ConceptCreation';
+import Planning from './pages/innerPages/Planning';
+import ComprehensiveConferenceManagement from './pages/innerPages/ComprehensiveConferenceManagement';
+import ConferenceExhibitionSolutions from './pages/innerPages/ConferenceExhibitionSolutions';
+import MarketingVideoProduction from './pages/innerPages/MarketingVideoProduction';
+import ComprehensiveMarketingServices from './pages/innerPages/ComprehensiveMarketingServices';
+import AdditionalConferenceExhibitionServices from './pages/innerPages/AdditionalConferenceExhibitionServices';
+import FooterV1 from './components/footer/FooterV1';
 
 
 
@@ -229,8 +264,45 @@ const App = () => {
                 (( isSponsor|| isGroup ||isOther) && isLoggedIn && limit && !isAdmin) )&&(
                   <Routes >
                   <Route path='/' element={<UserLayout/>}>
+                  {/* //home */}
+                <Route path='/pricing' element={<Pricing />}></Route>
+                <Route path='/faq' element={<Faq />}></Route>
+                <Route path='/gallery' element={<Gallery />}></Route>
+                <Route path='/our_team' element={<Teams />}></Route>
+                <Route path='/our_clients' element={<ClientV1/>}></Route>
+                <Route path="/job/list" element={<JobList />} />
+                <Route path="/page/exhibitions" element={<ExhibitionsPage />} />
+                <Route path='/about-us' element={<AboutUs />}></Route>
+                                <Route path='/contact_us' element={<Contact />}></Route>
 
-                  <Route path="/" element={<Home />} />
+
+
+                  {/* services */}
+                <Route path='/conf' element={<Conference />}></Route>
+                <Route path="/expositions" element={<Expositions />} />
+                <Route path="/workshops" element={<Workshops />} />
+              <Route path="/seminars" element={<Seminars />} />
+              <Route path="/corporate_meetings" element={<CorporateMeetings />}/>
+              
+              <Route path="/planning" element={<Planning />} />
+              <Route path="/social_events" element={<SocialEvents />} />
+              <Route path="/media_campaign" element={<MediaCampaign />} />
+              <Route path="/logistic_secretarial" element={<LogisticSecretarial />}/>
+              <Route path="/concept_creation" element={<ConceptCreation />} />
+              <Route path="/management_consulting"element={<ManagementConsulting />}/>
+              {/* Additional Services */}
+              <Route path="/comprehensive-conference-management" element={<ComprehensiveConferenceManagement />} />
+              <Route path="/conference-exhibition-solutions" element={<ConferenceExhibitionSolutions />} />
+              <Route path="/marketing-video-production" element={<MarketingVideoProduction />} />
+              <Route path="/comprehensive-marketing-services" element={<ComprehensiveMarketingServices />} />
+              <Route path="/additional-conference-exhibition-services" element={<AdditionalConferenceExhibitionServices />} />
+
+
+
+
+                <Route path='*' element={<ErrorPage />}></Route>
+
+                  <Route path="/" element={<Home1 />} />
                   <Route path="/forgetpassword" element={<ForgetPassword />} />
 
 
@@ -264,38 +336,15 @@ const App = () => {
               />
               {/* before login */}
               <Route path="/home" element={<Home />} />
-              <Route path="/about_us" element={<AboutUsEvent />} />
-              <Route path="/our_clients" element={<ClientsSlide />} />
-              <Route path="/our_team" element={<OurTeams />} />
-              <Route
-                path="/management_consulting"
-                element={<ManagementConsulting />}
-              />
-              <Route path="/planning" element={<Planning />} />
-              <Route path="/social_events" element={<SocialEvents />} />
-              <Route path="/media_campaign" element={<MediaCampaign />} />
-              <Route
-                path="/logistic_secretarial"
-                element={<LogisticSecretarial />}
-              />
+             
               <Route path="/tour_slider" element={<TourSlider />} />
-              <Route path="/expositions" element={<Expositions />} />
-              <Route path="/workshops" element={<Workshops />} />
-              <Route path="/seminars" element={<Seminars />} />
-              <Route
-                path="/corporate_meetings"
-                element={<CorporateMeetings />}
-              />
-
-              <Route path="/concept_creation" element={<ConceptCreation />} />
+             
               <Route path="/ser" element={<Conference />} />
-              <Route path="/contact_us" element={<ContactUs />} />
               <Route path="/top_navbar" element={<TopNavbar />} />
               <Route path="/audiovisuals" element={<Audiovisuals />} />
               <Route path="/conf" element={<Conference3 />} />
               <Route path="/packages" element={<Packages />} />
               <Route path="/welcome" element={<Welcome />} />
-              <Route path="/about" element={<AboutUs />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/successverification" element={<SuccessVerification/>}/>
               <Route path="/failedverification" element={<FailedVerification/>}/>
@@ -310,10 +359,6 @@ const App = () => {
                 element={<OnePage />}
               />
 
-              <Route path="/page/exhibitions" element={<ExhibitionsPage />} />
-              <Route path="/gallery" element={<ImageGallery />} />
-              <Route path="/job/list" element={<JobList />} />
-              <Route path="/faq" element={<FAQ />} />
               <Route path="/up/event" element={<UpcomingConferences2 />} />
               
               
@@ -622,7 +667,8 @@ const App = () => {
               !location.pathname.includes("/other") &&
               !location.pathname.includes("/register/")
               &&!isLoggedIn &&!limit
-               && <Footer />}
+               &&     <FooterV1 />
+}
           </div>
         </div>
       </div>

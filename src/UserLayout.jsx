@@ -1,11 +1,11 @@
 import React from 'react';
 import { Outlet} from 'react-router-dom';
-import NavBar from './components/Navbar';
+import HeaderV1 from './components/Header/HeaderV1';
 
 const UserLayout = () => {
     return (
         <div>
-            <NavBar/>
+            <HeaderV1 headerStyle="header-style-two"/>
             <main>
                 <Outlet />
             </main>

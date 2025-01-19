@@ -83,7 +83,10 @@ const ConferencesPage = () => {
   };
 
   return (
-    <div className="user-conference-cards-container">
+    <div className="user-conference-cards-container" style={{
+      padding:'20px',
+    marginTop:'15vh'
+    }}>
       <ConferenceCards conferences={conferences} />
       <Pagination
         currentPage={pagination.currentPage}

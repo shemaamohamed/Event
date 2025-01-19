@@ -49,7 +49,10 @@ const SelectConferences = () => {
   };
 
   return (
-    <div className="conferences">
+    <div className="conferences" style={{
+      padding:'20px',
+      marginTop:'20vh'
+    }}>
       <h1 className="title">Available Conferences</h1>
       <ul className="conference-list">
         {allConferences?.map((conference) => (

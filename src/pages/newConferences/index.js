@@ -18,9 +18,9 @@ import { backendUrlImages } from "../../constant/config";
 import httpService from "../../common/httpService";
 import PaperSubmissionForm from "../../components/abstract/abstractUser";
 import Speakers4 from "../../components/SpeakerProduct";
-import Home from "../HomeR";
 import Welcome from "../../components/UI/Welcome";
 import ClientsSlide from "../../components/ClientsSlide";
+import Home1 from "../homePages/Home1";
 
 const ConferenceDetails = () => {
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ const ConferenceDetails = () => {
 
   const sections = [
     { label: "Conference Overview", component: "overview" },
-    { label: "Home", component: "home" },
+    // { label: "Home", component: "home" },
     { label: "Welcome", component: "Welcome" },
     { label: "Abstract", component: "Abstract" },
     { label: "Speakers", component: "Speakers" },
@@ -87,8 +87,8 @@ const ConferenceDetails = () => {
     const { conference, scientific_topics, prices, committee_members } = data;
 
     switch (sections[selectedTab].component) {
-      case "home":
-        return <Home />;
+      // case "home":
+      //   return <Home1 />;
       case "sponsor":
         return <ClientsSlide />;
       case "Welcome":
@@ -205,7 +205,10 @@ const ConferenceDetails = () => {
   };
 
   return (
-    <Container>
+    <Container style={{
+      padding:'20px',
+    marginTop:'15vh'
+    }}>
       <Box sx={{ mb: 3, display: "flex", alignItems: "center" }}>
         <Tabs
           value={selectedTab}

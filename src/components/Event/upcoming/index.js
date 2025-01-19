@@ -33,7 +33,12 @@ const UpcomingConferences2 = () => {
   if (loading) return <p>Loading conferences...</p>;
 
   return (
-    <div className="upcoming-conferences-container">
+    <div className="upcoming-conferences-container"
+    style={{
+      padding:'20px',
+    marginTop:'15vh'
+    }}
+    >
       <h2 className="section-title">Upcoming Event</h2>
       <div className="card-container">
         {conferences.map((conference) => (

@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "icon": "icon flaticon-lecture",
+        "title": "Custom Booth Designs",
+        "text": "We create innovative and tailored booth designs that reflect your brand identity.",
+        "text1": "Offering both standard and model booths to meet various needs and preferences.",
+        "animation": "fadeInUp",
+        "delay": 0
+    },
+    {
+        "id": 2,
+        "icon": "icon flaticon-search",
+        "title": "Comprehensive Event Planning",
+        "text": "From concept creation to execution, we handle all aspects of event planning.",
+        "text1": "Ensuring seamless logistics and coordination for a hassle-free experience.",
+        "animation": "fadeInUp",
+        "delay": 0
+    },
+    {
+        "id": 3,
+        "icon": "icon flaticon-diamond-1",
+        "title": "Marketing Expertise",
+        "text": "Professional social media marketing campaigns tailored to promote your events.",
+        "text1": "Leveraging all platforms to maximize visibility and engagement.",
+        "animation": "fadeInUp",
+        "delay": 400
+    },
+    {
+        "id": 4,
+        "icon": "icon flaticon-success",
+        "title": "Experienced Team",
+        "text": "A skilled and trained team dedicated to delivering top-notch services.",
+        "text1": "Focused on achieving client satisfaction through creativity and precision.",
+        "animation": "fadeInUp",
+        "delay": 800
+    },
+    {
+        "id": 5,
+        "icon": "icon flaticon-employee",
+        "title": "End-to-End Solutions",
+        "text": "Offering complete event solutions, including setup, branding, and on-site management.",
+        "text1": "Ensuring your event stands out and leaves a lasting impression.",
+        "animation": "fadeInUp",
+        "delay": 1200
+    },
+    {
+        "id": 6,
+        "icon": "icon flaticon-business",
+        "title": "Promotional Video Production",
+        "text": "A specialized team for creating high-quality marketing and promotional videos.",
+        "text1": "Delivering impactful visuals to captivate audiences and highlight your services.",
+        "animation": "fadeInUp",
+        "delay": 1200
+    }
+]

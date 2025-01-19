@@ -58,7 +58,10 @@ const ExhibitionsPage = () => {
   };
 
   return (
-    <div className="user-exhibition-cards-container">
+    <div className="user-exhibition-cards-container" style={{
+      padding:'20px',
+    marginTop:'15vh'
+    }}>
       <div className="">
         <header className="exhibitions-header">
           <div className="filter-section">

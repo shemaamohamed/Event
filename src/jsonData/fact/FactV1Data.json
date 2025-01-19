@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "icon": "icon_headphones",
+        "end": 200,
+        "info": "Meetings and Conferences ",
+        "animation": "fadeInUp",
+        "delay": ""
+    },
+    {
+        "id": 2,
+        "icon": "icon_ribbon_alt",
+        "end": 100,
+        "info": "Exhibitions",
+        "animation": "fadeInUp",
+        "delay": 400
+    },
+    {
+        "id": 3,
+        "icon": "icon_like",
+        "end": 15,
+        "info": "Years of Experience in Jordan ",
+        "animation": "fadeInUp",
+        "delay": 800
+    },
+    {
+        "id": 4,
+        "icon": "icon_book_alt",
+        "end": 50,
+        "info": "Workshops & Scientifics Days",
+        "animation": "fadeInUp",
+        "delay": 1200
+    }
+]
