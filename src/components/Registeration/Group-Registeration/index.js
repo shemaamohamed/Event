@@ -193,7 +193,7 @@ const RegisterGroupPage = () => {
                                   sx={{
                                   color: "white",
                                   cursor: "pointer",
-                                  backgroundColor:'#c62828',
+                                  backgroundColor:'#9B1321',
                                   '&:hover': {
                                     backgroundColor: darken('#dc143c', 0.2), // Darken color by 10%
                                   },
@@ -310,7 +310,7 @@ const RegisterGroupPage = () => {
                   >
                     <Button
                     sx={{
-                      backgroundColor:'#c62828',
+                      backgroundColor:'#9B1321',
                       '&:hover': {
           backgroundColor: darken('#dc143c', 0.2), // Darken color by 10%
         },

@@ -11,7 +11,7 @@ const CallToActionV1 = () => {
                         <h2>With our expertise and commitment to excellence <br /> we transform your ideas into memorable and impactful events.</h2>
 
                         <div className="btn-box">
-                            <Link to="/contact#" className="theme-btn btn-style-one"><span className="btn-title">Contact
+                            <Link to="/contact_us#" className="theme-btn btn-style-one"><span className="btn-title">Contact
                                 Us</span></Link>
                         </div>
                     </div>

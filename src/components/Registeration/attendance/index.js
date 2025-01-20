@@ -196,7 +196,9 @@ const RegisterAttendancePage = () => {
             <div className="but-con2">
               <Button
                 variant="contained"
-                color="error"
+                sx={{
+                  backgroundColor:"#9B1321"
+                }}
                 onClick={handleRegister}
                 className="submit-button"
               >

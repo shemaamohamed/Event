@@ -339,7 +339,7 @@ const App = () => {
                 element={<RegisterSponsorPage />}
               />
               {/* before login */}
-              <Route path="/home" element={<Home />} />
+              {/* <Route path="/home" element={<Home />} /> */}
              
               <Route path="/tour_slider" element={<TourSlider />} />
              
@@ -364,6 +364,8 @@ const App = () => {
               />
 
               <Route path="/up/event" element={<UpcomingConferences2 />} />
+              <Route path="one/exhibits/:exhibitId" element={<OneExhibit />} />
+
               
               
                                       {/* <Route path="/all-speakers" element={<SpeakersComponent />} />

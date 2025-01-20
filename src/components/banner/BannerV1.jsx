@@ -1,9 +1,35 @@
-import React from 'react';
-import BannerV1Data from '../../jsonData/banner/BannerV1Data.json'
+import React, { useEffect, useState } from 'react';
 import SingleBannerV1 from './SingleBannerV1';
 import Slider from 'react-slick';
+import axios from 'axios';
 
 const BannerV1 = () => {
+    const [allConferences, setAllConferences] = useState([]);
+    const getConference = () => {
+      const BaseUrl = process.env.REACT_APP_BASE_URL;
+      const url = `${BaseUrl}/con/upcoming`;
+      const token = localStorage.getItem("token");
+  
+      axios
+        .get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setAllConferences(response.data.upcoming_conferences);
+          console.log(response.data.upcoming_conferences)
+        })
+        .catch(() => {
+          toast.error("Error fetching conferences");
+        });
+    };
+  
+    useEffect(() => {
+      getConference();
+    }, []);
+  
+    
 
     const NextArrow = (props) => {
         return <button className="slick-next" onClick={props.onClick}>
@@ -35,7 +61,7 @@ const BannerV1 = () => {
             <section className="banner-section">
                 <div className="banner-carousel">
                     <Slider {...settings}>
-                        {BannerV1Data.map(banner =>
+                        {allConferences.map(banner =>
                             <SingleBannerV1 banner={banner} key={banner.id} />
                         )}
                     </Slider>

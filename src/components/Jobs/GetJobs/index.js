@@ -3,6 +3,8 @@ import axios from "axios";
 import "./style.scss"; // إضافة ملف التنسيق
 import { Input } from "antd";
 import ImageUpload from "../../../CoreComponent/ImageUpload";
+import { Typography, Grid, Card, CardContent, CardActions, Button } from "@mui/material";
+
 
 const JobList = () => {
   const [jobs, setJobs] = useState([]);
@@ -82,131 +84,180 @@ const JobList = () => {
   };
 
   return (
-    <div className="job-list" style={{
-      padding:'20px',
-    marginTop:'15vh'
-    }}>
-      <h2>Available Jobs</h2>
-      {error && <p className="error-message">{error}</p>}
-      <div className="job-cards">
-        {jobs.map((job) => (
-          <div key={job.id} className="job-card">
-            <h3>{job.events_coordinator}</h3>
-            <p>
-              <strong>Responsibilities:</strong> {job.responsibilities}
-            </p>
-            <p>
-              <strong>Description:</strong> {job.description}
-            </p>
-            <button
-              onClick={() => setActiveJobId(job.id)} // لتحديد الوظيفة النشطة
-              className="submit-button"
-            >
-              Apply
-            </button>
+    <div style={{ padding: "20px", marginTop: "15vh" }}>
+    <Typography variant="h4" align="center" gutterBottom>
+      Available Jobs
+    </Typography>
+    {error && (
+      <Typography variant="body1" color="error" align="center">
+        {error}
+      </Typography>
+    )}
+    <Grid container spacing={3} justifyContent="center">
+      {jobs.map((job) => (
+        <Grid item key={job.id} xs={12} sm={6} md={8}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                {job.events_coordinator}
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                <strong>Responsibilities:</strong> {job.responsibilities}
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                <strong>Description:</strong> {job.description}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button
+                variant="contained"
+                style={{
+                  color:'white',
+                  backgroundColor:'#9B1321'
+                }}
+                fullWidth
+                onClick={() => setActiveJobId(job.id)}
+              >
+                Apply
+              </Button>
+            </CardActions>
 
-            {/* عرض النموذج أسفل الوظيفة فقط إذا كانت الوظيفة المحددة هي النشطة */}
             {activeJobId === job.id && !submittedJobs[job.id] && (
-              <div className="application-form">
-                <h3>Apply for Job</h3>
+              <CardContent>
+                <Typography variant="h6" gutterBottom>
+                  Apply for Job
+                </Typography>
                 <form onSubmit={(e) => handleFormSubmit(e, job.id)}>
-                  <Input
-                    type="text"
-                    name="first_name"
-                    placeholder="First Name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                  />
-                  <Input
-                    type="text"
-                    name="last_name"
-                    placeholder="Last Name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                  />
-                  <Input
-                    type="text"
-                    name="phone"
-                    placeholder="Phone Number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                  <Input
-                    type="text"
-                    name="whatsapp_number"
-                    placeholder="WhatsApp Number"
-                    value={whatsappNumber}
-                    onChange={(e) => setWhatsappNumber(e.target.value)}
-                  />
-                            <div> It will be used to send conference-related messages.</div>
+  <Grid container spacing={2}>
+    <Grid item xs={12} sm={6}>
+      <Input
+        type="text"
+        name="first_name"
+        placeholder="First Name"
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        required
+      />
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <Input
+        type="text"
+        name="last_name"
+        placeholder="Last Name"
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+        required
+      />
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <Input
+        type="text"
+        name="phone"
+        placeholder="Phone Number"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+      />
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <Input
+        type="text"
+        name="whatsapp_number"
+        placeholder="WhatsApp Number"
+        value={whatsappNumber}
+        onChange={(e) => setWhatsappNumber(e.target.value)}
+      />
+    </Grid>
+    <Grid item xs={12}>
+      <Typography variant="body2" color="textSecondary" gutterBottom>
+        It will be used to send conference-related messages.
+      </Typography>
+    </Grid>
+    <Grid item xs={12}>
+      <Input
+        type="email"
+        name="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <Input
+        type="text"
+        name="nationality"
+        placeholder="Nationality"
+        value={nationality}
+        onChange={(e) => setNationality(e.target.value)}
+      />
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <Input
+        type="text"
+        name="home_address"
+        placeholder="Home Address"
+        value={homeAddress}
+        onChange={(e) => setHomeAddress(e.target.value)}
+      />
+    </Grid>
+    <Grid item xs={12}>
+      <Input
+        type="text"
+        name="educational_qualification"
+        placeholder="Educational Qualification"
+        value={educationalQualification}
+        onChange={(e) => setEducationalQualification(e.target.value)}
+      />
+    </Grid>
+    <Grid item xs={12}>
+      <Input
+        type="text"
+        name="position_applied_for"
+        placeholder="Position Applied For"
+        value={positionAppliedFor}
+        onChange={(e) => setPositionAppliedFor(e.target.value)}
+      />
+    </Grid>
+    <Grid item xs={12}>
+      <ImageUpload
+        label="Upload Resume"
+        inputValue={resume}
+        setInputValue={setResume}
+        allowedExtensions={["pdf"]}
+      />
+    </Grid>
+    <Grid item xs={12}>
+      <Button type="submit" variant="contained" color="success" fullWidth>
+        Submit Application
+      </Button>
+    </Grid>
+  </Grid>
+</form>
 
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  <Input
-                    type="text"
-                    name="nationality"
-                    placeholder="Nationality"
-                    value={nationality}
-                    onChange={(e) => setNationality(e.target.value)}
-                  />
-                  <Input
-                    type="text"
-                    name="home_address"
-                    placeholder="Home Address"
-                    value={homeAddress}
-                    onChange={(e) => setHomeAddress(e.target.value)}
-                  />
-                  <Input
-                    type="text"
-                    name="educational_qualification"
-                    placeholder="Educational Qualification"
-                    value={educationalQualification}
-                    onChange={(e) => setEducationalQualification(e.target.value)}
-                  />
-                  <Input
-                    type="text"
-                    name="position_applied_for"
-                    placeholder="Position Applied For"
-                    value={positionAppliedFor}
-                    onChange={(e) => setPositionAppliedFor(e.target.value)}
-                  />
-                  <ImageUpload
-                    label="Upload Resume"
-                    inputValue={resume}
-                    setInputValue={setResume}
-                    allowedExtensions={["pdf"]}
-                  />
-                  <button type="submit" className="submit-button">
-                    Submit Application
-                  </button>
-                </form>
-              </div>
+              </CardContent>
             )}
 
-            {/* عرض الرسالة بعد تقديم الطلب فقط لهذه الوظيفة */}
             {submittedJobs[job.id] && activeJobId === job.id && (
-              <div className="thank-you-message">
-                <h3>Thank you for submitting your application!</h3>
-                <p>
-                  We appreciate your interest in joining our team. Your qualifications are currently under review, and we will contact you soon if your profile matches the job requirements.
-                </p>
-                <p>We wish you the best of luck!</p>
-                <p>Sincerely,</p>
-                <p>Events Consultant Company</p>
-              </div>
+              <CardContent>
+                <Typography variant="h6" color="primary" gutterBottom>
+                  Thank you for submitting your application!
+                </Typography>
+                <Typography variant="body2">
+                  We appreciate your interest in joining our team. Your qualifications are
+                  currently under review, and we will contact you soon if your profile matches
+                  the job requirements.
+                </Typography>
+                <Typography variant="body2">We wish you the best of luck!</Typography>
+                <Typography variant="body2" gutterBottom>
+                  Sincerely, Events Consultant Company
+                </Typography>
+              </CardContent>
             )}
-          </div>
-        ))}
-      </div>
-    </div>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  </div>
   );
 };
 

@@ -32,10 +32,18 @@ const OneExhibit = () => {
 
   if (loading) return <p>Loading exhibit details...</p>;
   if (error) return <p className="error-message">{error}</p>;
-  if (!exhibitData || exhibitData.length === 0) return <p>No exhibit details available.</p>;
+  if (!exhibitData || exhibitData.length === 0) return <p
+  style={{
+    marginTop:'20vh',
+    textAlign:'center'
+  }}
+  >No exhibit details available.</p>;
 
   return (
-    <div className="one-exhibit-container">
+    <div className="one-exhibit-container" style={{
+      marginTop:'20vh',
+      padding:'20px'
+    }}>
       {exhibitData.map((item, index) => (
         <div key={index} className="exhibit-item">
           <img
@@ -43,7 +51,7 @@ const OneExhibit = () => {
             alt={item.alt_text || "Exhibit Image"}
             className="exhibit-image"
           />
-          <h3 className="exhibit-title">{item.conference_title}</h3>
+          <h3 className="exhibit-title" >{item.conference_title}</h3>
         </div>
       ))}
     </div>

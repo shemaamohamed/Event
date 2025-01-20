@@ -52,7 +52,7 @@ const Home1 = () => {
         <>
             <div className="page-wrapper">
                 <BannerV1 />
-                <ComingSoonV1 />
+                {/* <ComingSoonV1 /> */}
                 <AboutV1 />
                 <FeatureV1 />
                 <SpeakerV1 />
@@ -64,7 +64,7 @@ const Home1 = () => {
                 <WhyChooseV1 />
                 <ClientV1 />
                 <RegisterV1 />
-                <BlogV1 hasShape={true} />
+                {/* <BlogV1 hasShape={true} /> */}
             </div>
         </>
     );

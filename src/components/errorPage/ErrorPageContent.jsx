@@ -16,7 +16,7 @@ const ErrorPageContent = () => {
                     <h4>Page not Found</h4>
                     <div className="text">Sorry, we couldnt find the page youre looking for</div>
                     <Link to="/#" className="theme-btn btn-style-three"><span className="btn-title">Home Page</span></Link>
-                    <Link to="/contact#" className="theme-btn btn-style-two"><span className="btn-title">Contact Us</span></Link>
+                    <Link to="/contact_us#" className="theme-btn btn-style-two"><span className="btn-title">Contact Us</span></Link>
                 </div>
             </section>
         </>

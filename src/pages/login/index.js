@@ -118,7 +118,7 @@ const LoginPage = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 padding:'10px',
-                color: " #c62828",
+                color: " #9B1321",
               }} className="login-title">
                 Login
               </Typography>
@@ -195,7 +195,7 @@ const LoginPage = () => {
               >
               <Button type="submit" 
               sx={{
-                backgroundColor: " #c62828",
+                backgroundColor: " #9B1321",
                 color: "#ffffff",
                 width: "100%",
               }}
@@ -215,7 +215,7 @@ const LoginPage = () => {
               }}>
                 Don't have an account? {' '}<span
                 style={{
-                color: "#c62828",
+                color: "#9B1321",
                 cursor: "pointer",
 
                 }}

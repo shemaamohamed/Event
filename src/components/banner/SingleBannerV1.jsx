@@ -1,23 +1,30 @@
 import React from 'react';
 import { HashLink as Link } from 'react-router-hash-link'
+import { backendUrlImages } from '../../constant/config';
 
 const SingleBannerV1 = ({ banner }) => {
-    const { thumb, subTitle, title1, title2, list1, list2, list3, btnLink, btnText } = banner
 
     return (
         <>
-            <div className="slide-item" style={{ backgroundImage: `url(images/main-slider/${thumb}` }}>
+            <div className="slide-item" style={{ backgroundImage: `url(${backendUrlImages}${banner.image})` }}>
                 <div className="auto-container">
-                    <div className="content-box">
-                        <span className="title">{subTitle}</span>
-                        <h2> {title1} <br /> {title2} </h2>
-                        <ul className="info-list">
+                     <div className="content-box">
+                        <span className="title">
+                        {new Date(banner.start_date).toLocaleDateString(undefined, {
+  year: 'numeric',
+  month: 'long', 
+  day: 'numeric',
+})}
+                        </span>
+                        <h2> 
+                             { banner.title} </h2>
+                        {/* <ul className="info-list">
                             <li><span className="icon fa fa-chair"></span>{list1}</li>
                             <li><span className="icon fa fa-user-alt"></span>{list2}</li>
                             <li><span className="icon fa fa-map-marker-alt"></span>{list3}</li>
-                        </ul>
-                        <div className="btn-box"><Link to={`/${btnLink}#`} className="theme-btn btn-style-two"><span className="btn-title">{btnText}</span ></Link></div>
-                    </div>
+                        </ul> */}
+                        <div className="btn-box"><Link to={`/login#`} className="theme-btn btn-style-two"><span className="btn-title">Book Ticket</span ></Link></div>
+                    </div> 
                 </div>
             </div >
         </>
