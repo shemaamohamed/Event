@@ -1,24 +1,31 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link'
 
-const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu }) => {
+const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu ,handleCloseMenu}) => {
+    const navigate =useNavigate();
+    const handleHomeClick = (e) => {
+        toggleMenu(e);
+        handleCloseMenu();
+        navigate('/'); // يقوم بالتنقل إلى الصفحة الرئيسية
+      };
     return (
         <>
             <ul className="navigation clearfix">
                 <li className={`dropdown ${parentMenu === 'home' ? 'current' : ''} `}>
-                    <Link to={void (0)} onClick={toggleMenu}>Home</Link>
+                    <Link   to="/" onClick={handleHomeClick}>Home</Link>
                     <ul className='sub-menu'>
-                        <li><Link to="/#">Home </Link></li>
-                        <li><Link to="/conferences">Conferences </Link></li>
-                        <li><Link to="/page/exhibitions">Exhibition </Link></li>
+                        {/* <li><Link to="/#">Home </Link></li> */}
+                        <li><Link onClick={handleCloseMenu} to="/conferences">Conferences </Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/page/exhibitions">Exhibition </Link></li>
 
 
-                        <li><Link to="/about-us#" >Our Story</Link></li>
-                        <li><Link to="/our_team" >Our Team</Link></li>
-                        <li><Link to="/our_clients" >Our Clients</Link></li>
-                        <li><Link to="/gallery" >Gallery</Link></li>
-                        <li><Link to="/job/list" >Careers</Link></li>
-                        <li><Link to="/faq" >FAQs</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/about-us#" >Our Story</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/our_team" >Our Team</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/our_clients" >Our Clients</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/gallery" >Gallery</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/job/list" >Careers</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/faq" >FAQs</Link></li>
 
 
 
@@ -34,36 +41,36 @@ const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu }) => {
                 <li className={`dropdown ${parentMenu === 'services' ? 'current' : ''}`}>
                     <Link to={void (0)} onClick={toggleMenu}>Services</Link>
                     <ul className='sub-menu'>
-                        <li><Link to="/conf">Conferences</Link></li>
-                        <li><Link to="/expositions">Exhibitions</Link></li>
-                        <li><Link to="/workshops">Workshops</Link></li>
-                        <li><Link to="/seminars">Seminars</Link></li>
-                        <li><Link to="/corporate_meetings">Corporate Meetings</Link></li>
-                        <li><Link to="/planning">Event Planning</Link></li>
-                        <li><Link to="/media_campaign">Media Campaigns</Link></li>
-                        <li><Link to="/logistic_secretarial">Logistics</Link></li>
-                        <li><Link to="/social_events">Social Events</Link></li>
-                        <li><Link to="/concept_creation">Concept Creation</Link></li>
-                        <li><Link to="/management_consulting">Management Consulting</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/conf">Conferences</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/expositions">Exhibitions</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/workshops">Workshops</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/seminars">Seminars</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/corporate_meetings">Corporate Meetings</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/planning">Event Planning</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/media_campaign">Media Campaigns</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/logistic_secretarial">Logistics</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/social_events">Social Events</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/concept_creation">Concept Creation</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/management_consulting">Management Consulting</Link></li>
                     </ul>
                     <div className="dropdown-btn"><span className="fa fa-angle-down"></span></div>
                 </li>
                 <li className={`dropdown ${parentMenu === ' additional services' ? 'current' : ''}`}>
                     <Link to={void (0)} onClick={toggleMenu}>Additional Services</Link>
                     <ul className='sub-menu'>
-                        <li><Link to="/comprehensive-conference-management">Comprehensive Conference Management Services</Link></li>
-                        <li><Link to="/conference-exhibition-solutions">Professional Conference and Exhibition Solutions – Booths Creation</Link></li>
-                        <li><Link to="/marketing-video-production">Professional Marketing Video Production</Link></li>
-                        <li><Link to="/comprehensive-marketing-services">Comprehensive Marketing Services</Link></li>
-                        <li><Link to="/additional-conference-exhibition-services">Expanding Excellence: Additional Services for Conferences and Exhibitions</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/comprehensive-conference-management">Comprehensive Conference Management Services</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/conference-exhibition-solutions">Professional Conference and Exhibition Solutions – Booths Creation</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/marketing-video-production">Professional Marketing Video Production</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/comprehensive-marketing-services">Comprehensive Marketing Services</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/additional-conference-exhibition-services">Expanding Excellence: Additional Services for Conferences and Exhibitions</Link></li>
                     </ul>
                     <div className="dropdown-btn"><span className="fa fa-angle-down"></span></div>
                 </li>
                 <li className={`dropdown ${parentMenu === ' events ' ? 'current' : ''}`}>
                     <Link to={void (0)} onClick={toggleMenu}>Events </Link>
                     <ul className='sub-menu'>
-                        <li><Link to="/up/event">Upcoming Events</Link></li>
-                        <li><Link to="/gallery"> Previous Events</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/up/event">Upcoming Events</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/gallery"> Previous Events</Link></li>
                         
                     </ul>
                     <div className="dropdown-btn"><span className="fa fa-angle-down"></span></div>
@@ -71,7 +78,7 @@ const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu }) => {
                 <li className={`dropdown ${parentMenu === ' Travel and Tourism ' ? 'current' : ''}`}>
                     <Link to={void (0)} onClick={toggleMenu}>Travel and Tourism </Link>
                     <ul className='sub-menu'>
-                        <li><Link to="/tour_slider">Sights</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/tour_slider">Sights</Link></li>
                         
                     </ul>
                     <div className="dropdown-btn"><span className="fa fa-angle-down"></span></div>
@@ -80,7 +87,7 @@ const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu }) => {
               
                
                 
-                <li><Link to="/contact_us">Contact</Link></li>
+                <li><Link onClick={handleCloseMenu} to="/contact_us">Contact</Link></li>
             </ul>
         </>
     );

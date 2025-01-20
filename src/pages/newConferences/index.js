@@ -12,6 +12,7 @@ import {
   CardMedia,
   Container,
   Grid,
+  Divider,
 } from "@mui/material";
 import image from "./file.png";
 import { backendUrlImages } from "../../constant/config";
@@ -114,7 +115,6 @@ const ConferenceDetails = () => {
 
   const sections = [
     { label: "Conference Overview", component: "overview" },
-    // { label: "Home", component: "home" },
     { label: "Welcome", component: "Welcome" },
     { label: "Abstract", component: "Abstract" },
     { label: "Speakers", component: "Speakers" },
@@ -142,7 +142,9 @@ const ConferenceDetails = () => {
             This document contains important details about {label}. Please
             download it for more information.
           </Typography>
-          <Button variant="contained" href={url} download sx={{ mt: 2 }}>
+          <Button variant="contained" href={url} download sx={{ mt: 2,
+            backgroundColor:' #9B1321'
+           }} >
             Download {label}
           </Button>
         </>
@@ -264,7 +266,9 @@ const ConferenceDetails = () => {
               <Button
                 variant="contained"
                 onClick={() => navigate("/registertype")}
-                sx={{ mt: 3 }}
+                sx={{ mt: 3 ,
+                  backgroundColor:' #9B1321'
+                }}
               >
                 Register
               </Button>
@@ -273,21 +277,45 @@ const ConferenceDetails = () => {
         );
       case "committee":
         return (
-          <Box>
-            {committee_members?.map((member) => (
-              <Card key={member.id} sx={{ mb: 2 }}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={`${backendUrlImages}${member?.committee_image}`}
-                  alt={member?.name}
-                />
-                <CardContent>
-                  <Typography variant="h6">{member?.name}</Typography>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 2 }}>
+  {committee_members?.map((member) => (
+    <Card
+      key={member.id}
+      sx={{
+        width: 345,
+        borderRadius: 2,
+        boxShadow: 3,
+        transition: 'transform 0.3s, box-shadow 0.3s',
+        '&:hover': {
+          transform: 'scale(1.05)',
+          boxShadow: 6,
+        },
+      }}
+    >
+      <CardMedia
+        component="img"
+        height="200"
+        image={`${backendUrlImages}${member?.committee_image}`}
+        alt={member?.name}
+        sx={{
+          borderTopLeftRadius: 2,
+          borderTopRightRadius: 2,
+          objectFit: 'cover',
+        }}
+      />
+      <CardContent>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', textAlign: 'center', color: 'text.primary' }}>
+          {member?.name}
+        </Typography>
+        <Divider sx={{ margin: '8px 0' }} />
+        {/* Add member's role or description if needed */}
+        <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
+          {member?.role} {/* Or any additional description */}
+        </Typography>
+      </CardContent>
+    </Card>
+  ))}
+</Box>
         );
       case "firstAnnouncement":
       case "secondAnnouncement":

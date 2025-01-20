@@ -236,7 +236,14 @@ const RegisterPage = () => {
       />
 
       <Grid container>
-        <Grid xs={12} sm={6} md={6} lg={6} xl={6}>
+        <Grid xs={12} sm={6} md={6} lg={6} xl={6}
+        sx={{
+          order:{
+            xs:2,
+            sm:1,
+          }
+        }}
+        >
           <form onSubmit={handleRegister}>
             <Grid container spacing={2}>
               <Grid
@@ -500,7 +507,14 @@ const RegisterPage = () => {
             </Grid>
           </form>
         </Grid>
-        <Grid xs={12} sm={6} md={6} lg={6} xl={6}>
+        <Grid xs={12} sm={6} md={6} lg={6} xl={6}
+        sx={{
+          order:{
+            xs:1,
+            sm:2,
+          }
+        }}
+        >
           <img src={registerImg} alt="register" className="register-img" />
         </Grid>
       </Grid>

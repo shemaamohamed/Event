@@ -102,7 +102,11 @@ const ExcelUpload = () => {
     userGroupData && new Date() > new Date(userGroupData.update_deadline);
 
   return (
-    <div className="excel-upload-container">
+    <div className="excel-upload-container"
+    style={{
+      marginTop:'20vh'
+    }}
+    >
       {showUploadForm ? (
         <form onSubmit={handleUpload} className="excel-upload-form">
           <ImageUpload

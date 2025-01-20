@@ -30,7 +30,7 @@ const AboutV1 = () => {
                                     )}
                                 </ul>
                                 <div className="btn-box">
-                                    <Link to="/contact_us#" className="theme-btn btn-style-three">
+                                    <Link to="/registertype#" className="theme-btn btn-style-three">
                                         <span className="btn-title">Register Now</span>
                                     </Link>
                                 </div>

@@ -106,7 +106,9 @@ const ConferenceWelcomeMessageForm = () => {
         </div>
         <div className="form-group"></div>
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} style={{
+          backgroundColor:' #9B1321'
+        }}>
           {loading ? "Submitting..." : "Submit"}
         </button>
       </form>

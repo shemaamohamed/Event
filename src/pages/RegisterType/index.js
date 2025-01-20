@@ -48,7 +48,8 @@ const RegisterType = () => {
         lg: '80vh', 
         xl: '80vh', 
       },
-      padding:'20px'
+      marginTop:'20vh',
+      padding:'30px'
       
 
     }}

@@ -492,7 +492,9 @@ const SponsorSection = () => {
   }, [myConferenceId]);
 
   return (
-    <div className="sponsor-section">
+    <div className="sponsor-section" style={{
+      marginTop:'10vh'
+    }}>
       {/* شرط عرض مكون الفاتورة أو الخيارات بناءً على وجود invoiceData */}
       {invoiceData ? (
         <SponsorInvoice data={invoiceData} /> // إذا كانت invoiceData موجودة، يتم عرض هذا المكون

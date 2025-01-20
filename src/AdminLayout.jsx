@@ -43,13 +43,13 @@ const demoTheme = createTheme({
 });
 
 const AuthButton = styled.div`
-  background-color: #c82333;
+  background-color: #9B1321;
   color: #fff;
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  border: 1px solid #c82333;
+  border: 1px solid #9B1321;
 
   &:hover {
     background-color: #d90429;

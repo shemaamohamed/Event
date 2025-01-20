@@ -15,42 +15,43 @@ function CardType({value  ,handleNavigate}) {
       };
 
   return (
-    <Card sx={{
-        '&:hover': {
-      transform: 'scale(1.05)',  
-    },
-    marginTop:'20px',
-
-
-        
-    }} > 
+    <Card
+    sx={{
+      '&:hover': {
+        transform: 'scale(1.05)',  
+      },
+      height:'400px'
+     
+    }}
+  >
     <CardActionArea onClick={handleClick}>
       <CardMedia
         component="img"
-        height="250"
         alt="green iguana"
-        
         image={require(`../../icons/${value.img}`)}
-       
-        
       />
-      <CardContent>
-        <Typography 
+      <CardContent
         sx={{
-                   
-            padding:'10px',
-            color: " gray",
-            textAlign:'center',
-            fontStyle:'bold',
-            fontSize:'1rem'
-          }} 
-          height={50}  >
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Typography
+          sx={{
+            padding: '10px',
+            color: 'gray',
+            textAlign: 'center',
+            fontWeight: 'bold', 
+            fontSize: '1rem',
+          }}
+        >
           Login As {value.type}
         </Typography>
-        
       </CardContent>
     </CardActionArea>
   </Card>
+  
   )
 }
 

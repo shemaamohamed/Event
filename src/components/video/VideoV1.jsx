@@ -13,7 +13,7 @@ const VideoV1 = () => {
                     <div className="content-box">
                         <div className="text">WE’RE A LEADING INDUSTRY COMPANY</div>
                         <h2>With our expertise and commitment to excellence, <br /> we transform your ideas into memorable and impactful events.</h2>
-                        <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId="Fvae8nxzVz4" onClose={() => setOpen(false)} />
+                        <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId="ZP_rrjQalqQ" onClose={() => setOpen(false)} />
                         <Link className="play-now" onClick={() => setOpen(true)}>
                             <i className="icon flaticon-play-button-3" aria-hidden="true"></i>
                             <span className="ripple"></span>

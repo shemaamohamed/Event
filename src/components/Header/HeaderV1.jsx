@@ -7,7 +7,6 @@ import MainMenu from './MainMenu';
 import { useAuth } from '../../common/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import NotificationDropdown from "../Notification";
-import ColorsPalate from './../others/ColorsPalate';
 
 
 const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, parentMenu }) => {
@@ -33,17 +32,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
         };
     }, []);
 
-    // Search Bar
-    const [openSearch, setOpenSearch] = useState(false);
-
-    const searchOpen = (event) => {
-        event.preventDefault();
-        setOpenSearch(!openSearch)
-    }
-
-    const searchClose = () => {
-        setOpenSearch(false)
-    }
+   
 
     // Mobile Menu 
 
@@ -51,21 +40,12 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
 
     const handleOpenMenu = (event) => {
         event.preventDefault();
-        setOpenMenu(!openMenu);
-        const pageWrapper = document.querySelector(".page-wrapper");
-        if (pageWrapper) {
-            pageWrapper.classList.add("no-color-palate");
-        }
+        setOpenMenu(!openMenu)
     }
-    
+
     const handleCloseMenu = () => {
-        setOpenMenu(false);
-        const pageWrapper = document.querySelector(".page-wrapper");
-        if (pageWrapper) {
-            pageWrapper.classList.remove("no-color-palate");
-        }
+        setOpenMenu(false)
     }
-    
 
     const toggleMenu = (e) => {
         e.preventDefault();
@@ -104,7 +84,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                                     <div className="logo"><Link to="/#"><img src="/images/logo.png" alt="image" /></Link></div>
                                 </>
                                 : <>
-                                    <div className="logo"><Link to="/#"><img src="/images/logo-2.png" alt="image" /></Link></div>
+                                    <div className="logo"><Link to="/#"><img src="/images/logo.png" alt="image" /></Link></div>
                                 </>}
                         </div>
                         <div className="nav-outer clearfix">
@@ -127,8 +107,9 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                                   <div className="btn-box" onClick={() => {
                       logout();
                       navigate("/login");
+                      handleCloseMenu
                     }}>
-                                <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
+                                <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">logout</span></Link>
 
                                 </div>
                                   </>
@@ -136,13 +117,17 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
               ) : (
                 <>
                 <div className="btn-box">
-                <Link to="/registertype" className="theme-btn btn-style-one"><span className="btn-title">Register</span></Link>
+                <Link to="/registertype"
+                onClick={handleCloseMenu}
+                 className="theme-btn btn-style-one"><span className="btn-title">Register</span></Link>
 
 
                                 </div>
                                 
                                  <div className="btn-box">
-                                <Link to="/login" className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
+                                <Link to="/login" 
+                                onClick={handleCloseMenu}
+                                className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
 
                                 </div> 
                 </>
@@ -157,8 +142,8 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                         <div className="menu-backdrop" ></div>
                         <div className="close-btn"><span className="icon flaticon-cancel-1"></span></div>
                         <nav className="menu-box">
-                            <div className="nav-logo"><Link to="/#"><img src="/images/logo-2.png" alt="image" /></Link></div>
-                            <MainMenu toggleMultiMenu={toggleMultiMenu} toggleMenu={toggleMenu} parentMenu={parentMenu} />
+                            <div className="nav-logo"><Link to="/#"><img src="/images/logo.png" alt="image" /></Link></div>
+                            <MainMenu toggleMultiMenu={toggleMultiMenu} toggleMenu={toggleMenu} parentMenu={parentMenu}       handleCloseMenu={handleCloseMenu}  />
                             {isLoggedIn ? (
                                   <>
                                                     <NotificationDropdown />
@@ -166,6 +151,8 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                                   <div className="btn-box" onClick={() => {
                       logout();
                       navigate("/login");
+                      handleCloseMenu
+
                     }}>
                                 <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
 
@@ -179,10 +166,14 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                     justifyContent:'center',
                     display:'flex'
                 }}>
-                <Link  style={{
+                <Link 
+                onClick={handleCloseMenu}
+                 style={{
                     marginRight:'2px'
                 }}to="/registertype" className="theme-btn btn-style-one"><span className="btn-title">Register</span></Link>
-                <Link to="/login" className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
+                <Link to="/login" 
+                onClick={handleCloseMenu}
+                className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
 
 
 
@@ -196,8 +187,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                     </div>
                 </div>
             </header>
-            {/* <SearchPopup openSearch={openSearch} searchClose={searchClose} /> */}
-            {/* <ColorsPalate /> */}
+         
 
         </>
     );
