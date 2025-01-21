@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import SingleBannerV1 from './SingleBannerV1';
 import Slider from 'react-slick';
 import axios from 'axios';
+import toast from 'react-hot-toast';
+import { HashLink as Link } from 'react-router-hash-link';
+import EventsConsultant from "./EventsConsultant.jpg"
+
 
 const BannerV1 = () => {
     const [allConferences, setAllConferences] = useState([]);
@@ -61,6 +65,19 @@ const BannerV1 = () => {
             <section className="banner-section">
                 <div className="banner-carousel">
                     <Slider {...settings}>
+                        <>
+                         <div className="slide-item" style={{ backgroundImage: `url(${EventsConsultant})` }}>
+                                        <div className="auto-container">
+                                             <div className="content-box">
+                                              
+                                                <h2> 
+                                                Events Consultant </h2>
+                                               
+                                                <div className="btn-box"><Link to={`/login#`} className="theme-btn btn-style-two"><span className="btn-title">Book Ticket</span ></Link></div>
+                                            </div> 
+                                        </div>
+                                    </div >
+                        </>
                         {allConferences.map(banner =>
                             <SingleBannerV1 banner={banner} key={banner.id} />
                         )}

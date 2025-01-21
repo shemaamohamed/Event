@@ -228,9 +228,7 @@ const CreateTrip = ({ isOpen, setIsOpen, fetchTrips }) => {
 
         <CustomFormWrapper handleSubmit={handleSubmit} setOpenForm={setIsOpen}>
           <form
-            style={{
-              marginTop: "30vh",
-            }}
+           
           >
             <Typography
               variant="h6"

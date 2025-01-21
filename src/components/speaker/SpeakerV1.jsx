@@ -8,7 +8,7 @@ import MohammadImage from './image/mhammd4-removebg-preview.png';
 import DanaImage from './image/dana4-removebg-preview.png';
 import FarahImage from './image/farah4-removebg-preview.png';
 import BakerImage from './image/baker4-removebg-preview.png';
-import NancyImage from './image/nancy2.jpg';
+import GhadiImage from './image/ghadi.jpg';
 
 const TeamV1 = () => {
     const teamMembers = [
@@ -19,7 +19,7 @@ const TeamV1 = () => {
         { name: 'Dana Al Sabbar', role: 'Events Manager', image: DanaImage },
         { name: 'Farah Jamal', role: 'Public Relations', image: FarahImage },
         { name: 'Baker Helmi', role: 'Designer', image: BakerImage },
-        { name: 'Nancy Nehad', role: 'Events Coordinator', image: NancyImage },
+        { name: 'Ghaida Sami', role: 'Events Coordinator', image:GhadiImage },
       ];
     return (
         <>

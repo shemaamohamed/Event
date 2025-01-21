@@ -61,9 +61,10 @@ const StyledButton = styled(Box)`
 function SideMenu() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const [link, setLink] = useState(null);
+  const [cert, setCert] = useState(null);
   const { isAdmin, registrationType, isLoggedIn } = useAuth();
   const isSpeaker = registrationType === "speaker";
-  const [cert, setCert] = useState(null);
+
 
   const toggleDrawer = (open) => () => {
     setIsDrawerOpen(open);
@@ -139,7 +140,7 @@ function SideMenu() {
   const attendanceMenuItems =
     isAttendance && !isAdmin
       ? [
-          { label: "Visa", icon: "🛂", path: "/visa" },
+          { label: "Visa33", icon: "🛂", path: "/visa" },
           { label: "Flight", icon: "✈️", path: "/flight/form" },
           { label: "Airport Transfer", icon: "🚐", path: "/airport/transfer" },
           { label: "Reservation", icon: "🏨", path: "/reservation/form" },

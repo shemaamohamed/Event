@@ -263,3 +263,76 @@
   text-align: justify;
 }
 
+// style.scss
+
+.accommodation-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.accommodation-container .title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0A74DA;
+  margin-bottom: 20px;
+}
+
+.room-prices {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.room-price {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.room-price:hover {
+  transform: translateY(-8px);
+}
+
+.room-price h6 {
+  font-size: 1.2rem;
+  color: #0A74DA;
+}
+
+.room-price h5 {
+  font-size: 1.5rem;
+  color: #FF7043;
+  margin-top: 10px;
+}
+
+.register-btn {
+  display: block;
+  margin: 30px auto;
+  background-color: #0A74DA;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  width: 200px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.register-btn:hover {
+  background-color: #FF7043;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .room-prices {
+    grid-template-columns: 1fr;
+  }
+}

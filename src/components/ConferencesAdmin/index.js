@@ -84,6 +84,9 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
             >
               <InputLabel id={`country-label-${member.id}`}>Country</InputLabel>
               <Select
+                sx={{
+                  height:'40px'
+                }}
                 labelId={`country-label-${member.id}`}
                 value={member.country}
                 onChange={(e) => handleCountryChange(member.id, e.target.value)}

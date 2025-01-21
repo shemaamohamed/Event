@@ -16,26 +16,27 @@ function CardType({value  ,handleNavigate}) {
 
   return (
     <Card
+    onClick={handleClick}
     sx={{
       '&:hover': {
-        transform: 'scale(1.05)',  
+        transform: 'scale(1.05)', 
+        cursor:'pointer' 
       },
-      height:'400px'
+      height:'350px'
      
     }}
   >
-    <CardActionArea onClick={handleClick}>
+   
       <CardMedia
         component="img"
         alt="green iguana"
         image={require(`../../icons/${value.img}`)}
+        sx={{
+          height:'50%'
+        }}
       />
       <CardContent
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        
       >
         <Typography
           sx={{
@@ -49,7 +50,6 @@ function CardType({value  ,handleNavigate}) {
           Login As {value.type}
         </Typography>
       </CardContent>
-    </CardActionArea>
   </Card>
   
   )

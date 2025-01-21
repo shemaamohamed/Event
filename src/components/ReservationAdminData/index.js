@@ -49,13 +49,12 @@ const ReservationsComponent = () => {
         },
         onError: (error) => {
           setErrorMsg(error?.message || DEFAULT_ERROR_MESSAGE);
-          toast.error(error?.message || DEFAULT_ERROR_MESSAGE);
+          // toast.error(error?.message || DEFAULT_ERROR_MESSAGE);
         },
         withToast: false,
       });
     } catch (error) {
-      setErrorMsg(DEFAULT_ERROR_MESSAGE);
-      toast.error(DEFAULT_ERROR_MESSAGE);
+      // setErrorMsg(DEFAULT_ERROR_MESSAGE);
     }
   };
 

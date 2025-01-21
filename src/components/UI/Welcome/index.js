@@ -45,84 +45,88 @@ const Welcome = () => {
     getWelcomeData()
   }, [])
   return (
-    <Box sx={{ padding: 1 }}>
-      {/* Header Section */}
-      <Box className="welcome-header" sx={{ textAlign: 'center', marginBottom: 6 }}>
-        <Typography variant="h6" component="h6" gutterBottom sx={{ fontWeight: 'bold', color: '#9B1321' }}>
-          Welcome to the Conference!
-        </Typography>
-        <Typography variant="h6" color="textSecondary">
-          On behalf of the Organizing Committee, we are excited to invite you to join us at this prestigious conference, bringing together experts and professionals from around the world. The event will be held in a dynamic and welcoming city, offering a platform for collaboration, innovation, and knowledge exchange.
-        </Typography>
-      </Box>
-
-      {/* Content Section */}
-      <Grid container spacing={4} className="welcome-content" alignItems="center">
-        {/* Image Section */}
-        <Grid item xs={12} md={5}>
-          <Card sx={{ borderRadius: 3, overflow: 'hidden', boxShadow: 3 }}>
-            <CardMedia
-              component="img"
-              alt="President"
-              height="300"
-              image={`${backendUrlImages}conference_images/${info?.president_image}`}
-            />
-          </Card>
-        </Grid>
-
-        {/* Description Section */}
-        <Grid item xs={12} md={7}>
-          <CardContent sx={{ backgroundColor: '#f1f1f1', borderRadius: 2, padding: 3 }}>
-            <Typography variant="body1" paragraph>
-              {info?.welcome_message}
-            </Typography>
-            <Typography variant="h6" fontWeight="bold" sx={{ marginTop: 2, color: '#9B1321' }}>
-              Chairman of the Conference
-            </Typography>
-          </CardContent>
-        </Grid>
+    <Box sx={{ padding: 2 }}>
+    {/* Header Section */}
+    <Box className="welcome-header" sx={{ textAlign: 'center', marginBottom: 6 }}>
+      <Typography variant="h4" component="h6" gutterBottom sx={{ fontWeight: 'bold', color: '#9B1321', textTransform: 'uppercase' }}>
+        Welcome to the Conference!
+      </Typography>
+      <Typography variant="h6" color="textSecondary" sx={{ maxWidth: '800px', margin: '0 auto' }}>
+        On behalf of the Organizing Committee, we are excited to invite you to join us at this prestigious conference, bringing together experts and professionals from around the world. The event will be held in a dynamic and welcoming city, offering a platform for collaboration, innovation, and knowledge exchange.
+      </Typography>
+    </Box>
+  
+    {/* Content Section */}
+    <Grid container spacing={4} className="welcome-content" alignItems="center">
+      {/* Image Section */}
+      <Grid item xs={12} md={5}>
+        <Card sx={{ borderRadius: 3, overflow: 'hidden', boxShadow: 3, height: '100%' }}>
+          <CardMedia
+            component="img"
+            alt="President"
+            height="300"
+            image={`${backendUrlImages}conference_images/${info?.president_image}`}
+            sx={{ objectFit: 'cover' }}
+          />
+        </Card>
       </Grid>
-
-      {/* Topics Section */}
-      <Box className="topics-section" sx={{ textAlign: 'center', marginTop: 6 }}>
-        <Card
-          elevation={3}
-          sx={{
-            padding: 3,
-            display: 'inline-block',
-            borderRadius: 3,
-            marginBottom: 4,
-            backgroundColor: '#ffffff',
-          }}
-        >
-          <CardMedia
-            component="img"
-            image={`${backendUrlImages}conference_logos/${info?.conference_logo}`}
-            alt="Conference Logo"
-            sx={{ width: '150px', margin: '0 auto' }}
-          />
-        </Card>
-        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#9B1321' }}>
-          In collaboration with
-        </Typography>
-        <Card
-          elevation={3}
-          sx={{
-            padding: 3,
-            display: 'inline-block',
-            borderRadius: 3,
-            backgroundColor: '#ffffff',
-          }}
-        >
-          <CardMedia
-            component="img"
-            image={`${backendUrlImages}cooperating_associations_logo/${info?.cooperating_associations_logo}`}
-            alt="Associations Logo"
-            sx={{ width: '150px', margin: '0 auto' }}
-          />
-        </Card>
-      </Box>
+  
+      {/* Description Section */}
+      <Grid item xs={12} md={7}>
+        <CardContent sx={{ backgroundColor: '#f1f1f1', borderRadius: 2, padding: 3 }}>
+          <Typography variant="body1" paragraph>
+            {info?.welcome_message}
+          </Typography>
+          <Typography variant="h6" fontWeight="bold" sx={{ marginTop: 2, color: '#9B1321' }}>
+            Chairman of the Conference
+          </Typography>
+        </CardContent>
+      </Grid>
+    </Grid>
+  
+    {/* Topics Section */}
+    <Box className="topics-section" sx={{ textAlign: 'center', marginTop: 6 }}>
+      <Card
+        elevation={3}
+        sx={{
+          padding: 3,
+          display: 'inline-block',
+          borderRadius: 3,
+          marginBottom: 4,
+          backgroundColor: '#ffffff',
+          boxShadow: 6,
+        }}
+      >
+        <CardMedia
+          component="img"
+          image={`${backendUrlImages}conference_logos/${info?.conference_logo}`}
+          alt="Conference Logo"
+          sx={{ width: '150px', margin: '0 auto', borderRadius: '50%' }}
+        />
+      </Card>
+      <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#9B1321' }}>
+        In collaboration with
+      </Typography>
+      <Card
+        elevation={3}
+        sx={{
+          padding: 3,
+          display: 'inline-block',
+          borderRadius: 3,
+          backgroundColor: '#ffffff',
+          boxShadow: 6,
+        }}
+      >
+        <CardMedia
+          component="img"
+          image={`${backendUrlImages}cooperating_associations_logo/${info?.cooperating_associations_logo}`}
+          alt="Associations Logo"
+          sx={{ width: '150px', margin: '0 auto', borderRadius: '50%' }}
+        />
+      </Card>
+    </Box>
   </Box>
+  
   );
 };
 

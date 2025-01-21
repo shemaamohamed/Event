@@ -253,11 +253,14 @@ const ViewOneTripUser = () => {
           </Grid>
         )}
         
-        {tripData?.duration && (
-          <Grid item xs={12} sm={6}>
-            <SimpleLabelValue label="Duration" value={`${tripData?.duration} days`} />
-          </Grid>
-        )}
+        {tripData?.duration > 0 && (
+  <Grid item xs={12} sm={6}>
+    <SimpleLabelValue 
+      label="Duration" 
+      value={`${tripData?.duration} days`} 
+    />
+  </Grid>
+)}
 
       
 
@@ -281,7 +284,7 @@ const ViewOneTripUser = () => {
 
        
 
-
+ 
         {tripData?.trip_type === 'group' && (tripData?.group_accompanying_price ?? 0) > 0 && (
           <Grid item xs={12} sm={6}>
             <SimpleLabelValue
@@ -289,7 +292,7 @@ const ViewOneTripUser = () => {
               value={`$${tripData?.group_accompanying_price}`}
             />
           </Grid>
-        )}
+        )} 
           </Grid>
 
       

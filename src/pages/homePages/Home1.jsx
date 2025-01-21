@@ -11,11 +11,9 @@ import VideoV1 from '../../components/video/VideoV1';
 import WhyChooseV1 from '../../components/whyChoose/WhyChooseV1';
 import ClientV1 from '../../components/client/ClientV1';
 import RegisterV1 from '../../components/form/RegisterV1';
-import BlogV1 from '../../components/blog/BlogV1';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
-import CustomSlider from '../../components/CustomSlider';
 
 
 const Home1 = () => {
@@ -52,7 +50,6 @@ const Home1 = () => {
         <>
             <div className="page-wrapper">
                 <BannerV1 />
-                {/* <ComingSoonV1 /> */}
                 <AboutV1 />
                 <FeatureV1 />
                 <SpeakerV1 />

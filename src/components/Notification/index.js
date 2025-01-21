@@ -210,7 +210,7 @@ const NotificationDropdown = () => {
                   notification?.message?.includes("New speaker registration")
                 ) {
                   navigate(
-                    `/edit/speaker/data/${notification?.conference_id}/${notification?.register_id}`
+                    `/pending/users`
                   );
                 }
                 if (

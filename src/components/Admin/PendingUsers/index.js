@@ -73,6 +73,8 @@ const PendingUsersTable = () => {
       })
       .then((response) => {
         console.log("User deleted successfully:", response.data);
+        window.location.reload();
+
       })
       .catch((error) => {
         console.error(
@@ -295,6 +297,8 @@ const PendingUsersTable = () => {
   useEffect(() => {
     fetchConferences();
   }, []);
+  console.log(selectedUser);
+  
   return (
     <div className="pending-users-container">
       <Typography
@@ -522,7 +526,7 @@ const PendingUsersTable = () => {
                               primary="Paper Title"
                               secondary={
                                 <a
-                                  href={`${backendUrlImages}${paper[0]?.file_path}`} // مسار الملف الذي سيتم تنزيله
+                                  href={`${backendUrlImages}${paper?.file_path}`} // مسار الملف الذي سيتم تنزيله
                                   download={paper.title} // اسم الملف الذي سيتم تنزيله
                                   style={{
                                     textDecoration: "none",

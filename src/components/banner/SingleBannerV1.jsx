@@ -18,11 +18,7 @@ const SingleBannerV1 = ({ banner }) => {
                         </span>
                         <h2> 
                              { banner.title} </h2>
-                        {/* <ul className="info-list">
-                            <li><span className="icon fa fa-chair"></span>{list1}</li>
-                            <li><span className="icon fa fa-user-alt"></span>{list2}</li>
-                            <li><span className="icon fa fa-map-marker-alt"></span>{list3}</li>
-                        </ul> */}
+                       
                         <div className="btn-box"><Link to={`/login#`} className="theme-btn btn-style-two"><span className="btn-title">Book Ticket</span ></Link></div>
                     </div> 
                 </div>

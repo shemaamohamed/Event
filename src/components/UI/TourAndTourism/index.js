@@ -21,71 +21,85 @@ const sliderSettings = {
 
 const TourSlider = () => {
   const navigate = useNavigate();
-
-  const DestinationCard = ({ destination }) => (
-    <Box
-      className="destination-card"
-      sx={{
-        position: "relative",
-        boxShadow: 6,
-        borderRadius: "16px",
-        overflow: "hidden",
-        backgroundColor: "#fff",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        transition: "transform 0.3s ease-in-out",
-        "&:hover": {
-          transform: "scale(1.05)",
-          boxShadow: 12,
-        },
-        height: "400px", // fixed height for the card
-      }}
-    >
-      <Box className="slider-container" sx={{ height: "30%" }}>
-        <Slider {...sliderSettings}>
-          {destination.images.map((img, imgIndex) => (
-            <div key={imgIndex} className="slide">
-              <img
-                src={img}
-                alt={destination.title}
-                className="slide-img"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
-            </div>
-          ))}
-        </Slider>
+  const DestinationCard = ({ destination }) => {
+    const navigate = useNavigate();
+  
+    const sliderSettings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      arrows: false,
+    };
+  
+    return (
+      <Box
+        className="destination-card"
+        sx={{
+          position: "relative",
+          borderRadius: "20px",
+          overflow: "hidden",
+          background: "linear-gradient(135deg, #f5f5f5, #ffffff)",
+          boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          "&:hover": {
+            transform: "scale(1.03)",
+            boxShadow: "0px 15px 30px rgba(0, 0, 0, 0.3)",
+          },
+          display: "flex",
+          flexDirection: "column",
+          width: "350px",
+          height:'80vh',
+          margin: "auto",
+        }}
+      >
+        <Box className="slider-container" sx={{ height: "40%", overflow: "hidden" }}>
+          <Slider {...sliderSettings}>
+            {destination.images.map((img, imgIndex) => (
+              <div key={imgIndex} className="slide">
+                <img
+                  src={img}
+                  alt={destination.title}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    borderRadius: "20px 20px 0 0",
+                  }}
+                />
+              </div>
+            ))}
+          </Slider>
+        </Box>
+        <DestinationInfo destination={destination} navigate={navigate} />
       </Box>
-      <DestinationInfo destination={destination} />
-    </Box>
-  );
-
-  const DestinationInfo = ({ destination }) => (
+    );
+  };
+  
+  const DestinationInfo = ({ destination, navigate }) => (
     <Box
       className="destination-info"
       sx={{
-        textAlign: "center",
-        color: "white",
-        background: "rgba(0, 0, 0, 0.6)",
-        borderRadius: "8px",
-        width: "80%",
-        padding: "15px",
-        position: "absolute",
-        bottom: "20px",
-        left: "50%",
-        transform: "translateX(-50%)",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#ffffff",
+        borderRadius: "0 0 20px 20px",
+        height: "40%",
       }}
     >
       <Typography
-        variant="h5"
+        variant="h6"
         sx={{
           fontWeight: "bold",
-          color: "white",
+          color: "#333",
           fontSize: { xs: "1.2rem", sm: "1.5rem" },
+          marginBottom: "10px",
         }}
       >
         {destination.title}
@@ -93,33 +107,36 @@ const TourSlider = () => {
       <Typography
         variant="body2"
         sx={{
-          color: "#ccc",
-          marginTop: "10px",
+          color: "#666",
+          textAlign: "center",
           fontSize: { xs: "0.9rem", sm: "1rem" },
+          marginBottom: "15px",
         }}
       >
         {destination.description}
       </Typography>
-      <Box sx={{ marginTop: "15px" }}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => navigate("/registerType")}
-          sx={{
-            padding: "12px 25px",
-            fontSize: "1.1rem",
-            borderRadius: "25px",
-            boxShadow: 2,
-            "&:hover": {
-              backgroundColor: "#0056b3",
-            },
-          }}
-        >
-          Book Now
-        </Button>
-      </Box>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate("/registerType")}
+        sx={{
+          padding: "10px 20px",
+          fontSize: "1rem",
+          borderRadius: "25px",
+          backgroundColor: "#0073e6",
+          color: "#fff",
+          textTransform: "none",
+          boxShadow: "0px 4px 8px rgba(0, 115, 230, 0.4)",
+          "&:hover": {
+            backgroundColor: "#005bb5",
+          },
+        }}
+      >
+        Book Now
+      </Button>
     </Box>
   );
+  
 
   return (
     <Box sx={{ padding: "30px", marginTop: "20vh", textAlign: "center" }}>
@@ -135,7 +152,7 @@ const TourSlider = () => {
       </Typography>
       <Grid container spacing={4} justifyContent="center">
         {destinations.map((destination, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
+          <Grid item xs={12} sm={6} md={3} key={index}>
             <DestinationCard destination={destination} />
           </Grid>
         ))}

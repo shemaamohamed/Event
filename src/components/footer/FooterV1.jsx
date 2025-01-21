@@ -4,6 +4,7 @@ import SocialShare from '../others/SocialShare';
 import { Gallery } from 'react-photoswipe-gallery';
 import SingleGalleryV1 from '../gallery/SingleGalleryV1';
 import axios from 'axios';
+import { Box } from '@mui/material';
 
 const FooterV1 = () => {
      const [currentPage, setCurrentPage] = useState(1);
@@ -110,12 +111,34 @@ const FooterV1 = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
+                            <div className=" col-lg-12 col-md-12 col-sm-12">
+                                    <Box
+              sx={{
+                marginTop: "1rem",
+                borderRadius: "8px",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+                width:'100%',
+                margin:'auto'
+              }}
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d54162.63123254484!2d35.86073700000001!3d31.956435!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151ca10ff839a7bf%3A0xa854064ff6e1a48b!2zRXZlbnRzIENvbnN1bHRhbnQgY29tcGFueSAtINi02LHZg9ipINin2YTZhdiz2KrYtNin2LEg2YTZhNmF2KTYqtmF2LHYp9iq!5e0!3m2!1sen!2sus!4v1728902606826!5m2!1sen!2sus"
+                width="100%"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                style={{ border: "0", borderRadius: "8px" }}
+              ></iframe>
+            </Box>
+                                    </div>
                         </div>
                     </div>
                 </div>
                 <div className="footer-bottom">
+           
                     <div className="auto-container">
                         <div className="inner-container clearfix">
                             <div className="copyright-text">

@@ -7,6 +7,9 @@ import { useAuth } from "./common/AuthContext";
 import NotificationDropdown from "./components/Notification";
 import styled from "styled-components";
 import { useDemoRouter } from "@toolpad/core/internal";
+import { useState, useEffect } from "react";  // إضافة useState و useEffect
+
+import axios from "axios";
 
 const demoTheme = createTheme({
   palette: {
@@ -84,10 +87,80 @@ const AdminLayoutBasic = () => {
   const isSpeaker = registrationType === "speaker";
   const isSponsor = registrationType === "sponsor";
   const isAttendance = registrationType === "attendance";
-
+  const [link, setLink] = useState(null);
+  const [cert, setCert] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const router = useDemoRouter('/admin');
+
+
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const getUserData = () => {
+    const token = localStorage.getItem("token"); // ضع التوكن هنا
+
+    // إرسال طلب GET إلى API
+    axios
+      .get(`${BaseUrl}/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // إضافة التوكن في الهيدر
+        },
+      })
+      .then((response) => {
+        // عند النجاح، طباعة الداتا المستلمة من السيرفر
+        console.log(response?.data?.user?.certificatePDF);
+        setCert(response?.data?.user?.certificatePDF);
+      })
+      .catch((error) => {
+        // إذا حدث خطأ، طباعة الخطأ
+        console.error("Error:", error);
+      });
+  };
+  // دالة لجلب بيانات المتحدث
+  const getSpeakerInfo = async () => {
+    try {
+      // جلب التوكن من localStorage
+      const token = localStorage.getItem("token");
+
+      // التأكد من وجود التوكن
+      if (!token) {
+        throw new Error("توكن المستخدم غير موجود.");
+      }
+
+      try {
+        // إرسال طلب GET مع التوكن في الهيدر
+        const response = await axios.get(`${BaseUrl}/speakers/info`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // إضافة التوكن في الهيدر
+          },
+        });
+
+        // التعامل مع البيانات المستلمة من الـ API
+        const speaker = response?.data?.speaker;
+        console.log(speaker);
+
+        // تحديث الحالة بالرابط
+        if (speaker) {
+          setLink(speaker?.link);
+          console.log(link);
+        }
+      } catch (err) {
+        // التعامل مع الأخطاء في حال فشل الطلب
+        console.error("خطأ في إرسال الطلب:", err);
+        throw err; // إعادة الخطأ ليتم معالجته في مكان آخر إذا لزم الأمر
+      }
+    } catch (err) {
+      // التعامل مع الأخطاء في حال عدم وجود التوكن
+      console.error("خطأ في جلب التوكن أو البيانات:", err);
+    }
+  };
+
+  useEffect(() => {
+    getSpeakerInfo();
+    getUserData();
+  }, []);
+
+
+
 
   const menuItems = {
     speaker: [
@@ -98,10 +171,14 @@ const AdminLayoutBasic = () => {
       { title: "All Trips", icon: "🗺️", segment: "view-user-trips" },
       { title: "My Trips", icon: "🗺️", segment: "user/trip/participants" },
       { title: "Group Trips", icon: "🗺️", segment: "user/group/trip/participants" },
-
       { title: "Gala Dinner", icon: "🍽️", segment: "gala/dinner" },
       { title: "Profile", icon: "👤", segment: "speaker/profile" },
+      
+      ...(cert ? [{ title: "Certification", icon: "🎓", segment: "certification" }] : []),
+    
+      ...(link ? [{ title: "Zoom Link", icon: "🔗", segment: "speaker/link" }] : [])
     ],
+    
     admin: [
       { title: "Conferences", icon: "🎓", segment: "conferences/page" },
       { title: "Exhibitions", icon: "🏢", segment: "exhibitions" },
@@ -157,7 +234,7 @@ const AdminLayoutBasic = () => {
       ] }
     ],
     attendance:[
-      { title: "Visa", icon: "🛂", segment: "visa" },
+      { title: "Visa55", icon: "🛂", segment: "visa" },
       { title: "Flight", icon: "✈️", segment: "flight/form" },
       { title: "Airport Transfer", icon: "🚐", segment: "airport/transfer" },
       { title: "Reservation", icon: "🏨", segment: "reservation/form" },

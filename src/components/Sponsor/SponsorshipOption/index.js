@@ -7,6 +7,7 @@ import { useAuth } from "../../../common/AuthContext";
 import "./style.scss";
 import SponsorInvoice from "../../SpoonsotInvoice";
 import Input from "../../../CoreComponent/Input";
+import { backendUrlImages } from "../../../constant/config";
 
 const SponsorshipOption = ({ id, title, description, price, onSelect }) => {
   const [selected, setSelected] = useState(false);
@@ -41,6 +42,15 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
 
   const { myConferenceId } = useAuth();
   const BaseUrl = process.env.REACT_APP_BASE_URL;
+
+  // دالة لتحويل الرابط المعدل
+  const getModifiedUrl = (url) => {
+    if (!url) return null;
+    const parts = url?.split("https://panel.mayazin.co/storage/");
+    const afterPublic = parts?.slice(parts.indexOf("public") + 1).join("");
+    return "https://mayazin.co/backend/storage/app/public/" + afterPublic;
+  };
+
   const fetchFloorPlan = async () => {
     if (!myConferenceId) return;
 
@@ -48,16 +58,26 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
       const response = await axios.get(
         `${BaseUrl}/floor/plan/${myConferenceId}`
       );
-      setFloorPlanUrl(response?.data.data[0].floor_plan);
-      setAgreementFile(response?.data.data[0].agreement_page);
+      // تعديل الرابط قبل تخزينه
+      const modifiedFloorPlanUrl = getModifiedUrl(response?.data.data[0].floor_plan);
+      const modifiedAgreementFileUrl = getModifiedUrl(response?.data.data[0].agreement_page);
 
-    } catch (error) { }
+      setFloorPlanUrl(modifiedFloorPlanUrl);
+      setAgreementFile(modifiedAgreementFileUrl);
+
+      console.log(modifiedFloorPlanUrl);
+
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   useEffect(() => {
     if (myConferenceId) {
       fetchFloorPlan();
     }
-  }, [{ myConferenceId }]);
+  }, [myConferenceId]);
+
   const handleDownload = () => {
     const blob = new Blob([agreementFile], { type: 'application/pdf' });
     const link = document.createElement('a');
@@ -65,6 +85,8 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
     link.download = 'agreement-form.pdf'; // تحديد اسم الملف عند التحميل
     link.click();
   };
+
+  console.log(floorPlanUrl);
 
   return (
     <div className="booth-package">
@@ -93,13 +115,12 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
             contact the organizers:
             <a href="mailto:admin@eventcons.com">admin@eventcons.com</a>
           </p>
-
           {floorPlanUrl && (
             <a
               href={floorPlanUrl}
               target="_blank"
-              rel="noopener noreferrer"
               className="view-floor-plans-btn"
+              download
             >
               <button className="view-floor-plans-button">
                 View Floor Plans
@@ -114,9 +135,7 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
               className="view-floor-plans-btn"
               download
             >
-              <button className="view-floor-plans-button" onClick={() => {
-                handleDownload()
-              }}>
+              <button className="view-floor-plans-button" onClick={handleDownload}>
                 View and Sign Form
               </button>
             </a>
@@ -140,6 +159,7 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
     </div>
   );
 };
+
 
 const BoothCostTable = ({
   selectedBoothIds,
@@ -492,9 +512,7 @@ const SponsorSection = () => {
   }, [myConferenceId]);
 
   return (
-    <div className="sponsor-section" style={{
-      marginTop:'10vh'
-    }}>
+    <div className="sponsor-section">
       {/* شرط عرض مكون الفاتورة أو الخيارات بناءً على وجود invoiceData */}
       {invoiceData ? (
         <SponsorInvoice data={invoiceData} /> // إذا كانت invoiceData موجودة، يتم عرض هذا المكون

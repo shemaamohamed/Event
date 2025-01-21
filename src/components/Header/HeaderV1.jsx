@@ -109,7 +109,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                       navigate("/login");
                       handleCloseMenu
                     }}>
-                                <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">logout</span></Link>
+                                <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">Logout</span></Link>
 
                                 </div>
                                   </>
@@ -127,7 +127,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                                  <div className="btn-box">
                                 <Link to="/login" 
                                 onClick={handleCloseMenu}
-                                className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
+                                className="theme-btn btn-style-one"><span className="btn-title">Login</span></Link>
 
                                 </div> 
                 </>
@@ -154,7 +154,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                       handleCloseMenu
 
                     }}>
-                                <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
+                                <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">Login</span></Link>
 
                                 </div>
                                   </>

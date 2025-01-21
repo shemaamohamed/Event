@@ -300,6 +300,7 @@ const App = () => {
               <Route path="/marketing-video-production" element={<MarketingVideoProduction />} />
               <Route path="/comprehensive-marketing-services" element={<ComprehensiveMarketingServices />} />
               <Route path="/additional-conference-exhibition-services" element={<AdditionalConferenceExhibitionServices />} />
+              <Route path="/sponsor/invoice" element={<SponsorInvoice />} />
 
 
 
@@ -591,6 +592,8 @@ const App = () => {
                                           path="/conference/speaker/:conferenceId"
                                           element={<Speakers4 />}
                                         />
+                                                      <Route path="/speaker/link" element={<SpeakerList />} />
+
                                       <Route
                                         path="conference/speaker/:conferenceId"
                                         element={<Speakers4 />}
@@ -644,7 +647,6 @@ const App = () => {
                 path="/table/zoom/speaker/:conferenceId"
                 element={<AddZoomLink />}
               />
-              <Route path="/speaker/link" element={<SpeakerList />} />
               {/* reservations */}
               <Route path="/reservations" element={<DataTable />} />
               <Route path="/reservations/room/prices" element={<RoomPriceForm />} />

@@ -34,6 +34,9 @@ const CustomFormWrapper = ({
       {!noActions && (
         <div className="actions-section-container">
           <button
+          style={{
+            margin:'auto'
+          }}
             className="submit-btn"
             type="submit"
             onClick={handleSubmit ? handleSubmit : null}
