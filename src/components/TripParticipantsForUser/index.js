@@ -344,7 +344,7 @@ Delete
        <SimpleLabelValue label="Price Per Person" value={`$${selectedParticipantDetails.price_per_person || '-'}`} />
      </Grid>
      <Grid item xs={12} sm={6}>
-       <SimpleLabelValue label="Duration" value={selectedParticipantDetails.duration || '-'} />
+       <SimpleLabelValue label="Duration in Days" value={selectedParticipantDetails.duration || '-'} />
      </Grid>
      <Grid item xs={12} sm={6}>
        <SimpleLabelValue label="Price for Two" value={`$${selectedParticipantDetails.price_for_two || '-'}`} />
@@ -399,10 +399,10 @@ Delete
            <SimpleLabelValue label="Nationality" value={user.nationality || '-'} />
          </Grid>
          <Grid item xs={12} sm={6}>
-           <SimpleLabelValue label="Check-In Date" value={user.check_in_date || '-'} />
+           <SimpleLabelValue label="Start Date" value={user.check_in_date || '-'} />
          </Grid>
          <Grid item xs={12} sm={6}>
-           <SimpleLabelValue label="Check-Out Date" value={user.check_out_date || '-'} />
+           <SimpleLabelValue label="End Date" value={user.check_out_date || '-'} />
          </Grid>
          <Grid item xs={12} sm={6}>
            <SimpleLabelValue label="Nights Count" value={user.nights_count || '-'} />
@@ -456,10 +456,10 @@ Delete
            <SimpleLabelValue label="Nationality" value={companion.nationality || '-'} />
          </Grid>
          <Grid item xs={12} sm={6}>
-           <SimpleLabelValue label="Check-In Date" value={companion.check_in_date || '-'} />
+           <SimpleLabelValue label="Start Date" value={companion.check_in_date || '-'} />
          </Grid>
          <Grid item xs={12} sm={6}>
-           <SimpleLabelValue label="Check-Out Date" value={companion.check_out_date || '-'} />
+           <SimpleLabelValue label="End Date" value={companion.check_out_date || '-'} />
          </Grid>
          <Grid item xs={12} sm={6}>
            <SimpleLabelValue label="Nights Count" value={companion.nights_count || '-'} />

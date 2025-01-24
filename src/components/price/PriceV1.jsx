@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import SinglePriceV1 from './SinglePriceV1';
+import priceV1Data from '../../jsonData/price/PriceV1Data.json'; 
 import axios from 'axios';
 
 const PriceV1 = () => {
-    const [priceV1Data, setPriceV1Data] = useState([]);  // تأكد من أن المتغير المستخدم هو priceV1Data
-    const [conferenceData, setConferenceData] = useState(null); // إضافة حالة للمؤتمر بالكامل
+    const [conferenceData, setConferenceData] = useState(null); 
 
     const BaseUrl = process.env.REACT_APP_BASE_URL;
     const getConference = () => {
@@ -16,10 +16,8 @@ const PriceV1 = () => {
                 const upcomingConferences = response?.data?.upcoming_conferences;
 
                 if (upcomingConferences && upcomingConferences.length > 0) {
-                    // استخراج الأسعار بشكل مسطح
                     const prices = upcomingConferences.map((item) => item.prices).flat();
-                    setPriceV1Data(prices);  // استخدام setPriceV1Data لتحديث الـ state
-                    setConferenceData(upcomingConferences[0]);  // تخزين المؤتمر الأول في حالة المؤتمر
+                    setConferenceData(upcomingConferences[0]); 
                 }
             })
             .catch((error) => {
@@ -28,7 +26,7 @@ const PriceV1 = () => {
     };
 
     useEffect(() => {
-        getConference();  // استدعاء الوظيفة لتحميل البيانات عند تحميل المكون
+        getConference(); 
     }, []);
 
     return (
@@ -52,7 +50,6 @@ const PriceV1 = () => {
                                     <div className="pricing-block col-lg-4 col-md-6 col-sm-12" key={index}>
                                         <SinglePriceV1 
                                             plan={plan}
-                                            conferenceData={conferenceData}  // تمرير بيانات المؤتمر بالكامل إلى المكون
                                         />
                                     </div>
                                 ))}

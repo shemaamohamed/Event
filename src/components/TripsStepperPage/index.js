@@ -20,7 +20,7 @@ const TripsStepperPageContent = () => {
 
   const stepperInfo = [
     { title: "Accommodation Details" },
-    { title: "Participant Details" },
+    { title: "Companion Details" },
     { title: "Additional Options Details" },
     { title: "Invoice" },
     { title: "Pay Form" },

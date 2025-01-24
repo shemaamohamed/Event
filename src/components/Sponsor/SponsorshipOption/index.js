@@ -92,9 +92,9 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
     <div className="booth-package">
       <div className="booth-package-header7">Standard Booth Package</div>
       <div className="booth-package-header8">
-        <img src={require("./both.jfif")} alt="Booth" />
+        {/* <img src={require("./both.jfif")} alt="Booth" /> */}
         <div>
-          <p>(Minimum space 9 sqm)</p>
+          {/* <p>(Minimum space 9 sqm)</p>
           <ul className="lst-sponser">
             <li>Fascia board with company name & stand number.</li>
             <li>White partitions.</li>
@@ -114,7 +114,7 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
             For special buildup booths and other special requirements, please
             contact the organizers:
             <a href="mailto:admin@eventcons.com">admin@eventcons.com</a>
-          </p>
+          </p> */}
           {floorPlanUrl && (
             <a
               href={floorPlanUrl}
@@ -145,12 +145,12 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
       {floorPlanUrl && (
         <div className="input-container">
           <label htmlFor="exhibitNumber" className="input-label">
-            Enter Exhibit Number:
+            Enter Booth Number:
           </label>
           <input
             type="text"
             id="exhibitNumber"
-            placeholder="Enter the exhibit number"
+            placeholder="Enter Booth Number"
             className="input-field"
             onChange={(e) => onExhibitNumberChange(e.target.value)}
           />
@@ -271,10 +271,8 @@ const BoothCostTable = ({
             <tbody>
               {boothData.map((booth) => (
                 <tr key={booth.id} className="table-row">
-                  <td className="table-cell">
-                    {booth.name}{" "}
-                    {selectedBoothIds.includes(booth.id) ? "(Selected)" : ""}
-                  </td>
+                                  <td className="table-cell">{booth.size}</td>
+
                   <td className="table-cell">{booth.cost}</td>
                   <td className="table-cell">{booth.lunch_invitations}</td>
                   <td className="table-cell">{booth.name_tags}</td>
@@ -344,6 +342,10 @@ const SponsorSection = () => {
   const handleShellSchemeChange = (event) => {
     setShellSchemeSelected(event.target.checked);
   };
+
+
+  const isFormValid = firstAdvertisement && secondAdvertisement && logo && contractSignature;
+
   const handleSignAgreement2 = async () => {
     // تحويل الملفات إلى FormData
     const formData = new FormData();
@@ -625,9 +627,14 @@ const SponsorSection = () => {
                 </div>
 
                 <div className="popup-buttons">
-                  <button onClick={handleSignAgreement2} className="btn-sign">
+                  <button
+                    onClick={handleSignAgreement2}
+                    className="btn-sign"
+                    disabled={!isFormValid} // تعطيل الزر إذا كان النموذج غير صالح
+                  >
                     Sign Agreement
                   </button>
+
                   <button
                     onClick={() => setIsPopupOpen(false)}
                     className="btn-cancel"

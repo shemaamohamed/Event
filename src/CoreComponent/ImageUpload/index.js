@@ -88,7 +88,10 @@ const ImageUpload = ({
   };
 
   return (
-    <div className="image-upload-container">
+    <div className="image-upload-container"
+    style={{
+      overflow:'hidden'
+    }}>
       {label && (
         <div className="label-container">
           <span>{label}</span>

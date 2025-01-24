@@ -191,6 +191,7 @@ import CreateWorkshop from './components/CreateWorkshop/index';
 import DinnerAdmin from './components/DinnerAdmin/index';
 import GroupTripParticipantsForUser from './components/TripParticipantsForUserGroup/index';
 import ConferenceWelcomeMessageForm from './components/welcomComponents/ConferenceWelcomeMessageForm/index';
+import EditWelcomeMessage from './components/editWelcomeMsg';
 
 
 
@@ -642,6 +643,14 @@ const App = () => {
                                                           element={<AddZoomLink />}
                                                           
                                                         />
+                                                          <Route
+                                                          path="/edit/welcome/:conferenceId"
+                                                          element={<EditWelcomeMessage />}
+                                                          
+                                                        />          
+                                                                 
+                                                                 
+                                                                 
                                                                       <Route path="/speaker/link" element={<SpeakerList />} />
                                                                       <Route
                 path="/table/zoom/speaker/:conferenceId"

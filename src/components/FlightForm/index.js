@@ -265,7 +265,7 @@ const FlightForm = () => {
           variant="h5"
           gutterBottom
           sx={{
-            color: '#c62828',
+            color: '#9B1321',
             fontWeight: 'bold',
             fontSize: { xs: '1.5rem', sm: '2rem', md: '2rem' },
             textAlign: 'center',
@@ -285,7 +285,7 @@ const FlightForm = () => {
               navigate(`/accept/flight/${flight_id}`);
             }}
             sx={{
-              backgroundColor: '#c62828',
+              backgroundColor: '#9B1321',
       
               marginTop: "20px",
               width: "100%",
@@ -332,7 +332,7 @@ const FlightForm = () => {
             onClick={() => navigate(`/flights/users/edit`)}
             disabled={!Object.keys(data).length}
             sx={{
-              backgroundColor: '#c62828',// Modern vibrant red
+              backgroundColor: '#9B1321',// Modern vibrant red
 
       
               marginTop: "20px",
@@ -356,7 +356,7 @@ const FlightForm = () => {
               EmergencyButton();
             }}
             sx={{
-              backgroundColor: '#c62828',// Modern vibrant red
+              backgroundColor: '#9B1321',// Modern vibrant red
       
               marginTop: "20px",
               color: "#fff",
@@ -379,7 +379,7 @@ const FlightForm = () => {
               handelDelete();
             }}
             sx={{
-              backgroundColor: '#c62828',// Modern vibrant red
+              backgroundColor: '#9B1321',// Modern vibrant red
       
               marginTop: "20px",
               color: "#fff",

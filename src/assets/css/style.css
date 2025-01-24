@@ -5108,6 +5108,8 @@ background: rgb(155, 19, 33); /* لون البداية */
 	max-width: 370px;
 	margin: 0 auto;
 	border-bottom: 20px solid #9B1321;
+	height: 60vh;
+
 }
 
 .pricing-block .icon-box {

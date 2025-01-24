@@ -87,7 +87,11 @@ const AddTripForm = ({ data, setOpen }) => {
         >
           Cancel
         </button>
-        <button className="submit-btn" onClick={handleSubmit}>Submit</button>
+        <button
+        style={{
+          backgroundColor: '#9B1321',
+        }}
+         className="submit-btn" onClick={handleSubmit}>Submit</button>
       </div>
     </div>
   );

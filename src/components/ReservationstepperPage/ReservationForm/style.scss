@@ -7,3 +7,27 @@
     margin-top: 25px;
   }
 }
+.hotel-name-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto; /* يضمن أن يتم محاذاة العنصر في منتصف الشاشة */
+  background-color: #f8f8f8; /* خلفية خفيفة */
+  padding: 20px;
+  margin: 5px 0px;
+}
+
+.hotel-name {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50; /* لون داكن وعصري */
+  text-transform: uppercase; /* لتكبير الأحرف */
+  letter-spacing: 1px; /* مسافة بين الأحرف */
+  animation: fadeIn 1s ease-in-out; /* تأثير الانزلاق */
+}
+
+.hotel-name-container span {
+  font-size: 1.5rem;
+  color: #95a5a6; /* لون نص محايد لحالة "Loading" */
+}
+

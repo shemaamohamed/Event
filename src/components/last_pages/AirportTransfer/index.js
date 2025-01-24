@@ -326,7 +326,7 @@ const AirportTransferForm = () => {
                     />
                     <SimpleLabelValue
                       label="Status"
-                      value={booking.invoice.status}
+                      value={booking.invoice.total_price > 0 ? booking.invoice.status: "approved"}
                     />
                     {booking.invoice.total_price !== "0.00" ? (
                       <button className="pay-btn">Pay Now</button>

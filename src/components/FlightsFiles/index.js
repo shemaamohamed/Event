@@ -6,22 +6,34 @@ import axios from "axios";
 import "./style.scss";
 import toast from "react-hot-toast";
 import httpService from "../../common/httpService";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+
+
 
 const FlightsFiles = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [file, setFile] = useState(null);
   const [id, setId] = useState(0);
-
   const [data, setData] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+    const [selectedRow, setSelectedRow] = useState(null);
+  
   // Mock data for the table
+    const [isOpen, setIsOpen] = useState(false);
+    const openMenu = (event, row) => {
+      setAnchorEl(event.currentTarget);
+      setSelectedRow(row);
+    };
+  
+    const closeMenu = () => {
+      setAnchorEl(null);
+      setSelectedRow(null);
+    };
 
-  const headers = [
-    { key: "id", label: "ID" },
-    { key: "name", label: "User Name" },
-    { key: "status", label: "Flight Status" },
-    { key: "actions", label: "Actions" },
-  ];
+  
 
   const handleUploadClick = (user) => {
     setSelectedUser(user);
@@ -30,9 +42,6 @@ const FlightsFiles = () => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   const getData = () => {
-    console.log("hihi");
-    
-    // استبدال التوكن هنا
     const token = localStorage.getItem("token");
 
     axios
@@ -84,32 +93,99 @@ const FlightsFiles = () => {
 
     setDialogOpen(false);
   };
-  const tableData = data.map((row) => ({
+  const rows = data.map((row) => ({
     ...row,
-    actions: (
-      <button
-        className="upload-button"
-        onClick={() => {
-          handleUploadClick(row);
-          setId(row.id);
-        }}
-      >
-        Upload Flight Ticket
-      </button>
-    ),
+    
   }));
+  const columns=[
+    {
+      field: "id",
+      headerName: "ID",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },{
+      field: "name",
+      headerName: "User Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },{
+      field: "status",
+      headerName: "Flight Status",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },{
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        <>
+          <IconButton onClick={(event) => openMenu(event, params.row)}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+            onClose={closeMenu}
+          >
+            <MenuItem
+              onClick={() => {
+                handleUploadClick(params.row);
+                setId(params.row.id);
+              }}
+            >
+                      Upload Flight Ticket
+
+            </MenuItem>
+          </Menu>
+        </>
+      ),
+
+    }
+    
+  ]
   useEffect(() => {
     getData();
   }, []);
   return (
     <div className="flights-files-container">
-      <h1 className="visa-files">Flights Files</h1>
-      <Table headers={headers} data={tableData} />
+      <h1 className="visa-files" style={{
+        color:'#9B1321'
+      }}>Flights Files</h1>
+      <DataGrid
+              rows={rows}
+              columns={columns}
+              getRowId={(row) => row.id}
+
+              getRowHeight={() => "auto"}
+
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 5,
+                  },
+                },
+              }}
+              pageSizeOptions={[5]}
+              checkboxSelection
+              disableRowSelectionOnClick
+              autoHeight
+              sx={{
+                marginTop: "20px",
+                "& .MuiDataGrid-virtualScroller": {
+                  overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                },
+              }}
+            />
 
       {isDialogOpen && (
         <Dialog
           viewHeader={true}
-          header={`Upload Ticket File }`}
+          header={`Upload Ticket File `}
           open={isDialogOpen}
           setOpen={setDialogOpen}
         >

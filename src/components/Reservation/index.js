@@ -176,7 +176,7 @@ const Reservation = () => {
         <Typography
           variant="h6"
           sx={{
-            color: '#c62828',
+            color: '#9B1321',
             fontWeight: 'bold',
             fontSize: { xs: '1.3rem', sm: '2rem', md: '2rem' },
             textAlign: 'center',
@@ -212,6 +212,9 @@ const Reservation = () => {
               disabled={!disabledBtn}
               onClick={() => navigate("/stepper/edit")}
               fullWidth
+              sx={{
+                backgroundColor:"#9B1321"
+              }}
             >
               Edit Reservation Information
             </Button>

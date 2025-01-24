@@ -236,111 +236,111 @@ const AirportTransferBookingsComponent = () => {
       {selectedBooking ? (
         <Paper elevation={1} sx={{ padding: 2 }}>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 Trip Type:
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1">
                 {selectedBooking.trip_type || "-"}
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 Arrival Date:
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1">
                 {new Date(selectedBooking.arrival_date).toLocaleString() || "-"}
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 Arrival Time:
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1">
                 {selectedBooking.arrival_time || "-"}
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 Departure Date:
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1">
                 {new Date(selectedBooking.departure_date).toLocaleString() || "-"}
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 Departure Time:
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1">
                 {selectedBooking.departure_time || "-"}
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 Flight Number:
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1">
                 {selectedBooking.flight_number || "-"}
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 Companion Name:
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1">
                 {selectedBooking.companion_name || "-"}
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 User Email:
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1">
                 {selectedBooking.user?.email || "-"}
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 User Phone:
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1">
                 {selectedBooking.user?.phone_number || "-"}
               </Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 Conference Title:
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography variant="body1">
                 {selectedBooking.conference?.title || "-"}
               </Typography>

@@ -185,11 +185,12 @@ const FlightFormAdmin = () => {
           </IconButton>
           <Menu
             anchorEl={anchorEl}
-            open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+            open={Boolean(anchorEl) && selectedRow?.flight_id === params.row.flight_id}
             onClose={closeMenu}
           >
             <MenuItem
               onClick={() => {
+          console.log(params);     
                 navigate(`/flights/admins/${params.row?.flight_id}`);
               }}
             >
@@ -291,6 +292,15 @@ const FlightFormAdmin = () => {
           getRowId={(row) => row.user_id}
           checkboxSelection
           disableRowSelectionOnClick
+            onSelectionModelChange={(newSelection) => {
+    const selectedRowData = rows.find(row => row.id === newSelection[0]); // الحصول على بيانات الصف المحدد
+    if (selectedRowData) {
+      // قم بمعالجة بيانات الصف المحدد هنا
+      console.log(selectedRowData.flight_id); // استخدام الـ flight_id للصف المحدد
+      // يمكن تعيين بيانات الصف المحدد هنا لمزيد من العمليات
+    }
+  }}
+
         />
 
         <CompanionModal

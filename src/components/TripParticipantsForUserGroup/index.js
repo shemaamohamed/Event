@@ -394,7 +394,7 @@ const GroupTripParticipantsForUser = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <SimpleLabelValue
-                    label="Duration"
+                    label="Duration in Days"
                     value={selectedParticipantDetails.duration || "-"}
                   />
                 </Grid>

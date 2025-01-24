@@ -243,15 +243,47 @@ const ConferenceDetails = () => {
 {
   work?.map((item)=>{
     return(
-      <div className="workshop-container999">
+    <Grid container spacing={3} style={{ padding: "20px" }}>
       {work?.map((item, index) => (
-        <div key={index} className="workshop-card">
-          <div className="workshop-description">
-            <p>{item?.description}</p>
-          </div>
-        </div>
+        <Grid item xs={12}  key={index}>
+          <Card
+            sx={{
+              
+              borderRadius: "12px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              "&:hover": {
+                transform: "translateY(-5px)",
+                boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15)",
+              },
+            }}
+          >
+            <CardContent>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{
+                  fontWeight: "bold",
+                  marginBottom: "10px",
+                  textAlign: "center",
+                  color: "#9B1321",
+                }}
+              >
+                {item?.title || "Workshop Title"}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ lineHeight: 2 }}
+              >
+                {item?.description}
+              </Typography>
+            </CardContent>
+         
+          </Card>
+        </Grid>
       ))}
-    </div>
+    </Grid>
     
   
     )

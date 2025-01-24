@@ -302,63 +302,72 @@ const SponsorsComponent = () => {
               <CloseRounded />
             </IconButton>
           </div>
-          <Box sx={{ padding: 2 }}>
             {/* Sponsor Details */}
-            <Typography
-              variant="h5"
-              component="div"
-              gutterBottom
-              color="#c62828"
-            >
-              Sponsor Details
-            </Typography>
+            <Typography variant="h6"  gutterBottom
+        sx={{
+          color: "#9B1321",
+          textAlign: "center",
+          backgroundColor: "#f1f1f1",
+          padding: 1,
+          borderRadius: 1,
+          marginBottom: 2,
+        }}
+        >
+                        Sponsor Details
+
+        </Typography>
+        <Box sx={{ padding: 2,
+          overflowY:'auto'
+         }}>
+
+           
             {selectedSponsor ? (
               <Card sx={{ marginBottom: 2 }}>
                 <CardContent>
                   <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <SimpleLabelValue
                         label="Company Name"
                         value={selectedSponsor.company_name || "-"}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <SimpleLabelValue
                         label="Contact Person"
                         value={selectedSponsor.contact_person || "-"}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <SimpleLabelValue
                         label="Email"
                         value={selectedSponsor.user.email || "-"}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <SimpleLabelValue
                         label="Phone Number"
                         value={selectedSponsor.user.phone_number || "-"}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <SimpleLabelValue
                         label="WhatsApp Number"
                         value={selectedSponsor.user.whatsapp_number || "-"}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <SimpleLabelValue
                         label="Address"
                         value={selectedSponsor.company_address || "-"}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <SimpleLabelValue
                         label="Status"
                         value={selectedSponsor.status || "-"}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <SimpleLabelValue
                         label="Registration Type"
                         value={selectedSponsor.user.registration_type || "-"}
@@ -366,7 +375,7 @@ const SponsorsComponent = () => {
                     </Grid>
 
                     {/* Links to backendUrlImages before simple values */}
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <Typography
                         variant="body2"
                         color="primary"
@@ -387,7 +396,7 @@ const SponsorsComponent = () => {
                       </Typography>
                     </Grid>
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <Typography
                         variant="body2"
                         color="primary"
@@ -408,7 +417,7 @@ const SponsorsComponent = () => {
                       </Typography>
                     </Grid>
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <Typography
                         variant="body2"
                         color="primary"
@@ -427,7 +436,7 @@ const SponsorsComponent = () => {
                       </Typography>
                     </Grid>
 
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                       <Typography
                         variant="body2"
                         color="primary"
@@ -461,7 +470,7 @@ const SponsorsComponent = () => {
               variant="h5"
               component="div"
               gutterBottom
-              color="#c62828"
+              color="#9B1321"
             >
               Invoices
             </Typography>
@@ -472,84 +481,84 @@ const SponsorsComponent = () => {
                     <Grid container spacing={2}>
                       {/* Invoice ID */}
                       {invoice?.id && (
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="Invoice ID" value={invoice.id} />
                         </Grid>
                       )}
 
                       {/* User ID */}
                       {invoice?.user_id && (
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="User ID" value={invoice.user_id} />
                         </Grid>
                       )}
 
                       {/* Total Amount */}
                       {invoice?.total_amount && (
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="Total Amount" value={`$${invoice.total_amount}`} />
                         </Grid>
                       )}
 
                       {/* Square Meters */}
                       {invoice?.square_meters && (
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="Square Meters" value={invoice.square_meters} />
                         </Grid>
                       )}
 
                       {/* Exhibit Number */}
                       {invoice?.exhibit_number && (
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="Exhibit Number" value={invoice.exhibit_number} />
                         </Grid>
                       )}
 
                       {/* Shell Scheme Price */}
                       {invoice?.shell_scheme_price && (
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="Shell Scheme Price" value={`$${invoice.shell_scheme_price}`} />
                         </Grid>
                       )}
 
                       {/* Created At */}
                       {invoice?.created_at && (
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="Created At" value={new Date(invoice.created_at).toLocaleString()} />
                         </Grid>
                       )}
 
                       {/* Updated At */}
                       {invoice?.updated_at && (
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="Updated At" value={new Date(invoice.updated_at).toLocaleString()} />
                         </Grid>
                       )}
 
                       {/* Conference Sponsorship Option IDs */}
                       {invoice?.conference_sponsorship_option_ids && (
-                        <Grid item xs={12}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="Conference Sponsorship Option IDs" value={invoice.conference_sponsorship_option_ids} />
                         </Grid>
                       )}
 
                       {/* Booth Cost IDs */}
                       {invoice?.booth_cost_ids && (
-                        <Grid item xs={12}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="Booth Cost IDs" value={invoice.booth_cost_ids} />
                         </Grid>
                       )}
 
                       {/* Sponsorship Option IDs */}
                       {invoice?.sponsorship_option_ids && (
-                        <Grid item xs={12}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue label="Sponsorship Option IDs" value={invoice.sponsorship_option_ids} />
                         </Grid>
                       )}
 
                       {/* Additional Cost for Shell Scheme Booth */}
                       {invoice?.additional_cost_for_shell_scheme_booth !== undefined && (
-                        <Grid item xs={12}>
+                        <Grid item xs={12} md={6}>
                           <SimpleLabelValue
                             label="Additional Cost for Shell Scheme Booth"
                             value={invoice.additional_cost_for_shell_scheme_booth ? "Yes" : "No"}

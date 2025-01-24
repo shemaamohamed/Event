@@ -42,7 +42,7 @@ const ParentComponentContent = () => {
     const navigate = useNavigate();
 
   const stepperInfo = [
-    { title: "Speaker Reservation" },
+    { title: "Reservation of User " },
     { title: "Reservation Of Companions" },
     { title: "Reservation Details" },
     { title: "Invoice" },

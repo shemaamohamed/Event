@@ -154,7 +154,7 @@ const ParticipantTripForm = () => {
 
                 <Grid item xs={12} sm={6}>
                   <DateInput
-                    label="Check-In Date"
+                    label="Start Date"
                     inputValue={participant.check_in_date}
                     setInputValue={(value) =>
                       handleInputChange(participant.id, "check_in_date", value)
@@ -165,7 +165,7 @@ const ParticipantTripForm = () => {
 
                 <Grid item xs={12} sm={6}>
                   <DateInput
-                    label="Check-Out Date"
+                    label="End Date"
                     inputValue={participant.check_out_date}
                     setInputValue={(value) =>
                       handleInputChange(participant.id, "check_out_date", value)

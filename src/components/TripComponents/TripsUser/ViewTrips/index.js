@@ -63,38 +63,76 @@ const ViewUserTrips = () => {
   return (
     <div className="trips-page">
       <div className="trips-users-container">
-        <div className="trips-types-btn">
+        <Grid container spacing={2} sx={{
+          justifyContent: "center",
+          marginBottom: "20px",
+          alignItems: "center",
+        }}>
           {hasFreeTrip && (
-            <button
+            <Grid item xs={12} md={6}
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            >
+               <Button
+                         fullWidth
+
               className={`trip-type-btn ${
                 selectedTripType === "group" ? "active" : ""
               }`}
               onClick={() => setSelectedTripType("group")}
+              sx={{
+                backgroundColor:"#9B1321",
+                color:"#fff"
+              }}
             >
               Group Trips
-            </button>
+            </Button>
+
+              </Grid>
+           
           )}
-          <button
+          <Grid item xs={12} md={6}
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          >
+          <Button
+          fullWidth
             className={`trip-type-btn ${
               selectedTripType === "private" ? "active" : ""
             }`}
             onClick={() => setSelectedTripType("private")}
+            sx={{
+              backgroundColor:"#9B1321",
+              color:"#fff"
+
+            }}
           >
             Private Trips
-          </button>
-          <small className="trip-note">
-            You can book multiple trips based on your availability.
-          </small>
-        </div>
+          </Button>
+
+              </Grid>
+          <Grid item xs={12}>
+          <Typography   textAlign={'center'} className="trip-note">
+          You can book multiple trips based on your availability.
+
+          </Typography> 
+          </Grid>
+          
+          
+          
+        </Grid>
       </div>
 
       <Grid container spacing={2}>
         {allTrips.length > 0 ? (
           allTrips.map((trip) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={trip.id}>
+            <Grid item xs={12} sm={6} key={trip.id}>
                      <Card
       sx={{
-        maxWidth: 345, 
         margin: "20px auto", 
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", 
         borderRadius: "8px", 
@@ -131,6 +169,10 @@ const ViewUserTrips = () => {
             variant="body2"
             color="text.secondary"
             className="desc"
+            sx={{
+              height:"20vh",
+              overflow:"hidden",
+            }}
           >
             {trip.description}
           </Typography>
@@ -146,7 +188,10 @@ const ViewUserTrips = () => {
         >
           <Button
             variant="contained"
-            color="primary"
+            sx={{
+              backgroundColor:"#9B1321",
+              color:"#fff"
+            }}
             className="view"
             onClick={() => navigate(`/view/trip/${trip.id}`)}
           >

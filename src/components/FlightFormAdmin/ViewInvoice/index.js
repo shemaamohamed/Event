@@ -50,7 +50,7 @@ const ViewInvoice = ({ data }) => {
               label="Total Price(USD)"
               value={invoice.total_price || "-"}
             />
-            <SimpleLabelValue label="Status" value={invoice.status || "-"} />
+            <SimpleLabelValue label="Status" value={invoice.total_price > 0 ?invoice.status : "approved" } />
             <SimpleLabelValue
               label="Created At"
               value={moment(invoice.created_at).format("DD-MM-YYYY") || "-"}

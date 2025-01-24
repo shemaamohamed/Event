@@ -86,6 +86,7 @@ const ViewTrip = () => {
             actions: item.actions
           }));
           setRows(newData);
+          console.log("newData:", newData);
         },
         onError: (error) => {
           console.error("Error fetching trips:", error);
@@ -132,7 +133,10 @@ const ViewTrip = () => {
   
   useEffect(() => {
     fetchTrips();
+    console.log("rows:", rows);
+
   }, [tripType, tripName]);
+
   const columns =[
     {
       field:"id",
@@ -164,69 +168,67 @@ const ViewTrip = () => {
       minWidth: 230,
       cellClassName: "centered-cell", 
     },
-    { field: "actions", headerName: "Actions", flex: 0.2, minWidth: 230, cellClassName: "centered-cell", 
-      
-      renderCell: (params) => (
-        
-        <>
-        
-        <IconButton onClick={(event) => openMenu(event, params.row)}>
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
-            onClose={closeMenu}
-          >
-            {params.row.status === "pending" && (
-              <>
-               <MenuItem 
-                       onClick={() => {
-                        setAddPrice(true);
-                        setTripId(params.row?.id);
-                       }}
-
-
-             >
-                              Add Prices
-
-
-            </MenuItem> 
-            <MenuItem
-              onClick={() => {
-                setViewOneTrip(true);
-                setTripId(params.row?.id);
-              }}
+    {
+      field: "actions", 
+      headerName: "Actions", 
+      flex: 0.2, 
+      minWidth: 230, 
+      cellClassName: "centered-cell", 
+      renderCell: (params) => {
+        console.log("selectedRow?.id:", selectedRow?.id);  // سجل قيمة selectedRow?.id
+        console.log("params.row.status:", params.row.status);      // سجل قيمة params.row.id
+        console.log("params.row:", params.row);  // تحقق من محتويات params.row
+        console.log("params.row.id:", params.row.id);  // تحقق من id
+        return (
+          <>
+            <IconButton onClick={(event) => openMenu(event, params.row)}>
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+              onClose={closeMenu}
             >
-              View
-            </MenuItem>
-
-            <MenuItem
-              onClick={() => {
-                setOpenEditTrip(true);
-                setOpen(true);
-                setTripId(params.row?.id);
-              }}>
-                                Edit
-
-              </MenuItem>
-              <MenuItem
-              onClick={() => {
-                handleDelete(params.row?.id);
-              }}
-            >
-              Delete
-            </MenuItem>
-              </>
-
-            )}
-            
-            
-            
-          </Menu>
-        </>
-      ),
-    },
+                <>
+                  <MenuItem 
+                    onClick={() => {
+                      setAddPrice(true);
+                      setTripId(params.row.id);
+                    }}
+                  >
+                    Add Prices
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      setViewOneTrip(true);
+                      setTripId(params.row?.id);
+                    }}
+                  >
+                    View
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      setOpenEditTrip(true);
+                      setOpen(true);
+                      setTripId(params.row?.id);
+                    }}
+                  >
+                    Edit
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleDelete(params.row?.id);
+                    }}
+                  >
+                    Delete
+                  </MenuItem>
+                </>
+            </Menu>
+          </>
+        );
+      }
+    }
+    
   ]
 
   return (

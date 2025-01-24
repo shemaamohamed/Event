@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Box, Button, TextField, MenuItem, Select, InputLabel, FormControl, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Button, TextField, MenuItem, Select, InputLabel, FormControl, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
 import toast from "react-hot-toast";
 
 const CreateWorkshop = () => {
@@ -58,20 +58,28 @@ const CreateWorkshop = () => {
     };
 
     return (
-        <div style={{ padding: "20px" }}>
-            <Typography variant="h5" gutterBottom>
+        <div style={{ padding: "20px" ,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+         }} >
+            <Typography variant="h5" textAlign={'center'} gutterBottom>
                 Create New Workshop
             </Typography>
 
-            <Button variant="contained" color="primary" onClick={() => setOpenDialog(true)}>
+            <Button variant="contained"
+             sx={{
+                backgroundColor:"#9B1321"
+            }}
+            onClick={() => setOpenDialog(true)}>
                 Add Workshop
             </Button>
 
-            {/* Dialog to create workshop */}
-            <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+            <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="md" fullWidth>
                 <DialogTitle>Create Workshop</DialogTitle>
                 <DialogContent>
-                    <FormControl fullWidth margin="normal">
+                    <FormControl fullWidth>
                         <InputLabel id="conference-select-label">Select Conference</InputLabel>
                         <Select
                             labelId="conference-select-label"

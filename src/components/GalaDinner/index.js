@@ -220,7 +220,11 @@ const DinnerDetails = () => {
                         />
                       </div>
                     )}
-                    <button className="submit-btn" onClick={addDinnerAttendees}>
+                    <button 
+                    style={{
+                      backgroundColor:'#9B1321'
+                    }}
+                    className="submit-btn" onClick={addDinnerAttendees}>
                       Confirm Attendance
                     </button>
                   </div>
@@ -265,6 +269,9 @@ const DinnerDetails = () => {
       </div>
       <button
         className="fixed-button"
+        style={{
+          marginTop: "5rem",
+        }}
         onClick={() => {
           navigate("/airport/transfer");
         }}

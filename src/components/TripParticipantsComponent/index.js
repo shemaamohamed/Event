@@ -455,7 +455,7 @@ const TripParticipantsComponent = () => {
 
                   <Grid item xs={6}>
                     <Typography variant="body1" fontWeight="bold">
-                      Check-In Date:
+                      Start Date:
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -466,7 +466,7 @@ const TripParticipantsComponent = () => {
 
                   <Grid item xs={6}>
                     <Typography variant="body1" fontWeight="bold">
-                      Check-Out Date:
+                      End Date:
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>

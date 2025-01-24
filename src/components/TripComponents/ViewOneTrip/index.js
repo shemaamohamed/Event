@@ -77,10 +77,10 @@ const ViewOneTrip = ({ isOpen, setIsOpen, tripId }) => {
   <Grid item xs={6}>
     <SimpleLabelValue label="Trip Type" value={data?.trip_type} />
   </Grid>
-  <Grid item xs={6}>
+  <Grid item xs={12}>
     <SimpleLabelValue label="Description" value={data?.description} />
   </Grid>
-  <Grid item xs={6}>
+  <Grid item xs={12}>
     <SimpleLabelValue label="Additional Info" value={data?.additional_info} />
   </Grid>
 

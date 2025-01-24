@@ -406,7 +406,7 @@ const ConferencesPage = () => {
               
         <Typography variant="h6"  gutterBottom
         sx={{
-          color: "#c62828",
+          color: "#9B1321",
           textAlign: "center",
           backgroundColor: "#f1f1f1",
           padding: 1,

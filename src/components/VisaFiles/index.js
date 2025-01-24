@@ -5,6 +5,9 @@ import ImageUpload from "../../CoreComponent/ImageUpload";
 import "./style.scss";
 import httpService from "../../common/httpService";
 import toast from "react-hot-toast";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 const VisaFiles = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -13,29 +16,19 @@ const VisaFiles = () => {
   const [id, setId] = useState(0);
 
   const [data, setData] = useState([]);
-  // Mock data for the table
-  const mockData = [
-    { id: 1, name: "John Doe", email: "John Doe", status: "approved" },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "John Doe",
-      status: "approved",
-    },
-    {
-      id: 3,
-      name: "Alice Johnson",
-      email: "John Doe",
-      status: "approved",
-    },
-  ];
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const openMenu = (event, row) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedRow(row);
+  };
 
-  const headers = [
-    { key: "id", label: "ID" },
-    { key: "name", label: "User Name" },
-    { key: "status", label: "Visa Status" },
-    { key: "actions", label: "Actions" },
-  ];
+  const closeMenu = () => {
+    setAnchorEl(null);
+    setSelectedRow(null);
+  };
+
+ 
 
   const handleUploadClick = (user) => {
     setSelectedUser(user);
@@ -117,26 +110,108 @@ const VisaFiles = () => {
 
     setDialogOpen(false);
   };
-  const tableData = data.map((row) => ({
+  const rows = data.map((row) => ({
     ...row,
-    actions: (
-      <button className="upload-button"
-        onClick={(() => {
-          handleUploadClick(row)
-          setId(row.id)
-        })}
-      >
-        Upload Visa File
-      </button>
-    ),
+   
   }));
+  const columns = [
+    {
+      field: "id",
+      headerName: "ID",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+     
+    },
+    {
+      field: "name",
+      headerName: "User Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "status",
+      headerName: "Visa Status",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        <>
+          <IconButton onClick={(event) => openMenu(event, params.row)}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+            onClose={closeMenu}
+          >
+            <MenuItem
+              onClick={() => {
+                handleUploadClick(params.row)
+          setId(params.row.id)
+              }}
+            >
+                      Upload Visa File
+
+
+            </MenuItem>
+          </Menu>
+        </>
+      ),
+
+
+    },
+  ];
   useEffect(() => {
     getData();
   }, []);
   return (
     <div className="visa-files-container">
-      <h1 className="visa-files">Visa Files</h1>
-      <Table headers={headers} data={tableData} />
+      <h1 className="visa-files"
+      style={{
+        color: "#9B1321",
+      }}
+      >Visa Files</h1>
+       <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    getRowId={(row) => row.id}
+      
+                    getRowHeight={() => "auto"}
+      
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 5,
+                        },
+                      },
+                    }}
+                    pageSizeOptions={[5]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                    autoHeight
+                    sx={{
+                      marginTop: "20px",
+                      "& .MuiDataGrid-virtualScroller": {
+                        overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                      },
+                    }}
+                  />
 
       {isDialogOpen && (
         <Dialog

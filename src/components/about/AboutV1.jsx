@@ -20,7 +20,7 @@ const AboutV1 = () => {
                         <div className="content-column col-lg-6 col-md-12 col-sm-12">
                             <div className="inner-column">
                                 <div className="sec-title">
-                                    <span className="title">ABOUT EVENT</span>
+                                    <span className="title">ABOUT COMPANY</span>
                                     <h2>Welcome to Event Consultant </h2>
                                     <div className="text">Event Consultant is a company specializing in the preparation, organization, and marketing of scientific conferences, exhibitions, workshops, and seminars in Jordan.</div>
                                 </div>

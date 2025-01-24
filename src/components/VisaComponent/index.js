@@ -292,109 +292,122 @@ const VisasComponent = () => {
         </Typography>
         <Divider style={{ marginBottom: "16px" }} />
         {selectedVisa ? (
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <Box display="flex" alignItems="center">
-                <CalendarToday color="primary" style={{ marginRight: "8px" }} />
-                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
-                  User ID:
-                </Typography>
-              </Box>
-              <Typography variant="body1" style={{ marginLeft: "32px" }}>
-                {selectedVisa.user_id || "-"}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Box display="flex" alignItems="center">
-                <CalendarToday color="primary" style={{ marginRight: "8px" }} />
-                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
-                  Arrival Date:
-                </Typography>
-              </Box>
-              <Typography variant="body1" style={{ marginLeft: "32px" }}>
-                {selectedVisa.arrival_date || "-"}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Box display="flex" alignItems="center">
-                <CalendarToday color="primary" style={{ marginRight: "8px" }} />
-                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
-                  Departure Date:
-                </Typography>
-              </Box>
-              <Typography variant="body1" style={{ marginLeft: "32px" }}>
-                {selectedVisa.departure_date || "-"}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Box display="flex" alignItems="center">
-                <AttachMoney color="success" style={{ marginRight: "8px" }} />
-                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
-                  Visa Cost:
-                </Typography>
-              </Box>
-              <Typography variant="body1" style={{ marginLeft: "32px" }}>
-                {selectedVisa.visa_cost || "-"}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Box display="flex" alignItems="center">
-                {selectedVisa.payment_required ? (
-                  <CheckCircle color="success" style={{ marginRight: "8px" }} />
-                ) : (
-                  <Cancel color="error" style={{ marginRight: "8px" }} />
-                )}
-                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
-                  Payment Required:
-                </Typography>
-              </Box>
-              <Typography variant="body1" style={{ marginLeft: "32px" }}>
-                {selectedVisa.payment_required ? "Yes" : "No"}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Box display="flex" alignItems="center">
-                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
-                  Status:
-                </Typography>
-              </Box>
-              <Typography variant="body1" style={{ marginLeft: "32px" }}>
-                {selectedVisa.status || "-"}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} >
-              <Box display="flex" alignItems="center">
-                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
-                  Payment Status:
-                </Typography>
-                <Typography variant="body1" style={{ marginLeft: "6px" }}>
-                {selectedVisa.payment_status || "-"}
-              </Typography>
-              </Box>
-              
-            </Grid>
-            <Grid item xs={12}>
-              <Box display="flex" alignItems="center"  >
-                <Typography variant="subtitle1" style={{ fontWeight: 600 }}>
-                  Created At:{' '}
-                  {selectedVisa.created_at
-                  ? new Date(selectedVisa.created_at).toLocaleString()
-                  : "-"}
-                </Typography>
-               
-              </Box>
-              
-            </Grid>
-          </Grid>
-        ) : (
-          <Typography
-            variant="body1"
-            color="textSecondary"
-            style={{ textAlign: "center" }}
-          >
-            No visa details available.
-          </Typography>
-        )}
+  <Grid container spacing={3}>
+    {/* User ID */}
+    <Grid item xs={12} >
+    <Box display="flex" alignItems="center">
+
+      <Typography variant="subtitle1" fontWeight={600}>
+        User ID:
+      </Typography>
+      <Typography variant="body1" ml={2}>
+        {selectedVisa.user_id || "-"}
+      </Typography>
+    </Box>
+    </Grid>
+
+    {/* Arrival Date */}
+    <Grid item xs={12} >
+    <Box display="flex" alignItems="center">
+
+      <Typography variant="subtitle1" fontWeight={600}>
+        Arrival Date:
+      </Typography>
+      <Typography variant="body1" ml={2}>
+        {selectedVisa.arrival_date || "-"}
+      </Typography>
+    </Box>
+    </Grid>
+
+    {/* Departure Date */}
+    <Grid item xs={12} >
+    <Box display="flex" alignItems="center">
+
+      <Typography variant="subtitle1" fontWeight={600}>
+        Departure Date:
+      </Typography>
+      <Typography variant="body1" ml={2}>
+        {selectedVisa.departure_date || "-"}
+      </Typography>
+    </Box>
+    </Grid>
+
+    {/* Visa Cost */}
+    <Grid item xs={12} >
+    <Box display="flex" alignItems="center">
+
+      <Typography variant="subtitle1" fontWeight={600}>
+        Visa Cost:
+      </Typography>
+      <Typography variant="body1" ml={2}>
+        {selectedVisa.visa_cost || "-"}
+      </Typography>
+    </Box>
+    </Grid>
+
+    {/* Payment Required */}
+    <Grid item xs={12} >
+    <Box display="flex" alignItems="center">
+
+      <Typography variant="subtitle1" fontWeight={600}>
+        Payment Required:
+      </Typography>
+      <Typography variant="body1" ml={1}>
+        {selectedVisa.payment_required ? "Yes" : "No"}
+      </Typography>
+    </Box>
+    </Grid>
+
+    {/* Status */}
+    <Grid item xs={12} >
+    <Box display="flex" alignItems="center">
+      <Typography variant="subtitle1" fontWeight={600}>
+        Status:
+      </Typography>
+      <Typography variant="body1" ml={1}>
+        {selectedVisa.status || "-"}
+      </Typography>
+    </Box>
+    </Grid>
+
+    {/* Payment Status */}
+    <Grid item xs={12}>
+      <Box display="flex" alignItems="center">
+        <Typography variant="subtitle1" fontWeight={600}>
+          Payment Status:
+        </Typography>
+        <Typography variant="body1" ml={1}>
+          {(selectedVisa.status === "approved" && selectedVisa.visa_cost > 0)
+            ? selectedVisa.payment_status
+            : "completed"}
+        </Typography>
+      </Box>
+    </Grid>
+
+    {/* Created At */}
+    <Grid item xs={12}>
+      <Box display="flex" alignItems="center">
+        <Typography variant="subtitle1" fontWeight={600}>
+          Created At:
+        </Typography>
+        <Typography variant="body1" ml={1}>
+          {selectedVisa.created_at
+            ? new Date(selectedVisa.created_at).toLocaleString()
+            : "-"}
+        </Typography>
+      </Box>
+    </Grid>
+  </Grid>
+) : (
+  <Typography
+    variant="body1"
+    color="textSecondary"
+    style={{ textAlign: "center" }}
+  >
+    No visa details available.
+  </Typography>
+)}
+
       </CardContent>
     </Card>
 

@@ -1,80 +1,157 @@
 .add-client {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 20px;
-    }
-  
-    .form {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .form-group {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-  
-      .form-group {
-        display: flex;
-        flex-direction: column;
-  
-        label {
-          font-size: 1rem;
-          margin-bottom: 8px;
-          color: #555;
-        }
-  
-        .file-input {
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 1rem;
-          color: #333;
-        }
-  
-        .error {
-          font-size: 0.875rem;
-          color: red;
-          margin-top: 5px;
-        }
-      }
-  
-      .submit-btn {
-        padding: 12px;
+
+      label {
         font-size: 1rem;
-        background-color: #c83222;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-  
-        &:hover {
-          background-color: #bf4b3e;
-        }
+        margin-bottom: 8px;
+        color: #555;
+        font-weight: 500;
       }
-    }
-  
-    .success {
-      color: green;
-      text-align: center;
-      margin-top: 20px;
-    }
-  
-    @media (max-width: 600px) {
-      padding: 15px;
-      .form {
-        gap: 10px;
-      }
-  
-      .submit-btn {
-        font-size: 0.875rem;
+
+      .file-input {
         padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        color: #333;
+      }
+
+      .error {
+        font-size: 0.875rem;
+        color: red;
+        margin-top: 5px;
+      }
+    }
+
+    .submit-btn {
+      padding: 12px;
+      font-size: 1rem;
+      background-color: #c83222;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+
+      &:hover {
+        background-color: #bf4b3e;
+        transform: scale(1.05);
       }
     }
   }
-  
+
+  .success {
+    color: green;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 600;
+  }
+
+  .auto-container {
+    margin-top: 40px;
+    .clients-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+
+      .client-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+
+        .client-image {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          position: relative;
+
+          img {
+            max-width: 100%;
+            border-radius: 8px;
+          }
+
+          .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.8);
+            }
+
+            .delete-icon {
+              font-size: 1.2rem;
+              font-weight: bold;
+            }
+          }
+        }
+
+        .client-info {
+          margin-top: 10px;
+          text-align: center;
+          font-size: 1rem;
+          color: #555;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 15px;
+
+    .form {
+      gap: 10px;
+    }
+
+    .submit-btn {
+      font-size: 0.875rem;
+      padding: 10px;
+    }
+
+    .auto-container {
+      .clients-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}

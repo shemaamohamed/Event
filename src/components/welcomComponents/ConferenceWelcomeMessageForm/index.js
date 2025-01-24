@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import httpService from "../../../common/httpService";
 import ImageUpload from "../../../CoreComponent/ImageUpload";
 import "./style.scss";
@@ -14,68 +14,86 @@ const ConferenceWelcomeMessageForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const { id } = useParams();
+
   const getAuthToken = () => localStorage.getItem("token");
-  const { id } = useParams()
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     const formData = new FormData();
-    formData.append("welcome_message", welcomeMessage);
-    formData.append("president_image", presidentImage);
-    formData.append("conference_logo", conferenceLogo);
-    formData.append("cooperating_associations_logo", cooperatingLogo);
-
-    const data = {
-      method: "POST",
-      url: `${BaseUrl}/conferences/${id}/welcome-message`,
-      data: formData,
-      headers: { Authorization: `Bearer ${getAuthToken()}` },
-
-      showLoader: true,
-      withToast: true,
-      onSuccess: (response) => {
-        toast.success("Welcome message created successfully");
-
-        // Resetting form state after success
-        setWelcomeMessage("");
-        setPresidentImage(null);
-        setConferenceLogo(null);
-        setCooperatingLogo(null);
-      },
-      onError: (errMsg) => {
-        toast.error("A welcome message for this conference already exists.");
-        setError(errMsg || "A welcome message for this conference already exists.");
-      },
-    };
+    if (welcomeMessage) formData.append("welcome_message", welcomeMessage);
+    if (presidentImage) formData.append("president_image", presidentImage);
+    if (conferenceLogo) formData.append("conference_logo", conferenceLogo);
+    if (cooperatingLogo)
+      formData.append("cooperating_associations_logo", cooperatingLogo);
 
     try {
-      await httpService(data);
-    } catch (err) {
-      setError("Error creating welcome message");
+      await httpService({
+        method: "POST",
+        url: `${BaseUrl}/conferences/${id}/welcome-message`,  // التصحيح هنا
+        data: formData,
+        headers: { Authorization: `Bearer ${getAuthToken()}` },  // التصحيح هنا
+      });
+      toast.success("Welcome message created successfully");
+      getData();
+
+    } catch (error) {
+      toast.error("Failed to create welcome message. Please try again.");
+      setError(error?.response?.data?.message || "Unexpected error occurred.");
     } finally {
       setLoading(false);
     }
   };
 
+  const getData = async () => {
+    setLoading(true);
+    try {
+      const data = await httpService({
+        method: "GET",
+        url: `${BaseUrl}/conferences/${id}/welcome-message`,  // التصحيح هنا
+        headers: { Authorization: `Bearer ${getAuthToken()}` },  // التصحيح هنا
+      });
+
+      if (data) {
+        setWelcomeMessage(data.welcome_message || "");
+        setPresidentImage(data.president_image || null);
+        setConferenceLogo(data.conference_logo || null);
+        setCooperatingLogo(data.cooperating_associations_logo || null);
+      }
+    } catch (error) {
+      // يمكن إضافة إدارة الأخطاء هنا
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, [id]);
+
   return (
     <div className="container88">
-      <h1>Create Conference Welcome Message</h1>
+      <h1
+      style={{
+        color:'#9B1321'
+      }}
+      >Create Conference Welcome Message</h1>
       {error && <div className="error">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <TextArea
             className="textarea-field"
             label="Welcome Message"
-            placeholder="Welcome Message"
+            placeholder="Enter welcome message"
             value={welcomeMessage}
             setValue={setWelcomeMessage}
-            required={true}
+            required
             rows={15}
           />
         </div>
-
         <div className="form-group">
           <ImageUpload
             label="President Image"
@@ -85,7 +103,6 @@ const ConferenceWelcomeMessageForm = () => {
             required
           />
         </div>
-
         <div className="form-group">
           <ImageUpload
             label="Conference Logo"
@@ -104,11 +121,11 @@ const ConferenceWelcomeMessageForm = () => {
             required
           />
         </div>
-        <div className="form-group"></div>
-
-        <button type="submit" disabled={loading} style={{
-          backgroundColor:' #9B1321'
-        }}>
+        <button 
+        style={{
+          backgroundColor:'#9B1321'  
+        }}
+        type="submit" disabled={loading}>
           {loading ? "Submitting..." : "Submit"}
         </button>
       </form>

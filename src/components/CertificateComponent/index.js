@@ -8,6 +8,10 @@ import toast from "react-hot-toast";
 import ImageUpload from "../../CoreComponent/ImageUpload";
 import "./style.scss";
 import { backendUrlImages } from "../../constant/config";
+import { Grid } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 const CertificateComponent = () => {
   // State variables to manage component state
@@ -21,6 +25,9 @@ const CertificateComponent = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [userIdForUpload, setUserIdForUpload] = useState(0);
   const [file, setFile] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
+
 
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const token = localStorage.getItem("token");
@@ -29,6 +36,16 @@ const CertificateComponent = () => {
     { label: "Speaker", value: "speaker" },
     { label: "Attendance", value: "attendance" },
   ];
+    const [isOpen, setIsOpen] = useState(false);
+      const openMenu = (event, row) => {
+        setAnchorEl(event.currentTarget);
+        setSelectedRow(row);
+      };
+    
+      const closeMenu = () => {
+        setAnchorEl(null);
+        setSelectedRow(null);
+      };
 
 
 
@@ -136,32 +153,9 @@ const CertificateComponent = () => {
     setDialogOpen(true);
   };
 
-  const tableData = usersData.map((user) => ({
+  const rows = usersData.map((user) => ({
     ...user,
-    certificatePDF: user.certificatePDF ? (
-      user.certificatePDF.includes("image") ? (
-        <img
-          src={`${backendUrlImages}${user.certificatePDF}`}
-          alt="Certificate"
-          style={{ width: "100px", height: "100px" }}
-        />
-      ) : (
-        <a
-          href={`${backendUrlImages}${user.certificatePDF}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View File
-        </a>
-      )
-    ) : (
-      "No Certificate"
-    ),
-    actions: (
-      <button className="upload-button" onClick={() => handleUploadClick(user)}>
-        Upload Certificate
-      </button>
-    ),
+    
   }));
 
   const handleFileUpload = async () => {
@@ -190,11 +184,102 @@ const CertificateComponent = () => {
   useEffect(() => {
     fetchConferences();
   }, []);
+  const columns = [
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "registration_type",
+      headerName: "Registration Type",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "phone_number",
+      headerName: "Phone Number",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "certificatePDF",
+      headerName: "Certificate PDF",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+       renderCell: (params) => (
+        
+                <span>
+                  {params.row.certificatePDF ? (
+          params.row.certificatePDF.includes("image") ? (
+            <img
+              src={`${backendUrlImages}${params.row.certificatePDF}`}
+              alt="Certificate"
+              style={{ width: "100px", height: "100px" }}
+            />
+          ) : (
+            <a
+              href={`${backendUrlImages}${params.row.certificatePDF}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View File
+            </a>
+          )
+        ) : (
+          "No Certificate"
+        )}
+                </span>
+              ),
+
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => (
+        <>
+          <IconButton onClick={(event) => openMenu(event, params.row)}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+            onClose={closeMenu}
+          >
+            <MenuItem
+              onClick={() => {
+                handleUploadClick(params.row)
+              }
+            }
+            >
+              Upload Certificate
+            </MenuItem>
+          </Menu>
+        </>
+      ),
+    },
+  ];
 
   return (
     <div className="certificate-component">
       {/* Filters Section */}
-      <div className="filters">
+      <Grid container spacing={2} >
+        <Grid item xs={12} md={6} >
         <Select
           label="Select Conference"
           options={conferences.map((item) => ({
@@ -208,7 +293,10 @@ const CertificateComponent = () => {
           }}
         />
 
+        </Grid>
+       
 
+        <Grid item xs={12} md={6} >
         <Select
           label="Select Registration Type"
           options={registrationTypes}
@@ -221,21 +309,39 @@ const CertificateComponent = () => {
           }}
         //   errorMsg={errorMsg}
         />
-      </div>
+          </Grid>
+       
+      </Grid>
 
       {/* Users Table Section */}
-      <div className="table-container">
-        <Table
-          headers={[
-            { label: "Name", key: "name" },
-            { label: "Email", key: "email" },
-            { label: "Registration Type", key: "registration_type" },
-            { label: "Phone Number", key: "phone_number" },
-            { label: "Certificate PDF", key: "certificatePDF" },
-            { label: "Actions", key: "actions" },
-          ]}
-          data={tableData}
-        />
+      <div className="table-container" style={{
+        marginTop:'20px'
+      }}>
+        <DataGrid
+                      rows={rows}
+                      columns={columns}
+                      getRowId={(row) => row.id}
+        
+                      getRowHeight={() => "auto"}
+        
+                      initialState={{
+                        pagination: {
+                          paginationModel: {
+                            pageSize: 5,
+                          },
+                        },
+                      }}
+                      pageSizeOptions={[5]}
+                      checkboxSelection
+                      disableRowSelectionOnClick
+                      autoHeight
+                      sx={{
+                        marginTop: "20px",
+                        "& .MuiDataGrid-virtualScroller": {
+                          overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+                        },
+                      }}
+                    />
       </div>
 
       {/* File Upload Dialog */}
@@ -274,14 +380,7 @@ const CertificateComponent = () => {
         </Dialog>
       )}
 
-      {/* Pagination Section */}
-      <div className="pagination-container">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      
     </div>
   );
 };

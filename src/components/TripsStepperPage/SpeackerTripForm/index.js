@@ -74,7 +74,7 @@ const SpeackerTripForm = () => {
 
           <Grid item xs={12} sm={6}>
             <DateInput
-              label="Check-In Date"
+              label="Start Date"
               inputValue={checkInDate}
               setInputValue={setCheckInDate}
               required={true}
@@ -83,7 +83,7 @@ const SpeackerTripForm = () => {
 
           <Grid item xs={12} sm={6}>
             <DateInput
-              label="Check-Out Date"
+              label="End Date"
               inputValue={checkOutDate}
               setInputValue={setCheckOutDate}
               required={true}

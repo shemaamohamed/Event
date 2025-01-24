@@ -19,7 +19,7 @@ const SingleBannerV1 = ({ banner }) => {
                         <h2> 
                              { banner.title} </h2>
                        
-                        <div className="btn-box"><Link to={`/login#`} className="theme-btn btn-style-two"><span className="btn-title">Book Ticket</span ></Link></div>
+                        <div className="btn-box"><Link to={`/conference/details/${banner.id}#`} className="theme-btn btn-style-two"><span className="btn-title">Read More  </span ></Link></div>
                     </div> 
                 </div>
             </div >

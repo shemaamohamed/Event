@@ -1,8 +1,6 @@
 .airport-transfer-form-section {
-  height: calc(100vh - 58px);
   overflow: overlay;
   padding: 20px;
-  background-color: #f4f4fac5;
   display: flex;
 
   justify-content: center;
@@ -52,7 +50,7 @@
 
   h3 {
     font-size: 24px;
-    color: #ef233c;
+    color: #9B1321;
     margin-bottom: 15px;
   }
 
@@ -76,7 +74,7 @@
       font-size: 16px;
       font-weight: bold;
       color: #ffffff;
-      background-color: #ef233c;
+      background-color: #9B1321;
       border: none;
       border-radius: 5px;
       text-decoration: none;
@@ -189,7 +187,7 @@
         }
         .pay-btn {
           width: 180px;
-          background-color: #c83222;
+          background-color: #9B1321;
           color: white;
           padding: 10px 20px;
           font-size: 16px;

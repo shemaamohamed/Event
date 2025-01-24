@@ -85,7 +85,11 @@ const GalaDinner = ({ isOpen, setIsOpen }) => {
   return (
     <div className="dinner-container5">
     <form className="trip-form-container5" onSubmit={handleSubmit}>
-      <h2 className="form-title">Gala Dinner Details</h2>
+      <h2 className="form-title"
+      style={{
+        color:'#9B1321'
+      }}
+      >Gala Dinner Details</h2>
       <Select
         options={allConference}
         value={conferenceId}

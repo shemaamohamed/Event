@@ -299,8 +299,8 @@ const FlightInformation = ({ member, index }) => {
                           updatedTrips[index].flightFile = value;
                           setTrips(updatedTrips);
                         }}
-                        allowedExtensions={["pdf"]}
-                      />
+                        allowedExtensions={["pdf", "jpg", "jpeg", "png"]}
+                        />
                     </Grid>
                   </Grid>
                   <Divider

@@ -234,12 +234,14 @@ const AdminLayoutBasic = () => {
       ] }
     ],
     attendance:[
-      { title: "Visa55", icon: "🛂", segment: "visa" },
+      { title: "Visa", icon: "🛂", segment: "visa" },
       { title: "Flight", icon: "✈️", segment: "flight/form" },
       { title: "Airport Transfer", icon: "🚐", segment: "airport/transfer" },
       { title: "Reservation", icon: "🏨", segment: "reservation/form" },
       { title: "All Trips", icon: "🗺️", segment: "view-user-trips" },
       { title: "My Trips", icon: "🗺️", segment: "user/trip/participants" },
+      ...(cert ? [{ title: "Certification", icon: "🎓", segment: "certification" }] : []),
+
     ]
   };
 

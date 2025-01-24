@@ -81,7 +81,7 @@ const ReservationsComponent = () => {
     room_count: reservation.room_count,
     companions_count: reservation.companions_count,
     update_deadline: reservation.update_deadline,
-    created_at: reservation.created_at,
+    created_at: new Date(reservation.created_at).toLocaleString(),
     rooms: reservation.rooms,
     actions: reservation.actions,
   }));

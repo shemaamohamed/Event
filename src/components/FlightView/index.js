@@ -137,7 +137,7 @@ const FlightsWithInvoices = () => {
       flexDirection:'column',
       marginTop: 4,
     }}>
-    <Typography variant="h4" component="h2" sx={{ marginBottom: 2, fontWeight: 'bold',  color: '#c62828' }}>
+    <Typography variant="h4" component="h2" sx={{ marginBottom: 2, fontWeight: 'bold',  color: '#9B1321' }}>
       User Flights
     </Typography>
     <Grid container spacing={2}>
@@ -150,7 +150,7 @@ const FlightsWithInvoices = () => {
       ) : (
         <Typography
           variant="body1"
-          sx={{ color: '#f44336', textAlign: 'center', width: '100%' }}
+          sx={{ color: '#9B1321', textAlign: 'center', width: '100%' }}
           className="no-flights-message"
         >
           No flights available
@@ -158,7 +158,7 @@ const FlightsWithInvoices = () => {
       )}
     </Grid>
 
-    <Typography variant="h4" component="h2" sx={{ marginTop: 4, marginBottom: 2, fontWeight: 'bold',  color: '#c62828' }}>
+    <Typography variant="h4" component="h2" sx={{ marginTop: 4, marginBottom: 2, fontWeight: 'bold',  color: '#9B1321' }}>
       Companions
     </Typography>
     <Grid container spacing={2}
@@ -172,7 +172,7 @@ const FlightsWithInvoices = () => {
       ) : (
         <Typography
           variant="body1"
-          sx={{ color: '#f44336', textAlign: 'center', width: '100%' }}
+          sx={{ color: '#9B1321', textAlign: 'center', width: '100%' }}
           className="no-companions-message"
         >
           No companions available
