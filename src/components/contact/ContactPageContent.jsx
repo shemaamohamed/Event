@@ -16,8 +16,8 @@ const ContactPageContent = () => {
                                 <ul className="contact-info">
                                     <li>
                                         <span className="icon fa fa-map-marker-alt"></span>
-                                        <p><strong>Rawhi Al Katabi Commercial Complex,</strong></p>
-                                        <p> Al Wakalat St 7, Amman, Jordan</p>
+                                        <p><strong>Rawhi Al Qutabi Commercial Complex,</strong></p>
+                                        <p> Al Swaifieh Al Wakalat St,  7, Amman, Jordan</p>
                                     </li>
                                     <li>
                                         <span className="icon fa fa-phone-volume"></span>

@@ -22,6 +22,7 @@ const Speakers4 = ({ conferenceId }) => {
       {speakers.map((speaker) => (
         <div className="speaker" key={speaker.id}>
           <div className="speaker-image">
+
             {speaker.image ? (
               <img
                 src={`${backendUrlImages}/${speaker.image}`}
@@ -33,7 +34,8 @@ const Speakers4 = ({ conferenceId }) => {
             )}
           </div>
           <div className="speaker-details">
-            <h3 className="speaker-name">{speaker.name}</h3>
+
+            <h3 className="speaker-name">{speaker.title} {speaker.name}</h3>
             <p className="speaker-bio">{speaker.biography}</p>
           </div>
         </div>

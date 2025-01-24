@@ -39,7 +39,7 @@ const FooterV1 = () => {
                                     <div className="footer-column col-xl-7 col-lg-6 col-md-6 col-sm-12">
                                         <div className="footer-widget about-widget">
                                             <div className="logo">
-                                                <Link to="/#"><img src="/images/logo.png" alt="image" /></Link>
+                                                <Link to="/#"><img src="/images/logo-2.png" alt="image" /></Link>
                                             </div>
                                             <div className="text">
                                                 <p>Empowering Success Through Exceptional Events – We are Your Trusted Partner in Conference and Exhibition Management.</p>
@@ -90,8 +90,7 @@ const FooterV1 = () => {
                                                     </li>
                                                     <li>
                                                         <span className="icon flaticon-worldwide"></span>
-                                                        <div className="text"> Rawhi Al Katabi Commercial Complex, Al Wakalat St 7, Amman,
-                                                        Jordan</div>
+                                                        <div className="text"> Rawhi Al Qutabi Commercial Complex, Al Swaifieh Al Wakalat St,  7, Amman, Jordan</div>
                                                     </li>
                                                 </ul>
                                             </div>

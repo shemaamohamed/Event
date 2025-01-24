@@ -73,7 +73,7 @@ const BannerV1 = () => {
                                                 <h2> 
                                                 Events Consultant </h2>
                                                
-                                                <div className="btn-box"><Link to={`/login#`} className="theme-btn btn-style-two"><span className="btn-title">Book Ticket</span ></Link></div>
+                                                <div className="btn-box"><Link to={`/registertype#`} className="theme-btn btn-style-two"><span className="btn-title">Book Ticket</span ></Link></div>
                                             </div> 
                                         </div>
                                     </div >

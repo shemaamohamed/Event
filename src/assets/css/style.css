@@ -1563,7 +1563,7 @@ background: rgb(155, 19, 33); /* لون البداية */
 }
 
 .mobile-menu .nav-logo img {
-	max-width: 200px;
+	width: 200px;
 }
 
 .mobile-menu-visible {

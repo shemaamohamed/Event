@@ -1,0 +1,74 @@
+// .inner-box {
+//     border: 1px solid #ddd; /* تحديد حافة للكارد */
+//     padding: 20px; /* مسافة داخلية */
+//     text-align: center;
+//     border-radius: 10px; /* حواف مدورة للكارد */
+//     background-color: #fff; /* خلفية بيضاء للكارد */
+//     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* إضافة ظل للكارد */
+//   }
+  
+//   .icon-box {
+//     margin-bottom: 20px; /* مسافة بين الأيقونة و باقي المحتوى */
+//   }
+  
+//   .icon-outer {
+//     width: 80px; /* تحديد العرض */
+//     height: 80px; /* تحديد الارتفاع */
+//     margin: 0 auto; /* محاذاة الصورة في المنتصف */
+//     border-radius: 50%; /* جعل الصورة دائرية */
+//     overflow: hidden; /* قص الصورة إذا كانت أكبر من المساحة */
+//   }
+  
+   .conference-logo {
+    width: 100%; /* جعل الصورة تأخذ العرض كامل */
+   height: 100%; /* جعل الصورة تأخذ الارتفاع كامل */
+   border-radius: 50%;
+    object-fit: cover; /* تأكد من ملء الصورة للمساحة بشكل صحيح */
+   }
+  
+//   .price-box {
+//     margin-bottom: 20px; /* مسافة بين المربع السعري وبقية المحتوى */
+//   }
+  
+//   .title {
+//     font-size: 18px;
+//     font-weight: bold;
+//     color: #333;
+//   }
+  
+//   .price {
+//     font-size: 20px;
+//     font-weight: bold;
+//     color: #007bff;
+//     margin: 10px 0;
+//   }
+  
+//   .features {
+//     list-style: none;
+//     padding: 0;
+//     margin-bottom: 20px;
+//   }
+  
+//   .features li {
+//     font-size: 14px;
+//     color: #666;
+//     margin-bottom: 10px;
+//   }
+  
+//   .btn-box {
+//     text-align: center;
+//   }
+  
+//   .theme-btn {
+//     padding: 10px 20px;
+//     background-color: #007bff;
+//     color: white;
+//     border-radius: 5px;
+//     text-decoration: none;
+//     font-size: 16px;
+//   }
+  
+//   .theme-btn:hover {
+//     background-color: #0056b3;
+//   }
+  

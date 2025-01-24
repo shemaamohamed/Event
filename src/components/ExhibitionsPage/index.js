@@ -6,6 +6,8 @@ import httpService from "../../common/httpService";
 import { backendUrlImages } from "../../constant/config";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
+import { Grid, Box, Typography, Button } from "@mui/material";
+
 
 const ExhibitionsPage = () => {
   // States
@@ -63,64 +65,134 @@ const ExhibitionsPage = () => {
     marginTop:'15vh'
     }}>
       <div className="">
-        <header className="exhibitions-header">
-          <div className="filter-section">
-            <Input
-              placeholder="Search"
-              inputValue={filters.name}
-              setInputValue={(value) => handleFilterChange("name", value)}
-              label="Exhibition Name"
-            />
-            <Select
-              options={[
-                { value: "upcoming", label: "Upcoming" },
-                { value: "past", label: "Past" },
-              ]}
-              value={filters.status}
-              setValue={(value) => handleFilterChange("status", value?.value)}
-              label="Status"
-            />
-          </div>
-        </header>
+      <Box className="exhibitions-header" sx={{ mb: 3 }}>
+  <Grid container spacing={2} alignItems="center" justifyContent="space-between">
+    {/* Search Input */}
+    <Grid item xs={12} sm={6} md={4}>
+      <Input
+        placeholder="Search"
+        inputValue={filters.name}
+        setInputValue={(value) => handleFilterChange("name", value)}
+        label="Exhibition Name"
+        fullWidth
+      />
+    </Grid>
+
+    {/* Status Select */}
+    <Grid item xs={12} sm={6} md={4}>
+      <Select
+        options={[
+          { value: "upcoming", label: "Upcoming" },
+          { value: "past", label: "Past" },
+        ]}
+        value={filters.status}
+        setValue={(value) => handleFilterChange("status", value?.value)}
+        label="Status"
+        fullWidth
+      />
+    </Grid>
+  </Grid>
+</Box>
+
         {error ? (
           <p className="error-message">{error}</p>
         ) : exhibitions.length ? (
-          <div className="exhibition-cards-container">
-            {exhibitions.map(
-              ({ id, title, location, description, image, conference_id }) => (
-                <div key={id} className="exhibition-card">
-                  <div className="exhibition-card-image">
-                    {image ? (
-                      <img src={`${backendUrlImages}${image}`} alt={title} />
-                    ) : (
-                      <div className="exhibition-placeholder">No Image</div>
-                    )}
-                  </div>
-                  <div className="exhibition-card-details">
-                    <h3 className="exhibition-card-title">{title}</h3>
-                    <p className="exhibition-card-description">{description}</p>
-                    <p className="exhibition-card-location">{location}</p>
-                  </div>
-                  <div className="two-btn">
-                    <button className="btn"
-                      onClick={() => {
-                        navigate(`/one/exhibits/${id}`);
-                      }}
-                    >
-                      View Gallery
-                    </button>
-                    <button className="btn"
-                      onClick={() => {
-                        navigate(`/register/sponsor/${conference_id}`);
-                      }}
-                    >
-                      Join as Sponsor
-                    </button>
-                  </div>
-                </div>
-              )
+          <Grid container spacing={3} className="exhibition-cards-container">
+  {exhibitions.map(
+    ({ id, title, location, description, image, conference_id }) => (
+      <Grid item xs={12} sm={6} md={4} lg={3} key={id}>
+        <Box
+          className="exhibition-card"
+          p={2}
+          borderRadius={2}
+          boxShadow={3}
+          bgcolor="background.paper"
+        >
+          {/* Image Section */}
+          <Box className="exhibition-card-image" mb={2}>
+            {image ? (
+              <img
+                src={`${backendUrlImages}${image}`}
+                alt={title}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: "8px",
+                }}
+              />
+            ) : (
+              <Box
+                className="exhibition-placeholder"
+                height={150}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                bgcolor="grey.200"
+                borderRadius="8px"
+              >
+                No Image
+              </Box>
             )}
-          </div>
+          </Box>
+          {/* Details Section */}
+          <Box className="exhibition-card-details" mb={2}>
+            <Typography
+              variant="h6"
+              className="exhibition-card-title"
+              gutterBottom
+            >
+              {title}
+            </Typography>
+            <Typography
+              variant="body2"
+              className="exhibition-card-description"
+              color="textSecondary"
+            >
+              {description}
+            </Typography>
+            <Typography
+              variant="body2"
+              className="exhibition-card-location"
+              color="textSecondary"
+            >
+              {location}
+            </Typography>
+          </Box>
+          {/* Buttons Section */}
+          <Box className="two-btn" display="flex"  flexDirection={'column'}>
+            <Button
+              variant="contained"
+              fullWidth
+              sx={{
+                backgroundColor:'#9B1321',
+              }}
+              onClick={() => {
+                navigate(`/one/exhibits/${id}`);
+              }}
+            >
+              View Gallery
+            </Button>
+            <Button
+                          variant="contained"
+
+              fullWidth
+              sx={{
+                marginTop:'1rem',
+                backgroundColor:'#9B1321',
+              }}
+              onClick={() => {
+                navigate(`/register/sponsor/${conference_id}`);
+              }}
+            >
+              Join as Sponsor
+            </Button>
+          </Box>
+        </Box>
+      </Grid>
+    )
+  )}
+</Grid>
+
         ) : (
           <p className="no-data">No exhibitions available.</p>
         )}

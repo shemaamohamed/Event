@@ -32,6 +32,8 @@ const RegisterPage = () => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
@@ -58,6 +60,8 @@ const RegisterPage = () => {
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("name", name);
+    formData.append("title", title);
+
     formData.append("email", email);
     formData.append("password", password);
     formData.append("image", image);
@@ -104,6 +108,9 @@ const RegisterPage = () => {
     // Name validation
     if (!name) {
       errorName = "Please enter your name.";
+    }
+    if (!title) {
+      errorName = "Please enter your title.";
     }
 
     // Email validation
@@ -186,6 +193,7 @@ const RegisterPage = () => {
       specialization &&
       selectedNationality &&
       country &&
+      
       !errorImage &&
       !errorResume
     ) {
@@ -302,6 +310,18 @@ const RegisterPage = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   helperText={error.name}
+                  fullWidth
+                  placeholder="e.g. John Doe"
+                  type="text"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <TextField
+                  label="title"
+                  // error={error.name ? true : false}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  // helperText={error.name}
                   fullWidth
                   placeholder="e.g. John Doe"
                   type="text"

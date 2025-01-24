@@ -81,10 +81,14 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                         <div className="logo-box">
                             {whiteLogo ?
                                 <>
-                                    <div className="logo"><Link to="/#"><img src="/images/logo.png" alt="image" /></Link></div>
+                                    <div className="logo"><Link to="/#"><img src="/images/logo.png" alt="image" style={{
+                                        width:'150px'
+                                    }} /></Link></div>
                                 </>
                                 : <>
-                                    <div className="logo"><Link to="/#"><img src="/images/logo.png" alt="image" /></Link></div>
+                                    <div className="logo"><Link to="/#"><img src="/images/logo.png" alt="image" style={{
+                                        width:'150px'
+                                    }}  /></Link></div>
                                 </>}
                         </div>
                         <div className="nav-outer clearfix">
@@ -107,7 +111,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                                   <div className="btn-box" onClick={() => {
                       logout();
                       navigate("/login");
-                      handleCloseMenu
+                      handleCloseMenu()
                     }}>
                                 <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">Logout</span></Link>
 
@@ -151,7 +155,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                                   <div className="btn-box" onClick={() => {
                       logout();
                       navigate("/login");
-                      handleCloseMenu
+                      handleCloseMenu()
 
                     }}>
                                 <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">Login</span></Link>

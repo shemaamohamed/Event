@@ -219,7 +219,7 @@ const ConferencesPage = () => {
                 >
                   {conference.title}
                 </Typography>
-                <Typography
+                {/* <Typography
                   variant="body2"
                   color="text.secondary"
                   sx={{ marginBottom: "4px" }}
@@ -228,7 +228,7 @@ const ConferencesPage = () => {
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   <strong>Place:</strong> {conference.place}
-                </Typography>
+                </Typography> */}
               </CardContent>
               <CardActions
                 sx={{
