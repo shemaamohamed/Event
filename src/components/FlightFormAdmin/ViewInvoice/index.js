@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Assuming you're using React Router
+import { useNavigate } from "react-router-dom";
 import "./style.scss";
 import CustomFormWrapper from "../../../CoreComponent/CustomFormWrapper";
 import SimpleLabelValue from "../../SimpleLabelValue";
@@ -9,6 +9,7 @@ import { backendUrlImages } from "../../../constant/config";
 
 const ViewInvoice = ({ data }) => {
   const [invoiceFlights, setInvoiceFlights] = useState([]);
+  const [acceptedFlights, setAcceptedFlights] = useState([]);
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const getAuthToken = () => localStorage.getItem("token");
   const navigate = useNavigate();
@@ -24,7 +25,11 @@ const ViewInvoice = ({ data }) => {
         showLoader: true,
       });
 
+      // Logging the accepted flight file URLs to debug
+      console.log(response?.accepted_flights);
+
       setInvoiceFlights(response?.invoice_flights || []); // Set invoice_flights array
+      setAcceptedFlights(response?.accepted_flights || []); // Set accepted_flights array
     } catch (error) {
       console.error("Error fetching invoice", error);
     }
@@ -38,6 +43,7 @@ const ViewInvoice = ({ data }) => {
 
   return (
     <CustomFormWrapper title="Invoice" noActions={false}>
+      <h3>Invoice Flights</h3>
       {invoiceFlights.length > 0 ? (
         invoiceFlights.map((invoice) => (
           <div key={invoice.id} className="all-Invoice">
@@ -50,7 +56,7 @@ const ViewInvoice = ({ data }) => {
               label="Total Price(USD)"
               value={invoice.total_price || "-"}
             />
-            <SimpleLabelValue label="Status" value={invoice.total_price > 0 ?invoice.status : "approved" } />
+            <SimpleLabelValue label="Status" value={invoice.total_price > 0 ? invoice.status : "approved"} />
             <SimpleLabelValue
               label="Created At"
               value={moment(invoice.created_at).format("DD-MM-YYYY") || "-"}
@@ -74,7 +80,46 @@ const ViewInvoice = ({ data }) => {
           </div>
         ))
       ) : (
-        <div className="no-data"> No Data Available</div>
+        <div className="no-data">No Data Available for Invoices</div>
+      )}
+
+      <h3>Accepted Flights</h3>
+      {acceptedFlights.length > 0 ? (
+        acceptedFlights.map((acceptedFlight) => (
+          <div key={acceptedFlight.accepted_flight_id} className="all-accepted-flight">
+            {/* <SimpleLabelValue
+              label="Accepted Flight ID"
+              value={acceptedFlight.accepted_flight_id || "-"}
+            /> */}
+            <SimpleLabelValue
+              label="Flight ID"
+              value={acceptedFlight.flight_id || "-"}
+            />
+            <SimpleLabelValue
+              label="Price (USD)"
+              value={acceptedFlight.price || "-"}
+            />
+       
+            <SimpleLabelValue
+              label="Flight File"
+              value={
+                acceptedFlight.flightFile ? (
+                  <a
+                    href={`${backendUrlImages}${acceptedFlight.flightFile}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Flight File
+                  </a>
+                ) : (
+                  "-"
+                )
+              }
+            />
+          </div>
+        ))
+      ) : (
+        <div className="no-data">No Data Available for Accepted Flights</div>
       )}
     </CustomFormWrapper>
   );

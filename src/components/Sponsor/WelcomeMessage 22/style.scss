@@ -1,0 +1,64 @@
+.welcome-container3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.welcome-card {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+}
+
+.welcome-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #c83222; /* Your desired red color */
+  margin-bottom: 20px;
+}
+
+.welcome-text {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.instructions {
+  margin-bottom: 30px;
+}
+
+.instructions-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.instructions-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1.1rem;
+  text-align: left;
+  color: #555;
+
+  li {
+    margin-bottom: 10px;
+    &:before {
+      content: "✔️";
+      margin-right: 10px;
+      color: #c83222;
+    }
+  }
+}
+
+.conclusion-text {
+  font-size: 1.1rem;
+  color: #333;
+  font-style: italic;
+}
+

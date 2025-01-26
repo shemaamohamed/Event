@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { NavHashLink as Link } from 'react-router-hash-link'
-import SearchPopup from '../others/SearchPopup';
 import HeaderTopV1 from './HeaderTopV1';
 import HeaderTopV2 from './HeaderTopV2';
 import MainMenu from './MainMenu';
 import { useAuth } from '../../common/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import NotificationDropdown from "../Notification";
+import { Button } from '@mui/material';
+import { HomeIcon, LayoutDashboardIcon } from 'lucide-react';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+
 
 
 const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, parentMenu }) => {
      const { logout, isLoggedIn } = useAuth();
        const navigate = useNavigate();
-     
+       const { isAdmin, registrationType} = useAuth();
+         const isAttendance = registrationType === "attendance";
+         const isSpeaker = registrationType === "speaker";
+    const handleHome = (e) => {
+        e.preventDefault();
+        navigate('/');
+    }
+
 
     // Sticky Menu 
     const [isSticky, setIsSticky] = useState(false);
@@ -82,12 +92,12 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                             {whiteLogo ?
                                 <>
                                     <div className="logo"><Link to="/#"><img src="/images/logo.png" alt="image" style={{
-                                        width:'150px'
+                                        width:'130px'
                                     }} /></Link></div>
                                 </>
                                 : <>
                                     <div className="logo"><Link to="/#"><img src="/images/logo.png" alt="image" style={{
-                                        width:'150px'
+                                        width:'130px'
                                     }}  /></Link></div>
                                 </>}
                         </div>
@@ -98,15 +108,44 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                                     <MainMenu parentMenu={parentMenu} />
                                 </div>
                             </nav>
-                            <div className="outer-box d-none d-lg-block">
-                                {/* <div className="search-box-outer">
-                                    <div className="search-box-btn"><span className={`flaticon-search`} onClick={searchOpen}></span></div>
-                                </div> */}
+                            <div className="outer-box ">
+                               
 
 
                                 {isLoggedIn ? (
-                                  <>
-                                                    <NotificationDropdown />
+
+                                  <div
+                                    div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '1px'
+                                       
+                                    }}
+                                  >
+                                 
+                                  <NotificationDropdown />
+                                  {
+                                    (isAdmin || isAttendance || isSpeaker) && (
+                                        <Button
+      sx={{
+        backgroundColor: "#9B1321",
+        borderRadius: "50%",
+        color: "#fff",
+        color: "#fff",
+    width: "40px", // Adjust size
+    height: "40px",
+    minWidth: "unset", 
+    marginLeft:'20px'
+      }}
+    onClick={handleHome}
+  >
+    <LayoutDashboardIcon fontSize="medium" />
+  </Button>
+                                    )
+                                  }
+
+
 
                                   <div className="btn-box" onClick={() => {
                       logout();
@@ -116,7 +155,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                                 <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">Logout</span></Link>
 
                                 </div>
-                                  </>
+                                  </div>
                
               ) : (
                 <>
@@ -149,8 +188,19 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                             <div className="nav-logo"><Link to="/#"><img src="/images/logo.png" alt="image" /></Link></div>
                             <MainMenu toggleMultiMenu={toggleMultiMenu} toggleMenu={toggleMenu} parentMenu={parentMenu}       handleCloseMenu={handleCloseMenu}  />
                             {isLoggedIn ? (
-                                  <>
-                                                    <NotificationDropdown />
+                                  <div
+                                    style={{
+                                        marginTop:'3vh',
+                    justifyContent:'space-evenly',
+                    display:'flex',
+                    alignItems:'center',
+                    flexDirection:'row'
+                                    }}
+
+                                  >
+                                 
+
+
 
                                   <div className="btn-box" onClick={() => {
                       logout();
@@ -158,17 +208,40 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                       handleCloseMenu()
 
                     }}>
-                                <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">Login</span></Link>
+                                <Link  to="/login" className="theme-btn btn-style-one"><span className="btn-title">Logout</span></Link>
 
                                 </div>
-                                  </>
+                             
+                                {
+                                    (isAdmin || isAttendance || isSpeaker) && (
+                                        <Button
+      sx={{
+        backgroundColor: "#9B1321",
+        borderRadius: "50%",
+        color: "#fff",
+        color: "#fff",
+    width: "40px", // Adjust size
+    height: "40px",
+    minWidth: "unset", 
+      }}
+    onClick={handleHome}
+  >
+    <LayoutDashboardIcon fontSize="medium" />
+  </Button>
+                                    )
+                                  }
+                                <NotificationDropdown />
+
+                                  </div>
                
               ) : (
                 <>
                 <div className="btn-box" style={{
                     marginTop:'3vh',
                     justifyContent:'center',
-                    display:'flex'
+                    display:'flex',
+                    alignItems:'center',
+                    flexDirection:'row'
                 }}>
                 <Link 
                 onClick={handleCloseMenu}
@@ -177,7 +250,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                 }}to="/registertype" className="theme-btn btn-style-one"><span className="btn-title">Register</span></Link>
                 <Link to="/login" 
                 onClick={handleCloseMenu}
-                className="theme-btn btn-style-one"><span className="btn-title">login</span></Link>
+                className="theme-btn btn-style-one"><span className="btn-title">Login</span></Link>
 
 
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link'
+import { useAuth } from '../../common/AuthContext';
 
 const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu ,handleCloseMenu}) => {
     const navigate =useNavigate();
@@ -9,11 +10,13 @@ const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu ,handleCloseMenu}) =
         handleCloseMenu();
         navigate('/'); // يقوم بالتنقل إلى الصفحة الرئيسية
       };
+       const {  isLoggedIn } = useAuth();
+      
     return (
         <>
             <ul className="navigation clearfix">
                 <li className={`dropdown ${parentMenu === 'home' ? 'current' : ''} `}>
-                    <Link   to="/" onClick={handleHomeClick}>Home</Link>
+                    <Link   to="/home" onClick={handleHomeClick}>Home</Link>
                     <ul className='sub-menu'>
                         {/* <li><Link to="/#">Home </Link></li> */}
                         <li><Link onClick={handleCloseMenu} to="/conferences">Conferences </Link></li>
@@ -25,7 +28,12 @@ const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu ,handleCloseMenu}) =
                         <li><Link onClick={handleCloseMenu} to="/our_clients" >Our Clients</Link></li>
                         <li><Link onClick={handleCloseMenu} to="/gallery" >Gallery</Link></li>
                         <li><Link onClick={handleCloseMenu} to="/job/list" >Careers</Link></li>
-                        <li><Link onClick={handleCloseMenu} to="/faq" >FAQs</Link></li>
+                        {
+                            isLoggedIn && (
+                                <li><Link onClick={handleCloseMenu} to="/faq" >FAQs</Link></li>
+
+                            )
+                        }
 
 
 

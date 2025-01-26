@@ -10,6 +10,8 @@ import { useDemoRouter } from "@toolpad/core/internal";
 import { useState, useEffect } from "react";  // إضافة useState و useEffect
 
 import axios from "axios";
+import { HomeIcon } from "lucide-react";
+import { Button } from "@mui/material";
 
 const demoTheme = createTheme({
   palette: {
@@ -73,10 +75,27 @@ function ToolbarActions() {
     logout();
     navigate("/login");
   };
+  const handleHome = () => {
+    navigate("/home");
+  }
 
   return (
     <ButtonWrapper>
       <NotificationDropdown />
+      <Button
+      sx={{
+        backgroundColor: "#9B1321",
+        borderRadius: "50%",
+        color: "#fff",
+        color: "#fff",
+    width: "40px", // Adjust size
+    height: "40px",
+    minWidth: "unset", 
+      }}
+    onClick={handleHome}
+  >
+    <HomeIcon fontSize="medium" />
+  </Button>
       <AuthButton onClick={handleLogout}>Logout</AuthButton>
     </ButtonWrapper>
   );
@@ -191,6 +210,9 @@ const AdminLayoutBasic = () => {
       { title: "All Speakers", icon: "🎤", segment: "all-speakers" },
       { title: "All Attendances", icon: "📅", segment: "all-attendances" },
       { title: "All Sponsors", icon: "🤝", segment: "all-sponsors" },
+      { title: "Notifications", icon: "🤝", segment: "notification" },
+      { title: "Closing Date", icon: "🤝", segment: "close/date" },
+
       { title: "Group Registration Table", icon: "📊", segment: "admin/excel/table" },
       { title: "Add Clients", icon: "➕", segment: "add/client" },
       { title: "Airport Transfer Bookings", icon: "✈️", segment: "all-airports" },
@@ -274,7 +296,7 @@ const AdminLayoutBasic = () => {
       disableColorScheme={true}
       branding={{
         title: "",
-        homeUrl: "/",
+        homeUrl: "/home",
         logo: <img src="/image/logo.png" alt="Logo" height={40} />,
       }}
     >

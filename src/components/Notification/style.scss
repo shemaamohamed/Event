@@ -1,6 +1,7 @@
 .notification-container {
   position: relative;
   display: inline-block;
+  
 }
 
 .notification-icon {
@@ -41,23 +42,39 @@
   z-index: 1000;
   height: 400px;
   overflow: overlay;
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
+}
 
-  &::-webkit-scrollbar-track {
-    background: var(--scrollbar-track-color);
-  }
+.notification-dropdown::-webkit-scrollbar {
+  width: 3px;
+}
 
-  &::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb-color);
-    border-radius: 50px;
-  }
+.notification-dropdown::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+}
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover-color);
+.notification-dropdown::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: 50px;
+}
+
+.notification-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color);
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+  .notification-dropdown {
+    width: 250px; /* Adjust width for smaller screens */
   }
 }
+
+/* Media Query for very small screens (mobile devices) */
+@media (max-width: 480px) {
+  .notification-dropdown {
+    width: 200px; /* Further adjust width for mobile screens */
+  }
+}
+
 
 .notification-item {
   display: flex;

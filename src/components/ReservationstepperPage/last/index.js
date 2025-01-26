@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import httpService from "../../../common/httpService";
+import { useAuth } from "../../../common/AuthContext";
 
 const Lastt = () => {
   const [error, setError] = useState(null); // Error message state
@@ -8,11 +9,12 @@ const Lastt = () => {
   const fetchRoomPrices = async () => {
     const token = localStorage.getItem("token"); // Retrieve the token
     const BaseUrl = process.env.REACT_APP_BASE_URL;;
+  const { myConferenceId } = useAuth();
 
     try {
       const response = await httpService({
         method: "GET",
-        url: `${BaseUrl}/room-prices/1`, // Endpoint to get room prices by conference ID
+        url: `${BaseUrl}/room-prices/${myConferenceId}`, // Endpoint to get room prices by conference ID
         headers: {
           Authorization: `Bearer ${token}`, // Pass the token
         },

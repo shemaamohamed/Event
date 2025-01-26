@@ -1,0 +1,81 @@
+/* Container for centering the message box */
+.welcome-message-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+margin-top: 20px;    background: linear-gradient(135deg, #f7f7f7, #d6d9e0); /* Subtle gradient for the background */
+    padding: 0 20px;
+  }
+  
+  /* Message box styling */
+  .message-box {
+    text-align: center;
+    background: #c83222; /* Vibrant red background for attention */
+    color: #ffffff;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border: 2px solid #f8f9fa; /* Border to create contrast */
+    animation: fadeIn 1s ease-out; /* Animation for smooth appearance */
+  }
+  
+  /* Title with bold font and larger size */
+  .title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffe600; /* Bright color for the title */
+  }
+  
+  /* Main message style */
+  .message-main {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+  
+  /* Sub-message style with softer color */
+  .message-sub {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: #f0e7db; /* Light cream color for contrast */
+    margin-bottom: 25px;
+  }
+  
+  /* Closing message with a different font style */
+  .message-closing {
+    font-size: 18px;
+    font-weight: 500;
+    color: #f7f7f7;
+    font-style: italic;
+    margin-bottom: 40px;
+  }
+  
+  /* Footer with encouraging statement */
+  .footer {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #333; /* Dark footer for emphasis */
+    padding: 15px 0;
+    border-radius: 8px;
+    margin-top: 40px;
+  }
+  
+  /* Animation for smooth fade-in effect */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

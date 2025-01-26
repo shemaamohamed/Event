@@ -49,7 +49,7 @@ const LoginPage = () => {
         if (response?.data?.user?.registration_type === "speaker") {
           navigate("/speaker/profile");
         } else if (response?.data?.user?.registration_type === "sponsor") {
-          navigate("/sponsor/section");
+          navigate("/sponsor/stepper");
         }else if (response?.data?.user?.registration_type === "group_registration") {
           navigate("/add/excel");
         } 

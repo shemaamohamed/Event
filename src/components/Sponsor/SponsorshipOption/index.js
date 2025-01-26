@@ -59,14 +59,17 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
         `${BaseUrl}/floor/plan/${myConferenceId}`
       );
       // تعديل الرابط قبل تخزينه
-      const modifiedFloorPlanUrl = getModifiedUrl(response?.data.data[0].floor_plan);
-      const modifiedAgreementFileUrl = getModifiedUrl(response?.data.data[0].agreement_page);
+      const modifiedFloorPlanUrl = getModifiedUrl(
+        response?.data.data[0].floor_plan
+      );
+      const modifiedAgreementFileUrl = getModifiedUrl(
+        response?.data.data[0].agreement_page
+      );
 
       setFloorPlanUrl(modifiedFloorPlanUrl);
       setAgreementFile(modifiedAgreementFileUrl);
 
       console.log(modifiedFloorPlanUrl);
-
     } catch (error) {
       console.error(error);
     }
@@ -79,10 +82,10 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
   }, [myConferenceId]);
 
   const handleDownload = () => {
-    const blob = new Blob([agreementFile], { type: 'application/pdf' });
-    const link = document.createElement('a');
+    const blob = new Blob([agreementFile], { type: "application/pdf" });
+    const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = 'agreement-form.pdf'; // تحديد اسم الملف عند التحميل
+    link.download = "agreement-form.pdf"; // تحديد اسم الملف عند التحميل
     link.click();
   };
 
@@ -127,7 +130,7 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
               </button>
             </a>
           )}
-          {agreementFile && (
+          {/* {agreementFile && (
             <a
               href={agreementFile}
               target="_blank"
@@ -139,7 +142,7 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
                 View and Sign Form
               </button>
             </a>
-          )}
+          )} */}
         </div>
       </div>
       {floorPlanUrl && (
@@ -159,7 +162,6 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
     </div>
   );
 };
-
 
 const BoothCostTable = ({
   selectedBoothIds,
@@ -271,7 +273,7 @@ const BoothCostTable = ({
             <tbody>
               {boothData.map((booth) => (
                 <tr key={booth.id} className="table-row">
-                                  <td className="table-cell">{booth.size}</td>
+                  <td className="table-cell">{booth.size}</td>
 
                   <td className="table-cell">{booth.cost}</td>
                   <td className="table-cell">{booth.lunch_invitations}</td>
@@ -321,67 +323,34 @@ const BoothCostTable = ({
   );
 };
 
-const SponsorSection = () => {
-  const [options, setOptions] = useState([]);
-  const [selectedOptionIds, setSelectedOptionIds] = useState([]);
-  const [isAgreementSigned, setIsAgreementSigned] = useState(false);
+const SponsorSection = ({
+  options,
+  setOptions,
+  selectedOptionIds,
+  setSelectedOptionIds,
+  selectedSponsorshipIds,
+  setSelectedSponsorshipIds,
+  chosenBooths,
+  setChosenBooths,
+  exhibitNumber,
+  setExhibitNumber,
+  shellSchemeSelected,
+  setShellSchemeSelected,
+  invoiceData,
+  setInvoiceData,
+  shellSchemePrice,
+  setShellSchemePrice,
+  squareMeters,
+  setSquareMeters,
+  handlePrevious,
+  handleNext,
+}) => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [selectedSponsorshipIds, setSelectedSponsorshipIds] = useState([]);
-  const [chosenBooths, setChosenBooths] = useState([]);
-  const [exhibitNumber, setExhibitNumber] = useState("");
-  const [shellSchemeSelected, setShellSchemeSelected] = useState(false);
-  const [invoiceData, setInvoiceData] = useState(null);
-  const [shellSchemePrice, setShellSchemePrice] = useState(0);
-  const [squareMeters, setSquareMeters] = useState(0);
-  const [viewSubmit, setViewSubmit] = useState(false);
-  const [firstAdvertisement, setFirstAdvertisement] = useState(null);
-  const [secondAdvertisement, setSecondAdvertisement] = useState(null);
-  const [logo, setLogo] = useState(null);
-  const [contractSignature, setContractSignature] = useState(null);
+
   const handleShellSchemeChange = (event) => {
     setShellSchemeSelected(event.target.checked);
   };
 
-
-  const isFormValid = firstAdvertisement && secondAdvertisement && logo && contractSignature;
-
-  const handleSignAgreement2 = async () => {
-    // تحويل الملفات إلى FormData
-    const formData = new FormData();
-    if (firstAdvertisement) formData.append('first_advertisement', firstAdvertisement);
-    if (secondAdvertisement) formData.append('second_advertisement', secondAdvertisement);
-    if (logo) formData.append('logo', logo);
-    if (contractSignature) formData.append('contract_signature', contractSignature);
-
-    try {
-      // الحصول على التوكن من localStorage
-      const token = localStorage.getItem('token');
-
-      // إرسال الـ POST request باستخدام Axios
-      const response = await axios.post(
-        `${BaseUrl}/sponsor/add/adv`,
-        formData,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          }
-        }
-      );
-
-      // إذا كانت العملية ناجحة، عرض توست
-      if (response.status === 200) {
-        toast.success('Agreement submitted successfully!');
-        setViewSubmit(true);
-        setIsPopupOpen(false);
-
-      }
-    } catch (error) {
-      // في حالة حدوث خطأ، عرض رسالة خطأ
-      console.error('Error submitting agreement:', error);
-      toast.error('There was an error while submitting the agreement. Please try again later.');
-    }
-  };
   const navigate = useNavigate();
   const handleSelectBooth = (boothId, isSelected) => {
     setChosenBooths((prevIds) => {
@@ -406,17 +375,6 @@ const SponsorSection = () => {
 
   const handleExhibitNumberChange = (number) => {
     setExhibitNumber(number);
-  };
-
-  const openAgreementPopup = () => {
-    setIsPopupOpen(true);
-  };
-
-  const handleSignAgreement = () => {
-    setIsAgreementSigned(true);
-    setIsPopupOpen(false);
-    toast.success("Agreement signed successfully!");
-    setViewSubmit(true);
   };
 
   const { myConferenceId } = useAuth();
@@ -484,7 +442,8 @@ const SponsorSection = () => {
       toast.success(
         "The options have been successfully registered as a sponsor for this event."
       );
-      navigate("/sponsor/invoice");
+      handleNext();
+      // navigate("/sponsor/invoice");
     } catch (error) {
       toast.error(
         error.response.data.message ||
@@ -517,7 +476,12 @@ const SponsorSection = () => {
     <div className="sponsor-section">
       {/* شرط عرض مكون الفاتورة أو الخيارات بناءً على وجود invoiceData */}
       {invoiceData ? (
-        <SponsorInvoice data={invoiceData} /> // إذا كانت invoiceData موجودة، يتم عرض هذا المكون
+        // <SponsorInvoice data={invoiceData} /> // إذا كانت invoiceData موجودة، يتم عرض هذا المكون
+
+<div class="message">
+        You have already submitted your data. Please click "Next" to view the invoice.
+    </div>
+
       ) : (
         <div>
           {options && options.length > 0 && (
@@ -557,96 +521,36 @@ const SponsorSection = () => {
           <StandardBoothPackage
             onExhibitNumberChange={handleExhibitNumberChange}
           />
-          <div className="button-container-list">
-            {!viewSubmit && (
-              <button
-                className="Sign-Agreement-button"
-                onClick={openAgreementPopup}
-              >
-                Sign Agreement
-              </button>
-            )}
-            {viewSubmit && (
-              <button onClick={handleSubmit} className="submit-button">
-                Submit
-              </button>
-            )}
+
+          <div className="fixed-buttons">
+            <button 
+            style={{
+              backgroundColor:'#9B1321'
+            }}
+            onClick={handleSubmit} className="next-button">
+              Submit
+            </button>
+            {/* <button className="prev-button" onClick={handlePrevious}>Prev</button> */}
+            <button
+            style={{
+              backgroundColor:'#9B1321'
+            }}
+             className="next-button" onClick={handleNext}>
+              Next
+            </button>
           </div>
-
-          {isAgreementSigned && (
-            <div className="agreement-status">
-              <p>Your agreement has been signed successfully!</p>
-            </div>
-          )}
-
-          {isPopupOpen && (
-            <div className="agreement-popup">
-              <div className="popup-content">
-                <h3>Agreement for Sponsorship</h3>
-                <p>
-                  By signing this agreement, you confirm your commitment to sponsor the event. Please upload the necessary documents below.
-                </p>
-
-                <div className="input-fields">
-                  <div className="file-upload">
-                    <label htmlFor="first_advertisement">First Advertisement (PDF)</label>
-                    <input
-                      id="first_advertisement"
-                      type="file"
-                      accept=".pdf"
-                      onChange={(e) => setFirstAdvertisement(e.target.files[0])}
-                    />
-                  </div>
-                  <div className="file-upload">
-                    <label htmlFor="second_advertisement">Second Advertisement (PDF)</label>
-                    <input
-                      id="second_advertisement"
-                      type="file"
-                      accept=".pdf"
-                      onChange={(e) => setSecondAdvertisement(e.target.files[0])}
-                    />
-                  </div>
-                  <div className="file-upload">
-                    <label htmlFor="logo">Logo (Image)</label>
-                    <input
-                      id="logo"
-                      type="file"
-                      accept=".jpg,.jpeg,.png"
-                      onChange={(e) => setLogo(e.target.files[0])}
-                    />
-                  </div>
-                  <div className="file-upload">
-                    <label htmlFor="contract_signature">Contract Signature (PDF)</label>
-                    <input
-                      id="contract_signature"
-                      type="file"
-                      accept=".pdf"
-                      onChange={(e) => setContractSignature(e.target.files[0])}
-                    />
-                  </div>
-                </div>
-
-                <div className="popup-buttons">
-                  <button
-                    onClick={handleSignAgreement2}
-                    className="btn-sign"
-                    disabled={!isFormValid} // تعطيل الزر إذا كان النموذج غير صالح
-                  >
-                    Sign Agreement
-                  </button>
-
-                  <button
-                    onClick={() => setIsPopupOpen(false)}
-                    className="btn-cancel"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       )}
+      <div className="fixed-buttons">
+          
+            <button 
+            style={{
+              backgroundColor:'#9B1321'
+            }}
+            className="next-button" onClick={handleNext}>
+              Next
+            </button>
+          </div>
     </div>
   );
 };

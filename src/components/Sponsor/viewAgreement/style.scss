@@ -1,0 +1,88 @@
+$primary-color: #4CAF50;
+$secondary-color: #FF5722;
+$background-color: #f9f9f9;
+$border-radius: 8px;
+$box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+.toto{
+display: flex;
+flex-direction: column;
+align-items: center;
+.agreement-description {
+  background-color: #fff;
+  border-radius: $border-radius;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: $box-shadow;
+  text-align: center;
+}
+
+.agreement-description p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.view-floor-plans-btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  text-decoration: none;
+  margin: 0px 40px;
+}
+
+.view-floor-plans-button {
+  background-color: $primary-color;
+  color: white;
+  padding: 0.8rem 2rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  display: inline-block;
+  text-align: center;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.view-floor-plans-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.fixed-buttons {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.prev-button, .next-button {
+  background-color: $secondary-color;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+  }
+}
+
+.next-button {
+  background-color: #4CAF50;
+
+  &:hover {
+    background-color: darken(#4CAF50, 10%);
+  }
+}
+}

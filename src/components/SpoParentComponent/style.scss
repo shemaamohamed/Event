@@ -1,0 +1,39 @@
+.parentComponent {
+  margin-top: 110px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin-top: 110px;
+  .customStepper2 {
+    width: fit-content;
+  }
+  .fixed-buttons {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    bottom: 20px;
+    right: 20px; /* Position the buttons on the right */
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: flex-end; /* Align buttons to the right */
+
+    .prev-button,
+    .next-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border-radius: 25px;
+      margin: 5px 0; /* Space between the buttons */
+      transition: background-color 0.3s;
+    }
+  
+    .prev-button:hover,
+    .next-button:hover {
+      background-color: #0056b3;
+    }
+  }
+}

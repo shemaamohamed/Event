@@ -334,6 +334,23 @@ const ConferencesPage = () => {
                   variant="contained"
                   size="medium"
                   onClick={() => {
+                    // handleDelete(conference.id)
+                    navigate(`/edit/workshop/${conference.id}`)
+                  }}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#ff7632",
+                    "&:hover": {
+                      backgroundColor: "#ff7632",
+                    },
+                  }}
+                >
+                      Edit WorkShop
+                </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  onClick={() => {
                     navigate(`/conference/welcome/message/form/${conference.id}`)
                   }}
                   sx={{

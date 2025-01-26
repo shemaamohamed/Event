@@ -192,6 +192,11 @@ import DinnerAdmin from './components/DinnerAdmin/index';
 import GroupTripParticipantsForUser from './components/TripParticipantsForUserGroup/index';
 import ConferenceWelcomeMessageForm from './components/welcomComponents/ConferenceWelcomeMessageForm/index';
 import EditWelcomeMessage from './components/editWelcomeMsg';
+import SpoParentComponent from './components/SpoParentComponent';
+import AgreementSigning from './components/Sponsor/Agreement Signing';
+import WorkShopEdit from './components/EditWorkShop';
+import Notifications from './components/Notifications';
+import ClosingDateForm from './components/ClosingDateForm';
 
 
 
@@ -266,12 +271,12 @@ const App = () => {
            { 
               
                 ((!isLoggedIn && !limit) || 
-                (( isSponsor|| isGroup ||isOther) && isLoggedIn && limit && !isAdmin) )&&(
+                (( isSponsor|| isGroup ||isOther ) && isLoggedIn && limit && !isAdmin) )&&(
                   <Routes >
                   <Route path='/' element={<UserLayout/>}>
                   {/* //home */}
                 <Route path='/pricing' element={<Pricing />}></Route>
-                <Route path='/faq' element={<Faq />}></Route>
+                
                 <Route path='/gallery' element={<Gallery />}></Route>
                 <Route path='/our_team' element={<Teams />}></Route>
                 <Route path='/our_clients' element={<ClientV1/>}></Route>
@@ -279,8 +284,72 @@ const App = () => {
                 <Route path="/page/exhibitions" element={<ExhibitionsPage />} />
                 <Route path='/about-us' element={<AboutUs />}></Route>
                                 <Route path='/contact_us' element={<Contact />}></Route>
+{
+  isSponsor &&(
+    <Route path='/sponsor/stepper' element={<SpoParentComponent />}></Route>
 
 
+  )
+}  
+{
+                isGroup&&(
+                  <Route path="add/excel" element={<ExcelUpload />} />
+
+
+                )
+              }  
+                {
+                      isLoggedIn&&(
+                        <Route path='/faq' element={<Faq />}></Route>
+
+
+                      )
+                    }
+              {
+                !isLoggedIn&&(
+                  <>
+                                    <Route path="/login" element={<LoginPage />} />
+
+                  <Route path="/forgetpassword" element={<ForgetPassword />} />
+
+
+
+<Route path="/other" element={<RegisterOther />} />
+<Route path="/registertype" element={<RegisterType />} />
+            {/* register */}
+            <Route
+  path="register/attendance/:conferenceId/:type"
+  element={<RegisterAttendancePage />}
+
+/>
+
+<Route
+                path="/register/group/:conferenceId"
+                element={<RegisterGroupPage />}
+              />
+              <Route path="/register/speaker/:id" element={<RegisterPage />} />
+              <Route
+                path="/registerPage/:type"
+                element={<SelectConferences />}
+              />
+              <Route path="/reset-password/:token" element={<ForgotPassword2 />} />
+
+               <Route
+                path="register/sponsor/:conferenceId"
+                element={<RegisterSponsorPage />}
+              />
+              
+              <Route path="/successverification" element={<SuccessVerification/>}/>
+              <Route path="/failedverification" element={<FailedVerification/>}/>
+                  </>
+                  
+
+
+                )
+              }                   
+
+
+                                <Route path='/sign/agreement' element={<AgreementSigning />}></Route>
 
                   {/* services */}
                 <Route path='/conf' element={<Conference />}></Route>
@@ -308,38 +377,13 @@ const App = () => {
 
                 <Route path='*' element={<ErrorPage />}></Route>
 
-                  <Route path="/" element={<Home1 />} />
-                  <Route path="/forgetpassword" element={<ForgetPassword />} />
-
-
-
-              <Route path="/other" element={<RegisterOther />} />
-            <Route path="/registertype" element={<RegisterType />} />
-                          {/* register */}
-                          <Route
-                path="register/attendance/:conferenceId/:type"
-                element={<RegisterAttendancePage />}
-              />
+                  <Route path="/home" element={<Home1 />} />
+                  
               <Route
                 path="/paper/form/:conferenceId"
                 element={<PaperSubmissionForm />}
               />
 
-              <Route
-                path="/register/group/:conferenceId"
-                element={<RegisterGroupPage />}
-              />
-              <Route path="/register/speaker/:id" element={<RegisterPage />} />
-              <Route
-                path="/registerPage/:type"
-                element={<SelectConferences />}
-              />
-              <Route path="/reset-password/:token" element={<ForgotPassword2 />} />
-
-               <Route
-                path="register/sponsor/:conferenceId"
-                element={<RegisterSponsorPage />}
-              />
               {/* before login */}
               {/* <Route path="/home" element={<Home />} /> */}
              
@@ -351,9 +395,7 @@ const App = () => {
               <Route path="/conf" element={<Conference3 />} />
               <Route path="/packages" element={<Packages />} />
               <Route path="/welcome" element={<Welcome />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/successverification" element={<SuccessVerification/>}/>
-              <Route path="/failedverification" element={<FailedVerification/>}/>
+            
 
               <Route path="/conferences" element={<AllConferencesPage />} />
               <Route
@@ -367,6 +409,8 @@ const App = () => {
 
               <Route path="/up/event" element={<UpcomingConferences2 />} />
               <Route path="one/exhibits/:exhibitId" element={<OneExhibit />} />
+              <Route path="/notification" element={<Notifications/>} />
+
 
               
               
@@ -375,12 +419,13 @@ const App = () => {
                 path="/all-attendances"
                 element={<AttendanceComponent />}
 
-              /> */}                         
+              /> */}  
+                                    
                 {/* //group */}
-                    <Route path="add/excel" element={<ExcelUpload />} />
 
                 {/* //sponsor */}
                     <Route path="/sponsor/section" element={<SponsorSection />} />
+                    
 
 
               
@@ -412,7 +457,7 @@ const App = () => {
 
                                     <Route path="/" element={<AdminLayoutBasic/>} >
                                    
-                                   
+
 
                                     
 
@@ -424,9 +469,14 @@ const App = () => {
   
   
   <Route path="/admin/workshop" element={<CreateWorkshop/>} />
+  <Route path="/edit/workshop/:conferenceId" element={<WorkShopEdit/>} />
 
-                                      <Route path="exhibitions" element={<Exhibitions />} />
+  <Route path="exhibitions" element={<Exhibitions />} />
                                       <Route path="/dinner/admin" element={<DinnerAdmin />} />
+                                      <Route path="/close/date" element={<ClosingDateForm />} />
+
+                                     
+                                     
                                       <Route path="adminForm/:userId" element={<AdminForm />} />
                                       <Route path="test" element={<SpeakerUpdateForm />} />
                                       <Route
@@ -665,7 +715,8 @@ const App = () => {
               />
 
               
-              
+<Route path="/notification" element={<Notifications/>} />
+
               
                <Route
                 path="/all-airports"
@@ -681,11 +732,121 @@ const App = () => {
                     <Route path="sponsor/floor/edit" element={<EditFloor />} />
                     <Route path="reset/password" element={<ForgotPassword2 />} />
 
+
                                         <Route path="*" element={<NotFound/>} />
 
 
 
-          </Route>
+
+                                        
+                                <Route path='/sign/agreement' element={<AgreementSigning />}></Route>
+                                </Route>
+
+
+
+            <Route path='/' element={<UserLayout/>}>
+                                {/* //home */}
+                              {/* <Route path='/pricing' element={<Pricing />}></Route> */}
+                              
+                              <Route path='/gallery' element={<Gallery />}></Route>
+                              <Route path='/our_team' element={<Teams />}></Route>
+                              <Route path='/our_clients' element={<ClientV1/>}></Route>
+                              <Route path="/job/list" element={<JobList />} />
+                              <Route path="/page/exhibitions" element={<ExhibitionsPage />} />
+                              <Route path='/about-us' element={<AboutUs />}></Route>
+                              <Route path='/contact_us' element={<Contact />}></Route>
+                                {/* services */}
+                                <Route path='/conf' element={<Conference />}></Route>
+                                <Route path="/expositions" element={<Expositions />} />
+                                <Route path="/workshops" element={<Workshops />} />
+                                <Route path="/seminars" element={<Seminars />} />
+                                <Route path="/corporate_meetings" element={<CorporateMeetings />}/>
+
+                                <Route path="/planning" element={<Planning />} />
+                                <Route path="/social_events" element={<SocialEvents />} />
+                                <Route path="/media_campaign" element={<MediaCampaign />} />
+                                <Route path="/logistic_secretarial" element={<LogisticSecretarial />}/>
+                                <Route path="/concept_creation" element={<ConceptCreation />} />
+                                <Route path="/management_consulting"element={<ManagementConsulting />}/>
+                                {/* Additional Services */}
+                                <Route path="/comprehensive-conference-management" element={<ComprehensiveConferenceManagement />} />
+                                <Route path="/conference-exhibition-solutions" element={<ConferenceExhibitionSolutions />} />
+                                <Route path="/marketing-video-production" element={<MarketingVideoProduction />} />
+                                <Route path="/comprehensive-marketing-services" element={<ComprehensiveMarketingServices />} />
+                                <Route path="/additional-conference-exhibition-services" element={<AdditionalConferenceExhibitionServices />} />
+                                <Route path="/sponsor/invoice" element={<SponsorInvoice />} />
+                                <Route path="*" element={<NotFound/>} />
+                                              <Route
+                                                                          path="/conference/speaker/:conferenceId"
+                                                                          element={<Speakers4 />}
+                                                                        />
+                                                                        
+                                                <Route path='*' element={<ErrorPage />}></Route>
+
+                                <Route path="/home" element={<Home1 />} />
+
+                                <Route
+                                path="/paper/form/:conferenceId"
+                                element={<PaperSubmissionForm />}
+                                />
+
+                                {/* before login */}
+                                {/* <Route path="/home" element={<Home />} /> */}
+
+                                <Route path="/tour_slider" element={<TourSlider />} />
+
+                                <Route path="/ser" element={<Conference />} />
+                                <Route path="/top_navbar" element={<TopNavbar />} />
+                                <Route path="/audiovisuals" element={<Audiovisuals />} />
+                                <Route path="/conf" element={<Conference3 />} />
+                                <Route path="/packages" element={<Packages />} />
+                                <Route path="/welcome" element={<Welcome />} />
+
+
+                                <Route path="/conferences" element={<AllConferencesPage />} />
+                                <Route
+                                                      path="conference/details/:conferenceId"
+                                                      element={<ConferenceDetails />}
+                                                    />
+                                <Route
+                                path="/conference/details/:conferenceId"
+                                element={<OnePage />}
+                                />
+                                                        <Route path='/faq' element={<Faq />}></Route>
+
+
+                                <Route path="/up/event" element={<UpcomingConferences2 />} />
+                                <Route path="one/exhibits/:exhibitId" element={<OneExhibit />} />
+                                <Route path="/notification" element={<Notifications/>} />
+
+
+
+
+                                                    {/* <Route path="/all-speakers" element={<SpeakersComponent />} />
+                                <Route
+                                path="/all-attendances"
+                                element={<AttendanceComponent />}
+
+                                /> */}  
+                                                  
+                                {/* //group */}
+
+                                {/* //sponsor */}
+                                  <Route path="/sponsor/section" element={<SponsorSection />} />
+                                  
+
+
+
+                                <Route path="*" element={<NotFound/>} />
+                                <Route
+                                                        path="/conference/speaker/:conferenceId"
+                                                        element={<Speakers4 />}
+                                                      />
+                                </Route>
+
+
+
+
           </Routes>
 
                                   )

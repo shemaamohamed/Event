@@ -181,7 +181,9 @@ const NotificationDropdown = () => {
   const reversedNotifications = unreadNotifications.slice().reverse();
 
   return (
-    <div className="notification-container" ref={dropdownRef}>
+    <div className="notification-container" style={{
+      marginTop:'1vh',
+    }} ref={dropdownRef}>
       <div className="notification-icon" onClick={toggleDropdown}>
         <SVG src={notification} fill="#000" />
         {unreadNotifications.length > 0 && (
@@ -304,6 +306,13 @@ const NotificationDropdown = () => {
               </div>
             </div>
           ))}
+           <div className="see-all-notifications">
+            <button onClick={()=>{
+              navigate("/notification")
+            }}>
+              {"See All Notifications"}
+            </button>
+          </div>
         </div>
       )}
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={true} closeOnClick />
