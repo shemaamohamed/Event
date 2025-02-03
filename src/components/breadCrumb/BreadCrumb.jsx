@@ -11,7 +11,7 @@ const BreadCrumb = ({ title, breadCrumb ,name }) => {
                 <div className="auto-container">
                     <h1>{title ? title : "Error Page"}</h1>
                     <ul className="bread-crumb clearfix">
-                        <li><Link to="/#">Home</Link></li>
+                        <li><Link to="/home">Home</Link></li>
                         <li>{breadCrumb ? breadCrumb : "Error Page"}</li>
                     </ul>
                 </div>

@@ -9,7 +9,9 @@ import FooterV1 from '../../components/footer/FooterV1';
 const AboutUs = () => {
     return (
         <>
-            <div className="page-wrapper">
+            <div className="page-wrapper" style={{
+                marginTop:'10vh'
+            }}>
                 <span className="header-span"></span>
                 <AboutV1 />
                  <FactV1 />

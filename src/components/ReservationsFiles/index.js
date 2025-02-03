@@ -9,6 +9,7 @@ import axios from "axios";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+
 const ReservationsFiles = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -17,73 +18,67 @@ const ReservationsFiles = () => {
   const [id, setId] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
+  
   const openMenu = (event, row) => {
     setAnchorEl(event.currentTarget);
     setSelectedRow(row);
   };
+
   const closeMenu = () => {
     setAnchorEl(null);
     setSelectedRow(null);
   };
 
- 
-
   const handleUploadClick = (user) => {
     setSelectedUser(user);
     setDialogOpen(true);
   };
+
   const BaseUrl = process.env.REACT_APP_BASE_URL;
+  
   const getData = () => {
-    // الحصول على التوكن من الـ localStorage أو من الـ context أو من أي مصدر آخر
-    const token = localStorage.getItem("token"); // إذا كنت تخزن التوكن في الـ localStorage
+    const token = localStorage.getItem("token");
 
     if (token) {
       axios
         .get(`${BaseUrl}/reservation/approved`, {
           headers: {
-            Authorization: `Bearer ${token}`, // تمرير التوكن مع الهيدر
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
-          // إذا تم الحصول على البيانات بنجاح
-          setData(response?.data?.invoices); // تحديث الحالة بالبيانات المستلمة من الـ API
+          setData(response?.data?.invoices || []);
         })
         .catch((error) => {
-          // التعامل مع الأخطاء
-          console.error("There was an error fetching the data: ", error);
+          console.error("Error fetching data:", error);
         });
     } else {
       console.error("Token is missing or expired.");
     }
   };
+
   const handleSubmit = (id) => {
-    // الحصول على التوكن من الـ localStorage أو من الـ context أو من أي مصدر آخر
-    const token = localStorage.getItem("token"); // إذا كنت تخزن التوكن في الـ localStorage
+    const token = localStorage.getItem("token");
 
     if (token) {
-      // إعداد FormData لتحميل الملف
       const formData = new FormData();
 
       if (file) {
         formData.append("confirmationPDF", file);
 
-        // إرسال طلب POST لتحميل الملف
         axios
           .post(`${BaseUrl}/add/confirmation/${id}`, formData, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then((response) => {
-            // التعامل مع الاستجابة الناجحة
-            console.log("File uploaded successfully:", response.data);
-            toast.success("File uploaded successfully:");
+          .then(() => {
+            toast.success("File uploaded successfully.");
             getData();
-            setDialogOpen(false); // إغلاق الـ dialog بعد النجاح
+            setDialogOpen(false);
           })
           .catch((error) => {
-            // التعامل مع الأخطاء
-            console.error("There was an error uploading the file: ", error);
+            console.error("Error uploading file:", error);
           });
       } else {
         console.error("No file selected.");
@@ -93,18 +88,24 @@ const ReservationsFiles = () => {
     }
   };
 
-  const rows = data?.map((row) => ({
-    ...row,
-    name: row?.room?.occupant_name,
-    
+  const rows = data?.map((invoice) => ({
+    id: invoice.id,
+    email: invoice.room.reservation.user.email,
+    name: invoice.room.occupant_name,
+    user_type: invoice.room.user_type,
+
+    status: invoice.status,
+    confirmationPDF: invoice.confirmationPDF,
   }));
+
   useEffect(() => {
     getData();
   }, []);
+
   const columns = [
     {
-      field: "id",
-      headerName: "ID",
+      field: "email",
+      headerName: "Email",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
@@ -115,6 +116,22 @@ const ReservationsFiles = () => {
       width: 200,
       flex: 1,
       minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "user_type",
+      headerName: "User Type",
+      width: 200,
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 150,
+      flex: 1,
+      minWidth: 150,
       cellClassName: "centered-cell",
     },
     {
@@ -140,55 +157,45 @@ const ReservationsFiles = () => {
                 setId(params.row.id);
               }}
             >
-        Upload Confirmation File
-
-
+              Upload Confirmation File
             </MenuItem>
           </Menu>
         </>
       ),
-
     },
   ];
 
   return (
     <div className="flights-files-container">
-      <h1 className="visa-files"
-      style={{
-        color:'#9B1321',
-      }}
-      >Reservations Files</h1>
-       <DataGrid
-                          rows={rows}
-                          columns={columns}
-                          getRowId={(row) => row.id}
-            
-                          getRowHeight={() => "auto"}
-            
-                          initialState={{
-                            pagination: {
-                              paginationModel: {
-                                pageSize: 5,
-                              },
-                            },
-                          }}
-                          pageSizeOptions={[5]}
-                          checkboxSelection
-                          disableRowSelectionOnClick
-                          autoHeight
-                          sx={{
-                            marginTop: "20px",
-                            "& .MuiDataGrid-virtualScroller": {
-                              overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
-                            },
-                          }}
-                        />
-      
+      <h1 className="visa-files" style={{ color: '#9B1321' }}>
+        Reservations Files
+      </h1>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        getRowId={(row) => row.id}
+        getRowHeight={() => "auto"}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 5 },
+          },
+        }}
+        pageSizeOptions={[5]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        autoHeight
+        sx={{
+          marginTop: "20px",
+          "& .MuiDataGrid-virtualScroller": {
+            overflow: "hidden",
+          },
+        }}
+      />
 
       {isDialogOpen && (
         <Dialog
           viewHeader={true}
-          header={`Upload Hotel Booking Confirmation File `}
+          header={`Upload Hotel Booking Confirmation File`}
           open={isDialogOpen}
           setOpen={setDialogOpen}
         >
@@ -209,10 +216,7 @@ const ReservationsFiles = () => {
               <button className="save-button" onClick={() => handleSubmit(id)}>
                 Save
               </button>
-              <button
-                className="cancel-button"
-                onClick={() => setDialogOpen(false)}
-              >
+              <button className="cancel-button" onClick={() => setDialogOpen(false)}>
                 Cancel
               </button>
             </div>

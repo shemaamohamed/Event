@@ -25,7 +25,7 @@ const Notifications = () => {
       const data = response?.data?.filter((item) => {
         return !item?.is_read;
       });
-      setNotifications(data);
+      setNotifications(data.reverse());
     } catch (error) {
       console.error("Error fetching notifications", error);
     }
@@ -80,12 +80,15 @@ const Notifications = () => {
     } else if (message.includes("your certificate has been successfully uploaded")) {
       navigate(`/certification`);
     } else if (message.includes("has requested additional trips")) {
-      navigate(`/enter/new/flights`);
+      navigate(`/flights/enter/new`);
     } else if (message.includes("has signed a contract")) {
       navigate(`/all-sponsors`);
     } else if (message.includes("has requested to become an admin")) {
       navigate(`/pending/users`);
+    }else if (message.includes("updated the Excel file")) {
+      navigate(`/admin/excel/table`);
     }
+
   };
 
   const unreadNotifications = notifications.filter(
@@ -93,7 +96,7 @@ const Notifications = () => {
   );
 
   return (
-    <div className="notification-container" style={{marginLeft:16 , marginTop:'8vh'}}>
+    <div className="notification-container" style={{ marginLeft: 16, marginTop: '15vh' }}>
       {selectedNotification ? (
         // If there is a selected notification, show its details
         <div className="notification-detail">

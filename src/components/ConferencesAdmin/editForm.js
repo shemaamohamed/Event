@@ -24,7 +24,7 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
   const addCommitteeMember = () => {
     setCommitteeMembers([
       ...committeeMembers,
-      { id: generateId(), name: "", image: null },
+      { id: generateId(), name: "", image: null, country: "" },
     ]);
   };
 
@@ -42,6 +42,12 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
   const handleImageChange = (id, file) => {
     const updatedMembers = committeeMembers.map((member) =>
       member.id === id ? { ...member, image: file } : member
+    );
+    setCommitteeMembers(updatedMembers);
+  };
+  const handleInputChange = (id, field, value) => {
+    const updatedMembers = committeeMembers.map((member) =>
+      member.id === id ? { ...member, [field]: value } : member
     );
     setCommitteeMembers(updatedMembers);
   };
@@ -73,6 +79,14 @@ const CommitteeForm = ({ committeeMembers, setCommitteeMembers }) => {
               setInputValue={(file) => handleImageChange(member.id, file)}
               allowedExtensions={["jpg", "jpeg", "png"]}
               required={false}
+            />
+            <Input
+              type="text"
+              label="Country"
+              placeholder="Country"
+              inputValue={member.country || ""} // هنا نمرر القيمة الحالية للبلد من المصفوفة
+              setInputValue={(value) => handleInputChange(member.id, 'country', value)} // تحديث الحقل country
+              className="name-input"
             />
           </div>
 
@@ -165,15 +179,19 @@ const EditConferencesAdmin = ({
   conferenceData,
 }) => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const [logo, setLogo] = useState(""); // For storing logo URL or name
+  const [secondLogo, setSecondLogo] = useState(""); // For a secondary logo
+  const [country, setCountry] = useState(""); // For country name
+  const [visaPrice, setVisaPrice] = useState(0); // For visa price
 
   const [committeeMembers, setCommitteeMembers] = useState([
     { id: Date.now(), name: "", image: null },
   ]);
   console.log(
-    setIsOpen ,
+    setIsOpen,
     getConference,
-  setConference,
-  conferenceData,
+    setConference,
+    conferenceData,
 
   )
   const [title, setTitle] = useState("");
@@ -188,8 +206,8 @@ const EditConferencesAdmin = ({
   const [brochure, setBrochure] = useState(null);
   const [scientificProgram, setScientificProgram] = useState(null);
   const [companionDinnerPrice, setCompanionDinnerPrice] = useState("");
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
 
   const [errors, setErrors] = useState({});
 
@@ -218,7 +236,11 @@ const EditConferencesAdmin = ({
     if (conferenceData) {
       console.log({ conferenceData });
       console.log(conferenceData.start_date);
-
+      setLogo(conferenceData?.logo)
+      setSecondLogo(conferenceData?.second_logo)
+      setVisaPrice(conferenceData?.visa_price)
+      setCountry(conferenceData?.country)
+      setCompanionDinnerPrice(conferenceData?.companion_dinner_price)
       // تحديث الحقول الرئيسية
       setTitle(conferenceData.title || "");
       setDescription(conferenceData.description || "");
@@ -245,6 +267,7 @@ const EditConferencesAdmin = ({
         id: member.id,
         name: member.name,
         image: member.committee_image,
+        country: member.country
       }));
       setCommitteeMembers(
         committee.length > 0
@@ -297,6 +320,8 @@ const EditConferencesAdmin = ({
     const token = localStorage.getItem("token");
     members.forEach((member, index) => {
       formData.append(`members[${index}][name]`, member.name);
+      formData.append(`members[${index}][country]`, member.country);
+
       if (member.image) {
         formData.append(`members[${index}][committee_image]`, member.image);
       }
@@ -317,7 +342,7 @@ const EditConferencesAdmin = ({
 
       setIsOpen(false);
       getConference();
-    } catch (error) {}
+    } catch (error) { }
   }
 
   const handleSubmit = (e) => {
@@ -337,6 +362,10 @@ const EditConferencesAdmin = ({
       }
 
       formData.append("title", title);
+      formData.append("country", country);
+      formData.append("visa_price", visaPrice);
+      formData.append("logo", logo);
+      formData.append("second_logo", secondLogo);
       formData.append("description", description);
       formData.append("start_date", startDate);
       formData.append("end_date", endDate);
@@ -379,33 +408,33 @@ const EditConferencesAdmin = ({
   };
   return (
     <Drawer
-    anchor="right"
-    sx={{
-      zIndex: (theme) => theme.zIndex.modal + 1,
-      "& .MuiDrawer-paper": {
-        width: { xs: "100%", sm: "100%", md: "50%" },
-        padding: "24px",
-        boxShadow: "0 4px 12px rgba(0,0,  0,0.1)",
-      },
-  
-    }}
-    open={setIsOpen}
-    onClose={() => setIsOpen(false)}
-  >
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "flex-end",
-        padding: 2,
+      anchor="right"
+      sx={{
+        zIndex: (theme) => theme.zIndex.modal + 1,
+        "& .MuiDrawer-paper": {
+          width: { xs: "100%", sm: "100%", md: "50%" },
+          padding: "24px",
+          boxShadow: "0 4px 12px rgba(0,0,  0,0.1)",
+        },
+
       }}
+      open={setIsOpen}
+      onClose={() => setIsOpen(false)}
     >
-      <IconButton onClick={() => setIsOpen(false)}>
-        <CloseRounded />
-      </IconButton>
-    </div>
-    <Typography
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: 2,
+        }}
+      >
+        <IconButton onClick={() => setIsOpen(false)}>
+          <CloseRounded />
+        </IconButton>
+      </div>
+      <Typography
         variant="h6"
-        
+
         sx={{
           color: "#c62828",
           textAlign: "center",
@@ -414,171 +443,201 @@ const EditConferencesAdmin = ({
           borderRadius: 1,
           marginBottom: 2,
         }}
-      
+
         gutterBottom
       >
         Edit Conference
       </Typography>
-  
-    <Box sx={{ padding: 2 ,
-      overflowY:'auto'
-    }}>
-      
-      <Input
-        label="Title"
-        placeholder="Enter title"
-        inputValue={title}
-        setInputValue={setTitle}
-        type="text"
-        required
-        errorMsg={errors.title}
-      />
-      <TextArea
-        label="Description"
-        placeholder="Enter description"
-        value={description}
-        setValue={setDescription}
-        required
-        errorMsg={errors.description}
-      />
-      <DateInput
-        label="Start Date"
-        placeholder="YYYY-MM-DD"
-        inputValue={startDate}
-        setInputValue={setStartDate}
-        required
-        errorMsg={errors.startDate}
-      />
-      <DateInput
-        label="End Date"
-        placeholder="YYYY-MM-DD"
-        inputValue={endDate}
-        setInputValue={setEndDate}
-        required
-        errorMsg={errors.endDate}
-      />
-      <Input
-        label="Location"
-        placeholder="Enter location"
-        inputValue={location}
-        setInputValue={setLocation}
-        required
-        errorMsg={errors.location}
-      />
-      <Input
-        label="Companion Dinner Cost (USD)"
-        placeholder="Enter companion Dinner Price Cost"
-        inputValue={companionDinnerPrice}
-        setInputValue={setCompanionDinnerPrice}
-        type="number"
-        required
-      />
-  
-      <ImageUpload
-        label="Upload Image"
-        inputValue={image}
-        setInputValue={setImage}
-        existingFile={conferenceData.image}
-        allowedExtensions={["jpg", "jpeg", "png"]}
-        errorMsg={errors.image}
-      />
-  
-      <ImageUpload
-        label="First Announcement PDF"
-        inputValue={firstAnnouncement}
-        setInputValue={setFirstAnnouncement}
-        existingFile={conferenceData.first_announcement_pdf}
-        allowedExtensions={["pdf"]}
-        errorMsg={errors.firstAnnouncement}
-      />
-  
-      <ImageUpload
-        label="Second Announcement PDF"
-        inputValue={secondAnnouncement}
-        setInputValue={setSecondAnnouncement}
-        existingFile={conferenceData.second_announcement_pdf}
-        allowedExtensions={["pdf"]}
-        errorMsg={errors.secondAnnouncement}
-      />
-  
-      <ImageUpload
-        label="Conference Brochure PDF"
-        inputValue={brochure}
-        setInputValue={setBrochure}
-        allowedExtensions={["pdf"]}
-        existingFile={conferenceData.conference_brochure_pdf}
-        errorMsg={errors.brochure}
-      />
-  
-      <ImageUpload
-        label="Conference Scientific Program PDF"
-        inputValue={scientificProgram}
-        setInputValue={setScientificProgram}
-        allowedExtensions={["pdf"]}
-        existingFile={conferenceData.conference_scientific_program_pdf}
-        errorMsg={errors.scientificProgram}
-      />
-  
-      <div className="topics-container">
-        <div className="topic-title">
-          Topics
-          <span className="star">*</span>
-        </div>
-        <div className="topics-container-inputs">
-          {topics.map((topic, index) => (
-            <div key={index} className="topic-input-container">
-              <Input
-                placeholder="Enter a topic"
-                inputValue={topic}
-                setInputValue={(newValue) =>
-                  handleTopicChange(index, newValue)
-                }
-              />
-              <SVG
-                className="delete-icon"
-                src={deleteIcon}
-                onClick={() => handleRemoveTopic(index)}
-              />
+
+      <Box sx={{
+        padding: 2,
+        overflowY: 'auto'
+      }}>
+
+        <Input
+          label="Title"
+          placeholder="Enter title"
+          inputValue={title}
+          setInputValue={setTitle}
+          type="text"
+          required
+          errorMsg={errors.title}
+        />
+        <TextArea
+          label="Description"
+          placeholder="Enter description"
+          value={description}
+          setValue={setDescription}
+          required
+          errorMsg={errors.description}
+        />
+        <DateInput
+          label="Start Date"
+          placeholder="YYYY-MM-DD"
+          inputValue={startDate}
+          setInputValue={setStartDate}
+          required
+          errorMsg={errors.startDate}
+        />
+        <DateInput
+          label="End Date"
+          placeholder="YYYY-MM-DD"
+          inputValue={endDate}
+          setInputValue={setEndDate}
+          required
+          errorMsg={errors.endDate}
+        />
+        <Input
+          label="Location"
+          placeholder="Enter location"
+          inputValue={location}
+          setInputValue={setLocation}
+          required
+          errorMsg={errors.location}
+        />
+        <Input
+          label="Companion Dinner Cost (USD)"
+          placeholder="Enter companion Dinner Price Cost"
+          inputValue={companionDinnerPrice}
+          setInputValue={setCompanionDinnerPrice}
+          type="number"
+          required
+        />
+
+        <ImageUpload
+          label="Upload Image"
+          inputValue={image}
+          setInputValue={setImage}
+          existingFile={conferenceData.image}
+          allowedExtensions={["jpg", "jpeg", "png"]}
+          errorMsg={errors.image}
+        />
+
+        <ImageUpload
+          label="First Announcement PDF"
+          inputValue={firstAnnouncement}
+          setInputValue={setFirstAnnouncement}
+          existingFile={conferenceData.first_announcement_pdf}
+          allowedExtensions={["pdf"]}
+          errorMsg={errors.firstAnnouncement}
+        />
+
+        <ImageUpload
+          label="Second Announcement PDF"
+          inputValue={secondAnnouncement}
+          setInputValue={setSecondAnnouncement}
+          existingFile={conferenceData.second_announcement_pdf}
+          allowedExtensions={["pdf"]}
+          errorMsg={errors.secondAnnouncement}
+        />
+
+        <ImageUpload
+          label="Conference Brochure PDF"
+          inputValue={brochure}
+          setInputValue={setBrochure}
+          allowedExtensions={["pdf"]}
+          existingFile={conferenceData.conference_brochure_pdf}
+          errorMsg={errors.brochure}
+        />
+
+        <ImageUpload
+          label="Conference Scientific Program PDF"
+          inputValue={scientificProgram}
+          setInputValue={setScientificProgram}
+          allowedExtensions={["pdf"]}
+          existingFile={conferenceData.conference_scientific_program_pdf}
+          errorMsg={errors.scientificProgram}
+        />
+        <ImageUpload
+          label="Logo"
+          inputValue={logo}
+          setInputValue={setLogo}
+          allowedExtensions={["jpg", "jpeg", "png", "gif"]}
+        // existingFile={conferenceData.conference_scientific_program_pdf}
+        // errorMsg={errors.scientificProgram}
+        />
+        <Input
+          label="Visa price"
+          // placeholder="Enter companion Dinner Price Cost"
+          inputValue={visaPrice}
+          setInputValue={setVisaPrice}
+          type="number"
+          required
+        />
+        <Input
+          label="Country"
+          // placeholder="Enter companion Dinner Price Cost"
+          inputValue={country}
+          setInputValue={setCountry}
+          required
+        />
+        <ImageUpload
+          label=" Second Logo"
+          inputValue={secondLogo}
+          setInputValue={setSecondLogo}
+          allowedExtensions={["jpg", "jpeg", "png", "gif"]}
+
+        />
+        <div className="topics-container">
+          <div className="topic-title">
+            Topics
+            <span className="star">*</span>
+          </div>
+          <div className="topics-container-inputs">
+            {topics.map((topic, index) => (
+              <div key={index} className="topic-input-container">
+                <Input
+                  placeholder="Enter a topic"
+                  inputValue={topic}
+                  setInputValue={(newValue) =>
+                    handleTopicChange(index, newValue)
+                  }
+                />
+                <SVG
+                  className="delete-icon"
+                  src={deleteIcon}
+                  onClick={() => handleRemoveTopic(index)}
+                />
+              </div>
+            ))}
+            <div className="add-topic-btn-container">
+              <Button
+                type="button"
+                onClick={handleAddTopic}
+                className="add-topic-btn"
+              >
+                Add Topic
+              </Button>
             </div>
-          ))}
-          <div className="add-topic-btn-container">
-            <Button
-              type="button"
-              onClick={handleAddTopic}
-              className="add-topic-btn"
-            >
-              Add Topic
-            </Button>
           </div>
         </div>
-      </div>
-  
-      <PriceForm entries={entries} setEntries={setEntries} />
-      <CommitteeForm
-        committeeMembers={committeeMembers}
-        setCommitteeMembers={setCommitteeMembers}
-      />
-       <Button 
-      sx={{
-        backgroundColor: '#c62828',// Modern vibrant red
 
-        marginTop: "20px",
-        color: "#fff",
-        width: "100%",
-        "&:hover": {
-          backgroundColor: "#e63946",
-          color: "#fff",
-        }
-      }}
-      
-       onClick={handleSubmit}>
-        Edit
-      </Button>
-    </Box>
-  
-   
-  </Drawer>
-  
+        <PriceForm entries={entries} setEntries={setEntries} />
+        <CommitteeForm
+          committeeMembers={committeeMembers}
+          setCommitteeMembers={setCommitteeMembers}
+        />
+        <Button
+          sx={{
+            backgroundColor: '#c62828',// Modern vibrant red
+
+            marginTop: "20px",
+            color: "#fff",
+            width: "100%",
+            "&:hover": {
+              backgroundColor: "#e63946",
+              color: "#fff",
+            }
+          }}
+
+          onClick={handleSubmit}>
+          Edit
+        </Button>
+      </Box>
+
+
+    </Drawer>
+
   );
 };
 

@@ -281,14 +281,13 @@ const FlightFormAdmin = () => {
           rows={rows}
           columns={columns}
           getRowHeight={() => "auto"}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
+          paginationModel={{ page: currentPage - 1, pageSize: 10 }} 
+        onPaginationModelChange={(pagination) => {
+          setCurrentPage(pagination.page + 1); 
+        }}
+        rowCount={totalPages * 10}
+        pageSizeOptions={[10]}
+        paginationMode="server" 
           getRowId={(row) => row.user_id}
           checkboxSelection
           disableRowSelectionOnClick

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../common/AuthContext";
 import { useStepper } from "../StepperContext";
 import { Button } from "@mui/material";
+import toast from "react-hot-toast";
 
 const InvoiceForm = () => {
   const {
@@ -32,6 +33,7 @@ const InvoiceForm = () => {
   const { mode } = useParams();
   const { userName, myConferenceId } = useAuth();
   const BaseUrl = process.env.REACT_APP_BASE_URL;
+  
   const mainRoom2 = {
     checkInDate,
     checkOutDate,
@@ -40,25 +42,31 @@ const InvoiceForm = () => {
     totalNights,
     roomType,
   };
+  
   useEffect(() => {
     setMainRoom(mainRoom2 || {});
     setOtherRooms(rooms || []);
   }, []);
 
-  function convertObject(obj) {
-    const rooms = [];
+  const formatDateTime = (dateStr) => {
+    if (!dateStr) return "";
+    return dateStr
+    // const date = new Date(dateStr);
+    
+    // // تحويل التاريخ إلى تنسيق Y-m-d\TH:i
+    // return date.toISOString().slice(0, 16); // سيزيل الأجزاء غير الضرورية مثل الثواني والوقت الزمني
+  };
+  
 
-    const formatDate = (dateStr) => {
-      const date = new Date(dateStr);
-      return date.toISOString().split("T")[0]; // Formats the date to YYYY-MM-DD
-    };
+  const convertObject = (obj) => {
+    const rooms = [];
 
     // Add main room
     rooms.push({
       room_type: obj.mainRoom.roomType.value,
       occupant_name: obj.mainRoom.occupant_name || "",
-      check_in_date: formatDate(obj.mainRoom.checkInDate),
-      check_out_date: formatDate(obj.mainRoom.checkOutDate),
+      check_in_date: formatDateTime(obj.mainRoom.checkInDate),
+      check_out_date: formatDateTime(obj.mainRoom.checkOutDate),
       total_nights: parseInt(obj.mainRoom.totalNights),
       cost: 0,
       additional_cost: 0,
@@ -72,8 +80,8 @@ const InvoiceForm = () => {
       rooms.push({
         room_type: room.roomType.value,
         occupant_name: room.occupantName,
-        check_in_date: formatDate(room.checkInDate),
-        check_out_date: formatDate(room.checkOutDate),
+        check_in_date: formatDateTime(room.checkInDate),
+        check_out_date: formatDateTime(room.checkOutDate),
         total_nights: parseInt(room.totalNights),
         cost: 0,
         additional_cost: 0,
@@ -84,7 +92,7 @@ const InvoiceForm = () => {
     });
 
     return { rooms };
-  }
+  };
 
   const getAuthToken = () => localStorage.getItem("token");
 
@@ -96,22 +104,21 @@ const InvoiceForm = () => {
       mainRoom: { ...mainRoom, occupant_name: userName, id: mainRoomId },
       otherRooms,
     });
+console.log(body);
 
     try {
       const response = await httpService({
         method: "POST",
         url:
-          mode == "edit"
+          mode === "edit"
             ? `${BaseUrl}/edit/reservation`
             : `${BaseUrl}/reservation`,
         headers: { Authorization: `Bearer ${getAuthToken()}` },
-        // showLoader: true,
         data: {
           conference_id: myConferenceId,
           reservation_id: reservationId,
           ...body,
         },
-        // withToast: true,
       });
 
       if (response) {
@@ -121,6 +128,7 @@ const InvoiceForm = () => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -130,13 +138,19 @@ const InvoiceForm = () => {
       <h3>Main Room</h3>
       <div className="main-room-section">
         <SimpleLabelValue label="Room Type" value={mainRoom?.roomType?.label} />
-        <SimpleLabelValue
-          label="Check-in Date"
-          value={new Date(mainRoom?.checkInDate).toLocaleDateString()}
+        <input
+          type="datetime-local"
+          value={checkInDate}
+          onChange={(e) =>
+            setMainRoom({ ...mainRoom, checkInDate: e.target.value })
+          }
         />
-        <SimpleLabelValue
-          label="Check-out Date"
-          value={new Date(mainRoom?.checkOutDate).toLocaleDateString()}
+        <input
+          type="datetime-local"
+          value={checkOutDate}
+          onChange={(e) =>
+            setMainRoom({ ...mainRoom, checkOutDate: e.target.value })
+          }
         />
         <SimpleLabelValue label="Total Nights" value={mainRoom?.totalNights} />
         <SimpleLabelValue
@@ -164,16 +178,12 @@ const InvoiceForm = () => {
                 value={room.roomType?.label}
               />
               <SimpleLabelValue
-                label="Special Requests"
-                value={room.specialRequests}
-              />
-              <SimpleLabelValue
                 label="Check-in Date"
-                value={new Date(room.checkInDate).toLocaleDateString()}
+                value={new Date(room.checkInDate).toLocaleString()}
               />
               <SimpleLabelValue
                 label="Check-out Date"
-                value={new Date(room.checkOutDate).toLocaleDateString()}
+                value={new Date(room.checkOutDate).toLocaleString()}
               />
               <SimpleLabelValue
                 label="Total Nights"
@@ -194,20 +204,20 @@ const InvoiceForm = () => {
 
       <div className="actions-section">
         <Button
-        variant="contained"
-        sx={{
-          backgroundColor: '#c62828',// Modern vibrant red
-
-          marginTop: "20px",
-          color: "#fff",
-          width: "100%",
-
-          "&:hover": {
-            backgroundColor: "#e63946",
+          variant="contained"
+          sx={{
+            backgroundColor: "#c62828",
+            marginTop: "20px",
             color: "#fff",
-          }
-        }}
-         className="next-button" onClick={submitReservation}>
+            width: "100%",
+            "&:hover": {
+              backgroundColor: "#e63946",
+              color: "#fff",
+            },
+          }}
+          className="next-button"
+          onClick={submitReservation}
+        >
           Submit
         </Button>
       </div>

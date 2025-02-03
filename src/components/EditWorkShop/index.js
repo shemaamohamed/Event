@@ -130,7 +130,7 @@ const {conferenceId} = useParams()
                     <EditIcon />
                   </IconButton>
                   <CardContent>
-                    <Typography
+                    {/* <Typography
                       variant="h6"
                       sx={{
                         fontWeight: "bold",
@@ -140,8 +140,8 @@ const {conferenceId} = useParams()
                         fontSize: "1.1rem",
                       }}
                     >
-                      {item?.title || "Workshop Title"}
-                    </Typography>
+                      {item?.title || " Title"}
+                    </Typography> */}
                     <Typography
                       variant="body2"
                       color="text.secondary"

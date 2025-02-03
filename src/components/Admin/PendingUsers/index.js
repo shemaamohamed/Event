@@ -121,6 +121,13 @@ const PendingUsersTable = () => {
 
   const columns = [
     {
+      field: "id",
+      headerName: "ID",
+      flex: 0.5,
+      minWidth: 100,
+      cellClassName: "centered-cell",
+    },
+    {
       field: "name",
       headerName: "Name",
       flex: 1,
@@ -334,28 +341,28 @@ const PendingUsersTable = () => {
         setValue={setStatus}
         label="Status"
       />
-      <DataGrid
-        getRowId={(row) => row.id}
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 8,
-            },
-          },
-        }}
-        pageSizeOptions={[8]}
-        checkboxSelection
-        disableRowSelectionOnClick
-        autoHeight
-        sx={{
-          marginTop: "20px",
-          "& .MuiDataGrid-virtualScroller": {
-            overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
-          },
-        }}
-      />
+     <DataGrid
+  getRowId={(row) => row.id}
+  rows={rows}
+  columns={columns}
+  paginationModel={{ page: currentPage - 1, pageSize: 10 }} 
+  onPaginationModelChange={(pagination) => {
+    setCurrentPage(pagination.page + 1); 
+  }}
+  rowCount={totalPages * 10} 
+  pageSizeOptions={[10]}
+  paginationMode="server" 
+  checkboxSelection
+  disableRowSelectionOnClick
+  autoHeight
+  sx={{
+    marginTop: "20px",
+    "& .MuiDataGrid-virtualScroller": {
+      overflow: "hidden", // لمنع أي تمرير غير مرغوب فيه
+    },
+  }}
+/>
+
 
       <Drawer
         anchor="right"

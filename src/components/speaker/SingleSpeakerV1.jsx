@@ -6,14 +6,18 @@ const SingleTeamV1 = ({ team }) => {
     return (
         <>
             <div className="inner-box" style={{
-                width:'320px',
+                width:'290px',
                 height:'300px'
 
             }}>
                 <div className="image-box">
                     <figure className="image" 
                     
-                    ><img src={image} alt="name" /></figure>
+                    ><img src={image} alt="name" 
+                    style={{
+                        marginBottom:'90px'
+                    }}
+                    /></figure>
                 </div>
                 <div className="info-box">
                     <div className="inner">

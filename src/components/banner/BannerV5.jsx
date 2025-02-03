@@ -18,7 +18,7 @@ const BannerV5 = () => {
 
     return (
         <>
-            <section className="banner-conference-two" style={{ backgroundImage: "url(images/background/6.jpg)" }}>
+            <section className="banner-conference-two" style={{ backgroundImage: "url(images/background/6.jpeg)" }}>
                 <div className="images-outer">
                     <figure className="speaker-img"><img src="images/main-slider/banner_img.png" alt="image" /></figure>
                 </div>

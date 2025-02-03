@@ -50,11 +50,11 @@ const PayForm = () => {
         </div>
       )}
 
-      <div className="actions-section">
+   { invoice.total_invoice>0 &&  <div className="actions-section">
         <button className="next-button" onClick={submitReservation}>
           Pay
         </button>
-      </div>
+      </div>}
     </div>
   );
 };

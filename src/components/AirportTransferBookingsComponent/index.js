@@ -77,8 +77,9 @@ const AirportTransferBookingsComponent = () => {
     id: booking.id,
     name: booking.user?.name,
     trip_type: booking.trip_type,
-    arrival_date: new Date(booking.arrival_date).toLocaleString(),
-    departure_date: new Date(booking.departure_date).toLocaleString(),
+    arrival_date: new Date(booking.arrival_date).toLocaleDateString(),
+    departure_date: new Date(booking.departure_date).toLocaleDateString(),
+    
     flight_number: booking.flight_number,
     companion_name: booking.companion_name,
     actions: booking.actions,
@@ -156,14 +157,14 @@ const AirportTransferBookingsComponent = () => {
         getRowId={(row) => row.id}
         rows={row}
                     columns={column}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 8,
-                        },
-                      },
-                    }}
-                    pageSizeOptions={[8]}
+                    paginationModel={{ page: currentPage - 1, pageSize: 12 }} 
+  onPaginationModelChange={(pagination) => {
+    setCurrentPage(pagination.page + 1); 
+    handlePageChange(pagination.page + 1);
+  }}
+  rowCount={totalPages * 12} 
+  pageSizeOptions={[12]}
+  paginationMode="server" 
                     checkboxSelection
                     disableRowSelectionOnClick
                     autoHeight
@@ -254,7 +255,7 @@ const AirportTransferBookingsComponent = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <Typography variant="body1">
-                {new Date(selectedBooking.arrival_date).toLocaleString() || "-"}
+                {new Date(selectedBooking.arrival_date).toLocaleDateString() || "-"}
               </Typography>
             </Grid>
 
@@ -276,10 +277,10 @@ const AirportTransferBookingsComponent = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <Typography variant="body1">
-                {new Date(selectedBooking.departure_date).toLocaleString() || "-"}
+                {new Date(selectedBooking.departure_date).toLocaleDateString() || "-"}
               </Typography>
             </Grid>
-
+     
             <Grid item xs={12} md={6}>
               <Typography variant="body1" fontWeight="bold">
                 Departure Time:

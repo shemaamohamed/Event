@@ -45,7 +45,7 @@ const VisasComponent = () => {
         params: { page },
         headers: { Authorization: `Bearer ${TOKEN}` },
         onSuccess: (data) => {
-          setVisasData(data.visas || []);
+          setVisasData(data.visas.reverse() || []);
           setTotalPages(data?.totalPages || 1);
           setCurrentPage(Number(data?.currentPage) || 1);
         },
@@ -87,6 +87,13 @@ const VisasComponent = () => {
     {
       field: "id",
       headerName: "ID",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "user_id",
+      headerName: "UserID",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
@@ -229,14 +236,14 @@ const VisasComponent = () => {
                       rows={rows}
                       columns={columns}
                       getRowId={(row) => row.id}
-                      initialState={{
-                        pagination: {
-                          paginationModel: {
-                            pageSize: 8,
-                          },
-                        },
-                      }}
-                      pageSizeOptions={[8]}
+                     paginationModel={{ page: currentPage - 1, pageSize: 12 }} 
+                     onPaginationModelChange={(pagination) => {
+                       setCurrentPage(pagination.page + 1); 
+                       handlePageChange(pagination.page + 1);
+                     }}
+                     rowCount={totalPages * 12}
+                     pageSizeOptions={[12]}
+                     paginationMode="server" 
                       checkboxSelection
                       disableRowSelectionOnClick
                       autoHeight
@@ -371,7 +378,7 @@ const VisasComponent = () => {
     </Grid>
 
     {/* Payment Status */}
-    <Grid item xs={12}>
+    {/* <Grid item xs={12}>
       <Box display="flex" alignItems="center">
         <Typography variant="subtitle1" fontWeight={600}>
           Payment Status:
@@ -382,7 +389,7 @@ const VisasComponent = () => {
             : "completed"}
         </Typography>
       </Box>
-    </Grid>
+    </Grid> */}
 
     {/* Created At */}
     <Grid item xs={12}>

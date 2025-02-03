@@ -18,46 +18,30 @@ const Cardd = ({
   return (
     <Card
       sx={{
-        width: 345,  // Fixed width for all cards
+        width: '100%',  // Fixed width for all cards
         height: 500, // Fixed height for all cards
         boxShadow: 3,
         borderRadius: 2,
         overflow: 'hidden',
         transition: 'transform 0.3s ease-in-out',
         display: 'flex',
-        flexDirection: 'column', // Ensures vertical stacking of image and content
-        '&:hover': {
-          transform: 'scale(1.05)',
-        },
+        flexDirection: 'column', 
+       
       }}
     >
       <Box sx={{ position: 'relative' }}>
         <CardMedia
           component="img"
-          height="200"  // Fixed height for images to make them uniform
+          height="200"  
+          width="100%"
           image={imageUrl}
           alt="card image"
           sx={{
-            objectFit: 'cover', // Ensures the image covers the area without distortion
+            objectFit: 'cover', 
           }}
         />
-        {galleryLink && (
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              position: 'absolute',
-              top: '10px',
-              right: '10px',
-              zIndex: 1,
-              padding: '8px 16px',
-              borderRadius: '20px',
-            }}
-            onClick={() => window.open(galleryLink, '_blank')}
-          >
-            {galleryButtonText}
-          </Button>
-        )}
+        
+       
       </Box>
       <CardContent sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <Typography
@@ -102,6 +86,19 @@ const Cardd = ({
           >
             {buttonText}
           </Button>
+        )}
+         {galleryLink && (
+           <Button
+           variant="contained"
+           color="primary"
+           sx={{
+             marginTop:'10px'
+           }}
+           
+           onClick={() => window.open(galleryLink, '_blank')}
+         >
+           {galleryButtonText}
+         </Button>
         )}
       </CardContent>
     </Card>

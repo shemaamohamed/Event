@@ -43,7 +43,7 @@ const ReservationsComponent = () => {
         params: { page },
         headers: { Authorization: `Bearer ${TOKEN}` },
         onSuccess: (data) => {
-          setReservationsData(data.reservations || []);
+          setReservationsData(data.reservations.reverse() || []);
           setTotalPages(data?.totalPages || 1);
           setCurrentPage(Number(data?.currentPage) || 1);
         },
@@ -171,14 +171,14 @@ const ReservationsComponent = () => {
         rows={rows}
         columns={columns}
         getRowId={(row) => row.email}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 7,
-            },
-          },
+        paginationModel={{ page: currentPage - 1, pageSize: 12 }} 
+        onPaginationModelChange={(pagination) => {
+          setCurrentPage(pagination.page + 1); 
+          handlePageChange(pagination.page + 1);
         }}
-        pageSizeOptions={[7]}
+        rowCount={totalPages * 12}
+        pageSizeOptions={[12]}
+        paginationMode="server" 
         checkboxSelection
         disableRowSelectionOnClick
         autoHeight
@@ -260,6 +260,12 @@ const ReservationsComponent = () => {
                   <SimpleLabelValue label="Check-In" value={room.check_in_date || "-"} />
                   <SimpleLabelValue label="Check-Out" value={room.check_out_date || "-"} />
                   <SimpleLabelValue label="Total Nights" value={room.total_nights || "-"} />
+               
+                  <SimpleLabelValue label="Early Check In" value={room.early_check_in === 1 ? "YES" : (room.early_check_in === 0 ? "NO" : "-")} />
+<SimpleLabelValue label="Late Check Out" value={room.late_check_out === 1 ? "YES" : (room.late_check_out === 0 ? "NO" : "-")} />
+
+               
+               
                 </Box>
                 <Divider sx={{ marginY: 2 }} />
                 <Typography variant="subtitle1" sx={{ fontWeight: "bold" ,          color: "#c62828",}}>
@@ -284,7 +290,7 @@ const ReservationsComponent = () => {
                         value={invoice.additional_price || "-"}
                       />
                       <SimpleLabelValue label="Total Price (USD)" value={invoice.total || "-"} />
-                      {/* <SimpleLabelValue label="Status" value={invoice.status || "-"} /> */}
+                      <SimpleLabelValue label="Status" value={invoice.status || "-"} />
                       <SimpleLabelValue
                         label="Confirmation PDF"
                         value={

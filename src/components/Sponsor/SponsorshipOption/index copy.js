@@ -360,6 +360,7 @@ const SponsorSection = () => {
         ))}
       </div>
       <SponsorshipTable
+      selectedIds={selectedSponsorshipIds}
         onSelectedSponsorshipsChange={handleSelectedSponsorshipsChange}
       />{" "}
       <BoothCostTable

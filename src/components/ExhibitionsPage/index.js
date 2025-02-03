@@ -60,14 +60,38 @@ const ExhibitionsPage = () => {
   };
 
   return (
-    <div className="user-exhibition-cards-container" style={{
-      padding:'20px',
-    marginTop:'15vh'
+    <section className={`pricing-section-two ${"alternate"}`} style={{
+      marginTop:'10vh'
     }}>
-      <div className="">
+      <div className="sec-title  text-center">
+  <h2 style={{ display: 'inline-block', borderBottom: '2px solid #9B1321', paddingBottom: '10px' }}>Exhibitions
+  </h2>
+</div>
+   
+          <div className="anim-icons">
+                  <span className="icon icon-line-1"></span>
+                  <span className="icon icon-circle-1"></span>
+                  <span className="icon icon-dots"></span>
+          </div>
+          <div className="auto-container"
+          style={{
+            width:'100%',
+            maxWidth:'100%'
+          }}
+           >
+          <div className="outer-box"
+          style={{
+            width:'100%',
+            maxWidth:'100%'
+
+          }}
+          >
+       <div className="user-exhibition-cards-container" style={{
+      padding:'20px',
+    }}>
+      <>
       <Box className="exhibitions-header" sx={{ mb: 3 }}>
   <Grid container spacing={2} alignItems="center" justifyContent="space-between">
-    {/* Search Input */}
     <Grid item xs={12} sm={6} md={4}>
       <Input
         placeholder="Search"
@@ -97,16 +121,16 @@ const ExhibitionsPage = () => {
         {error ? (
           <p className="error-message">{error}</p>
         ) : exhibitions.length ? (
-          <Grid container spacing={3} className="exhibition-cards-container">
+          <Grid container spacing={3} >
   {exhibitions.map(
     ({ id, title, location, description, image, conference_id }) => (
-      <Grid item xs={12} sm={6} md={4} lg={3} key={id}>
+      <Grid item xs={12} sm={6}  md={3}  key={id}>
         <Box
-          className="exhibition-card"
           p={2}
           borderRadius={2}
           boxShadow={3}
           bgcolor="background.paper"
+
         >
           {/* Image Section */}
           <Box className="exhibition-card-image" mb={2}>
@@ -196,7 +220,7 @@ const ExhibitionsPage = () => {
         ) : (
           <p className="no-data">No exhibitions available.</p>
         )}
-      </div>
+      </>
 
       {/* Pagination */}
       <Pagination
@@ -205,6 +229,10 @@ const ExhibitionsPage = () => {
         onPageChange={(page) => handleFilterChange("page", page)}
       />
     </div>
+          </div>
+          </div>
+          </section>
+    
   );
 };
 

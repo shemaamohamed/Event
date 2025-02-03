@@ -16,17 +16,17 @@ const TripParticipantsComponent = () => {
 
   const [selectedParticipantDetails, setSelectedParticipantDetails] =
     useState(null);
-      const [anchorEl, setAnchorEl] = useState(null);
-      const [selectedRow, setSelectedRow] = useState(null);
-      const openMenu = (event, row) => {
-        setAnchorEl(event.currentTarget);
-        setSelectedRow(row);
-      };
-    
-      const closeMenu = () => {
-        setAnchorEl(null);
-        setSelectedRow(null);
-      };
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const openMenu = (event, row) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedRow(row);
+  };
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+    setSelectedRow(null);
+  };
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const TOKEN = localStorage.getItem("token");
 
@@ -60,6 +60,9 @@ const TripParticipantsComponent = () => {
               formattedParticipants.push({
                 id: entry.mainParticipant.id,
                 name: entry.mainParticipant.name,
+                email: entry.mainParticipant.email,
+
+                trip_name: entry.mainParticipant.trip_name,
                 nationality: entry.mainParticipant.nationality,
                 phone_number: entry.mainParticipant.phone_number,
                 whatsapp_number: entry.mainParticipant.whatsapp_number,
@@ -108,10 +111,24 @@ const TripParticipantsComponent = () => {
     status: participant.status,
     actions: participant.actions,
   }));
-  const column=[
+  const column = [
     {
       field: "name",
       headerName: "Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "trip_name",
+      headerName: "Trip Name",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
@@ -166,23 +183,23 @@ const TripParticipantsComponent = () => {
       cellClassName: "centered-cell",
       renderCell: (params) => (
         <>
-        <IconButton onClick={(event) => openMenu(event, params.row)}>
-          <MoreVertIcon />
-        </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
-          onClose={closeMenu}
-        >
-          <MenuItem onClick={() => {
-                   handleViewDetails(params.row)
+          <IconButton onClick={(event) => openMenu(event, params.row)}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
+            onClose={closeMenu}
+          >
+            <MenuItem onClick={() => {
+              handleViewDetails(params.row)
 
-          }}>
-            View Details
-          </MenuItem>
-        </Menu>
-      </>
-        
+            }}>
+              View Details
+            </MenuItem>
+          </Menu>
+        </>
+
 
       )
     }
@@ -197,330 +214,405 @@ const TripParticipantsComponent = () => {
 
     >
       <div className="participants-component">
-      <Typography
-                      variant="h6"
-                      sx={{
-                        color: '#c62828',
-                        fontWeight: 'bold',
-                        fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-                        textAlign: 'center',
-                      }}
-                    >
-                      Private Trip Participants
-                    </Typography>
-                    <DataGrid
-        getRowId={(row) => row.id}
-        rows={rows}
-                    columns={column}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 8,
-                        },
-                      },
-                    }}
-                    pageSizeOptions={[8]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                    autoHeight
-                    sx={{
-                      marginTop: "20px",
-                      "& .MuiDataGrid-virtualScroller": {
-                        overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
-                      },
+        <Typography
+          variant="h6"
+          sx={{
+            color: '#c62828',
+            fontWeight: 'bold',
+            fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+            textAlign: 'center',
+          }}
+        >
+          Private Trip Participants
+        </Typography>
+        <DataGrid
+          getRowId={(row) => row.id}
+          rows={rows}
+          columns={column}
+          paginationModel={{ page: currentPage - 1, pageSize: 12 }} 
+        onPaginationModelChange={(pagination) => {
+          setCurrentPage(pagination.page + 1); 
+          handlePageChange(pagination.page + 1);
         }}
-        
-      />
-      
+        rowCount={totalPages * 12}
+        pageSizeOptions={[12]}
+        paginationMode="server" 
+          checkboxSelection
+          disableRowSelectionOnClick
+          autoHeight
+          sx={{
+            marginTop: "20px",
+            "& .MuiDataGrid-virtualScroller": {
+              overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+            },
+          }}
+
+        />
+
 
         <Drawer open={isDrawerOpen} onClose={() => setDrawerOpen(false)}
-        
-        
-        anchor="right"
-        sx={{
-          zIndex: (theme) => theme.zIndex.modal + 1, 
-  
-          '& .MuiDrawer-paper': {
-              zIndex: (theme) => theme.zIndex.modal + 1,
-  
-  
-        width: 
-        {
-          xs: '100%',
-          sm: '70%',
-          md: '70%',
-          lg: '50%',
-          xl: '50%',
-        }, 
-      },
-  
-        }}
-          >
-             <div
-                                style={{
-                                  display: 'flex',
-                                  justifyContent: 'flex-end',
-                                  padding: 2,
-                                }}
-                                >
-                                  <IconButton onClick={() => setDrawerOpen(false)}>
-                                   <CloseRounded /> 
-                                  </IconButton>
-                                </div>
-                                <Box
-      sx={{
-        maxWidth: 800,
-        margin: "0 auto",
-        padding: 3,
-        backgroundColor: "#f9f9f9",
-        borderRadius: 2,
-        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-        overflowY: "auto"
-      }}
-    >
-      <Typography
-        variant="h5"
-        sx={{
-          color: "#c62828",
-          textAlign: "center",
-          marginBottom: 3,
-          fontWeight: "bold",
-        }}
-      >
-        Participant & Companions Details
-      </Typography>
 
-      {selectedParticipantDetails ? (
-        <Fragment>
-          {/* Main Participant Details */}
-          <Paper elevation={2} sx={{ padding: 2, marginBottom: 3 }}>
+
+          anchor="right"
+          sx={{
+            zIndex: (theme) => theme.zIndex.modal + 1,
+
+            '& .MuiDrawer-paper': {
+              zIndex: (theme) => theme.zIndex.modal + 1,
+
+
+              width:
+              {
+                xs: '100%',
+                sm: '70%',
+                md: '70%',
+                lg: '50%',
+                xl: '50%',
+              },
+            },
+
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              padding: 2,
+            }}
+          >
+            <IconButton onClick={() => setDrawerOpen(false)}>
+              <CloseRounded />
+            </IconButton>
+          </div>
+          <Box
+            sx={{
+              maxWidth: 800,
+              margin: "0 auto",
+              padding: 3,
+              backgroundColor: "#f9f9f9",
+              borderRadius: 2,
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+              overflowY: "auto"
+            }}
+          >
             <Typography
-              variant="h6"
+              variant="h5"
               sx={{
-                color: "#424242",
-                marginBottom: 2,
+                color: "#c62828",
+                textAlign: "center",
+                marginBottom: 3,
                 fontWeight: "bold",
               }}
             >
-              Main Participant Details
+              Participant & Companions Details
             </Typography>
 
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Typography variant="body1" fontWeight="bold">
-                  Name:
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">
-                  {selectedParticipantDetails.mainParticipant.name || "-"}
-                </Typography>
-              </Grid>
+            {selectedParticipantDetails ? (
+              <Fragment>
+                {/* Main Participant Details */}
+                <Paper elevation={2} sx={{ padding: 2, marginBottom: 3 }}>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: "#424242",
+                      marginBottom: 2,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Main Participant Details
+                  </Typography>
 
-              <Grid item xs={6}>
-                <Typography variant="body1" fontWeight="bold">
-                  Nationality:
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">
-                  {selectedParticipantDetails.mainParticipant.nationality || "-"}
-                </Typography>
-              </Grid>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                        Name:
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                        {selectedParticipantDetails.mainParticipant.name || "-"}
+                      </Typography>
+                    </Grid>
 
-              <Grid item xs={6}>
-                <Typography variant="body1" fontWeight="bold">
-                  Phone Number:
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">
-                  {selectedParticipantDetails.mainParticipant.phone_number || "-"}
-                </Typography>
-              </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                        Nationality:
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                        {selectedParticipantDetails.mainParticipant.nationality || "-"}
+                      </Typography>
+                    </Grid>
 
-              <Grid item xs={6}>
+                    <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                        Phone Number:
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                        {selectedParticipantDetails.mainParticipant.phone_number || "-"}
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                        WhatsApp Number:
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                        {selectedParticipantDetails.mainParticipant.whatsapp_number ||
+                          "-"}
+                      </Typography>
+                    </Grid>
+                    {/* <Grid item xs={6}>
                 <Typography variant="body1" fontWeight="bold">
-                  WhatsApp Number:
+                Start Date
                 </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="body1">
-                  {selectedParticipantDetails.mainParticipant.whatsapp_number ||
+                  {selectedParticipantDetails.mainParticipant.check_in_date||
                     "-"}
                 </Typography>
-              </Grid>
-
-              <Grid item xs={6}>
+                <Grid item xs={6}>
                 <Typography variant="body1" fontWeight="bold">
-                  Accommodation Stars:
+                  End Date
                 </Typography>
               </Grid>
-              <Grid item xs={6}>
                 <Typography variant="body1">
-                  {selectedParticipantDetails.mainParticipant
-                    .accommodation_stars || "-"}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={6}>
-                <Typography variant="body1" fontWeight="bold">
-                  Total Price(USD):
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">
-                  ${selectedParticipantDetails.mainParticipant.invoice.total_price ||
+                  {selectedParticipantDetails.mainParticipant.check_out_date||
                     "-"}
                 </Typography>
-              </Grid>
+              </Grid> */}
+                    <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                        Accommodation Stars:
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                        {selectedParticipantDetails.mainParticipant
+                          .accommodation_stars || "-"}
+                      </Typography>
+                    </Grid>
 
-              <Grid item xs={6}>
-                <Typography variant="body1" fontWeight="bold">
-                  Status:
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">
-                  {selectedParticipantDetails.mainParticipant.invoice.status ||
-                    "-"}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Paper>
+                    <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                        Total Price(USD):
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                        ${selectedParticipantDetails.mainParticipant.invoice.total_price ||
+                          "-"}
+                      </Typography>
+                    </Grid>
 
-          {/* Companions Details */}
-          {selectedParticipantDetails.companions.length > 0 ? (
-            selectedParticipantDetails.companions.map((companion, index) => (
-              <Paper
-                key={index}
-                elevation={1}
-                sx={{ padding: 2, marginBottom: 2 }}
+                    <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                        Status:
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                        {selectedParticipantDetails.mainParticipant.invoice.status ||
+                          "-"}
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                        Start Date
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                        {selectedParticipantDetails.mainParticipant.check_in_date ||
+                          "-"}
+                      </Typography>
+                
+                    </Grid>
+
+                    <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                      End Date
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                      {selectedParticipantDetails.mainParticipant.check_out_date ||
+                          "-"}
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                      Nights Count
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                      {selectedParticipantDetails.mainParticipant.nights_count ||
+                          "-"}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Paper>
+
+                {/* Companions Details */}
+                {selectedParticipantDetails.companions.length > 0 ? (
+                  selectedParticipantDetails.companions.map((companion, index) => (
+                    <Paper
+                      key={index}
+                      elevation={1}
+                      sx={{ padding: 2, marginBottom: 2 }}
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          color: "#424242",
+                          marginBottom: 2,
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Companion {index + 1} Details
+                      </Typography>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <Typography variant="body1" fontWeight="bold">
+                            Name:
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body1">
+                            {companion.name || "-"}
+                          </Typography>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <Typography variant="body1" fontWeight="bold">
+                            Nationality:
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body1">
+                            {companion.nationality || "-"}
+                          </Typography>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <Typography variant="body1" fontWeight="bold">
+                            Phone Number:
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body1">
+                            {companion.phone_number || "-"}
+                          </Typography>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <Typography variant="body1" fontWeight="bold">
+                            WhatsApp Number:
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body1">
+                            {companion.whatsapp_number || "-"}
+                          </Typography>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <Typography variant="body1" fontWeight="bold">
+                            Start Date:
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body1">
+                            {companion.check_in_date || "-"}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                        Accommodation Stars:
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                        {companion?.accommodation_stars || "-"}
+                      </Typography>
+                    </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body1" fontWeight="bold">
+                            End Date:
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body1">
+                            {companion.check_out_date || "-"}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                      <Typography variant="body1" fontWeight="bold">
+                      Nights Count
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                      {companion?.nights_count ||
+                          "-"}
+                      </Typography>
+                    </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body1" fontWeight="bold">
+                            Total Price(USD):
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body1">
+                            ${companion.invoice?.total_price || "-"}
+                          </Typography>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <Typography variant="body1" fontWeight="bold">
+                            Status:
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Typography variant="body1">
+                            {companion.invoice?.status || "-"}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Paper>
+                  ))
+                ) : (
+                  <Typography variant="body1" sx={{ textAlign: "center" }}>
+                    No companions available.
+                  </Typography>
+                )}
+              </Fragment>
+            ) : (
+              <Typography
+                variant="body1"
+                sx={{
+                  textAlign: "center",
+                  color: "#757575",
+                  marginTop: 2,
+                }}
               >
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: "#424242",
-                    marginBottom: 2,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Companion {index + 1} Details
-                </Typography>
-
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <Typography variant="body1" fontWeight="bold">
-                      Name:
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="body1">
-                      {companion.name || "-"}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <Typography variant="body1" fontWeight="bold">
-                      Nationality:
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="body1">
-                      {companion.nationality || "-"}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <Typography variant="body1" fontWeight="bold">
-                      Phone Number:
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="body1">
-                      {companion.phone_number || "-"}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <Typography variant="body1" fontWeight="bold">
-                      WhatsApp Number:
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="body1">
-                      {companion.whatsapp_number || "-"}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <Typography variant="body1" fontWeight="bold">
-                      Start Date:
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="body1">
-                      {companion.check_in_date || "-"}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <Typography variant="body1" fontWeight="bold">
-                      End Date:
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="body1">
-                      {companion.check_out_date || "-"}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <Typography variant="body1" fontWeight="bold">
-                      Total Price(USD):
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="body1">
-                      ${companion.invoice?.total_price || "-"}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <Typography variant="body1" fontWeight="bold">
-                      Status:
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="body1">
-                      {companion.invoice?.status || "-"}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Paper>
-            ))
-          ) : (
-            <Typography variant="body1" sx={{ textAlign: "center" }}>
-              No companions available.
-            </Typography>
-          )}
-        </Fragment>
-      ) : (
-        <Typography
-          variant="body1"
-          sx={{
-            textAlign: "center",
-            color: "#757575",
-            marginTop: 2,
-          }}
-        >
-          No participant details available.
-        </Typography>
-      )}
-    </Box>
+                No participant details available.
+              </Typography>
+            )}
+          </Box>
         </Drawer>
 
-      
+
       </div>
     </div>
   );

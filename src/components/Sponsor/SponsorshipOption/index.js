@@ -8,19 +8,22 @@ import "./style.scss";
 import SponsorInvoice from "../../SpoonsotInvoice";
 import Input from "../../../CoreComponent/Input";
 import { backendUrlImages } from "../../../constant/config";
+import { Grid } from "@mui/material";
 
-const SponsorshipOption = ({ id, title, description, price, onSelect }) => {
-  const [selected, setSelected] = useState(false);
+const SponsorshipOption = ({ id, title, description, price, onSelect, selectedOptions }) => {
+  const selected = selectedOptions.includes(id); // تحقق مما إذا كان الـ id موجودًا في القائمة
 
   const handleSelect = () => {
-    setSelected(!selected); // تغيير حالة التحديد
-    onSelect(id, !selected); // تمرير الـ id والـ selected state للمكون الأب
+    onSelect(id, !selected); // تمرير الـ id وحالته إلى المكون الأب
   };
 
   return (
     <div
       className={`sponsorship-option-container0 ${selected ? "selected" : ""}`}
       onClick={handleSelect}
+      style={{
+        padding:'20px'
+      }}
     >
       <div className="option-container-header">
         <h3>{title}</h3>
@@ -30,13 +33,19 @@ const SponsorshipOption = ({ id, title, description, price, onSelect }) => {
       </div>
       <p className="option-container-description">{description}</p>
       <div className="option-container-checkbox">
-        <input type="checkbox" checked={selected} readOnly />
+        <input type="checkbox"
+        style={{
+          width:'30px',
+          height:'30px'
+        }}
+         checked={selected} readOnly />
       </div>
     </div>
   );
 };
 
-const StandardBoothPackage = ({ onExhibitNumberChange }) => {
+
+const StandardBoothPackage = ({ onExhibitNumberChange , exhibitNumber }) => {
   const [floorPlanUrl, setFloorPlanUrl] = useState(null);
   const [agreementFile, setAgreementFile] = useState(null);
 
@@ -155,6 +164,7 @@ const StandardBoothPackage = ({ onExhibitNumberChange }) => {
             id="exhibitNumber"
             placeholder="Enter Booth Number"
             className="input-field"
+            value={exhibitNumber}
             onChange={(e) => onExhibitNumberChange(e.target.value)}
           />
         </div>
@@ -254,7 +264,11 @@ const BoothCostTable = ({
   return (
     Array.isArray(boothData) &&
     boothData.length > 0 && (
-      <div className="booth-cost-table">
+      <div className="booth-cost-table"
+      style={{
+        overflowX:'auto'
+      }}
+      >
         <div className="booth-cost-table-header3">Booth Cost Table</div>
         <h5 className="booth-cost-table-description">
           Space only stand USD {standPrice} Per Meter - Depth = {standDepth}
@@ -281,6 +295,10 @@ const BoothCostTable = ({
                   <td className="table-cell">
                     <input
                       type="checkbox"
+                      style={{
+                        width:'25px',
+                        height:'25px'
+                      }}
                       checked={selectedBoothIds.includes(booth.id)}
                       onChange={(e) => handleCheckboxChange(e, booth.id)}
                     />
@@ -294,6 +312,10 @@ const BoothCostTable = ({
         <div className="shell-scheme">
           <input
             type="checkbox"
+            style={{
+              width:'20px',
+              height:'20px'
+            }}
             checked={shellSchemeSelected}
             onChange={onShellSchemeChange}
           />
@@ -344,13 +366,13 @@ const SponsorSection = ({
   setSquareMeters,
   handlePrevious,
   handleNext,
+  invoiceData3
 }) => {
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   const handleShellSchemeChange = (event) => {
     setShellSchemeSelected(event.target.checked);
   };
-
   const navigate = useNavigate();
   const handleSelectBooth = (boothId, isSelected) => {
     setChosenBooths((prevIds) => {
@@ -398,9 +420,38 @@ const SponsorSection = ({
     }
   };
 
+
+
   useEffect(() => {
     if (myConferenceId) {
+      console.log(invoiceData3?.exhibit_number);
+      setExhibitNumber(invoiceData3?.exhibit_number)
+      setSelectedOptionIds(invoiceData3?.sponsorship_option_details?.map((item) => {
+        return item?.id
+      }))
       getSponsorshipOptions();
+      console.log({ invoiceData3 });
+
+
+
+
+      setSelectedSponsorshipIds(invoiceData3.conference_sponsorship_details?.map((item) => {
+        return item?.id
+      }))
+
+      //array of obj first sec 
+      setChosenBooths(invoiceData3.booth_cost_details?.map((item) => {
+        return item?.id
+      }))
+
+      setSquareMeters(invoiceData3?.square_meters);
+      //second sec
+
+
+      setShellSchemeSelected(!!invoiceData3?.square_meters ? true : false)
+
+
+
     }
   }, [myConferenceId]);
 
@@ -430,6 +481,8 @@ const SponsorSection = ({
       shell_scheme_price: shellSchemePrice, // إضافة السعر
       square_meters: squareMeters,
     };
+    console.log({payload});
+    
     console.log(squareMeters);
 
     try {
@@ -454,6 +507,26 @@ const SponsorSection = ({
 
   // Fetch the token from localStorage
   const getAuthToken = () => localStorage.getItem("token");
+  function isAnyArrayEmpty() {
+    const data = {
+      conference_sponsorship_option_ids: selectedSponsorshipIds,
+      booth_cost_ids: chosenBooths,
+      sponsorship_option_ids: selectedOptionIds,
+      additional_cost_for_shell_scheme_booth: shellSchemeSelected,
+      exhibit_number: exhibitNumber,
+      shell_scheme_price: shellSchemePrice,
+      square_meters: squareMeters,
+    };
+    return (
+        data.conference_sponsorship_option_ids.length === 0 &&
+        data.booth_cost_ids.length === 0 &&
+        data.sponsorship_option_ids.length === 0 
+    );
+}
+ 
+  
+
+
 
   const getInvoice = () => {
     axios
@@ -474,83 +547,91 @@ const SponsorSection = ({
 
   return (
     <div className="sponsor-section">
-      {/* شرط عرض مكون الفاتورة أو الخيارات بناءً على وجود invoiceData */}
-      {invoiceData ? (
-        // <SponsorInvoice data={invoiceData} /> // إذا كانت invoiceData موجودة، يتم عرض هذا المكون
 
-<div class="message">
-        You have already submitted your data. Please click "Next" to view the invoice.
-    </div>
+      <div>
+        {options && options.length > 0 && (
+          <div className="header-sponsorship-opportunities">
+            Sponsorship Opportunities
+          </div>
+        )}
 
-      ) : (
-        <div>
-          {options && options.length > 0 && (
-            <div className="header-sponsorship-opportunities">
-              Sponsorship Opportunities
-            </div>
-          )}
+        <Grid container
+        spacing={2}
+        sx={{ flexWrap: 'wrap', alignItems: 'stretch', display: 'flex' }}
+        >
 
-          <div className="sponsorship-options-sect">
-            {options.map((option) => (
+          {options.map((option) => (
+            <Grid item xs={12} sm={6} md={4}>
               <SponsorshipOption
-                key={option.id}
-                id={option.id}
-                title={option.title}
-                description={option.description}
-                price={option.price}
-                onSelect={handleSelectOption}
-              />
-            ))}
-          </div>
+              selectedOptions={selectedOptionIds}
+              key={option.id}
+              id={option.id}
+              title={option.title}
+              description={option.description}
+              price={option.price}
+              onSelect={handleSelectOption}
+            />
 
-          <SponsorshipTable
-            onSelectedSponsorshipsChange={handleSelectedSponsorshipsChange}
-          />
-          <BoothCostTable
-            selectedBoothIds={chosenBooths}
-            onSelectBooth={handleSelectBooth}
-            shellSchemeSelected={shellSchemeSelected}
-            onShellSchemeChange={handleShellSchemeChange}
-            onShellSchemePriceChange={handleShellSchemePriceChange} // تمرير دالة السعر
-            onSquareMetersChange={handleSquareMetersChange}
-            shellSchemePrice={shellSchemePrice}
-            setShellSchemePrice={setShellSchemePrice}
-            squareMeters={squareMeters}
-            setSquareMeters={setSquareMeters}
-          />
-          <StandardBoothPackage
-            onExhibitNumberChange={handleExhibitNumberChange}
-          />
+            </Grid>
+            
+          ))}
+        </Grid>
 
-          <div className="fixed-buttons">
-            <button 
+        <SponsorshipTable
+          selectedIds={selectedSponsorshipIds}
+
+          onSelectedSponsorshipsChange={handleSelectedSponsorshipsChange}
+        />
+        <BoothCostTable
+          selectedBoothIds={chosenBooths}
+          onSelectBooth={handleSelectBooth}
+          shellSchemeSelected={shellSchemeSelected}
+          onShellSchemeChange={handleShellSchemeChange}
+          onShellSchemePriceChange={handleShellSchemePriceChange} // تمرير دالة السعر
+          onSquareMetersChange={handleSquareMetersChange}
+          shellSchemePrice={shellSchemePrice}
+          setShellSchemePrice={setShellSchemePrice}
+          squareMeters={squareMeters}
+          setSquareMeters={setSquareMeters}
+        />
+        <StandardBoothPackage
+        exhibitNumber={exhibitNumber}
+          onExhibitNumberChange={handleExhibitNumberChange}
+        />
+
+        <div className="fixed-buttons">
+          <button
             style={{
-              backgroundColor:'#9B1321'
+              backgroundColor: '#9B1321'
             }}
-            onClick={handleSubmit} className="next-button">
-              Submit
-            </button>
-            {/* <button className="prev-button" onClick={handlePrevious}>Prev</button> */}
-            <button
+            onClick={handleSubmit} 
+            disabled={isAnyArrayEmpty()} 
+            // className="next-button"
+            className={`next-button ${isAnyArrayEmpty() ? "disabled":""}`}
+            >
+            Submit
+          </button>
+          {/* <button className="prev-button" onClick={handlePrevious}>Prev</button> */}
+          {/* <button
             style={{
-              backgroundColor:'#9B1321'
-            }}
-             className="next-button" onClick={handleNext}>
-              Next
-            </button>
-          </div>
-        </div>
-      )}
-      <div className="fixed-buttons">
-          
-            <button 
-            style={{
-              backgroundColor:'#9B1321'
+              backgroundColor: '#9B1321'
             }}
             className="next-button" onClick={handleNext}>
-              Next
-            </button>
-          </div>
+            Next
+          </button> */}
+        </div>
+      </div>
+
+      <div className="fixed-buttons">
+{/* 
+        <button
+          style={{
+            backgroundColor: '#9B1321'
+          }}
+          className="next-button" onClick={handleNext}>
+          Next
+        </button> */}
+      </div>
     </div>
   );
 };

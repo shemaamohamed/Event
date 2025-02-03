@@ -78,7 +78,7 @@ const AirportTransferForm = () => {
 
       // في حال نجاح الطلب، أظهر توست برسالة نجاح
       toast.success("Airport transfer booking has been deleted successfully.");
-      window.location.reload()
+    
     } catch (error) {
       // في حال حدوث خطأ، أظهر توست برسالة خطأ
       const errorMessage =
@@ -326,6 +326,7 @@ const AirportTransferForm = () => {
                     />
                     <SimpleLabelValue
                       label="Status"
+
                       value={booking.invoice.total_price > 0 ? booking.invoice.status: "approved"}
                     />
                     {booking.invoice.total_price !== "0.00" ? (

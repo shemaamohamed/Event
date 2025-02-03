@@ -1,13 +1,5 @@
 [
-    {
-        "id": 1,
-        "icon": "icon flaticon-lecture",
-        "title": "Custom Booth Designs",
-        "text": "We create innovative and tailored booth designs that reflect your brand identity.",
-        "text1": "Offering both standard and model booths to meet various needs and preferences.",
-        "animation": "fadeInUp",
-        "delay": 0
-    },
+   
     {
         "id": 2,
         "icon": "icon flaticon-search",

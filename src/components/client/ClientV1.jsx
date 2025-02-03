@@ -22,7 +22,9 @@ const ClientV1 = () => {
     }, []); 
     return (
         <>
-            <section className="clients-section">
+            <section className="clients-section" style={{
+              marginTop:'10vh'
+            }}>
                 <div className="anim-icons">
                         <span className="icon icon-dots-3"></span>
                     <span className="icon icon-circle-blue"></span>

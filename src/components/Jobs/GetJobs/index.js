@@ -84,10 +84,35 @@ const JobList = () => {
   };
 
   return (
-    <div style={{ padding: "20px", marginTop: "15vh" }}>
-    <Typography variant="h4" align="center" gutterBottom>
-      Available Jobs
-    </Typography>
+    <section className={`pricing-section-two ${"alternate"}`} style={{
+      marginTop:'10vh'
+    }}>
+      <div className="sec-title  text-center">
+  <h2 style={{ display: 'inline-block', borderBottom: '2px solid #9B1321', paddingBottom: '10px' }}>      Available Jobs
+
+  </h2>
+</div>
+   
+          <div className="anim-icons">
+                  <span className="icon icon-line-1"></span>
+                  <span className="icon icon-circle-1"></span>
+                  <span className="icon icon-dots"></span>
+          </div>
+          <div className="auto-container"
+          style={{
+            width:'100%',
+            maxWidth:'100%'
+          }}
+           >
+          <div className="outer-box"
+          style={{
+            width:'100%',
+            maxWidth:'100%'
+
+          }}
+          >
+          <div style={{ padding: "20px" }}>
+    
     {error && (
       <Typography variant="body1" color="error" align="center">
         {error}
@@ -95,7 +120,7 @@ const JobList = () => {
     )}
     <Grid container spacing={3} justifyContent="center">
       {jobs.map((job) => (
-        <Grid item key={job.id} xs={12} sm={6} md={8}>
+        <Grid item key={job.id} xs={12} md={8}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -258,6 +283,10 @@ const JobList = () => {
       ))}
     </Grid>
   </div>
+          </div>
+          </div>
+          </section>
+   
   );
 };
 

@@ -5,7 +5,7 @@ import AdditionalConferenceExhibitionServicesDetails from '../../components/serv
 const AdditionalConferenceExhibitionServices = () => {
     return (
         <>
-            <div className="page-wrapper">
+            <div className="page-wrapper" >
                 <span className="header-span"></span>
                 <BreadCrumb title="Additional Conference Exhibition Services" breadCrumb="Additional Conference Exhibition Services"  name={'AdditionalConferenceExhibitionServicesBackground.png'}/>
                 <AdditionalConferenceExhibitionServicesDetails />

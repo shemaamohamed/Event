@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const RegisterForm = () => {
     // إضافة الحقول الجديدة إلى الـ state
@@ -43,9 +43,10 @@ const RegisterForm = () => {
 
         try {
             const response = await axios.post(`${BaseUrl}/messages`, formData);
+            toast.success("Thank you for filling out the form. Our team will review your request and reach out to you shortly!");
+
             setResponseMessage('Message sent successfully!');
             setIsFormSent(true);
-            toast.success("Thank you for filling out the form. Our team will review your request and reach out to you shortly!");
         } catch (error) {
             setResponseMessage('Failed to send message. Please try again.');
         }

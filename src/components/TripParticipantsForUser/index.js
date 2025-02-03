@@ -263,14 +263,14 @@ Delete
                       rows={row}
                       columns={columns}
                       getRowId={(row) => row.id}
-                      initialState={{
-                        pagination: {
-                          paginationModel: {
-                            pageSize: 8,
-                          },
-                        },
-                      }}
-                      pageSizeOptions={[8]}
+                      paginationModel={{ page: currentPage - 1, pageSize: 12 }} 
+        onPaginationModelChange={(pagination) => {
+          setCurrentPage(pagination.page + 1); 
+          fetchParticipants(pagination.page + 1);
+        }}
+        rowCount={totalPages * 12}
+        pageSizeOptions={[12]}
+        paginationMode="server" 
                       checkboxSelection
                       disableRowSelectionOnClick
                       autoHeight

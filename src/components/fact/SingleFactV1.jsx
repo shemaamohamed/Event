@@ -7,7 +7,10 @@ const SingleFactV1 = ({ fact }) => {
     return (
         <>
                 <div className="count-box">
-                    <span className={`icon ${icon}`}></span>
+                    <span className={`icon ${icon}`}>
+                        <img src={`../../assets/images${icon}`} alt="icon"
+                         />
+                    </span>
                     <span className="count-text">
                         +<CountUp duration={3} end={end} enableScrollSpy />
                     </span>

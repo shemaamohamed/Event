@@ -41,125 +41,140 @@ const Welcome = () => {
       console.error("Error submitting form:", error);
     }
   };
+  console.log(info);
+  
   useEffect(() => {
     getWelcomeData()
   }, [])
   return (
-    <Box sx={{ padding: 2 }}>
-      {/* Header Section */}
-      <Box className="welcome-header" sx={{ textAlign: 'center', marginBottom: 6 }}>
-        <Typography variant="h4" component="h6" gutterBottom sx={{ fontWeight: 'bold', color: '#9B1321', textTransform: 'uppercase' }}>
-          Welcome to the Conference!
-        </Typography>
-        <Typography variant="h6" color="textSecondary" sx={{ maxWidth: '800px', margin: '0 auto' }}>
-          On behalf of the Organizing Committee, we are excited to invite you to join us at this prestigious conference, bringing together experts and professionals from around the world. The event will be held in a dynamic and welcoming city, offering a platform for collaboration, innovation, and knowledge exchange.
-        </Typography>
-      </Box>
-
-      {/* Content Section */}
-      <Grid container spacing={4} className="welcome-content" alignItems="center">
-        {/* Image Section */}
-        <Grid item xs={12} md={5}>
-          <Card sx={{ borderRadius: 3, overflow: 'hidden', boxShadow: 3, height: '100%' }}>
-            <CardMedia
-              component="img"
-              alt="President"
-              height="300"
-              image={`${backendUrlImages}conference_images/${info?.president_image}`}
-              sx={{ objectFit: 'cover' }}
-            />
-          </Card>
-        </Grid>
-
-        {/* Description Section */}
-        <Grid item xs={12} md={7}>
-          <CardContent sx={{
-            backgroundColor: '#f1f1f1',
-            borderRadius: 2,
-            padding: 3,
-            width: '100%',
-            height: 'auto',
-            overflow: 'visible',
-          }}>
-            <Typography
-              variant="body1"
-              paragraph
-              sx={{
-                whiteSpace: 'pre-wrap',
-                wordWrap: 'break-word',
-                lineHeight: '1.5',
-              }}
-            >
-              {info?.welcome_message}
-            </Typography>
-          </CardContent>
-
-        </Grid>
+    <section className={`pricing-section-two ${"alternate"}`}>
+   
+          <div className="anim-icons">
+                  <span className="icon icon-line-1"></span>
+                  <span className="icon icon-circle-1"></span>
+                  <span className="icon icon-dots"></span>
+          </div>
+          <div className="auto-container">
+          <div className="outer-box">
+          <Box sx={{ padding: 3 }}>
+    {/* Header Section */}
+    <Box className="welcome-header" sx={{ textAlign: 'center', marginBottom: 6 }}>
+      <Typography variant="h4" component="h6" gutterBottom sx={{ fontWeight: 'bold', color: '#9B1321', textTransform: 'uppercase', letterSpacing: 2 }}>
+        Welcome to the Conference!
+      </Typography>
+      <Typography variant="h6" color="textSecondary" sx={{ maxWidth: '800px', margin: '0 auto', lineHeight: 1.6 }}>
+        On behalf of the Organizing Committee, we are excited to invite you to join us at this prestigious conference, bringing together experts and professionals from around the world. The event will be held in a dynamic and welcoming city, offering a platform for collaboration, innovation, and knowledge exchange.
+      </Typography>
+    </Box>
+  
+    {/* Content Section */}
+    <Grid container spacing={4} className="welcome-content" alignItems="center">
+      {/* Image Section */}
+      <Grid item xs={12} md={3}>
+          <CardMedia
+            component="img"
+            alt="President"
+            image={`${backendUrlImages}${info?.president_image}`}
+            sx={{ objectFit: 'cover', width:'100%',transition: 'transform 0.3s ease', '&:hover': { transform: 'scale(1.1)' } }}
+          />
       </Grid>
-
-      {/* Topics Section */}
-      <Box className="topics-section" sx={{ textAlign: 'center', marginTop: 6 }}>
-        <Card
-          elevation={3}
+  
+      {/* Description Section */}
+      <Grid item xs={12} md={9}>
+        <CardContent sx={{ backgroundColor: '#f9f9f9', borderRadius: 2, padding: 3, boxShadow: 3 }}>
+          <Typography
+            variant="body1"
+            paragraph
+            sx={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', lineHeight: 1.6 ,
+            fontSize:'1.2rem'
+            }}
+          >
+            {info?.welcome_message}
+          </Typography>
+        </CardContent>
+      </Grid>
+    </Grid>
+  
+    {/* Topics Section */}
+    <Box className="topics-section" sx={{ textAlign: 'center', marginTop: 6 }}>
+      {/* Conference Logos */}
+      
+      
+        <Box
           sx={{
-            padding: 3,
-            display: 'inline-block',
-            borderRadius: 3,
-            marginBottom: 4,
-            backgroundColor: '#ffffff',
-            boxShadow: 6,
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 3,
+            alignItems: 'center',
+            flexDirection: { xs: 'column', md: 'row' },
           }}
         >
           <CardMedia
             component="img"
-            image={`${backendUrlImages}conference_logos/${info?.conference_logo}`}
+            image={`${backendUrlImages}${info?.conference_logo}`}
             alt="Conference Logo"
-            sx={{ width: '150px', margin: '0 auto', borderRadius: '50%' }}
+            sx={{
+              width: '120px',
+              height: '120px',
+              borderRadius: '50%',
+              objectFit: 'contain',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            }}
           />
-        </Card>
-        {info?.cooperating_associations_logo && (
-          <>
-            <Typography
-              variant="h5"
-              gutterBottom
+          <CardMedia
+            component="img"
+            image={`${backendUrlImages}${info?.second_logo}`}
+            alt="Second Conference Logo"
+            sx={{
+              width: '120px',
+              height: '120px',
+              borderRadius: '50%',
+              objectFit: 'contain',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            }}
+          />
+        </Box>
+  
+      {/* Cooperating Associations Section */}
+      {info?.cooperating_associations_logo && (
+        <>
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{
+              fontWeight: 'bold',
+              color: '#9B1321',
+              marginTop: 4,
+            }}
+          >
+            In Collaboration With
+          </Typography>
+         
+            <CardMedia
+              component="img"
+              image={`${backendUrlImages}${info?.cooperating_associations_logo}`}
+              alt="Associations Logo"
               sx={{
-                fontWeight: 'bold',
-                color: '#9B1321',
-                textAlign: 'center', // يضمن أن العنوان يكون في الوسط
+                width: '150px',
+                height: '150px',
+                margin: '0 auto',
+                borderRadius: '50%',
+                objectFit: 'contain',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
               }}
-            >
-              In collaboration with
-            </Typography>
-            <Card
-              elevation={3}
-              sx={{
-                padding: 3,
-                display: 'inline-block',
-                borderRadius: 3,
-                backgroundColor: '#ffffff',
-                boxShadow: 6,
-                textAlign: 'center', // يضمن أن الصورة تكون في الوسط
-              }}
-            >
-              <CardMedia
-                component="img"
-                image={`${backendUrlImages}cooperating_associations_logo/${info?.cooperating_associations_logo}`}
-                alt="Associations Logo"
-                sx={{
-                  width: '150px',
-                  height: '150px', // لضمان أن الصورة تكون دائرية
-                  margin: '0 auto',
-                  borderRadius: '50%',
-                  objectFit: 'cover', // يضمن أن الصورة تبقى ضمن الشكل الدائري بشكل جيد
-                }}
-              />
-            </Card>
-          </>
-        )}
-
-      </Box>
+            />
+        </>
+      )}
     </Box>
-
+  </Box>
+</div>
+       
+              
+          </div>
+      </section>
+   
+  
+  
   );
 };
 

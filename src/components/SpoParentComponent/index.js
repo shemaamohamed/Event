@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Stepper from "../../CoreComponent/stepper";
 import "./style.scss";
 import SponsorSection from "../Sponsor/SponsorshipOption";
@@ -9,6 +9,8 @@ import SponsorshipWelcomeMessage from "../Sponsor/Welcome";
 import WelcomeMessage from "../Sponsor/WelcomeMessage 22";
 import { Item } from 'react-photoswipe-gallery';
 import { Divider, Grid } from "@mui/material";
+import axios from "axios";
+import { useAuth } from "../../common/AuthContext";
 const SpoParentComponent = () => {
   // Stepper data
   // step2
@@ -21,6 +23,7 @@ const SpoParentComponent = () => {
   const [invoiceData, setInvoiceData] = useState(null);
   const [shellSchemePrice, setShellSchemePrice] = useState(0);
   const [squareMeters, setSquareMeters] = useState(0);
+  const [invoiceData3, setInvoiceData3] = useState(null);
 
   //step 3
   const [invoiceData2, setInvoiceData2] = useState(null);
@@ -57,6 +60,29 @@ const SpoParentComponent = () => {
       setCurrentStep(currentStep - 1);
     }
   };
+  const { myConferenceId } = useAuth();
+
+  // Fetch the token from localStorage
+  const getAuthToken = () => localStorage.getItem("token");
+  const BaseUrl = process.env.REACT_APP_BASE_URL;;
+  const getInvoice = () => {
+    axios
+      .get(`${BaseUrl}/invoice/${myConferenceId}`, {
+        headers: { Authorization: `Bearer ${getAuthToken()}` },
+      })
+      .then((response) => {
+        setInvoiceData3(response.data.invoices[0]);
+        console.log("ayat" , response);
+        
+      })
+      .catch((error) => {
+        console.error("Error fetching invoice data:", error);
+      });
+  };
+
+  useEffect(() => {
+    getInvoice();
+  }, [myConferenceId, currentStep]);
 
   // Step components
   const stepComponents = [
@@ -71,7 +97,9 @@ const SpoParentComponent = () => {
     {
       stepNumber: 2,
       component: (
-        <div>
+        <div
+        
+        >
           <SponsorSection
             handleNext={handleNext}
             handlePrevious={handlePrevious}
@@ -93,6 +121,8 @@ const SpoParentComponent = () => {
             setShellSchemePrice={setShellSchemePrice}
             squareMeters={squareMeters}
             setSquareMeters={setSquareMeters}
+              invoiceData3={invoiceData3} 
+
           />
         </div>
       ),

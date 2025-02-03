@@ -30,7 +30,9 @@ const ActiveRegistrations = () => {
         params: { page },
         headers: { Authorization: `Bearer ${token}` },
         onSuccess: (data) => {
-          setRegistrationsData(data.registrations || []);
+          setRegistrationsData(data.registrations.reverse() || []);
+          setTotalPages(data?.totalPages || 1);
+          setCurrentPage(Number(data?.currentPage) || 1);
           console.log(data.registrations);
         },
         onError: (error) => setErrorMsg(error?.message || "Failed to fetch registrations."),
@@ -147,8 +149,21 @@ const ActiveRegistrations = () => {
       
       
     },
-    
-
+    {
+      field: "last_update",
+      headerName: "Last Update By User",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) => {
+        // إذا كان هناك تاريخ موجود، نقوم بعرضه بدون الوقت
+        const date = params.value ? new Date(params.value) : null;
+        const formattedDate = date
+          ? `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
+          : "No Date";
+        return <span>{formattedDate}</span>;
+      }
+    },
    
   ];
   const rows = registrationsData.map((row) => {
@@ -161,6 +176,8 @@ const ActiveRegistrations = () => {
     number_of_doctors: row.number_of_doctors,
     excel_file: row.excel_file,
     update_deadline: row.update_deadline,
+    last_update: row.last_update,
+
     };
   });
 
@@ -192,14 +209,14 @@ const ActiveRegistrations = () => {
                     getRowId={(row) => row.user_email} 
                     rows={rows}
                     columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 8,
-                        },
-                      },
+                    paginationModel={{ page: currentPage - 1, pageSize: 12 }} 
+                    onPaginationModelChange={(pagination) => {
+                      setCurrentPage(pagination.page + 1); 
+                      fetchRegistrations(pagination.page + 1);
                     }}
-                    pageSizeOptions={[8]}
+                    rowCount={totalPages * 12} 
+                    pageSizeOptions={[12]}
+                    paginationMode="server" 
                     checkboxSelection
                     disableRowSelectionOnClick
                     autoHeight

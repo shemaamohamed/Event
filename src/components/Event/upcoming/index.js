@@ -34,16 +34,40 @@ const UpcomingConferences2 = () => {
   if (loading) return <p>Loading conferences...</p>;
 
   return (
+    <section className={`pricing-section-two ${"alternate"}`} style={{
+      marginTop:'10vh'
+    }}>
+      <div className="sec-title  text-center">
+  <h2 style={{ display: 'inline-block', borderBottom: '2px solid #9B1321', paddingBottom: '10px' }}>Upcoming Event
+  </h2>
+</div>
+   
+          <div className="anim-icons">
+                  <span className="icon icon-line-1"></span>
+                  <span className="icon icon-circle-1"></span>
+                  <span className="icon icon-dots"></span>
+          </div>
+          <div className="auto-container"
+          style={{
+            width:'100%',
+            maxWidth:'100%'
+          }}
+           >
+          <div className="outer-box"
+          style={{
+            width:'100%',
+            maxWidth:'100%'
+
+          }}
+          >
     <div className="upcoming-conferences-container"
     style={{
       padding:'20px',
-    marginTop:'15vh'
     }}
     >
-      <h2 className="section-title">Upcoming Event</h2>
-      <Grid container spacing={4} justifyContent="center">
+      <Grid container spacing={2} justifyContent="center">
       {conferences.map((conference) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={conference.id}>
+        <Grid item xs={12} sm={6} md={4} lg={4} key={conference.id}>
           <Cardd
             imageUrl={`${backendUrlImages}${conference?.image}`}
             title={conference.title}
@@ -51,12 +75,17 @@ const UpcomingConferences2 = () => {
             seeMoreLink={`/conference/details/${conference.id}`}
             galleryLink={conference.galleryLink}
             buttonText="Read More"
+           
             galleryButtonText="Explore Gallery"
           />
         </Grid>
       ))}
     </Grid>
     </div>
+          </div>
+          </div>
+          </section>
+   
   );
 };
 

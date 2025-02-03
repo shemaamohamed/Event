@@ -267,17 +267,7 @@ const DinnerDetails = () => {
           <p>No dinner details available.</p>
         )}
       </div>
-      <button
-        className="fixed-button"
-        style={{
-          marginTop: "5rem",
-        }}
-        onClick={() => {
-          navigate("/airport/transfer");
-        }}
-      >
-        Next
-      </button>
+
     </div>
   );
 };

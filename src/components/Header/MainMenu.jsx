@@ -8,7 +8,7 @@ const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu ,handleCloseMenu}) =
     const handleHomeClick = (e) => {
         toggleMenu(e);
         handleCloseMenu();
-        navigate('/'); // يقوم بالتنقل إلى الصفحة الرئيسية
+        navigate('/home'); 
       };
        const {  isLoggedIn } = useAuth();
       
@@ -78,8 +78,10 @@ const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu ,handleCloseMenu}) =
                     <Link to={void (0)} onClick={toggleMenu}>Events </Link>
                     <ul className='sub-menu'>
                         <li><Link onClick={handleCloseMenu} to="/up/event">Upcoming Events</Link></li>
-                        <li><Link onClick={handleCloseMenu} to="/gallery"> Previous Events</Link></li>
-                        
+                        <li><Link onClick={handleCloseMenu} to="/pre/con"> Previous Events</Link></li>
+
+                        <li><Link onClick={handleCloseMenu} to="/gallery"> Gallery</Link></li>
+
                     </ul>
                     <div className="dropdown-btn"><span className="fa fa-angle-down"></span></div>
                 </li>

@@ -7,7 +7,9 @@ import Select from "../../../CoreComponent/Select"; // إذا كانت لديك 
 import toast from "react-hot-toast";
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 
+
 import { styled } from '@mui/system';
+import { backendUrlImages } from "../../../constant/config";
 
 // Styling for the custom components
 const Container = styled(Box)({
@@ -100,7 +102,7 @@ const EditFloor = () => {
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) => (
-                <a href={params.row.floor_plan} target="_blank" rel="noopener noreferrer">
+                <a href={`${backendUrlImages}${params.row.floor_plan}`} target="_blank" rel="noopener noreferrer">
                     View Floor Plan
                 </a>
             ),
@@ -113,7 +115,7 @@ const EditFloor = () => {
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) => (
-                <a href={params.row.agreement_page} target="_blank" rel="noopener noreferrer">
+                <a   href={`${backendUrlImages}${params.row.agreement_page}`} target="_blank" rel="noopener noreferrer">
                     View Agreement Page
                 </a>
             ),

@@ -5,6 +5,13 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { HashLink as Link } from 'react-router-hash-link';
 import EventsConsultant from "./EventsConsultant.jpg"
+import EventsConsultant1 from "./EventsConsultant1.jpg"
+import EventsConsultant2 from "./EventsConsultant2.jpg"
+import EventsConsultant3 from "./EventsConsultant3.jpg"
+import EventsConsultant4 from "./EventsConsultant4.jpg"
+import EventsConsultant5 from "./EventsConsultant5.jpg"
+import EventsConsultant8 from "./EventsConsultant8.jpg"
+
 
 
 const BannerV1 = () => {
@@ -65,6 +72,61 @@ const BannerV1 = () => {
             <section className="banner-section">
                 <div className="banner-carousel">
                     <Slider {...settings}>
+                    <>
+                         <div className="slide-item" style={{ backgroundImage: `url(${EventsConsultant8})` }}>
+                                        <div className="auto-container">
+                                             <div className="content-box">
+                                              
+                                                <h2> 
+                                                Events Consultant </h2>
+                                               
+                                                <div className="btn-box"><Link to={`/registertype#`} className="theme-btn btn-style-two"><span className="btn-title">Book Ticket</span ></Link></div>
+                                            </div> 
+                                        </div>
+                                    </div >
+                        </>
+                       
+                        <>
+                         <div className="slide-item" style={{ backgroundImage: `url(${EventsConsultant1})` }}>
+                                        <div className="auto-container">
+                                             <div className="content-box">
+                                              
+                                                <h2> 
+                                                Events Consultant </h2>
+                                               
+                                                <div className="btn-box"><Link to={`/registertype#`} className="theme-btn btn-style-two"><span className="btn-title">Book Ticket</span ></Link></div>
+                                            </div> 
+                                        </div>
+                                    </div >
+                        </>
+                        <>
+                         <div className="slide-item" style={{ backgroundImage: `url(${EventsConsultant2})` }}>
+                                        <div className="auto-container">
+                                             <div className="content-box">
+                                              
+                                                <h2> 
+                                                Events Consultant </h2>
+                                               
+                                                <div className="btn-box"><Link to={`/registertype#`} className="theme-btn btn-style-two"><span className="btn-title">Book Ticket</span ></Link></div>
+                                            </div> 
+                                        </div>
+                                    </div >
+                        </>
+                        <>
+                         <div className="slide-item" style={{ backgroundImage: `url(${EventsConsultant3})` }}>
+                                        <div className="auto-container">
+                                             <div className="content-box">
+                                              
+                                                <h2> 
+                                                Events Consultant </h2>
+                                               
+                                                <div className="btn-box"><Link to={`/registertype#`} className="theme-btn btn-style-two"><span className="btn-title">Book Ticket</span ></Link></div>
+                                            </div> 
+                                        </div>
+                                    </div >
+                        </>
+                       
+                       
                         <>
                          <div className="slide-item" style={{ backgroundImage: `url(${EventsConsultant})` }}>
                                         <div className="auto-container">

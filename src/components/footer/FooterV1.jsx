@@ -5,10 +5,12 @@ import { Gallery } from 'react-photoswipe-gallery';
 import SingleGalleryV1 from '../gallery/SingleGalleryV1';
 import axios from 'axios';
 import { Box } from '@mui/material';
+import { useAuth } from '../../common/AuthContext';
 
 const FooterV1 = () => {
      const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(9);
+     const {  isLoggedIn } = useAuth();
     
     const [images, setImages] = useState([]); // Initialize state as an empty array
     const [loading, setLoading] = useState(false); 
@@ -53,7 +55,7 @@ const FooterV1 = () => {
                                         <div className="footer-widget widget-ps-50">
                                             <h2 className="widget-title">Useful Links</h2>
                                             <ul className="user-links">
-                                           <li><Link to="/#">Home </Link></li>
+                                           <li><Link to="/home">Home </Link></li>
                                                                    <li><Link to="/conferences">Conferences </Link></li>
                                                                    <li><Link to="/page/exhibitions">Exhibition </Link></li>
                                            
@@ -63,7 +65,19 @@ const FooterV1 = () => {
                                                                    <li><Link to="/our_clients" >Our Clients</Link></li>
                                                                    <li><Link to="/gallery" >Gallery</Link></li>
                                                                    <li><Link to="/job/list" >Careers</Link></li>
-                                                                   <li><Link to="/faq" >FAQs</Link></li>
+                                                                   {
+                            isLoggedIn && (
+                                <li><Link  to="/faq" >FAQs</Link></li>
+
+                            )
+                        }
+                        {
+                            !isLoggedIn&&(
+
+                                <li><Link to="/login" >FAQs</Link></li>
+
+                            )
+                        }
                                             </ul>
                                         </div>
                                     </div>
@@ -71,6 +85,25 @@ const FooterV1 = () => {
                             </div>
                             <div className="big-column col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                 <div className="row">
+                                <div className="footer-column col-xl-5 col-lg-6 col-md-6 col-sm-12">
+                                        <div className="footer-widget widget-ps-50">
+                                            <h2 className="widget-title">Events</h2>
+                                            <ul className="user-links">
+                                                                   <li><Link to="/up/event">Up Coming Events </Link></li>
+                                                                   <li><Link to="/pre/con">Previous Events </Link></li>
+                                           
+                                           
+                                            </ul>
+                                        </div>
+                                        <div className="footer-widget widget-ps-50">
+                                            <h2 className="widget-title">Travel </h2>
+                                            <ul className="user-links">
+                                                                   <li><Link to="/tour_slider">Sights </Link></li>
+                                           
+                                           
+                                            </ul>
+                                        </div>
+                                    </div>
                                     <div className="footer-column col-lg-6 col-md-6 col-sm-12">
                                         <div className="footer-widget contact-widget">
                                             <h2 className="widget-title">Contact Us</h2>
@@ -96,20 +129,7 @@ const FooterV1 = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="footer-column col-lg-6 col-md-6 col-sm-12">
-                                        <div className="footer-widget widget-ps-50 instagram-widget">
-                                            <h2 className="widget-title"> Gallery</h2>
-                                            <div className="widget-content">
-                                                <div className="outer insta-outer clearfix">
-                                                    <Gallery withDownloadButton>
-                                                        {images.slice(0, 6).map(album =>
-                                                            <SingleGalleryV1 key={album.id} album={album} />
-                                                        )}
-                                                    </Gallery>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                  
                                     
                                 </div>
                             </div>

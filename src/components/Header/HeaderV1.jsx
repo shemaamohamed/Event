@@ -91,12 +91,12 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                         <div className="logo-box">
                             {whiteLogo ?
                                 <>
-                                    <div className="logo"><Link to="/#"><img src="/images/logo.png" alt="image" style={{
+                                    <div className="logo"><Link to="/home#"><img src="/images/logo.jpg" alt="image" style={{
                                         width:'130px'
                                     }} /></Link></div>
                                 </>
                                 : <>
-                                    <div className="logo"><Link to="/#"><img src="/images/logo.png" alt="image" style={{
+                                    <div className="logo"><Link to="/home#"><img src="/images/logo.jpg" alt="image" style={{
                                         width:'130px'
                                     }}  /></Link></div>
                                 </>}
@@ -185,7 +185,7 @@ const HeaderV1 = ({ headerStyle, whiteLogo = false, headerTopV1, headerTopV2, pa
                         <div className="menu-backdrop" ></div>
                         <div className="close-btn"><span className="icon flaticon-cancel-1"></span></div>
                         <nav className="menu-box">
-                            <div className="nav-logo"><Link to="/#"><img src="/images/logo.png" alt="image" /></Link></div>
+                            <div className="nav-logo"><Link to="/home#"><img src="/images/logo.jpg" alt="image" /></Link></div>
                             <MainMenu toggleMultiMenu={toggleMultiMenu} toggleMenu={toggleMenu} parentMenu={parentMenu}       handleCloseMenu={handleCloseMenu}  />
                             {isLoggedIn ? (
                                   <div

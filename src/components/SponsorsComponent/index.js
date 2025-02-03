@@ -249,14 +249,14 @@ const SponsorsComponent = () => {
           getRowId={(row) => row.id}
           rows={rows}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 8,
-              },
-            },
-          }}
-          pageSizeOptions={[8]}
+          paginationModel={{ page: currentPage - 1, pageSize: 10 }} 
+        onPaginationModelChange={(pagination) => {
+          setCurrentPage(pagination.page + 1); 
+          handlePageChange(pagination.page + 1);
+        }}
+        rowCount={totalPages * 10}
+        pageSizeOptions={[10]}
+        paginationMode="server" 
           checkboxSelection
           disableRowSelectionOnClick
           autoHeight

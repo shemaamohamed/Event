@@ -215,27 +215,27 @@ const GroupTripParticipantsForUser = () => {
       flex: 1,
       cellClassName: "centered-cell",
     },
-    {
-      field: "groupPricePerPerson",
-      headerName: "Group Price Per Person",
-      minWidth: 200,
-      flex: 1,
-      cellClassName: "centered-cell",
-    },
-    {
-      field: "groupPricePerSpeaker",
-      headerName: "Group Price Per Speaker",
-      minWidth: 200,
-      flex: 1,
-      cellClassName: "centered-cell",
-    },
-    {
-      field: "accommodationPrice",
-      headerName: "Accommodation Price",
-      minWidth: 200,
-      flex: 1,
-      cellClassName: "centered-cell",
-    },
+    // {
+    //   field: "groupPricePerPerson",
+    //   headerName: "Group Price Per Person",
+    //   minWidth: 200,
+    //   flex: 1,
+    //   cellClassName: "centered-cell",
+    // },
+    // {
+    //   field: "groupPricePerSpeaker",
+    //   headerName: "Group Price Per Speaker",
+    //   minWidth: 200,
+    //   flex: 1,
+    //   cellClassName: "centered-cell",
+    // },
+    // {
+    //   field: "accommodationPrice",
+    //   headerName: "Accommodation Price",
+    //   minWidth: 200,
+    //   flex: 1,
+    //   cellClassName: "centered-cell",
+    // },
     {
       field: "actions",
       headerName: "Actions",
@@ -252,13 +252,7 @@ const GroupTripParticipantsForUser = () => {
             open={Boolean(anchorEl) && selectedRow?.id === params.row.id}
             onClose={closeMenu}
           >
-            <MenuItem
-              onClick={() => {
-                handleViewDetails(params.row);
-              }}
-            >
-              View Details
-            </MenuItem>
+      
             <MenuItem
               onClick={() => {
                 handleDelete(params.row.id);
@@ -294,14 +288,14 @@ const GroupTripParticipantsForUser = () => {
           rows={row}
           columns={columns}
           getRowId={(row) => row.id}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 8,
-              },
-            },
-          }}
-          pageSizeOptions={[8]}
+          paginationModel={{ page: currentPage - 1, pageSize: 12 }} 
+        onPaginationModelChange={(pagination) => {
+          setCurrentPage(pagination.page + 1); 
+          fetchParticipants(pagination.page + 1);
+        }}
+        rowCount={totalPages * 12}
+        pageSizeOptions={[12]}
+        paginationMode="server" 
           checkboxSelection
           disableRowSelectionOnClick
           autoHeight

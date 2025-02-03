@@ -192,6 +192,7 @@ const EnterNewFlights = () => {
         flight_id={flight_id}
         main_user_id={main_user_id}
       />
+      
       <DataGrid
         rows={rows}
         columns={columns}

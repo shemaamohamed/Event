@@ -194,7 +194,7 @@ const NotificationDropdown = () => {
       </div>
       {isOpen && unreadNotifications.length > 0 && (
         <div className="notification-dropdown">
-          {reversedNotifications.map((notification) => (
+          {reversedNotifications.slice(0, 3).map((notification) => (
             <div
               key={notification.id}
               className={`notification-item unread`}
@@ -283,7 +283,7 @@ const NotificationDropdown = () => {
                     "has requested additional trips"
                   )
                 ) {
-                  navigate(`/enter/new/flights`);
+                  navigate(`/flights/enter/new`);
                 }
                 else if (
                   notification?.message?.includes(
@@ -298,6 +298,69 @@ const NotificationDropdown = () => {
                   )
                 ) {
                   navigate(`/pending/users`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "updated the Excel file"
+                  )
+                ) {
+                  navigate(`/admin/excel/table`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "Available flights have been added for"
+                  )
+                ) {
+                  navigate(`/accept/flight/${notification?.flight_id}`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "Invoice for flight"
+                  )
+                ) {
+                  navigate(`/flights`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "New Reservation Added"
+                  )
+                ) {
+                  navigate(`/reservations`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "The confirmation letter for your reservation is now available"
+                  )
+                ) {
+                  navigate(`/reservation/form`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "has added to the trip"
+                  )
+                ) {
+                  navigate(`/trip/participants/user`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "has registered for the Group trip"
+                  )
+                ) {
+                  navigate(`/trip/participants/group`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "has registered for the Dinner event"
+                  )
+                ) {
+                  navigate(`/conferences/page`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "has registered for the Airport Transfer service."
+                  )
+                ) {
+                  navigate(`/all-airports`);
                 }
               }}
             >

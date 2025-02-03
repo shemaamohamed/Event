@@ -31,7 +31,7 @@ const WhyChooseV1 = () => {
                         </div>
                         <div className="image-column col-lg-6 col-md-12 col-sm-12 ">
                             <div className="image-box">
-                                <figure className="image"><img src="../images/background/3.jpg" alt="image" /></figure>
+                                <figure className="image"><img src="../images/background/3.png" alt="image" /></figure>
                             </div>
                         </div>
                     </div>

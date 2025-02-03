@@ -70,6 +70,30 @@ const FlightsWithInvoices = () => {
     <Grid item xs={12} sm={6}>
       <SimpleLabelValue label="Additional Requests" value={flight?.additional_requests || "-"} />
     </Grid>
+
+
+    <Grid item xs={12} sm={6}>
+      <SimpleLabelValue label="Flight Time" value={flight?.specific_flight_time || "-"} />
+    </Grid>
+
+{/* 
+    <Grid item xs={12} sm={6}>
+      <SimpleLabelValue label="Flight Time" value={flight?.additional_requests || "-"} />
+    </Grid> */}
+
+    <Grid item xs={12} sm={6}>
+      <SimpleLabelValue label="Flight Number" value={flight?.flight_number || "-"} />
+    </Grid>
+
+    <Grid item xs={12} sm={6}>
+      <SimpleLabelValue label="Upgrade Class" value={flight?.upgrade_class|| "-"} />
+    </Grid>
+
+
+
+
+
+
     <Grid item xs={12} sm={6}>
       <SimpleLabelValue label="Updated At" value={moment(flight?.updated_at).format("DD-MM-YYYY HH:MM") || "-"} />
     </Grid>

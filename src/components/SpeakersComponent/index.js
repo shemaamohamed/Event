@@ -55,26 +55,6 @@ const SpeakersComponent = () => {
     setDialogOpen(true);
   };
 
-  const rows = usersData.map((user) => ({
-    ...user,
-    name: user?.user?.name,
-    email: user?.user?.email,
-
-    biography: user?.user?.biography,
-    image: user?.user?.image,
-
-    abstract: user.abstract,
-    presentation_file: user.presentation_file,
-    video: user.video,
-    topics: user.topics,
-    online_participation: user.online_participation ? "Yes" : "No",
-    is_online_approved: user.is_online_approved ? "Yes" : "No",
-    accommodation_status: user.accommodation_status ? "Booked" : "Not Booked",
-    ticket_status: user.ticket_status ? "Approved" : "Rejected",
-    dinner_invitation: user.dinner_invitation ? "Yes" : "No",
-    airport_pickup: user.airport_pickup ? "Yes" : "No",
-    free_trip: user.free_trip ? "Yes" : "No",
-  }));
   const column = [
     {
       field: "name",
@@ -105,13 +85,9 @@ const SpeakersComponent = () => {
       cellClassName: "centered-cell",
       renderCell: (params) => {
         const imageUrl = `${backendUrlImages}${params.row.image}`;
-        // Placeholder if no image is available
         return (
           <div style={{ textAlign: "center" }}>
-            <a
-              href={imageUrl}
-              download={params.row.image ? params.row.image : null}
-            >
+            <a href={imageUrl} download={params.row.image ? params.row.image : null}>
               <img
                 src={imageUrl}
                 alt={params.row.name}
@@ -119,7 +95,7 @@ const SpeakersComponent = () => {
                   width: "50px",
                   height: "50px",
                   borderRadius: "50%",
-                  objectFit: "cover", // Makes sure the image fits the circle
+                  objectFit: "cover",
                 }}
               />
             </a>
@@ -197,7 +173,63 @@ const SpeakersComponent = () => {
           "No Topics"
         ),
     },
-
+    {
+      field: "second_abstract",
+      headerName: "Second Abstract",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) =>
+        params.row.second_abstract ? (
+          <a
+            href={`${backendUrlImages}${params.row.second_abstract}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Second Abstract
+          </a>
+        ) : (
+          "No Second Abstract"
+        ),
+    },
+    {
+      field: "second_presentation_file",
+      headerName: "Second Presentation File",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) =>
+        params.row.second_presentation_file ? (
+          <a
+            href={`${backendUrlImages}${params.row.second_presentation_file}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Second Presentation
+          </a>
+        ) : (
+          "No Second Presentation"
+        ),
+    },
+    {
+      field: "second_video",
+      headerName: "Second Video",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+      renderCell: (params) =>
+        params.row.second_video ? (
+          <a
+            href={`${backendUrlImages}${params.row.second_video}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Second Video
+          </a>
+        ) : (
+          "No Second Video"
+        ),
+    },
     {
       field: "online_participation",
       headerName: "Online Participation",
@@ -212,20 +244,6 @@ const SpeakersComponent = () => {
       minWidth: 230,
       cellClassName: "centered-cell",
     },
-    // {
-    //   field: "accommodation_status",
-    //   headerName: "Accommodation Status",
-    //   flex: 1,
-    //   minWidth: 230,
-    //   cellClassName: "centered-cell",
-    //  },
-    // {
-    //   field: "ticket_status",
-    //   headerName: "Visa Status",
-    //   flex: 1,
-    //   minWidth: 230,
-    //   cellClassName: "centered-cell",
-    // },
     {
       field: "dinner_invitation",
       headerName: "Have Dinner Invitation",
@@ -248,6 +266,30 @@ const SpeakersComponent = () => {
       cellClassName: "centered-cell",
     },
   ];
+  
+  const rows = usersData.map((user) => ({
+    ...user,
+    name: user?.user?.name,
+    email: user?.user?.email,
+    biography: user?.user?.biography,
+    image: user?.user?.image,
+    abstract: user.abstract,
+    presentation_file: user.presentation_file,
+    video: user.video,
+    topics: user.topics,
+    second_abstract: user.second_abstract,
+    second_presentation_file: user.second_presentation_file,
+    second_video: user.second_video,
+    online_participation: user.online_participation ? "Yes" : "No",
+    is_online_approved: user.is_online_approved ? "Yes" : "No",
+    accommodation_status: user.accommodation_status ? "Booked" : "Not Booked",
+    ticket_status: user.ticket_status ? "Approved" : "Rejected",
+    dinner_invitation: user.dinner_invitation ? "Yes" : "No",
+    airport_pickup: user.airport_pickup ? "Yes" : "No",
+    free_trip: user.free_trip ? "Yes" : "No",
+  }));
+  
+  
 
   const handleFileUpload = async () => {
     const formData = new FormData();
@@ -326,14 +368,14 @@ const SpeakersComponent = () => {
         rows={rows}
         columns={column}
         getRowId={(row) => row.email}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 7,
-            },
-          },
+        paginationModel={{ page: currentPage - 1, pageSize: 3 }} 
+        onPaginationModelChange={(pagination) => {
+          setCurrentPage(pagination.page + 1); 
+          handlePageChange(pagination.page + 1);
         }}
-        pageSizeOptions={[7]}
+        rowCount={totalPages * 3}
+        pageSizeOptions={[12]}
+        paginationMode="server" 
         checkboxSelection
         disableRowSelectionOnClick
         autoHeight

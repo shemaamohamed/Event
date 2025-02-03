@@ -146,7 +146,6 @@ import VisasComponent from "./components/VisaComponent";
 import Certificate from "./components/certificate";
 import InvoiceTrip from "./components/InvoiceTrip";
 import UserLayout from './UserLayout';
-import NotFound from './components/NotFound/index';
 import AdminLayoutBasic from './AdminLayout';
 import OverViewDashboard from './components/OverViewDashboard/index';
 import GroupTripRegistration from './components/GroupTripRegistration/index';
@@ -197,6 +196,7 @@ import AgreementSigning from './components/Sponsor/Agreement Signing';
 import WorkShopEdit from './components/EditWorkShop';
 import Notifications from './components/Notifications';
 import ClosingDateForm from './components/ClosingDateForm';
+import PreConferences from './components/Previous';
 
 
 
@@ -276,7 +276,8 @@ const App = () => {
                   <Route path='/' element={<UserLayout/>}>
                   {/* //home */}
                 <Route path='/pricing' element={<Pricing />}></Route>
-                
+                <Route path="/pre/con" element={<PreConferences />} />
+
                 <Route path='/gallery' element={<Gallery />}></Route>
                 <Route path='/our_team' element={<Teams />}></Route>
                 <Route path='/our_clients' element={<ClientV1/>}></Route>
@@ -318,7 +319,7 @@ const App = () => {
 <Route path="/registertype" element={<RegisterType />} />
             {/* register */}
             <Route
-  path="register/attendance/:conferenceId/:type"
+  path="register/attendance/:conferenceId/:type/:priceId"
   element={<RegisterAttendancePage />}
 
 />
@@ -429,7 +430,6 @@ const App = () => {
 
 
               
-              <Route path="*" element={<NotFound/>} />
               <Route
                                           path="/conference/speaker/:conferenceId"
                                           element={<Speakers4 />}
@@ -687,7 +687,6 @@ const App = () => {
                                         element={<GroupTripRegistration />}
                                       /> */}
                                       
-                                        <Route path="*" element={<NotFound/>} />
                                        <Route
                                                           path="/table/zoom/speaker/:conferenceId"
                                                           element={<AddZoomLink />}
@@ -733,7 +732,6 @@ const App = () => {
                     <Route path="reset/password" element={<ForgotPassword2 />} />
 
 
-                                        <Route path="*" element={<NotFound/>} />
 
 
 
@@ -775,7 +773,6 @@ const App = () => {
                                 <Route path="/comprehensive-marketing-services" element={<ComprehensiveMarketingServices />} />
                                 <Route path="/additional-conference-exhibition-services" element={<AdditionalConferenceExhibitionServices />} />
                                 <Route path="/sponsor/invoice" element={<SponsorInvoice />} />
-                                <Route path="*" element={<NotFound/>} />
                                               <Route
                                                                           path="/conference/speaker/:conferenceId"
                                                                           element={<Speakers4 />}
@@ -816,6 +813,7 @@ const App = () => {
 
 
                                 <Route path="/up/event" element={<UpcomingConferences2 />} />
+
                                 <Route path="one/exhibits/:exhibitId" element={<OneExhibit />} />
                                 <Route path="/notification" element={<Notifications/>} />
 
@@ -837,7 +835,6 @@ const App = () => {
 
 
 
-                                <Route path="*" element={<NotFound/>} />
                                 <Route
                                                         path="/conference/speaker/:conferenceId"
                                                         element={<Speakers4 />}
@@ -855,13 +852,13 @@ const App = () => {
                     
                      
                       
-            {!noNavRoute.includes(location.pathname) &&
+            {/* {!noNavRoute.includes(location.pathname) &&
               !location.pathname.includes("/registerPage") &&
               !location.pathname.includes("/other") &&
               !location.pathname.includes("/register/")
               &&!isLoggedIn &&!limit
                &&     <FooterV1 />
-}
+} */}
           </div>
         </div>
       </div>

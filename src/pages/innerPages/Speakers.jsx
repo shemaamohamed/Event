@@ -4,7 +4,9 @@ import TeamV1 from '../../components/speaker/SpeakerV1';
 const Teams = () => {
     return (
         <>
-            <div className="page-wrapper">
+            <div className="page-wrapper" style={{
+              marginTop:'10vh'
+            }} >
                 <span className="header-span"></span>
                 <TeamV1 />
             </div>

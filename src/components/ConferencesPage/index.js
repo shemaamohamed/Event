@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import httpService from "../../common/httpService";
 import { backendUrlImages } from "../../constant/config";
 import Pagination from "../../CoreComponent/Pagination";
+import { Card, CardContent, Grid ,CardMedia } from "@mui/material";
 
 const ConferenceCards = ({ conferences }) => {
   const navigate = useNavigate();
@@ -13,24 +14,48 @@ const ConferenceCards = ({ conferences }) => {
   };
 
   return (
-    <div className="conference-cards-container">
+    <>
       {conferences.map((conference) => (
-        <div
+         <Grid item xs={12} sm={12} md={6}  lg={3}
+        
+         >
+            <Card
           key={conference.id}
-          className="conference-card"
           onClick={() => handleCardClick(conference.id)}
+          sx={{
+            flex:1,
+            height:'100%',
+            cursor:'pointer',
+
+           }}
+
         >
-          <div className="conference-card-image">
+          <CardMedia
+                    onClick={() => handleCardClick(conference.id)}
+
+          
+          style={{
+            width:'100%',
+            height:'250px',
+            cursor:'pointer',
+
+          }}
+          >
             {conference.image ? (
               <img
                 src={`${backendUrlImages}${conference.image}`}
                 alt={conference.title}
+                style={{
+                  width:'100%',
+                  height:'100%'
+
+                }}
               />
             ) : (
               <div className="conference-placeholder">No Image</div>
             )}
-          </div>
-          <div className="conference-card-details">
+          </CardMedia>
+          <CardContent>
             <h3 className="conference-card-title">{conference.title}</h3>
             <p className="conference-card-description">
               {conference.description
@@ -46,10 +71,13 @@ const ConferenceCards = ({ conferences }) => {
             <p className="conference-card-location">
               {conference.location || "Location not specified"}
             </p>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
+        
+         </Grid>
+      
       ))}
-    </div>
+    </>
   );
 };
 
@@ -83,17 +111,54 @@ const ConferencesPage = () => {
   };
 
   return (
-    <div className="user-conference-cards-container" style={{
+    <section className={`pricing-section-two ${"alternate"}`} style={{
+      marginTop:'10vh'
+    }}>
+      <div className="sec-title  text-center">
+  <h2 style={{ display: 'inline-block', borderBottom: '2px solid #9B1321', paddingBottom: '10px' }}>Conferences
+  </h2>
+</div>
+   
+          <div className="anim-icons">
+                  <span className="icon icon-line-1"></span>
+                  <span className="icon icon-circle-1"></span>
+                  <span className="icon icon-dots"></span>
+          </div>
+          <div className="auto-container"
+          style={{
+            width:'100%',
+            maxWidth:'100%'
+          }}
+           >
+          <div className="outer-box"
+          style={{
+            width:'100%',
+            maxWidth:'100%'
+
+          }}
+          >
+          <Grid container spacing={3} style={{
       padding:'20px',
-    marginTop:'15vh'
+   
     }}>
       <ConferenceCards conferences={conferences} />
+
+
+      <Grid item xs={12}>
       <Pagination
         currentPage={pagination.currentPage}
         totalPages={pagination.totalPages}
         onPageChange={handlePageChange}
       />
-    </div>
+        
+        </Grid>
+      
+    </Grid>
+          </div>
+          </div>
+          </section>
+    
+    
   );
 };
 

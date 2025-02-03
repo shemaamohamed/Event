@@ -29,8 +29,19 @@
       border-radius: 25px;
       margin: 5px 0; /* Space between the buttons */
       transition: background-color 0.3s;
+
+
+      &.disabled{
+        background-color: #b0c4de; /* لون باهت */
+        cursor: not-allowed; /* مؤشر يوضح أن الزر غير نشط */
+        opacity: 0.6;
+      }
     }
-  
+    .next-button:disabled {
+      background-color: #b0c4de; /* لون باهت */
+      cursor: not-allowed; /* مؤشر يوضح أن الزر غير نشط */
+      opacity: 0.6; /* تقليل الوضوح */
+    }
     .prev-button:hover,
     .next-button:hover {
       background-color: #0056b3;

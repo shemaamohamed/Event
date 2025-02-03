@@ -10,7 +10,7 @@ import ImageUpload from "../../../CoreComponent/ImageUpload";
 import { countriesOptions, nationalitiesOptions } from "../../../constant";
 import "./style.scss";
 import toast from "react-hot-toast";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 
 function PaperSubmissionForm({ conferenceId }) {
   const navigate = useNavigate();
@@ -53,6 +53,8 @@ function PaperSubmissionForm({ conferenceId }) {
       );
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error(error.response.data.message)
+
       setError({
         form: "There was an error submitting your form. Please try again.",
       });
@@ -61,13 +63,14 @@ function PaperSubmissionForm({ conferenceId }) {
 
   return (
   
-<div >
+<Container
+padding={2} >
   {/* Adding the important notes section */}
 
   {/* The rest of the form */}
   <form onSubmit={handleSubmit} className="register-form">
 
-    <Grid container spacing={3} className="fields-container">
+    <Grid container spacing={2} className="fields-container">
       {/* Name */}
       <Grid item xs={12} sm={6} md={4}>
         <Input
@@ -214,7 +217,7 @@ function PaperSubmissionForm({ conferenceId }) {
       </Button>
     </Grid>
   </form>
-</div>
+</Container>
   );
 }
 

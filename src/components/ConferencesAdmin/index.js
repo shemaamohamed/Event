@@ -284,6 +284,7 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
   const [visaCost, setVisaCost] = useState("");
   const [companionDinnerPrice, setCompanionDinnerPrice] = useState("");
   const [logo, setLogo] = useState("");
+  const [slogo, setSLogo] = useState(null); // لتخزين الصورة الثانية
 
   const [entries, setEntries] = useState([
     { id: Date.now(), price_type: "", price: "", description: "" },
@@ -371,6 +372,7 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
     // formData.append("status", status.value);
     formData.append("image", image);
     formData.append("logo", logo);
+    formData.append("second_logo", slogo);
 
     formData.append("first_announcement_pdf", firstAnnouncement);
     formData.append("second_announcement_pdf", secondAnnouncement);
@@ -495,6 +497,12 @@ const ConferencesAdmin = ({ setIsOpen, getConference }) => {
           label="Upload Logo"
           inputValue={logo}
           setInputValue={setLogo}
+          allowedExtensions={["jpg", "jpeg", "png"]}
+        />
+              <ImageUpload
+          label="Upload Second Logo"
+          inputValue={slogo}
+          setInputValue={setSLogo}
           allowedExtensions={["jpg", "jpeg", "png"]}
         />
         <ImageUpload

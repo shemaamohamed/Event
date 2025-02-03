@@ -39,7 +39,7 @@ const AboutV1 = () => {
                         <div className="image-column col-lg-6 col-md-12 col-sm-12">
                             <div className="image-box">
                                         <figure className="image">
-                                            <img src="../images/resource/about-img-1.jpg" alt="image" />
+                                            <img src="../images/resource/about-img-1.png" alt="image" />
                                         </figure>
                             </div>
                         </div>

@@ -48,7 +48,9 @@ const Home1 = () => {
   };
     return (
         <>
-            <div className="page-wrapper">
+            <div className="page-wrapper" style={{
+              marginTop:'10vh'
+            }}>
                 <BannerV1 />
                 <AboutV1 />
                 <FeatureV1 />

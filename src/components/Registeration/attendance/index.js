@@ -9,7 +9,7 @@ import DialogMessage from "../../DialogMessage";
 
 const RegisterAttendancePage = () => {
   const navigate = useNavigate();
-  const { conferenceId, type } = useParams();
+  const { conferenceId, type ,priceId} = useParams();
   const [paymentStatus, setPaymentStatus] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [name, setName] = useState("");
@@ -23,6 +23,7 @@ const RegisterAttendancePage = () => {
   const [price, setPrice] = useState("");
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+console.log({priceId});
 
   const handlePayment = async () => {
     setPaymentStatus(true);
@@ -34,11 +35,17 @@ const RegisterAttendancePage = () => {
     if (!conference) {
       return `Conference with ID ${conferenceId} not found.`;
     }
+console.log(conference?.prices);
 
     // Find the doctor price in the prices array
     const doctorPrice = conference.prices.find(
-      (price) => price.price_type === type
+      (price) => price.id == priceId 
     );
+    console.log(conference.prices);
+    console.log(priceId);
+    
+    
+// console.log({doctorPrice});
 
     if (!doctorPrice) {
       return `Doctor price not found for conference ID ${conferenceId}.`;
@@ -47,12 +54,14 @@ const RegisterAttendancePage = () => {
     return doctorPrice.price;
   }
   const getConference = () => {
+    
     const url = `${BaseUrl}/con/upcoming`;
 
     axios
       .get(url)
       .then((response) => {
         console.log(response.data.upcoming_conferences);
+// console.log(getPrice(response?.data?.upcoming_conferences));
 
         setPrice(getPrice(response?.data?.upcoming_conferences));
       })

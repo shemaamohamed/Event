@@ -122,14 +122,13 @@ const UsersList = () => {
         rows={rows}
         columns={columns}
         getRowId={(row) => row.id}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 8,
-            },
-          },
+        paginationModel={{ page: currentPage - 1, pageSize: 10 }} 
+        onPaginationModelChange={(pagination) => {
+          setCurrentPage(pagination.page + 1); 
         }}
-        pageSizeOptions={[8]}
+        rowCount={totalPages * 10}
+        pageSizeOptions={[10]}
+        paginationMode="server" 
         checkboxSelection
         disableRowSelectionOnClick
         autoHeight

@@ -40,9 +40,9 @@ const PriceV1 = () => {
                     </div>
                     <div className="auto-container">
                         <div className="sec-title text-center">
-                            <span className="title">Get Ticket</span>
-                            <h2>{conferenceData.title}</h2>  {/* تم عرض عنوان المؤتمر هنا */}
-                            <p>{conferenceData.description}</p>  {/* وصف المؤتمر */}
+                            <span className="title">We offer</span>
+                            <h2>Additional Services</h2>  {/* تم عرض عنوان المؤتمر هنا */}
+                            {/* <p>{conferenceData.description}</p>  وصف المؤتمر */}
                         </div>
                         <div className="outer-box">
                             <div className="row">

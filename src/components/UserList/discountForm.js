@@ -95,7 +95,7 @@ const AddDiscountForm = ({ isOpen, setIsOpen, userId }) => {
         user_id: userId,
         option_id: selectedOptionId?.value,
         trip_id: selectedTripId?.value,
-        price: discountAmount,
+        price: 0,
         show_price: true,
       };
       await httpService({
@@ -191,13 +191,13 @@ const AddDiscountForm = ({ isOpen, setIsOpen, userId }) => {
             setValue={setSelectedOptionId}
             label="Option"
           />
-          <Input
+          {/* <Input
             label="New Value"
             inputValue={discountAmount}
             setInputValue={(value) => setDiscountAmount(parseFloat(value) || 0)}
             placeholder="new value"
             type="number"
-          />
+          /> */}
           {/* <Select
             options={[
               { value: true, label: "Show Discount" },

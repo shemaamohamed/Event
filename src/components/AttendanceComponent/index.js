@@ -207,14 +207,14 @@ const AttendanceComponent = () => {
         getRowId={(row) => row.email}
         rows={row}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 8,
-            },
-          },
+        paginationModel={{ page: currentPage - 1, pageSize: 12 }} 
+        onPaginationModelChange={(pagination) => {
+          setCurrentPage(pagination.page + 1); 
+          handlePageChange(pagination.page + 1);
         }}
-        pageSizeOptions={[8]}
+        rowCount={totalPages * 12}
+        pageSizeOptions={[12]}
+        paginationMode="server" 
         checkboxSelection
         disableRowSelectionOnClick
         autoHeight

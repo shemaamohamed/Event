@@ -4,7 +4,7 @@ import { useAuth } from "../../../common/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./style.scss"
-const AgreementSigning = ({handleNext , handlePrevious}) => {
+const AgreementSigning = ({ handleNext, handlePrevious }) => {
     const [firstAdvertisement, setFirstAdvertisement] = useState(null);
     const [secondAdvertisement, setSecondAdvertisement] = useState(null);
     const [logo, setLogo] = useState(null);
@@ -12,13 +12,13 @@ const AgreementSigning = ({handleNext , handlePrevious}) => {
     const [isAgreementSigned, setIsAgreementSigned] = useState(false);
 
     const navigate = useNavigate();
-    const isFormValid = firstAdvertisement && secondAdvertisement && logo && contractSignature;
+    const isFormValid =  logo && contractSignature;
 
     const handleSignAgreement2 = async () => {
         // تحويل الملفات إلى FormData
         const formData = new FormData();
-        if (firstAdvertisement) formData.append('first_advertisement', firstAdvertisement);
-        if (secondAdvertisement) formData.append('second_advertisement', secondAdvertisement);
+        if (firstAdvertisement) formData.append('first_advertisement', firstAdvertisement || null);
+        if (secondAdvertisement) formData.append('second_advertisement', secondAdvertisement || null);
         if (logo) formData.append('logo', logo);
         if (contractSignature) formData.append('contract_signature', contractSignature);
 
@@ -103,7 +103,7 @@ const AgreementSigning = ({handleNext , handlePrevious}) => {
 
                 <div className="form-buttons">
                     <button
-                        onClick={handleSignAgreement2}
+                        onClick={handleSignAgreement2} // استدعاء الدالة مباشرة
                         className="btn-sign"
                         disabled={!isFormValid} // تعطيل الزر إذا كان النموذج غير صالح
                     >
@@ -117,17 +117,18 @@ const AgreementSigning = ({handleNext , handlePrevious}) => {
                     <p>Your agreement has been signed successfully!</p>
                 </div>
             )}
-                <div className="fixed-buttons">
-         
-            {/* <button className="prev-button" onClick={handlePrevious}>Prev</button> */}
-            <button
-            style={{
-                backgroundColor:'#9B1321'
-              }}
-             className="next-button" onClick={handleNext}>
-              Next
-            </button>
-          </div>
+            <div className="fixed-buttons">
+
+                {/* <button className="prev-button" onClick={handlePrevious}>Prev</button> */}
+        {isAgreementSigned &&<button
+                   
+                    style={{
+                        backgroundColor: '#9B1321'
+                    }}
+                    className="next-button" onClick={handleNext}>
+                    Next
+                </button>}
+            </div>
         </div>
     );
 };

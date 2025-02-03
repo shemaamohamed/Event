@@ -69,149 +69,151 @@ const RoomForm = () => {
       </div>
 
       <form
-       >
-      {rooms.map((room, index) => (
-        <div    key={index}>
-          <div className="delete-icon-container">
-            <SVG
-              className="delete-icon"
-              src={deleteIcon}
-              onClick={() => deleteRoom(index)}
-            />
-          </div>
-
-          <Grid container spacing={2}
-          sx={{
-            marginTop: "20px",
-          }}
-           >
-            {/* Room Type */}
-            <Grid item xs={12} md={6}>
-              <Select
-                options={options}
-                value={room.roomType}
-                setValue={(value) => handleChange(index, "roomType", value)}
-                label="Room Type"
-                required={true}
+      >
+        {rooms.map((room, index) => (
+          <div key={index}>
+            <div className="delete-icon-container">
+              <SVG
+                className="delete-icon"
+                src={deleteIcon}
+                onClick={() => deleteRoom(index)}
               />
-            </Grid>
+            </div>
 
-            {/* Occupant Name */}
-            <Grid item xs={12} md={6}>
-              <Input
-                label="Occupant Name"
-                type="text"
-                inputValue={room.occupantName}
-                setInputValue={(value) =>
-                  handleChange(index, "occupantName", value)
-                }
-                placeholder="Enter occupant name"
-              />
-            </Grid>
+            <Grid container spacing={2}
+              sx={{
+                marginTop: "20px",
+              }}
+            >
+              {/* Room Type */}
+              <Grid item xs={12} md={6}>
+                <Select
+                  options={options}
+                  value={room.roomType}
+                  setValue={(value) => handleChange(index, "roomType", value)}
+                  label="Room Type"
+                  required={true}
+                />
+              </Grid>
 
-            {/* Special Requests */}
-            <Grid item xs={12} md={6}>
-              <Input
-                label="Special Requests"
-                type="text"
-                inputValue={room.specialRequests}
-                setInputValue={(value) =>
-                  handleChange(index, "specialRequests", value)
-                }
-                placeholder="Enter any special requests"
-              />
-            </Grid>
+              {/* Occupant Name */}
+              <Grid item xs={12} md={6}>
+                <Input
+                  label="Occupant Name"
+                  type="text"
+                  inputValue={room.occupantName}
+                  setInputValue={(value) =>
+                    handleChange(index, "occupantName", value)
+                  }
+                  placeholder="Enter occupant name"
+                />
+              </Grid>
 
-            {/* Late Check Out */}
-            <Grid item xs={12} md={6}>
-              <div className="check-in-input-container">
-                <Checkbox
-                  label="Late Check Out?"
-                  checkboxValue={room.lateCheckOut}
-                  setCheckboxValue={(value) =>
-                    handleChange(index, "lateCheckOut", value)
+              {/* Special Requests */}
+              {/* <Grid item xs={12} md={6}>
+                <Input
+                  label="Special Requests"
+                  type="text"
+                  inputValue={room.specialRequests}
+                  setInputValue={(value) =>
+                    handleChange(index, "specialRequests", value)
+                  }
+                  placeholder="Enter any special requests"
+                />
+              </Grid> */}
+
+              {/* Late Check Out */}
+              <Grid item xs={12} md={6}>
+                <div className="check-in-input-container">
+                  <Checkbox
+                    label="Late Check Out?"
+                    checkboxValue={room.lateCheckOut}
+                    setCheckboxValue={(value) =>
+                      handleChange(index, "lateCheckOut", value)
+                    }
+                  />
+                </div>
+              </Grid>
+
+              {/* Check In Date */}
+              <Grid item xs={12} md={6}>
+                <DateInput
+                  label="Check In Date"
+                  type="datetime-local"
+                  inputValue={room.checkInDate}
+                  setInputValue={(value) => {
+                    console.log(value);
+                    
+                    handleChange(index, "checkInDate", value)
+                  }}
+                />
+              </Grid>
+
+              {/* Early Check In */}
+              <Grid item xs={12} md={6}>
+                <div className="check-in-input-container">
+                  <Checkbox
+                    label="Early Check In?"
+                    checkboxValue={room.earlyCheckIn}
+                    setCheckboxValue={(value) =>
+                      handleChange(index, "earlyCheckIn", value)
+                    }
+                  />
+                </div>
+              </Grid>
+
+              {/* Check Out Date */}
+              <Grid item xs={12} md={6}>
+                <DateInput
+                  label="Check Out Date"
+                  type="datetime-local"
+                  inputValue={room.checkOutDate}
+                  setInputValue={(value) =>
+                    handleChange(index, "checkOutDate", value)
                   }
                 />
-              </div>
-            </Grid>
+              </Grid>
 
-            {/* Check In Date */}
-            <Grid item xs={12} md={6}>
-              <DateInput
-                label="Check In Date"
-                type="datetime-local"
-                inputValue={room.checkInDate}
-                setInputValue={(value) =>
-                  handleChange(index, "checkInDate", value)
-                }
-              />
-            </Grid>
-
-            {/* Early Check In */}
-            <Grid item xs={12} md={6}>
-              <div className="check-in-input-container">
-                <Checkbox
-                  label="Early Check In?"
-                  checkboxValue={room.earlyCheckIn}
-                  setCheckboxValue={(value) =>
-                    handleChange(index, "earlyCheckIn", value)
+              {/* Total Nights */}
+              <Grid item xs={12} md={6}>
+                <Input
+                  label="Total Nights"
+                  type="text"
+                  inputValue={room.totalNights}
+                  setInputValue={(value) =>
+                    handleChange(index, "totalNights", value)
                   }
+                  placeholder="Enter Total Nights"
                 />
-              </div>
+              </Grid>
             </Grid>
-
-            {/* Check Out Date */}
-            <Grid item xs={12} md={6}>
-              <DateInput
-                label="Check Out Date"
-                type="datetime-local"
-                inputValue={room.checkOutDate}
-                setInputValue={(value) =>
-                  handleChange(index, "checkOutDate", value)
-                }
-              />
-            </Grid>
-
-            {/* Total Nights */}
-            <Grid item xs={12} md={6}>
-              <Input
-                label="Total Nights"
-                type="text"
-                inputValue={room.totalNights}
-                setInputValue={(value) =>
-                  handleChange(index, "totalNights", value)
-                }
-                placeholder="Enter Total Nights"
-              />
-            </Grid>
-          </Grid>
-          <Divider
+            <Divider
               sx={{
                 color: "black",
                 marginTop: "10px",
                 backgroundColor: "black",
               }}
             />
-        </div>
-        
-      ))}
-    </form>
+          </div>
+
+        ))}
+      </form>
       <div className="actions-section">
         <Button
-        variant="contained"
-        sx={{
-          backgroundColor: '#c62828',// Modern vibrant red
+          variant="contained"
+          sx={{
+            backgroundColor: '#c62828',// Modern vibrant red
 
-          marginTop: "20px",
-          color: "#fff",
-          width: "100%",
-
-          "&:hover": {
-            backgroundColor: "#e63946",
+            marginTop: "20px",
             color: "#fff",
-          }
-        }}
-         className="next-button" onClick={() => handleSubmit()}>
+            width: "100%",
+
+            "&:hover": {
+              backgroundColor: "#e63946",
+              color: "#fff",
+            }
+          }}
+          className="next-button" onClick={() => handleSubmit()}>
           Next
         </Button>
       </div>

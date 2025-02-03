@@ -324,14 +324,14 @@ const CertificateComponent = () => {
         
                       getRowHeight={() => "auto"}
         
-                      initialState={{
-                        pagination: {
-                          paginationModel: {
-                            pageSize: 5,
-                          },
-                        },
-                      }}
-                      pageSizeOptions={[5]}
+                      paginationModel={{ page: currentPage - 1, pageSize: 12 }} 
+        onPaginationModelChange={(pagination) => {
+          setCurrentPage(pagination.page + 1); 
+          handlePageChange(pagination.page + 1);
+        }}
+        rowCount={totalPages * 12}
+        pageSizeOptions={[12]}
+        paginationMode="server" 
                       checkboxSelection
                       disableRowSelectionOnClick
                       autoHeight

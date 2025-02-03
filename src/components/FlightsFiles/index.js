@@ -54,8 +54,8 @@ const FlightsFiles = () => {
           response?.data?.approved_invoices.map((item) => {
             return {
               id: item?.invoice_id,
-              name: item.user?.name || "",
-              email: item.user?.email || "",
+              name: item.flight?.passenger_name || "",
+              email: item.user?.email || "companion",
               status: item.status,
             };
           })
@@ -107,6 +107,13 @@ const FlightsFiles = () => {
     },{
       field: "name",
       headerName: "User Name",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+    },
+    {
+      field: "email",
+      headerName: "Email",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",

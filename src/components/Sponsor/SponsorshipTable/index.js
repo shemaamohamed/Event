@@ -2,10 +2,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../common/AuthContext";
 import "./style.scss";
-const SponsorshipTable = ({ onSelectedSponsorshipsChange }) => {
+const SponsorshipTable = ({ onSelectedSponsorshipsChange , selectedIds }) => {
   const { myConferenceId } = useAuth();
   const [data, setData] = useState([]);
   const [selectedSponsorshipIds, setSelectedSponsorshipIds] = useState([]);
+
+  useEffect(() => {
+console.log({selectedIds});
+console.log({selectedSponsorshipIds});
+
+    setSelectedSponsorshipIds(selectedIds);
+  }, [selectedIds]);
+
   const handleCheckboxChange = (id) => {
     const updatedIds = selectedSponsorshipIds.includes(id)
       ? selectedSponsorshipIds.filter((prevId) => prevId !== id)
@@ -35,12 +43,20 @@ const SponsorshipTable = ({ onSelectedSponsorshipsChange }) => {
     return <div>Loading conference data...</div>;
   }
   return (
-    <div className="con-sponsorship">
+    <div className="con-sponsorship"
+    style={{
+      marginTop: "20px",
+    }}
+    >
       {data.length > 0 && (
         <div className="header-sponsorship-packages">Sponsorship Packages</div>
       )}
       {data.length > 0 && (
-        <div className="tab-con">
+        <div className="tab-con"
+        style={{
+          overflowX:'auto'
+        }}
+        >
         <table className="sponsorship-table">
           <thead>
             <tr>
@@ -59,6 +75,10 @@ const SponsorshipTable = ({ onSelectedSponsorshipsChange }) => {
                   <br />
                   <input
                     type="checkbox"
+                    style={{
+                      width:'20px',
+                      height:'20px'
+                    }}
                     checked={selectedSponsorshipIds.includes(row.id)}
                     onChange={() => handleCheckboxChange(row.id)}
                   />
