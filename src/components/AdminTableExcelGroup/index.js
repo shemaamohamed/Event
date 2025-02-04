@@ -86,7 +86,7 @@ const ActiveRegistrations = () => {
       cellClassName: "centered-cell",
     },
     {
-      field: "contact_phone",
+      field: "user_email",
       headerName:  "Email",
       flex: 1,
       minWidth: 230,

@@ -11,8 +11,8 @@ const SingleSpeakerV2 = ({ speaker }) => {
     return (
         <>
                  <div className="inner-box" style={{
-                width:'200px',
-                height:'200px'
+                width:'250px',
+                height:'250px'
 
             }}>
                 {speaker.image ? (
@@ -33,7 +33,7 @@ const SingleSpeakerV2 = ({ speaker }) => {
                 
                 <div className="info-box">
                     <div className="inner">
-                        <h4 className="name">{speaker.title}{speaker.name}</h4>
+                        <h4 className="name">{speaker.title}{' '}{speaker.name}</h4>
                         <span className="designation">{speaker.title}</span>
                         
                     </div>

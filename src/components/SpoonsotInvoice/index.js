@@ -81,7 +81,7 @@ const SponsorInvoice = ({ invoiceData2, setInvoiceData2, handlePrevious, handleN
             <div className="section booth-details">
               <h2>Booth Cost Details</h2>
               {invoiceData2.booth_cost_details.length > 0 ? (
-                invoiceData2.booth_cost_details.map((booth, index) => (
+                invoiceData2.booth_cost_details?.map((booth, index) => (
                   <div key={index} className="row">
                     <span className="label">Size:</span>
                     <span className="value">{booth.size}</span>

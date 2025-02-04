@@ -158,7 +158,7 @@ const BoothCostTable = ({
   }, [myConferenceId]);
 
   const handleClick = (boothId) => {
-    const isSelected = selectedBoothIds.includes(boothId);
+    const isSelected = selectedBoothIds?.includes(boothId);
     onSelectBooth(boothId, !isSelected);
   };
 
@@ -199,7 +199,7 @@ const BoothCostTable = ({
               <td className="table-cell">
                 <input
                   type="checkbox"
-                  checked={selectedBoothIds.includes(booth.id)}
+                  checked={selectedBoothIds?.includes(booth.id)}
                   onChange={(e) => handleCheckboxChange(e, booth.id)}
                 />
               </td>
@@ -299,13 +299,15 @@ const SponsorSection = () => {
 
   const handleSelectOption = (id, isSelected) => {
     setSelectedOptionIds((prevIds) => {
+      const prevArray = Array.isArray(prevIds) ? prevIds : []; // تأكد من أن prevIds هو مصفوفة
       if (isSelected) {
-        return [...prevIds, id];
+        return [...prevArray, id];
       } else {
-        return prevIds.filter((optionId) => optionId !== id);
+        return prevArray.filter((optionId) => optionId !== id);
       }
     });
   };
+  
   const { userId } = useAuth();
 
   const handleSubmit = async () => {

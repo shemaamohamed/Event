@@ -56,37 +56,42 @@ const Welcome = () => {
           </div>
           <div className="auto-container">
           <div className="outer-box">
-          <Box sx={{ padding: 3 }}>
+          <Box >
     {/* Header Section */}
-    <Box className="welcome-header" sx={{ textAlign: 'center', marginBottom: 6 }}>
-      <Typography variant="h4" component="h6" gutterBottom sx={{ fontWeight: 'bold', color: '#9B1321', textTransform: 'uppercase', letterSpacing: 2 }}>
-        Welcome to the Conference!
-      </Typography>
-      <Typography variant="h6" color="textSecondary" sx={{ maxWidth: '800px', margin: '0 auto', lineHeight: 1.6 }}>
-        On behalf of the Organizing Committee, we are excited to invite you to join us at this prestigious conference, bringing together experts and professionals from around the world. The event will be held in a dynamic and welcoming city, offering a platform for collaboration, innovation, and knowledge exchange.
-      </Typography>
-    </Box>
+    
   
     {/* Content Section */}
-    <Grid container spacing={4} className="welcome-content" alignItems="center">
+    <Grid container
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+     spacing={2} className="welcome-content" alignItems="center">
       {/* Image Section */}
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} md={5}>
           <CardMedia
             component="img"
             alt="President"
             image={`${backendUrlImages}${info?.president_image}`}
-            sx={{ objectFit: 'cover', width:'100%',transition: 'transform 0.3s ease', '&:hover': { transform: 'scale(1.1)' } }}
+            sx={{ objectFit: 'contain', width:'100%',
+              height:'200px',
+              transition: 'transform 0.3s ease' }}
           />
       </Grid>
+      
   
       {/* Description Section */}
-      <Grid item xs={12} md={9}>
+      <Grid item xs={12} md={8}>
         <CardContent sx={{ backgroundColor: '#f9f9f9', borderRadius: 2, padding: 3, boxShadow: 3 }}>
           <Typography
             variant="body1"
             paragraph
             sx={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', lineHeight: 1.6 ,
-            fontSize:'1.2rem'
+            fontSize:{
+              sm:'1rem',
+              md:'1.2rem'
+            }
             }}
           >
             {info?.welcome_message}

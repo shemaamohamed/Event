@@ -16,15 +16,20 @@ const SpoParentComponent = () => {
   const [completedSteps, setCompletedSteps] = useState([]);
 // ayat state 
 
-  const handleNext = () => {
-    // Mark current step as completed and move to the next step
-    if (!completedSteps.includes(currentStep)) {
-      setCompletedSteps([...completedSteps, currentStep]);
+const handleNext = () => {
+  setCompletedSteps((prevIds) => {
+    const prevArray = Array.isArray(prevIds) ? prevIds : []; // تأكد من أن prevIds هو مصفوفة
+    if (!prevArray.includes(currentStep)) {
+      return [...prevArray, currentStep];
     }
-    if (currentStep < stepComponents.length - 1) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
+    return prevArray;
+  });
+
+  if (currentStep < stepComponents.length - 1) {
+    setCurrentStep((prev) => prev + 1);
+  }
+};
+
 
   const handlePrevious = () => {
     // Go back to the previous step

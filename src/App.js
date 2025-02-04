@@ -562,7 +562,11 @@ const App = () => {
                                       <Route path="ticket/booking" element={<TicketBooking />} />
                                       <Route path="hotel/booking" element={<HotelBooking />} />
                                       <Route path="transportation" element={<Transportation />} />
-                                      <Route path="speaker/profile" element={<SpeakerProfileForm />} />
+                                      {
+                                        isSpeaker &&(
+                                          <Route path="speaker/profile" element={<SpeakerProfileForm />} />
+                                        )
+                                      }
                                       
                                       <Route path="admin/visa" element={<AdminVisa />} />
                                       <Route

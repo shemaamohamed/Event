@@ -616,7 +616,10 @@ const ConferenceDetails = () => {
                 {member?.name}
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                {member?.role} {/* Assuming the role of the member is available */}
+                {member?.role} 
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                {member?.country} 
               </Typography>
             </CardContent>
           </Card>
@@ -686,74 +689,63 @@ const ConferenceDetails = () => {
     >
       <Box sx={{ marginTop:'20vh', display: "flex", alignItems: "center" }}>
       <Tabs
-      // ref={tabsRef}
-      // value={selectedTab}
-      // onChange={handleTabChange}
-      // variant="scrollable"
-      // scrollButtons="auto"
-      
-      // allowScrollButtonsMobile
-      value={value}
-      onChange={handleChange}
-      variant="scrollable"
-      scrollButtons="auto"
-      aria-label="Auto-scrolling tabs"
+  value={value}
+  onChange={handleChange}
+  variant="scrollable"
+  allowScrollButtonsMobile
 
-      slots={{
-        StartScrollButtonIcon: () => (
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-            <path d="M14 8L10 12L14 16" stroke="#9B1321" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        ),
-        EndScrollButtonIcon: () => (
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-            <path d="M10 8L14 12L10 16" stroke="#9B1321" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        ),
-      }}
-      
-     
-      sx={{
-        '& .MuiTabs-flexContainer': {
-          display: 'flex',
-          position: 'relative',
-        },
-        '& .MuiTabs-scroller': {
-          transition: 'scroll 0.3s ease', 
-        },
-        "& .MuiTabs-scroller": {
-          transition: "scroll-left 0.5s ease-in-out",
-          overflowX: "auto",
-          scrollBehavior: "smooth", 
-        },
-        "& .MuiTabs-scrollButtons": {
+  scrollButtons="auto"
+  aria-label="Auto-scrolling tabs"
+  slots={{
+    StartScrollButtonIcon: () => (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+        <path d="M14 8L10 12L14 16" stroke="#9B1321" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    EndScrollButtonIcon: () => (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+        <path d="M10 8L14 12L10 16" stroke="#9B1321" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  }}
+  sx={{
+    '& .MuiTabs-flexContainer': {
+      display: 'flex',
+      position: 'relative',
+    },
+    '& .MuiTabs-scroller': {
+      transition: 'scroll 0.3s ease', 
+    },
+    "& .MuiTabs-scroller": {
+      transition: "scroll-left 0.5s ease-in-out",
+      overflowX: "auto",
+      scrollBehavior: "smooth", 
+    },
+    "& .MuiTabs-scrollButtons": {
       color: "red", 
-      fontSize: "2rem", 
+      fontSize: "30px", 
+      animation: "pulse 1.5s infinite ease-in-out",
     },
     "& .MuiTabs-scrollButtons.Mui-disabled": {
       opacity: 0.3, 
-    },
-    "& .MuiTabs-scrollButtons": {
-      fontSize: "30px",
-      color: "red",
-      animation: "pulse 1.5s infinite ease-in-out",
     },
     "@keyframes pulse": {
       "0%": { transform: "scale(1)" },
       "50%": { transform: "scale(1.3)" },
       "100%": { transform: "scale(1)" },
     },
-      }}
-    >
-      {sections.map((section, index) => (
-        <Tab
-          key={index}
-          label={section.label}
-          sx={{ fontWeight: '600' 
-          }}
-        />
-      ))}
-    </Tabs>
+  
+  }}
+>
+  {sections.map((section, index) => (
+    <Tab
+      key={index}
+      label={section.label}
+      sx={{ fontWeight: '600' }}
+    />
+  ))}
+</Tabs>
+
       </Box>
       <Box
       sx={{

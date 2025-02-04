@@ -27,13 +27,17 @@ const SpeakerV2 = ({conferenceId}) => {
 </div>
                     <div className="row">
                         {speakers.map(speaker =>
-                            <div className="speaker-block col-lg-4 col-md-6 col-sm-12" key={speaker.id}>
+                        <>
+                         <div className="speaker-block col-lg-3 col-md-6 col-sm-12" key={speaker.id}>
                                 <SingleSpeakerV2 speaker={speaker} />
                                 
 
 
 
                             </div>
+                            
+                        </>
+                           
                         )}
                     </div>
                 </div>

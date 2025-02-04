@@ -11,7 +11,7 @@ import { backendUrlImages } from "../../../constant/config";
 import { Grid } from "@mui/material";
 
 const SponsorshipOption = ({ id, title, description, price, onSelect, selectedOptions }) => {
-  const selected = selectedOptions.includes(id); // تحقق مما إذا كان الـ id موجودًا في القائمة
+  const selected = selectedOptions?.includes(id); // تحقق مما إذا كان الـ id موجودًا في القائمة
 
   const handleSelect = () => {
     onSelect(id, !selected); // تمرير الـ id وحالته إلى المكون الأب
@@ -244,7 +244,7 @@ const BoothCostTable = ({
   }, [myConferenceId]);
 
   const handleClick = (boothId) => {
-    const isSelected = selectedBoothIds.includes(boothId);
+    const isSelected = selectedBoothIds?.includes(boothId);
     onSelectBooth(boothId, !isSelected);
   };
 
@@ -299,7 +299,7 @@ const BoothCostTable = ({
                         width:'25px',
                         height:'25px'
                       }}
-                      checked={selectedBoothIds.includes(booth.id)}
+                      checked={selectedBoothIds?.includes(booth.id)}
                       onChange={(e) => handleCheckboxChange(e, booth.id)}
                     />
                   </td>
@@ -376,13 +376,17 @@ const SponsorSection = ({
   const navigate = useNavigate();
   const handleSelectBooth = (boothId, isSelected) => {
     setChosenBooths((prevIds) => {
+      // التأكد من أن prevIds هو مصفوفة
+      const validPrevIds = Array.isArray(prevIds) ? prevIds : [];
+  
       if (isSelected) {
-        return [...prevIds, boothId];
+        return [...validPrevIds, boothId];
       } else {
-        return prevIds.filter((id) => id !== boothId);
+        return validPrevIds.filter((id) => id !== boothId);
       }
     });
   };
+  
   const handleShellSchemePriceChange = (price) => {
     setShellSchemePrice(price); // تحديث السعر
   };
@@ -435,12 +439,12 @@ const SponsorSection = ({
 
 
 
-      setSelectedSponsorshipIds(invoiceData3.conference_sponsorship_details?.map((item) => {
+      setSelectedSponsorshipIds(invoiceData3?.conference_sponsorship_details?.map((item) => {
         return item?.id
       }))
 
       //array of obj first sec 
-      setChosenBooths(invoiceData3.booth_cost_details?.map((item) => {
+      setChosenBooths(invoiceData3?.booth_cost_details?.map((item) => {
         return item?.id
       }))
 
@@ -457,14 +461,17 @@ const SponsorSection = ({
 
   const handleSelectOption = (id, isSelected) => {
     setSelectedOptionIds((prevIds) => {
+      // تأكد من أن prevIds هو مصفوفة
+      const validPrevIds = Array.isArray(prevIds) ? prevIds : [];
+      
       if (isSelected) {
-        return [...prevIds, id];
+        return [...validPrevIds, id];
       } else {
-        return prevIds.filter((optionId) => optionId !== id);
+        return validPrevIds.filter((optionId) => optionId !== id);
       }
     });
   };
-
+  
   const { userId } = useAuth();
 
   const handleSubmit = async () => {
@@ -518,7 +525,7 @@ const SponsorSection = ({
       square_meters: squareMeters,
     };
     return (
-        data.conference_sponsorship_option_ids.length === 0 &&
+        data.conference_sponsorship_option_ids?.length === 0 &&
         data.booth_cost_ids.length === 0 &&
         data.sponsorship_option_ids.length === 0 
     );

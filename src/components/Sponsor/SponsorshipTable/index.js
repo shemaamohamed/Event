@@ -15,13 +15,19 @@ console.log({selectedSponsorshipIds});
   }, [selectedIds]);
 
   const handleCheckboxChange = (id) => {
-    const updatedIds = selectedSponsorshipIds.includes(id)
-      ? selectedSponsorshipIds.filter((prevId) => prevId !== id)
-      : [...selectedSponsorshipIds, id];
-
+    // تأكد من أن selectedSponsorshipIds هو مصفوفة
+    const validSelectedSponsorshipIds = Array.isArray(selectedSponsorshipIds)
+      ? selectedSponsorshipIds
+      : [];
+  
+    const updatedIds = validSelectedSponsorshipIds.includes(id)
+      ? validSelectedSponsorshipIds.filter((prevId) => prevId !== id)
+      : [...validSelectedSponsorshipIds, id];
+  
     setSelectedSponsorshipIds(updatedIds);
     onSelectedSponsorshipsChange(updatedIds);
   };
+  
   const getData = () => {
     const BaseUrl = process.env.REACT_APP_BASE_URL;
     if (!myConferenceId) return;
@@ -69,7 +75,7 @@ console.log({selectedSponsorshipIds});
           <tbody>
             <tr>
               <td>Total Package Price</td>
-              {data.map((row, index) => (
+              {data?.map((row, index) => (
                 <td key={index}>
                   {row.price}
                   <br />
@@ -79,7 +85,7 @@ console.log({selectedSponsorshipIds});
                       width:'20px',
                       height:'20px'
                     }}
-                    checked={selectedSponsorshipIds.includes(row.id)}
+                    checked={selectedSponsorshipIds?.includes(row.id)}
                     onChange={() => handleCheckboxChange(row.id)}
                   />
                 </td>

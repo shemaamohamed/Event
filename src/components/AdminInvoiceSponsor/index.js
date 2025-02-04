@@ -72,7 +72,7 @@ const InvoicesS = () => {
               </tr>
             </thead>
             <tbody>
-              {invoices.map((invoice) => (
+              {invoices?.map((invoice) => (
                 <tr key={invoice.invoice_id}>
                   {/* <td>{invoice.id}</td> */}
                   <td>{invoice.user_name}</td>
@@ -119,11 +119,11 @@ const InvoicesS = () => {
       )}
 
       {/* عرض تفاصيل الرعاية إذا كانت موجودة */}
-      {selectedInvoice.conference_sponsorship_details.length > 0 && (
+      {selectedInvoice?.conference_sponsorship_details?.length > 0 && (
         <>
           <h3>Sponsorship Details:</h3>
           <ul className="details-list">
-            {selectedInvoice.conference_sponsorship_details.map((item, index) => (
+            {selectedInvoice.conference_sponsorship_details?.map((item, index) => (
               <li key={index}>
                 {item.item} - ${item.price}
               </li>
@@ -133,11 +133,11 @@ const InvoicesS = () => {
       )}
 
       {/* عرض تفاصيل تكلفة الأكشاك إذا كانت موجودة */}
-      {selectedInvoice.booth_cost_details.length > 0 && (
+      {selectedInvoice?.booth_cost_details?.length > 0 && (
         <>
           <h3>Booth Cost Details:</h3>
           <ul className="details-list">
-            {selectedInvoice.booth_cost_details.map((booth, index) => (
+            {selectedInvoice?.booth_cost_details?.map((booth, index) => (
               <li key={index}>
                 Size: {booth.size} - Cost: ${booth.cost}
               </li>
@@ -147,7 +147,7 @@ const InvoicesS = () => {
       )}
 
       {/* عرض خيارات الرعاية إذا كانت موجودة */}
-      {selectedInvoice.sponsorship_option_details.length > 0 && (
+      {selectedInvoice?.sponsorship_option_details?.length > 0 && (
         <>
           <h3>Sponsorship Options:</h3>
           <ul className="details-list">

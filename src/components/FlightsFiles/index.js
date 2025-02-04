@@ -67,32 +67,28 @@ const FlightsFiles = () => {
   };
 
   const handleSubmit = async () => {
-    // post api to upload fil
     const formData = new FormData();
     formData.append("ticketPDF", file);
     const authToken = localStorage.getItem("token");
+  
     try {
-      const response = await httpService({
+      await httpService({
         method: "POST",
         url: `${BaseUrl}/add/ticket/${id}`,
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-        withToast: true,
         data: formData,
-        onSuccess: async (response) => {
-          console.log(response);
-          toast.success("File uploaded successfully!");
-        },
-        onError: (error) => console.error("Failed to fetch user data:", error),
       });
+  
+      toast.success("File uploaded successfully!"); // ✅ عرض التوست بعد نجاح الرفع
     } catch (error) {
-      console.error("Failed to fetch user data:", error);
+      console.error("Failed to upload file:", error);
+      toast.error("Failed to upload file. Please try again."); // ✅ توست في حال الخطأ
     }
-    // setData();
-
     setDialogOpen(false);
   };
+  
   const rows = data.map((row) => ({
     ...row,
     
@@ -200,7 +196,7 @@ const FlightsFiles = () => {
             <div className="file-con">
               <ImageUpload
                 required
-                label="Visa File"
+                label="Ticket File"
                 allowedExtensions={["pdf", "jpg", "jpeg", "png"]}
                 inputValue={file}
                 setInputValue={setFile}

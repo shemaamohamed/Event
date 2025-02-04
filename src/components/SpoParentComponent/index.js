@@ -71,7 +71,7 @@ const SpoParentComponent = () => {
         headers: { Authorization: `Bearer ${getAuthToken()}` },
       })
       .then((response) => {
-        setInvoiceData3(response.data.invoices[0]);
+        setInvoiceData3(response?.data.invoices[0]);
         console.log("ayat" , response);
         
       })
