@@ -205,7 +205,9 @@ const ExhibitionsPage = () => {
                 backgroundColor:'#9B1321',
               }}
               onClick={() => {
-                navigate(`/register/sponsor/${conference_id}`);
+                // navigate(`/register/sponsor/${conference_id}`);
+                navigate(`/contact_us`);
+
               }}
             >
               Join as Sponsor

@@ -100,7 +100,7 @@ console.log({selectedSponsorshipIds});
             <tr>
               <td>Booth Size</td>
               {data.map((row, index) => (
-                <td key={index}>{row.booklet_ad}</td>
+                <td key={index}>{row.booth_size}</td>
               ))}
             </tr>
             <tr>
@@ -134,7 +134,7 @@ console.log({selectedSponsorshipIds});
               ))}
             </tr>
             <tr>
-              <td>Free Residential Registration PKG SGL Room/4nights</td>
+              <td>Free Residential Registration</td>
               {data.map((row, index) => (
                 <td key={index}>{row.residential_reg}</td>
               ))}

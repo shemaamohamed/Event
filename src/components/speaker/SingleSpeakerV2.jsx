@@ -34,7 +34,7 @@ const SingleSpeakerV2 = ({ speaker }) => {
                 <div className="info-box">
                     <div className="inner">
                         <h4 className="name">{speaker.title}{' '}{speaker.name}</h4>
-                        <span className="designation">{speaker.title}</span>
+                        <span className="designation">{speaker.country_of_residence}</span>
                         
                     </div>
                 </div>

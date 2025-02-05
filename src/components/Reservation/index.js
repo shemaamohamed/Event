@@ -195,7 +195,6 @@ const Reservation = () => {
           <Grid item xs={12} sm={6} md={3}>
             <Button
               variant="contained"
-              color="primary"
               className={`reservation-information-btn ${disabledBtn && "disabled"}`}
               disabled={disabledBtn}
               onClick={() => navigate("/stepper")}
