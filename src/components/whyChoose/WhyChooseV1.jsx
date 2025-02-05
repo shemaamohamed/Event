@@ -1,6 +1,10 @@
 import React from 'react';
 import { HashLink as Link } from 'react-router-hash-link'
 import WhyChooseV1Data from '../../jsonData/whyChoose/WhyChooseV1Data.json'
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { Autoplay } from "swiper/modules";
+
 
 const WhyChooseV1 = () => {
     return (
@@ -29,10 +33,39 @@ const WhyChooseV1 = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="image-column col-lg-6 col-md-12 col-sm-12 ">
-                            <div className="image-box">
-                                <figure className="image"><img src="../images/background/3.jpeg" alt="image" /></figure>
-                            </div>
+                        <div className="image-column col-lg-6 col-md-12 col-sm-12 " style={{
+                            margin:'auto'
+                        }}>
+                            <Swiper
+            modules={[ Autoplay]}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            loop={true}
+            slidesPerView={1}
+        >
+            <SwiperSlide>
+                <div className="image-box" style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <figure className="image">
+                        <img src="../images/background/3.jpeg" alt="Slide 1" />
+                    </figure>
+                </div>
+            </SwiperSlide>
+            <SwiperSlide>
+                <div className="image-box">
+                    <figure className="image">
+                        <img src="../images/background/4.jpeg" alt="Slide 2" />
+                    </figure>
+                </div>
+            </SwiperSlide>
+            <SwiperSlide>
+                <div className="image-box">
+                    <figure className="image">
+                        <img src="../images/background/5.jpeg" alt="Slide 3" />
+                    </figure>
+                </div>
+            </SwiperSlide>
+        </Swiper>
                         </div>
                     </div>
                 </div>

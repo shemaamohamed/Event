@@ -5,6 +5,7 @@ import FeatureV1 from '../../components/feature/FeatureV1';
 import CallToActionV1 from '../../components/callToAction/CallToActionV1';
 import EventV2 from '../../components/Event/EventV2';
 import FooterV1 from '../../components/footer/FooterV1';
+import { Button } from '@mui/material';
 
 const AboutUs = () => {
     return (
@@ -17,7 +18,8 @@ const AboutUs = () => {
                  <FactV1 />
                 <FeatureV1 />
                 <CallToActionV1 />
-                <EventV2 /> 
+                <EventV2 />
+              
                
             </div>
         </>

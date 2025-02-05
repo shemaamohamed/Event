@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AboutV1Data from '../../jsonData/about/AboutV1Data.json';
 import { HashLink as Link } from 'react-router-hash-link';
+import profile from './profil.pdf'
 
 const AboutV1 = () => {
 
@@ -29,11 +30,20 @@ const AboutV1 = () => {
                                         <li key={aboutData.id}>{aboutData.listData}</li>
                                     )}
                                 </ul>
-                                <div className="btn-box">
+                                <div className="btn-box"
+                                    style={{ display: 'flex', justifyContent: 'space-between',
+                                        gap: '10px'
+                                     }}
+                                >
                                     <Link to="/registertype#" className="theme-btn btn-style-three">
                                         <span className="btn-title">Register Now</span>
                                     </Link>
+                                    <a  href={profile} download className="theme-btn btn-style-three ">
+                                        <span className="btn-title">Company Profile</span>
+                                    </a>
+                    
                                 </div>
+                                
                             </div>
                         </div>
                         <div className="image-column col-lg-6 col-md-12 col-sm-12">
