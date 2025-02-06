@@ -54,17 +54,11 @@ const WhyChooseV1 = () => {
             <SwiperSlide>
                 <div className="image-box">
                     <figure className="image">
-                        <img src="../images/background/4.jpeg" alt="Slide 2" />
+                        <img src="../images/background/4.jpg" alt="Slide 2" />
                     </figure>
                 </div>
             </SwiperSlide>
-            <SwiperSlide>
-                <div className="image-box">
-                    <figure className="image">
-                        <img src="../images/background/5.jpeg" alt="Slide 3" />
-                    </figure>
-                </div>
-            </SwiperSlide>
+          
         </Swiper>
                         </div>
                     </div>

@@ -30,7 +30,7 @@ import { CheckCircleIcon } from "lucide-react";
 import SpeakerV2 from "../../components/speaker/SpeakerV2";
 import SinglePriceV2 from "../../components/price/SinglePriceV2";
 import AccommodationPrices from "../../components/price/AccommodationPrices";
-import { HashLink as Link } from 'react-router-hash-link'
+import SponserV1 from "../../components/client/SponserV1";
 
 const ConferenceDetails = () => {
   const navigate = useNavigate();
@@ -39,25 +39,41 @@ const ConferenceDetails = () => {
   const [data, setData] = useState({});
   const [spo, setSpo] = useState([]);
   const [work, setWork] = useState([]);
-  const [roomPrices, setRoomPrices] = useState(null);  // الحالة لتخزين أسعار الغرف
-  const [error, setError] = useState(null);            // حالة الخطأ
+  const [roomPrices, setRoomPrices] = useState(null);
+  const [error, setError] = useState(null);            
   const [loading, setLoading] = useState(true); 
   const tabsRef = useRef(null);
+  const [stopScroll, setStopScroll] = useState(false);
   const [value, setValue] = useState(0);
   const tabsCount = 14;
-
   useEffect(() => {
-      const interval = setInterval(() => {
-        setValue((prev) => (prev + 1) % tabsCount); 
-      }, 1000); 
+    if (stopScroll) return;
 
-      return () => clearInterval(interval); 
-    
-  },[] );
+    const interval = setInterval(() => {
+      setValue((prev) => (prev + 1) % tabsCount); 
+    }, 1000);
+
+    return () => clearInterval(interval); 
+  }, [stopScroll, tabsCount]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setSelectedTab(newValue)
+  };
+
+  const handleMouseEnter = () => {
+    setStopScroll(true);
+  };
+
+  const handleMouseLeave = () => {
+    setStopScroll(false);
+  };
+  const handleTouchStart = () => {
+    setStopScroll(true); 
+  };
+
+  const handleTouchEnd = () => {
+    setStopScroll(false); 
   };
 
   // const handleTabChange = (event, newValue) => {
@@ -122,6 +138,7 @@ const ConferenceDetails = () => {
         onSuccess: (data) => {
 
           setSpo(data?.data)
+
 
         }
       });
@@ -260,64 +277,10 @@ const ConferenceDetails = () => {
     const { conference, scientific_topics, prices, committee_members } = data;
 
     switch (sections[selectedTab].component) {
-      // case "home":
-      //   return <Home1 />;
+     
       case "sponsor":
         return (
-          <section className={`pricing-section-two ${"alternate"}`}>
-          <div className="sec-title  text-center">
-  <h2 style={{ display: 'inline-block', borderBottom: '2px solid #9B1321', paddingBottom: '10px' }}> Sponsors</h2>
-</div>
-                <div className="anim-icons">
-                        <span className="icon icon-line-1"></span>
-                        <span className="icon icon-circle-1"></span>
-                        <span className="icon icon-dots"></span>
-                </div>
-                <div className="auto-container">
-                    {/* <div className="sec-title text-center">
-                        <span className="title">Get Ticket</span>
-                        <h2>Choose a Ticket</h2>
-                    </div> */}
-                    <div className="outer-box">
-                    <Grid 
-            container 
-            spacing={2} // مساحة بين الصور
-            justifyContent="center" // محاذاة العناصر في المنتصف
-            sx={{ padding: 2 }}
-          >
-            {
-              spo?.map((item, index) => {
-                return (
-                  <Grid item xs={12} sm={6} md={4} key={index}> {/* استخدام Grid لتوزيع الصور بشكل مناسب */}
-                    <Box
-                      sx={{
-                        borderRadius: 2,
-                        overflow: 'hidden',
-                        boxShadow: 3,
-                        flex:'1',
-                        height:'100%'
-                        
-                      }}
-                    >
-                      <img 
-                        src={`${backendUrlImages}${item}`} 
-                        alt={`spo-${index}`}
-                        style={{ 
-                          width: '100%', // تأكد من أن الصورة تأخذ العرض الكامل داخل العنصر
-                          height: 'auto', // الحفاظ على نسبة العرض إلى الارتفاع
-                          borderRadius: '10px',
-                          objectFit: 'cover', // لضمان أن الصورة تغطي المساحة بشكل مناسب
-                        }} 
-                      />
-                    </Box>
-                  </Grid>
-                );
-              })
-            }
-          </Grid>
-                    </div>
-                </div>
-            </section>
+          <SponserV1 spo={spo}/>
          
           
         );
@@ -688,63 +651,64 @@ const ConferenceDetails = () => {
     }} 
     >
       <Box sx={{ marginTop:'20vh', display: "flex", alignItems: "center" }}>
-      <Tabs
-  value={value}
-  onChange={handleChange}
-  variant="scrollable"
-  allowScrollButtonsMobile
+   <Tabs
+      value={value}
+      onChange={handleChange}
+      variant="scrollable"
+      allowScrollButtonsMobile
+      scrollButtons="auto"
+      aria-label="Auto-scrolling tabs"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+     
+      slots={{
+        StartScrollButtonIcon: () => (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            <path d="M14 8L10 12L14 16" stroke="#9B1321" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        ),
+        EndScrollButtonIcon: () => (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            <path d="M10 8L14 12L10 16" stroke="#9B1321" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        ),
+      }}
+      sx={{
+        '& .MuiTabs-flexContainer': {
+          display: 'flex',
+          position: 'relative',
+        },
+        "& .MuiTabs-scroller": {
+          overflowX: "auto",
+          scrollBehavior: stopScroll ? 'auto' : 'smooth',
+          transition: stopScroll ? 'none' : 'scroll-left 20s ease-in-out', 
+        },
+        "& .MuiTabs-scrollButtons": {
+          color: "red",
+          fontSize: "30px",
+          animation: "pulse 1.5s infinite ease-in-out",
+        },
+        "& .MuiTabs-scrollButtons.Mui-disabled": {
+          opacity: 0.3,
+        },
+        "@keyframes pulse": {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.3)" },
+          "100%": { transform: "scale(1)" },
+        },
+      }}
+    >
+      {sections.map((section, index) => (
+        <Tab
+          key={index}
+          label={section.label}
+          sx={{ fontWeight: '600' }}
+        />
+      ))}
+    </Tabs>
 
-  scrollButtons="auto"
-  aria-label="Auto-scrolling tabs"
-  slots={{
-    StartScrollButtonIcon: () => (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-        <path d="M14 8L10 12L14 16" stroke="#9B1321" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-    EndScrollButtonIcon: () => (
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-        <path d="M10 8L14 12L10 16" stroke="#9B1321" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-  }}
-  sx={{
-    '& .MuiTabs-flexContainer': {
-      display: 'flex',
-      position: 'relative',
-    },
-    '& .MuiTabs-scroller': {
-      transition: 'scroll 0.3s ease', 
-    },
-    "& .MuiTabs-scroller": {
-      transition: "scroll-left 0.5s ease-in-out",
-      overflowX: "auto",
-      scrollBehavior: "smooth", 
-    },
-    "& .MuiTabs-scrollButtons": {
-      color: "red", 
-      fontSize: "30px", 
-      animation: "pulse 1.5s infinite ease-in-out",
-    },
-    "& .MuiTabs-scrollButtons.Mui-disabled": {
-      opacity: 0.3, 
-    },
-    "@keyframes pulse": {
-      "0%": { transform: "scale(1)" },
-      "50%": { transform: "scale(1.3)" },
-      "100%": { transform: "scale(1)" },
-    },
-  
-  }}
->
-  {sections.map((section, index) => (
-    <Tab
-      key={index}
-      label={section.label}
-      sx={{ fontWeight: '600' }}
-    />
-  ))}
-</Tabs>
+
+
 
       </Box>
       <Box

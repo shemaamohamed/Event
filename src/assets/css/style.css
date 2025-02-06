@@ -8215,13 +8215,8 @@ background: rgb(155, 19, 33); /* لون البداية */
 	border-radius: 10px;
 }
 
-.clients-section .sponsors-outer:nth-child(3) h3 {
-	background-color: #1d95d2;
-}
 
-.clients-section .sponsors-outer:nth-child(2) h3 {
-	background-color: #9B1321;
-}
+
 
 
 .clients-section .icon-dots-3 {
