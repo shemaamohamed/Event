@@ -30,9 +30,10 @@ function CardType({value  ,handleNavigate}) {
       <CardMedia
         component="img"
         alt="green iguana"
+        objectFit="contain"
         image={require(`../../icons/${value.img}`)}
         sx={{
-          height:'50%'
+          height:'60%'
         }}
       />
       <CardContent

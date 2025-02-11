@@ -7,11 +7,7 @@ const AccommodationPrices = ({ roomPrices }) => {
             <div className="sec-title  text-center">
                 <h2 style={{ display: 'inline-block', borderBottom: '2px solid #9B1321', paddingBottom: '10px' }}>            Accommodation Prices</h2>
             </div>
-            <div className="anim-icons">
-                <span className="icon icon-line-1"></span>
-                <span className="icon icon-circle-1"></span>
-                <span className="icon icon-dots"></span>
-            </div>
+            
             <div className="auto-container">
                 
                 <div className="outer-box">
@@ -21,10 +17,33 @@ const AccommodationPrices = ({ roomPrices }) => {
                         <div className="pricing-block-two  col-sm-12">
                             <div className="inner-box">
                                 <div className="price-box">
-                                    <h4 className="price">{roomPrices?.hotel_name}</h4>
+                                    <h4 
+                                    style={{
+                                        borderRadius:'20px',
+                                        backgroundColor: '#222',
+                                        color:'white',
+                                        padding:'5px 50px',
+                                        position: 'relative',  
+
+                                    }}
+                                    >{roomPrices?.hotel_name}</h4>
+                                </div>
+                                <div
+                                style={{
+                                    width:'100%',
+                                    height:"10px",
+                                    color:"black",
+                                    backgroundColor:'black',
+                                }}
+                                >
+
                                 </div>
                                 {!localStorage.getItem("token") && (
-                                    <div className="btn-box">
+                                    <div className="btn-box"
+                                    style={{
+                                        marginTop:'2vh'
+                                    }}
+                                    >
                                         <Link to="/registertype" className="theme-btn btn-style-one">
                                             <span className="btn-title">Register</span>
                                         </Link>
@@ -38,9 +57,9 @@ const AccommodationPrices = ({ roomPrices }) => {
                     <div className="pricing-block-two col-md-6 col-sm-12" >
                         <div className="inner-box">
                             <div className="price-box">
-                                <h4 className="price">${roomPrices?.single_base_price}</h4>
+                                <h4 className="price1">${roomPrices?.single_base_price}</h4>
                             </div>
-                            <div className="title">Single Room</div>
+                            <div className="title1">Single Room</div>
 
                             {!localStorage.getItem("token") && (
                                 <div className="btn-box">
@@ -56,9 +75,9 @@ const AccommodationPrices = ({ roomPrices }) => {
                     <div className="pricing-block-two col-md-6 col-sm-12" >
                         <div className="inner-box">
                             <div className="price-box">
-                                <h4 className="price">${roomPrices?.double_base_price}</h4>
+                                <h4 className="price1">${roomPrices?.double_base_price}</h4>
                             </div>
-                            <div className="title">Double Room</div>
+                            <div className="title1">Double Room</div>
 
                             {!localStorage.getItem("token") && (
                                 <div className="btn-box">
@@ -74,9 +93,9 @@ const AccommodationPrices = ({ roomPrices }) => {
                     <div className="pricing-block-two col-md-6 col-sm-12" >
                         <div className="inner-box">
                             <div className="price-box">
-                                <h4 className="price">${roomPrices?.triple_base_price}</h4>
+                                <h4 className="price1">${roomPrices?.triple_base_price}</h4>
                             </div>
-                            <div className="title">Triple Room</div>
+                            <div className="title1">Triple Room</div>
 
                             {!localStorage.getItem("token") && (
                                 <div className="btn-box">

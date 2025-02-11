@@ -12,10 +12,12 @@ const GalleryPageContent = () => {
 
     const [images, setImages] = useState([]); // Initialize state as an empty array
      const [loading, setLoading] = useState(false); // Track loading state
+     const BaseUrl = process.env.REACT_APP_BASE_URL;
+
   const fetchImages = async (page = 1) => {
     setLoading(true);
     try {
-      const response = await axios.get(`https://panel.mayazin.co/api/get/image?page=${page}`);
+      const response = await axios.get(`${BaseUrl}/get/image?page=${page}`);
       setImages(response.data.data.data); // Assuming response contains data.data.data
       setCurrentPage(page);
     } catch (error) {

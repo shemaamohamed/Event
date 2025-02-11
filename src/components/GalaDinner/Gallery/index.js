@@ -8,12 +8,14 @@ const ImageGallery = () => {
   const [currentPage, setCurrentPage] = useState(1); // Track the current page
   const [totalPages, setTotalPages] = useState(1); // Track total number of pages
   const [loading, setLoading] = useState(false); // Track loading state
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+
 
   // Function to fetch images based on the current page
   const fetchImages = async (page = 1) => {
     setLoading(true);
     try {
-      const response = await axios.get(`https://panel.mayazin.co/api/get/image?page=${page}`);
+      const response = await axios.get(`${BaseUrl}/get/image?page=${page}`);
       setImages(response.data.data.data); // Assuming response contains data.data.data
       setTotalPages(response.data.data.last_page); // Set total pages from response
       setCurrentPage(page);

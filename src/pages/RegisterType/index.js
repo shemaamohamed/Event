@@ -8,25 +8,25 @@ const RegisterType = () => {
   const types =[
     {
       type:'Speaker',
-      img:'speaker.svg',
+      img:'speaker.png',
       link:'speaker'
     },{
       type:'Attendance',
-      img:'attendance.svg',
+      img:'attendance.png',
       link:'attendance'
 
     },{
       type:'Sponsor/Exhibitor',
-      img:'sponsor.svg',
+      img:'sponsor.png',
       link:'sponsor'
     },
     {
       type:'Group',
-      img:'group.svg',
+      img:'group.png',
       link:'group'
     },{
       type:'Other',
-      img:'conferencesImg.svg',
+      img:'other.png',
       link:'other'
     }
   ]

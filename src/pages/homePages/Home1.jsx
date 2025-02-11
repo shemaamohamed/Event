@@ -15,6 +15,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
 import ScheduleV11 from '../../components/schedule/ScheduleV11';
+import AboutM from '../../components/about/AboutM';
 
 
 const Home1 = () => {
@@ -58,6 +59,8 @@ const Home1 = () => {
                 <SpeakerV1 />
                 <FactV1 />
                 <ScheduleV11/>
+                <AboutM />
+
 
                 <ScheduleV1 />
                 <PriceV1 />

@@ -197,6 +197,7 @@ import WorkShopEdit from './components/EditWorkShop';
 import Notifications from './components/Notifications';
 import ClosingDateForm from './components/ClosingDateForm';
 import PreConferences from './components/Previous';
+import SpeakerInfo from './components/speaker/SpeakerInfo';
 
 
 
@@ -277,6 +278,8 @@ const App = () => {
                   {/* //home */}
                 <Route path='/pricing' element={<Pricing />}></Route>
                 <Route path="/pre/con" element={<PreConferences />} />
+                <Route path="/Mamoun" element={<SpeakerInfo />} />
+
 
                 <Route path='/gallery' element={<Gallery />}></Route>
                 <Route path='/our_team' element={<Teams />}></Route>
@@ -749,6 +752,8 @@ const App = () => {
             <Route path='/' element={<UserLayout/>}>
                                 {/* //home */}
                               {/* <Route path='/pricing' element={<Pricing />}></Route> */}
+                                              <Route path="/Mamoun" element={<SpeakerInfo />} />
+
                               
                               <Route path='/gallery' element={<Gallery />}></Route>
                               <Route path='/our_team' element={<Teams />}></Route>

@@ -509,11 +509,7 @@ const ConferenceDetails = () => {
           <div className="sec-title  text-center">
   <h2 style={{ display: 'inline-block', borderBottom: '2px solid #9B1321', paddingBottom: '10px' }}>Prices</h2>
 </div>
-                <div className="anim-icons">
-                        <span className="icon icon-line-1"></span>
-                        <span className="icon icon-circle-1"></span>
-                        <span className="icon icon-dots"></span>
-                </div>
+                
                 <div className="auto-container">
                     {/* <div className="sec-title text-center">
                         <span className="title">Get Ticket</span>

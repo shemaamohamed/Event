@@ -1,35 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { HashLink as Link } from 'react-router-hash-link'
 import SocialShare from '../others/SocialShare';
-import { Gallery } from 'react-photoswipe-gallery';
-import SingleGalleryV1 from '../gallery/SingleGalleryV1';
-import axios from 'axios';
+
 import { Box } from '@mui/material';
 import { useAuth } from '../../common/AuthContext';
 
 const FooterV1 = () => {
      const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(9);
      const {  isLoggedIn } = useAuth();
+
     
-    const [images, setImages] = useState([]); // Initialize state as an empty array
-    const [loading, setLoading] = useState(false); 
-    const fetchImages = async (page = 1) => {
-        setLoading(true);
-        try {
-          const response = await axios.get(`https://panel.mayazin.co/api/get/image?page=${page}`);
-          setImages(response.data.data.data); // Assuming response contains data.data.data
-          setCurrentPage(page);
-        } catch (error) {
-          console.error("Error fetching images:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
+   
     
-      useEffect(() => {
-        fetchImages(currentPage);
-      }, [currentPage]);
+  
     return (
         <>
             <footer className="main-footer">

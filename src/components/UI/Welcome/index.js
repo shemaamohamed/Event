@@ -82,7 +82,7 @@ const Welcome = () => {
       
   
       {/* Description Section */}
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={10}>
         <CardContent sx={{ backgroundColor: '#f9f9f9', borderRadius: 2, padding: 3, boxShadow: 3 }}>
           <Typography
             variant="body1"
@@ -90,7 +90,7 @@ const Welcome = () => {
             sx={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', lineHeight: 1.6 ,
             fontSize:{
               sm:'1rem',
-              md:'1.2rem'
+              md:'1rem'
             }
             }}
           >

@@ -5420,6 +5420,10 @@ background: rgb(155, 19, 33); /* لون البداية */
 	-ms-transition: all 500ms ease;
 	-o-transition: all 500ms ease;
 	transition: all 500ms ease;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .pricing-block-two .inner-box:hover {
@@ -5432,13 +5436,16 @@ background: rgb(155, 19, 33); /* لون البداية */
 
 .pricing-block-two .title {
 	position: relative;
-	display: block;
 	font-size: 20px;
 	line-height: 1.2em;
-	color: #212639;
+	color: white;
 	font-weight: 500;
 	text-transform: uppercase;
 	margin-bottom: 25px;
+	border-radius: 10px;
+	background-color: black;
+	padding: 20px;
+	border: gray 1px solid;
 }
 
 .pricing-block-two .title .icon {
@@ -5449,34 +5456,101 @@ background: rgb(155, 19, 33); /* لون البداية */
 
 .pricing-block-two .price-box {
 	position: relative;
-	margin-left: -30px;
 }
 
 .pricing-block-two .price {
 	position: relative;
 	display: inline-block;
+	margin: auto;
 	font-size: 38px;
 	line-height: .9em;
-	color: #ffffff;
+	color: black;
 	font-weight: 600;
 	margin-bottom: 20px;
 	padding: 20px 30px;
 	padding-right: 30px;
-	border-radius: 0 50px 50px 0;
-	background: rgb(247, 0, 104);
 	-webkit-transition: all 500ms ease;
 	-moz-transition: all 500ms ease;
 	-ms-transition: all 500ms ease;
 	-o-transition: all 500ms ease;
 	transition: all 500ms ease;
-	background: -moz-linear-gradient(to left, rgba(247, 0, 104, 1) 0%, rgba(68, 16, 102, 1) 25%, rgba(247, 0, 104, 1) 75%, rgba(68, 16, 102, 1) 100%);
-	background: -webkit-linear-gradient(to left, rgba(247, 0, 104, 1) 0%, rgba(68, 16, 102, 1) 25%, rgba(247, 0, 104, 1) 75%, rgba(68, 16, 102, 1) 100%);
-	background: linear-gradient(to left, rgba(247, 0, 104) 0%, rgba(68, 16, 102, 1) 25%, rgba(247, 0, 104, 1) 75%, rgba(68, 16, 102, 1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9B1321', endColorstr='#441066', GradientType=1);
+
+border-radius: 10px;
+z-index: 1;
+
+
 	background-size: 600% 100%;
 }
+.pricing-block-two .price::before{
+	content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: inherit; 
+  z-index: -1;
+  background: linear-gradient(to bottom, 
+  #444 0%,  
+  #bbb 25%,     
+  #fff 50%,     
+  #bbb 75%,  
+  #444 100%   
+);
 
-.pricing-block-two .inner-box:hover .price {
+}
+.pricing-block-two .title1 {
+	position: relative;
+	font-size: 20px;
+	line-height: 1.2em;
+	color: black;
+	font-weight: 500;
+	text-transform: uppercase;
+	margin-bottom: 25px;
+	border-radius: 10px;
+	background-color: black;
+	padding: 20px;
+	border: gray 1px solid;
+	background: linear-gradient(to bottom, 
+#444 0%,  
+#bbb 25%,     
+#fff 50%,     
+#bbb 75%,  
+#444 100%   
+);
+}
+.pricing-block-two .price1 {
+	position: relative;
+	display: inline-block;
+	margin: auto;
+	font-size: 38px;
+	line-height: .9em;
+	color: black;
+	font-weight: 600;
+	margin-bottom: 20px;
+	padding: 20px 30px;
+	padding-right: 30px;
+	-webkit-transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
+	-ms-transition: all 500ms ease;
+	-o-transition: all 500ms ease;
+	transition: all 500ms ease;
+
+border-radius: 10px 10px 0px 0px;
+background: linear-gradient(to bottom, 
+#444 0%,  
+#bbb 25%,     
+#fff 50%,     
+#bbb 75%,  
+#444 100%   
+);
+
+border-bottom:4px solid black ;
+background-size: 600% 100%;
+}
+
+
+.pricing-block-two .inner-box:hover .price1 {
 	padding-right: 80px;
 }
 
@@ -5533,7 +5607,6 @@ background: rgb(155, 19, 33); /* لون البداية */
 	line-height: 25px;
 	font-weight: 500;
 	padding: 8px 30px;
-	border-radius: 30px;
 }
 
 .pricing-section-two .icon-line-1 {

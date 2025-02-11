@@ -6,10 +6,11 @@ import { backendUrlImages } from '../../constant/config';
 
 const PreConferences = () => {
   const [conferences, setConferences] = useState([]);
-  // const BaseUrl = "https://panel.mayazin.co/api";
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+
   const fetchConferences = async () => {
     try {
-      const response = await axios.get(`https://panel.mayazin.co/api/conferences/past`);
+      const response = await axios.get(`${BaseUrl}/conferences/past`);
       setConferences(response.data.data);
       console.log(response.data);
     } catch (error) {

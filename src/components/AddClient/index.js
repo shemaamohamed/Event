@@ -9,7 +9,7 @@ const AddClient = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [clients, setClients] = useState([]);
-  const BaseUrl = "https://panel.mayazin.co/api";
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     const fetchClients = () => {

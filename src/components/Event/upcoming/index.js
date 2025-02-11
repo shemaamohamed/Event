@@ -8,7 +8,8 @@ import { Grid } from '@mui/material';
 const UpcomingConferences2 = () => {
   const [conferences, setConferences] = useState([]);
   const [loading, setLoading] = useState(true);
-  const BaseUrl = 'https://panel.mayazin.co/api';
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+
 
   useEffect(() => {
     const fetchConferences = async () => {

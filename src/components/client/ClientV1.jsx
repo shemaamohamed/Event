@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const ClientV1 = () => {
     const [clients, setClients] = useState([]); 
-    const BaseUrl = "https://panel.mayazin.co/api";
+    const BaseUrl = process.env.REACT_APP_BASE_URL;
   
     useEffect(() => {
       const fetchClients = () => {
