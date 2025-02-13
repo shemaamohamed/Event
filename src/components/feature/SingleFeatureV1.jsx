@@ -6,7 +6,10 @@ const SingleFeatureV1 = ({ feature }) => {
 
     return (
         <>
-            <div className="inner-box">
+            <div className="inner-box" style={{
+                                flex:'1',
+                                height:'100%'
+                            }}>
                 <div className="icon-box"><span className={`icon ${icon}`}></span></div>
                 <h4>{title}</h4>
                 <div className="text">{text}</div>

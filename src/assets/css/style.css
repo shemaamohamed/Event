@@ -442,6 +442,7 @@ input[type="search"]::-webkit-search-results-decoration {
 	background-color: #9B1321;
 	overflow: hidden;
 	border-radius: 10px;
+	width: 185px;
 }
 
 .btn-style-three .btn-title {
@@ -7871,7 +7872,7 @@ background: rgb(155, 19, 33); /* لون البداية */
 	text-align: center;
 	font-size: 18px;
 	line-height: 40px;
-	background-color: #1c94d2;
+	background-color: #9B1321;
 	color: #ffffff;
 }
 

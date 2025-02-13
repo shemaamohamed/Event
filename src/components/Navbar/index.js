@@ -274,7 +274,7 @@ const NavBar = () => {
             </Box>
           </a>
           <a
-            href="https://www.facebook.com/eventsconsultant.jo/"
+            href="https://www.facebook.com/eventscons/"
             target="_blank"
             rel="noopener noreferrer"
             className="social-icon"

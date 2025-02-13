@@ -15,7 +15,6 @@ const WhyChooseV1 = () => {
                         <div className="content-column col-lg-6 col-md-12 col-sm-12 order-lg-2  ">
                             <div className="inner-column">
                                 <div className="sec-title">
-                                    <span className="title">JOIN THE EVENT</span>
                                     <h2>Why Choose Us for Your Conferences and Events?</h2>
                                 </div>
                                 <ul className="list-style-one">

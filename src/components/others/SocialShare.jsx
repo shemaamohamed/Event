@@ -5,7 +5,7 @@ const SocialShare = () => {
     return (
         <>
             <li>
-                <Link to="https://www.facebook.com/eventsconsultant.jo/" target='_blank'><i className="fab fa-facebook-f"></i></Link>
+                <Link to="https://www.facebook.com/eventscons/" target='_blank'><i className="fab fa-facebook-f"></i></Link>
             </li>
             <li>
                 <Link to="https://api.whatsapp.com/send?phone=%2B962799602002" target='_blank'><i className="fab fa-whatsapp"></i></Link>

@@ -32,7 +32,6 @@ const ClientV1 = () => {
                 <div className="auto-container">
                     <div className="sec-title">
                         <span className="title">Clients</span>
-                        <h2>Our Clients</h2>
                     </div>
                     <SingleClientV1  clients={clients} />
                 </div>

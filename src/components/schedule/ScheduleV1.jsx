@@ -58,8 +58,7 @@ const ScheduleV1 = () => {
                 </div>
                 <div className="auto-container">
                     <div className="sec-title text-center">
-                        <span className="title">About Conference</span>
-                        <h2>Upcoming Conferences</h2>
+                        <span className="title">Upcoming Conferences</span>
                     </div>
                     <div className="schedule-tabs tabs-box ">
                         <div className="btns-box">

@@ -14,16 +14,26 @@ const FeatureV1 = () => {
                             <span className="icon twist-line-3"></span>
                     </div>
                     <div className="row">
-                        <div className="title-block col-lg-4 col-md-12 col-sm-12 wow fadeInUp">
+                        <div className="title-block  col-md-12 col-sm-12 wow fadeInUp">
                             <div className="inner-box">
                                 <div className="sec-title">
                                     <span className="title">Features</span>
-                                    <h2>Our Feature</h2>
+                                    <h2
+                                    style={{
+                                        textAlign:'center',
+                                        display:'block'
+                                    }}
+                                    >Our Feature</h2>
                                 </div>
                             </div>
                         </div>
-                        <div className="feature-block-two col-lg-4 col-md-6 col-sm-12 wow fadeInUp" >
-                        <div className="inner-box">
+                        <div className="feature-block-two col-lg-4 col-md-6 col-sm-12 wow fadeInUp" 
+                        
+                        >
+                        <div className="inner-box" style={{
+                            flex:'1',
+                            height:'100%'
+                        }}>
                 <div className="icon-box"><span className={`icon `}>
                     <img src={CustomBoothDesigns} className='icon' alt="icon"
                     width="70px" height="100px"
@@ -36,7 +46,7 @@ const FeatureV1 = () => {
             </div>
                             </div>
                         {featureV1Data.map(feature =>
-                            <div className="feature-block-two col-lg-4 col-md-6 col-sm-12 wow fadeInUp" key={feature.id}>
+                            <div className="feature-block-two col-lg-4 col-md-6 col-sm-12 wow fadeInUp" key={feature.id} >
                                 <SingleFeatureV1 feature={feature} />
                             </div>
                         )}

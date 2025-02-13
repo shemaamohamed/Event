@@ -12,7 +12,6 @@ const AboutM = () => {
                 <div className="anim-icons full-width">
                     <span className="icon icon-circle-blue"></span>
                   
-                            <span className="icon icon-dots"></span>
                             <span className="icon icon-circle-1"></span>
                 </div>
                 <div className="auto-container">
@@ -20,9 +19,11 @@ const AboutM = () => {
                         <div className="content-column col-lg-8 col-md-12 col-sm-12">
                             <div className="inner-column">
                                 <div className="sec-title">
-                                    <span className="title">Dear Valued Clients</span>
-                                    <h2>Welcome to Event Consultant </h2>
-                                    <div className="text">Welcome to Events Consultant Co., a space where innovation, professionalism, and passion come together to redefine the world of events management. My name is Mamoun Khraisheh, and it is my honor to share with you the story and vision behind our company.</div>
+                                   
+                                    <div className="text">
+                                    Dear Valued Clients,
+                                    <br/>
+                                        Welcome to Events Consultant Co., a space where innovation, professionalism, and passion come together to redefine the world of events management. My name is Mamoun Khraisheh, and it is my honor to share with you the story and vision behind our company.</div>
                                 </div>
                               
                                 <div className="btn-box"

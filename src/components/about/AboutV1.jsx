@@ -31,8 +31,10 @@ const AboutV1 = () => {
                                     )}
                                 </ul>
                                 <div className="btn-box"
-                                    style={{ display: 'flex', justifyContent: 'space-between',
-                                        gap: '10px'
+                                    style={{ display: 'flex',
+                                        justifyContent:'center',
+                                        gap:'10px'
+                                       
                                      }}
                                 >
                                     <Link to="/registertype#" className="theme-btn btn-style-three">

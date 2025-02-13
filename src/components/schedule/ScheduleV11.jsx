@@ -55,7 +55,7 @@ const ScheduleV11 = () => {
                 </div>
                 <div className="auto-container">
                     <div className="sec-title text-center">
-                        <span className="title">About Exhibitions</span>
+                        <span className="title">Up Coming Exhibitions</span>
                     </div>
                     <div className="schedule-tabs tabs-box ">
                         <div className="btns-box">

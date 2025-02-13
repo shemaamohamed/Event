@@ -37,8 +37,7 @@ function CardType({value  ,handleNavigate}) {
         }}
       />
       <CardContent
-        
-      >
+        >
         <Typography
           sx={{
             padding: '10px',
