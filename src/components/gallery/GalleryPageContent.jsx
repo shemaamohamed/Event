@@ -18,7 +18,7 @@ const GalleryPageContent = () => {
     setLoading(true);
     try {
       const response = await axios.get(`${BaseUrl}/get/image?page=${page}`);
-      setImages(response.data.data.data); // Assuming response contains data.data.data
+      setImages(Array.isArray(response.data.data) ? response.data.data : []); 
       setCurrentPage(page);
     } catch (error) {
       console.error("Error fetching images:", error);
@@ -33,7 +33,6 @@ const GalleryPageContent = () => {
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentGalleryData = images.slice(startIndex, endIndex);
 
     const handlePageClick = (data) => {
         setCurrentPage(data.selected + 1);
@@ -42,7 +41,7 @@ const GalleryPageContent = () => {
         }, 200);
     };
 
-    const totalPages = Math.ceil(images.length / itemsPerPage);
+    const totalPages = Math.ceil(images?.length / itemsPerPage);
 
     return (
         <>
@@ -54,7 +53,7 @@ const GalleryPageContent = () => {
                     </div>
                     <div className="row">
                         <Gallery withDownloadButton>
-                            {images.map(gallery =>
+                            {images?.map(gallery =>
                                 <div className="gallery-item col-lg-4 col-md-6 col-sm-12" key={gallery.id} >
                                     <SingleImageBox gallery={gallery} />
                                 </div>

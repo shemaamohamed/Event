@@ -204,6 +204,7 @@ const AdminLayoutBasic = () => {
       { title: "Gala Dinner", icon: "🍷", segment: "gala" },
       { title: "Dinner Detail", icon: "🍷", segment: "dinner/admin" },
       { title: "Create Workshop", icon: "🍷", segment: "admin/workshop" },
+      { title: "Create Gallery", icon: "🖼️", segment: "add/gallery" },
 
       { title: "Messages", icon: "💬", segment: "msgs" },
       { title: "Users", icon: "👥", segment: "pending/users" },

@@ -198,6 +198,7 @@ import Notifications from './components/Notifications';
 import ClosingDateForm from './components/ClosingDateForm';
 import PreConferences from './components/Previous';
 import SpeakerInfo from './components/speaker/SpeakerInfo';
+import AdminGallery from './pages/AdminGallery';
 
 
 
@@ -477,6 +478,7 @@ const App = () => {
   <Route path="exhibitions" element={<Exhibitions />} />
                                       <Route path="/dinner/admin" element={<DinnerAdmin />} />
                                       <Route path="/close/date" element={<ClosingDateForm />} />
+                                      <Route path="/add/gallery" element={<AdminGallery />} />
 
                                      
                                      

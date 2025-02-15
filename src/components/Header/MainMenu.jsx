@@ -66,11 +66,11 @@ const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu ,handleCloseMenu}) =
                 <li className={`dropdown ${parentMenu === ' additional services' ? 'current' : ''}`}>
                     <Link to={void (0)} onClick={toggleMenu}>Additional Services</Link>
                     <ul className='sub-menu'>
-                        <li><Link onClick={handleCloseMenu} to="/comprehensive-conference-management">Comprehensive Conference Management Services</Link></li>
-                        <li><Link onClick={handleCloseMenu} to="/conference-exhibition-solutions">Professional Conference and Exhibition Solutions – Booths Creation</Link></li>
-                        <li><Link onClick={handleCloseMenu} to="/marketing-video-production">Professional Marketing Video Production</Link></li>
-                        <li><Link onClick={handleCloseMenu} to="/comprehensive-marketing-services">Comprehensive Marketing Services</Link></li>
-                        <li><Link onClick={handleCloseMenu} to="/additional-conference-exhibition-services">Expanding Excellence: Additional Services for Conferences and Exhibitions</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/comprehensive-conference-management"> Management </Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/conference-exhibition-solutions">Booths Creation</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/marketing-video-production">Video Production</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/comprehensive-marketing-services">Marketing </Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/additional-conference-exhibition-services">Expanding Excellence</Link></li>
                     </ul>
                     <div className="dropdown-btn"><span className="fa fa-angle-down"></span></div>
                 </li>

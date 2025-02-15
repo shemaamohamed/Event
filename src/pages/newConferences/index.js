@@ -213,21 +213,21 @@ const ConferenceDetails = () => {
   }, []);
 
   const sections = [
-    { label: "Conference Overview", component: "overview" },
-    // { label: "Home", component: "home" },
+    { label: "Overview", component: "overview" },
     { label: "Welcome", component: "Welcome" },
     { label: "Abstract", component: "Abstract" },
     { label: "Speakers", component: "Speakers" },
-    { label: "Scientific Topics", component: "topics" },
-    { label: "Registration", component: "pricing" },
-    { label: "Committee Members", component: "committee" },
-    { label: "Accommodation", component: "accommodation" },
+    { label: "Topics", component: "topics" },
+    { label: "Register", component: "pricing" },
+    { label: "Committees ", component: "committee" },
+    { label: "Hotels", component: "accommodation" },
+    { label: "Brochure", component: "brochure", url: "conference_brochure_pdf_url" },
+    { label: "WorkShops", component: "WorkShop" },
+    { label: "Sponsor", component: "sponsor" },
     { label: "First Announcement Document", component: "firstAnnouncement", url: "first_announcement_pdf_url" },
     { label: "Second Announcement Document", component: "secondAnnouncement", url: "second_announcement_pdf_url" },
-    { label: "Conference Brochure", component: "brochure", url: "conference_brochure_pdf_url" },
     { label: "Scientific Program Document", component: "scientificProgram", url: "conference_scientific_program_pdf_url" },
-    { label: "Sponsor", component: "sponsor" },
-    { label: "WorkShop", component: "WorkShop" },
+  
 
   ];
 
