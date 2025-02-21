@@ -112,7 +112,7 @@ const AddClient = () => {
           {clients.map((client) => (
             <div className="client-item" key={client.id}>
               <div className="client-image">
-                <img src={`https://mayazin.co/backend/storage/app/public/${client.image}`} alt={`Client ${client.id}`} />
+                <img src={`https://eventscons.com/backend/storage/app/public/${client.image}`} alt={`Client ${client.id}`} />
                 <button
                   className="delete-btn"
                   onClick={() => handleDeleteClient(client.id)} // Call delete handler directly

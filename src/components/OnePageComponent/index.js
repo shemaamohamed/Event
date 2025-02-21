@@ -31,7 +31,8 @@ const OnePage = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const navigate = useNavigate(); // استخدام navigate للتنقل بين الأقسام
-  const BaseUrl = process.env.REACT_APP_BASE_URL;;
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+
 
   useEffect(() => {
     axios
@@ -53,9 +54,9 @@ const OnePage = () => {
     navigate(`#${section}`); 
   };
   const getModifiedUrl = (url) => {
-    const parts = url?.split("https://panel.mayazin.co/storage/");
+    const parts = url?.split("https://panel.eventscons.com/public/storage/");
     const afterPublic = parts?.slice(parts.indexOf("public") + 1).join("");
-    return "https://mayazin.co/backend/storage/app/public/" + afterPublic;
+    return "https://eventscons.com/backend/storage/app/public/" + afterPublic;
   };
 
   const toggleDrawer = () => {

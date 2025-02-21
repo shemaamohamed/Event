@@ -76,7 +76,7 @@ const ClientsSlide = () => {
        >
          <div>
            <img
-             src={`https://mayazin.co/backend/storage/app/public/${client.image}`}
+             src={`https://eventscons.com/backend/storage/app/public/${client.image}`}
              alt={`Company Logo ${i + 1}`}
              style={{
                objectFit: "contain",

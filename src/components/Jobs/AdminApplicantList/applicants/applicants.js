@@ -49,7 +49,7 @@ const ApplicantsList = () => {
             <p><strong>Position:</strong> {applicant.position_applied_for}</p>
             <p><strong>Education:</strong> {applicant.educational_qualification}</p>
             <a 
-              href={`https://mayazin.co/backend/storage/app/public/${applicant.resume}`} 
+              href={`https://eventscons.com/backend/storage/app/public/${applicant.resume}`} 
               target="_blank" 
               rel="noopener noreferrer" 
               download 

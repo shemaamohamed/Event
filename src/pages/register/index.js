@@ -323,7 +323,7 @@ const RegisterPage = () => {
                   onChange={(e) => setTitle(e.target.value)}
                   // helperText={error.name}
                   fullWidth
-                  placeholder="e.g. John Doe"
+                  placeholder="e.g. Dr,...etc"
                   type="text"
                 />
               </Grid>

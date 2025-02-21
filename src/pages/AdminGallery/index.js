@@ -120,15 +120,7 @@ const AdminGallery = () => {
           Submit
         </Button>
       </form>
-      {galleryData && (
-        <div className="gallery-data">
-          <Typography variant="h6">Gallery Created:</Typography>
-          <p>ID: {galleryData.id}</p>
-          <p>Name: {galleryData.name}</p>
-          <p>Cover Image: {galleryData.cover_image}</p>
-          <p>Images: {galleryData.images}</p>
-        </div>
-      )}
+
     </div>
   );
 };

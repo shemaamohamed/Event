@@ -1,1 +1,1 @@
-export const backendUrlImages = "https://mayazin.co/backend/storage/app/public/"
+export const backendUrlImages = "https://eventscons.com/backend/storage/app/public/"

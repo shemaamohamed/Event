@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Item } from 'react-photoswipe-gallery';
 
 const SingleImageBox = ({ gallery }) => {
-    const backendUrlImages = "https://mayazin.co/backend/storage/app/public/"
+    const backendUrlImages = "https://eventscons.com/backend/storage/app/public/"
 
 
     return (

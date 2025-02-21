@@ -11,9 +11,9 @@ const ViewAgreement = ({agreementFile, setAgreementFile, handlePrevious ,handleN
     // دالة لتحويل الرابط المعدل
     const getModifiedUrl = (url) => {
         if (!url) return null;
-        const parts = url?.split("https://panel.mayazin.co/storage/");
+        const parts = url?.split("https://panel.eventscons.com/public/storage/");
         const afterPublic = parts?.slice(parts.indexOf("public") + 1).join("");
-        return "https://mayazin.co/backend/storage/app/public/" + afterPublic;
+        return "https://eventscons.com/backend/storage/app/public/" + afterPublic;
     };
 
     const fetchFloorPlan = async () => {

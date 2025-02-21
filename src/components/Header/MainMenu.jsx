@@ -89,6 +89,7 @@ const MainMenu = ({ parentMenu, toggleMenu, toggleMultiMenu ,handleCloseMenu}) =
                     <Link to={void (0)} onClick={toggleMenu}>Travel and Tourism </Link>
                     <ul className='sub-menu'>
                         <li><Link onClick={handleCloseMenu} to="/tour_slider">Sights</Link></li>
+                        <li><Link onClick={handleCloseMenu} to="/travel_consultant"> Travel Consultant</Link></li>
                         
                     </ul>
                     <div className="dropdown-btn"><span className="fa fa-angle-down"></span></div>

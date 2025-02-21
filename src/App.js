@@ -199,6 +199,8 @@ import ClosingDateForm from './components/ClosingDateForm';
 import PreConferences from './components/Previous';
 import SpeakerInfo from './components/speaker/SpeakerInfo';
 import AdminGallery from './pages/AdminGallery';
+import TravelConsultant from './pages/innerPages/TravelConsultant';
+import Album from './pages/AlbumContent';
 
 
 
@@ -283,6 +285,8 @@ const App = () => {
 
 
                 <Route path='/gallery' element={<Gallery />}></Route>
+                <Route path='/album/:id' element={<Album/>}></Route>
+
                 <Route path='/our_team' element={<Teams />}></Route>
                 <Route path='/our_clients' element={<ClientV1/>}></Route>
                 <Route path="/job/list" element={<JobList />} />
@@ -369,6 +373,8 @@ const App = () => {
               <Route path="/logistic_secretarial" element={<LogisticSecretarial />}/>
               <Route path="/concept_creation" element={<ConceptCreation />} />
               <Route path="/management_consulting"element={<ManagementConsulting />}/>
+              <Route path="/travel_consultant" element={<TravelConsultant />} />
+
               {/* Additional Services */}
               <Route path="/comprehensive-conference-management" element={<ComprehensiveConferenceManagement />} />
               <Route path="/conference-exhibition-solutions" element={<ConferenceExhibitionSolutions />} />
@@ -758,6 +764,8 @@ const App = () => {
 
                               
                               <Route path='/gallery' element={<Gallery />}></Route>
+                              <Route path='/album/:id' element={<Album/>}></Route>
+
                               <Route path='/our_team' element={<Teams />}></Route>
                               <Route path='/our_clients' element={<ClientV1/>}></Route>
                               <Route path="/job/list" element={<JobList />} />
@@ -783,6 +791,8 @@ const App = () => {
                                 <Route path="/marketing-video-production" element={<MarketingVideoProduction />} />
                                 <Route path="/comprehensive-marketing-services" element={<ComprehensiveMarketingServices />} />
                                 <Route path="/additional-conference-exhibition-services" element={<AdditionalConferenceExhibitionServices />} />
+                                <Route path="/travel_consultant" element={<TravelConsultant />} />
+
                                 <Route path="/sponsor/invoice" element={<SponsorInvoice />} />
                                               <Route
                                                                           path="/conference/speaker/:conferenceId"

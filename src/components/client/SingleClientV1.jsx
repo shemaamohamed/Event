@@ -59,7 +59,7 @@ const SingleClientV1 = ({ clients }) => {
             }}
           >
             <img
-              src={`https://mayazin.co/backend/storage/app/public/${client.image}`}
+              src={`https://eventscons.com/backend/storage/app/public/${client.image}`}
               alt={`Logo ${index}`}
               style={{
                 objectFit: "contain",

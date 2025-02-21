@@ -599,7 +599,7 @@ const ConferenceDetails = () => {
       case "scientificProgram":
         return renderDocumentContent(
           `${backendUrlImages}${data[`${sections[selectedTab].url}`]?.replace(
-            "https://panel.mayazin.co/storage",
+            "https://panel.eventscons.com/public/storage/",
             ""
           )}`,
           sections[selectedTab].label

@@ -29,7 +29,7 @@ const OurClients = () => {
       <div className="clients-skew">
         {clients.map((client) => (
           <div className="clients-logo" key={client.id}>
-            <img src={`https://mayazin.co/backend/storage/app/public/${client.image}`} alt="Client Logo" className="client-logo" />
+            <img src={`https://eventscons.com/backend/storage/app/public/${client.image}`} alt="Client Logo" className="client-logo" />
           </div>
         ))}
       </div>

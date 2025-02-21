@@ -15,16 +15,24 @@ const SponserV1 = ({ spo }) => {
     spo.forEach(element => {
         if (element.sponsorship_items.length > 0) {
             element.sponsorship_items.forEach(type => {
-                data[type].push({
+                if(element.logo!==null){
+                    data[type].push({
+                        user_id: element.user_id,
+                        logo: element.logo
+                    });
+
+                }
+               
+            });
+        } else {
+            if(element.logo!==null){
+                data["participant"].push({
                     user_id: element.user_id,
                     logo: element.logo
                 });
-            });
-        } else {
-            data["participant"].push({
-                user_id: element.user_id,
-                logo: element.logo
-            });
+
+            }
+           
         }
     });
     
