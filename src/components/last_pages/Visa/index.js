@@ -11,6 +11,8 @@ import { getFromLocalStorage } from "../../../common/localStorage";
 import SimpleLabelValue from "../../SimpleLabelValue";
 import { useAuth } from "../../../common/AuthContext";
 import { backendUrlImages } from "../../../constant/config";
+import { PayPalButton } from "react-paypal-button-v2";
+
 const VisaPage = () => {
   const { userId } = useAuth();
   const BaseUrl = process.env.REACT_APP_BASE_URL;
@@ -59,7 +61,22 @@ const VisaPage = () => {
   useEffect(() => {
     getConferenceById(); // استدعاء getConferenceById عند تغيير myConferenceId
   }, [myConferenceId]); // Trigger whenever myConferenceId changes
+  const handlePaymentSuccess = (data) => {
+    if (data.state === 'approved') {
+      toast.success('Your payment has been successfully processed!');
+      // توجيه المستخدم إلى صفحة أخرى بعد النجاح
+      navigate('/payment-success');
+    } else {
+      toast.error('Payment failed, please try again.');
+    }
+  };
+  
+  const handlePayNow = () => {
+    const transactionId = `visa_${Date.now()}`; 
+    // توجه المستخدم إلى صفحة PayPal لبدء عملية الدفع
+const paymentUrl = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&business=mamoun.khraisha@yahoo.com&amount=${visaData.visa_cost}&currency_code=USD&item_name=VisaPayment&return=${encodeURIComponent(`https://eventscons.com/success`)}&cancel_return=https://eventscons.com/failed`;
 
+    window.location.href = paymentUrl;  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -195,7 +212,7 @@ const VisaPage = () => {
         // إذا كان هناك استجابة من السيرفر
         toast.error(
           error.response.data.error ||
-            "An error occurred while deleting the visa request."
+          "An error occurred while deleting the visa request."
         );
       } else {
         // إذا لم تكن هناك استجابة من السيرفر
@@ -206,6 +223,80 @@ const VisaPage = () => {
   useEffect(() => {
     console.log(visaData);
   }, [visaData]);
+
+
+
+  // const handlePayment = async (visaId) => {
+  //   const token = localStorage.getItem("token");
+
+  //   if (!token) {
+  //     alert("User not authenticated!");
+  //     return;
+  //   }
+
+  //   try {
+  //     const paymentData = {
+  //       transaction_id: "1234567890", // يجب أن يكون ID من PayPal بعد الدفع الحقيقي
+  //       payment_method: "PayPal", // طريقة الدفع
+  //     };
+
+  //     const response = await axios.post(`${BaseUrl}/visa/pay/${visaId}`, paymentData, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`, // تمرير التوكن هنا
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     if (response.data.success) {
+  //       alert("Payment successful!");
+  //     } else {
+  //       alert("Payment failed! Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Payment error:", error);
+  //     alert("An error occurred while processing the payment.");
+  //   }
+  // };
+  const handlePayment = async (visaId) => {
+    const token = localStorage.getItem("token");
+  
+    if (!token) {
+      alert("User not authenticated!");
+      return;
+    }
+  
+    try {
+      const paymentData = {
+        transaction_id: `visa_${Date.now()}`, // ID المخصص لكل عملية دفع
+        payment_method: "PayPal", // طريقة الدفع
+        visa_id: visaId // إرسال معرّف الفيزا للمساعدة في تحديد الدفع
+      };
+  
+      const response = await axios.post(`${BaseUrl}/visa/pay/${visaId}`, paymentData, {
+        headers: {
+          Authorization: `Bearer ${token}`, // تمرير التوكن هنا
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (response.data.success) {
+        // إذا كانت الاستجابة تحتوي على رابط الدفع من PayPal
+        const approvalUrl = response.data.approvalUrl; // هذا الرابط سيكون في الاستجابة من الـ backend
+        if (approvalUrl) {
+          // إعادة توجيه المستخدم إلى PayPal لإتمام الدفع
+          window.location.href = approvalUrl;
+        } else {
+          alert("Payment failed! No approval URL received.");
+        }
+      } else {
+        alert("Payment failed! Please try again.");
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      alert("An error occurred while processing the payment.");
+    }
+  };
+  
   return (
     <div className="visa-page-container">
       {!visaData &&
@@ -314,11 +405,11 @@ const VisaPage = () => {
             )}
           </div>
           <div className="actions-section">
-            {visaData.visa_cost !== "0.00" && (
-              <button className="next-button" onClick={() => {}}>
+            {/* {visaData.visa_cost !== "0.00" && (
+              <button className="next-button" onClick={() => { handlePayment(visaData.id) }}>
                 Pay
               </button>
-            )}
+            )} */}
             <button
               className="next-button"
               onClick={() => {
@@ -336,6 +427,12 @@ const VisaPage = () => {
             >
               Delete
             </button>
+
+            {visaData.visa_cost !== "0.00" && (
+        <button className="next-button" onClick={handlePayNow} >
+          Pay
+        </button>
+      )}
           </div>
         </Fragment>
       )}

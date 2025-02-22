@@ -201,6 +201,8 @@ import SpeakerInfo from './components/speaker/SpeakerInfo';
 import AdminGallery from './pages/AdminGallery';
 import TravelConsultant from './pages/innerPages/TravelConsultant';
 import Album from './pages/AlbumContent';
+import SuccessP from './components/SuccessP';
+import FailedP from './components/FailedP';
 
 
 
@@ -283,7 +285,7 @@ const App = () => {
                 <Route path="/pre/con" element={<PreConferences />} />
                 <Route path="/Mamoun" element={<SpeakerInfo />} />
 
-
+                <Route path="/failed" element={<FailedP/>}/>
                 <Route path='/gallery' element={<Gallery />}></Route>
                 <Route path='/album/:id' element={<Album/>}></Route>
 
@@ -350,6 +352,8 @@ const App = () => {
               
               <Route path="/successverification" element={<SuccessVerification/>}/>
               <Route path="/failedverification" element={<FailedVerification/>}/>
+              <Route path="/success" element={<SuccessP/>}/>
+              <Route path="/failed" element={<FailedP/>}/>
                   </>
                   
 
@@ -837,7 +841,8 @@ const App = () => {
 
                                 <Route path="one/exhibits/:exhibitId" element={<OneExhibit />} />
                                 <Route path="/notification" element={<Notifications/>} />
-
+      <Route path="/success" element={<SuccessP/>}/>
+              <Route path="/failed" element={<FailedP/>}/>
 
 
 

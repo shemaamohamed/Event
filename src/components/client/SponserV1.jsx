@@ -3,11 +3,12 @@ import SingleSponserV1 from './SingleSponserV1';
 
 const SponserV1 = ({ spo }) => {
     const data = {
+        "Diamond": [],
         "Platinum": [],
         "Gold": [],
         "Silver": [],
         "Bronze": [],
-        "Diamond": [],
+        
         "participant":[]
        
     };

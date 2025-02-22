@@ -20,12 +20,18 @@ const SingleSponserV1 = ({ title, sponsors }) => {
             <div className="row">
                 {sponsors.map((thumb, index) => (
                     <div className="client-block col-lg-3 col-md-6 col-sm-12" key={index}>
-                        <figure className="image-box">
+                        <figure className="image-box" style={{
+                              height: "100%",
+                        }}>
                             <Link to={void (0)}>
                            
                                 <img
                                     src={`${backendUrlImages}${thumb.logo}`}
                                     alt={`spo-${index}`}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                    }}
                                 />
                             </Link>
                         </figure>

@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { backendUrlImages } from "../../constant/config";
+import { Gallery } from 'react-photoswipe-gallery';
+import IconButton from "@mui/material/IconButton";
+import { Close } from "@mui/icons-material";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 
 const Album = () => {
     const { id } = useParams(); // جلب الـ id من الـ URL
@@ -10,10 +15,35 @@ const Album = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [userData, setUserData] = useState(null); // لتخزين بيانات المستخدم
-
+    const [isOpen, setIsOpen] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const BaseUrl = process.env.REACT_APP_BASE_URL;
+    
 
-    // دالة لجلب الصور
+ 
+  
+
+  const openModal = (index) => {
+    setCurrentIndex(index);
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % imagess.length);
+  };
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? imagess.length - 1 : prevIndex - 1
+    );
+  };
+
     const fetchImages = async () => {
         try {
             const response = await axios.get(`${BaseUrl}/images/album/${id}`);
@@ -26,7 +56,6 @@ const Album = () => {
         }
     };
 
-    // دالة لحذف الصورة
     const deleteImage = async (imageName) => {
         try {
             // إرسال طلب DELETE مع الـ id واسم الصورة
@@ -65,9 +94,14 @@ const Album = () => {
     useEffect(() => {
         fetchUserData();
     }, []);
+    const imagess = images?.map((img) => ({
+        img: `${backendUrlImages}/${img}`,
+        title: "Image",
+    }));
+   
     return (
-        <div style={{ maxWidth: "800px", margin: "auto", padding: "20px", textAlign: "center",marginTop:'10vh', fontFamily: "Arial, sans-serif" }}>
-        <h2 style={{ color: "#333", marginBottom: "15px" }}>Album {id}</h2>
+        <div style={{ width:'90%', margin: "auto", padding: "20px", textAlign: "center",marginTop:'10vh', fontFamily: "Arial, sans-serif" }}>
+        {/* <h2 style={{ color: "#333", marginBottom: "15px" }}>Album {id}</h2> */}
 
         {loading && <p style={{ color: "#007bff" }}>Loading...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
@@ -87,30 +121,26 @@ const Album = () => {
             </div>
         )}
 
-        <div>
+
             {images.length > 0 ? (
-                <div style={{ 
-                    display: "grid", 
-                    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", 
-                    gap: "15px",
-                    justifyContent: "center"
-                }}>
-                    {images.map((img, index) => (
-                        <div key={index} style={{ 
+                <div className="row" >
+                   <Gallery withDownloadButton>
+                   {images.map((img, index) => (
+                        <div key={index}
+                        onClick={() => openModal(index)} sx={{ cursor: "pointer" }}
+                        className="gallery-item col-xl-4 col-lg-4 col-md-6 col-sm-12 text-center" 
+                         style={{ 
                             position: "relative", 
-                            borderRadius: "10px",
                             overflow: "hidden",
-                            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
                             transition: "transform 0.3s",
+
                         }}>
                             <img
                                 src={`${backendUrlImages}/${img}`}
                                 alt={`Image ${index}`}
                                 style={{
                                     width: "100%",
-                                    height: "150px",
-                                    objectFit: "cover",
-                                    borderRadius: "10px",
+                                    objectFit: "contain",
                                     transition: "opacity 0.3s",
                                 }}
                                 onMouseOver={(e) => (e.target.style.opacity = "0.8")}
@@ -146,12 +176,78 @@ const Album = () => {
                             )}
                         </div>
                     ))}
+                   </Gallery>
+                    
                 </div>
             ) : (
                 <p style={{ color: "#777", fontStyle: "italic" }}>No images found.</p>
             )}
+             {isOpen && userData === null && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+          onClick={closeModal}
+        >
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              closeModal();
+            }}
+            sx={{
+              position: "absolute",
+              top: "20px",
+              right: "20px",
+              color: "white",
+              zIndex: 1001,
+            }}
+          >
+            <Close />
+          </IconButton>
+          <IconButton
+            onClick={handlePrev}
+            sx={{
+              position: "absolute",
+              left: "20px",
+              color: "white",
+              zIndex: 1001,
+            }}
+          >
+            <ChevronLeft fontSize="large" />
+          </IconButton>
+          <img
+            src={imagess[currentIndex].img}
+            alt={imagess[currentIndex].title}
+            style={{
+              maxWidth: "90%",
+              maxHeight: "90%",
+              borderRadius: "8px",
+            }}
+          />
+          <IconButton
+            onClick={handleNext}
+            sx={{
+              position: "absolute",
+              right: "20px",
+              color: "white",
+              zIndex: 1001,
+            }}
+          >
+            <ChevronRight fontSize="large" />
+          </IconButton>
         </div>
-    </div>
+      )}
+
+            </div>
     );
 };
 
