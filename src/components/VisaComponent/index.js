@@ -80,7 +80,6 @@ const VisasComponent = () => {
     departure_date: visa.departure_date,
     visa_cost: `$${visa.visa_cost}`,
     status: visa.status,
-    created_at: visa.created_at,
     actions: "actions",
   }));
   const columns = [
@@ -161,21 +160,24 @@ const VisasComponent = () => {
       flex:1,
       minWidth:230,
       cellClassName:"centered-cell",
-    },{
-      field:"created_at",
-      headerName:"Created At",
-      flex:1,
-      minWidth:230,
-      cellClassName:"centered-cell",
-      renderCell: (params) => (
-        <>
-          <Typography>
-            {new Date(params.row.created_at).toLocaleString()}
-          </Typography>
-        </>
-      )
+    }
+    ,
+    // {
+    //   field:"created_at",
+    //   headerName:"Created At",
+    //   flex:1,
+    //   minWidth:230,
+    //   cellClassName:"centered-cell",
+    //   renderCell: (params) => (
+    //     <>
+    //       <Typography>
+    //         {new Date(params.row.created_at).toLocaleString()}
+    //       </Typography>
+    //     </>
+    //   )
 
-    },{
+    // },
+    {
       field:"actions",
       headerName:"Actions",
       flex:1,
@@ -377,8 +379,76 @@ const VisasComponent = () => {
     </Box>
     </Grid>
 
-    {/* Payment Status */}
-    {/* <Grid item xs={12}>
+
+
+
+
+
+
+
+
+
+    <Grid item xs={12} >
+    <Box display="flex" alignItems="center">
+      <Typography variant="subtitle1" fontWeight={600}>
+      Payment Method
+      </Typography>
+      <Typography variant="body1" ml={1}>
+        {selectedVisa.payment_method || "-"}
+      </Typography>
+    </Box>
+    </Grid>
+
+    <Grid item xs={12} >
+    <Box display="flex" alignItems="center">
+      <Typography variant="subtitle1" fontWeight={600}>
+      Payment Status
+      </Typography>
+      <Typography variant="body1" ml={1}>
+        {selectedVisa.payment_status || "-"}
+      </Typography>
+    </Box>
+    </Grid>
+
+
+    <Grid item xs={12} >
+    <Box display="flex" alignItems="center">
+      <Typography variant="subtitle1" fontWeight={600}>
+      Transaction Id
+      </Typography>
+      <Typography variant="body1" ml={1}>
+        {selectedVisa.transaction_id || "-"}
+      </Typography>
+    </Box>
+    </Grid>
+
+
+    <Grid item xs={12} >
+    <Box display="flex" alignItems="center">
+      <Typography variant="subtitle1" fontWeight={600}>
+      Payment Date
+      </Typography>
+      <Typography variant="body1" ml={1}>
+        {selectedVisa.payment_date || "-"}
+      </Typography>
+    </Box>
+    </Grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {/* Payment Status  */}
+     {/* <Grid item xs={12}>
       <Box display="flex" alignItems="center">
         <Typography variant="subtitle1" fontWeight={600}>
           Payment Status:
@@ -392,10 +462,10 @@ const VisasComponent = () => {
     </Grid> */}
 
     {/* Created At */}
-    <Grid item xs={12}>
+    {/* <Grid item xs={12}>
       <Box display="flex" alignItems="center">
         <Typography variant="subtitle1" fontWeight={600}>
-          Created At:
+          Created At:22
         </Typography>
         <Typography variant="body1" ml={1}>
           {selectedVisa.created_at
@@ -403,7 +473,7 @@ const VisasComponent = () => {
             : "-"}
         </Typography>
       </Box>
-    </Grid>
+    </Grid> */}
   </Grid>
 ) : (
   <Typography

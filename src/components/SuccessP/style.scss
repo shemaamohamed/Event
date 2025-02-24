@@ -1,46 +1,60 @@
-.success-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    // background-color: #ffe0e0; /* خلفية خضراء فاتحة */
+.payment-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.success-message {
+  text-align: center;
+  background-color: #d4edda;
+  color: #155724;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #c3e6cb;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.failed-message {
+  text-align: center;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #f5c6cb;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.failed-message button {
+  margin-top: 20px;
+  background-color: #721c24;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.failed-message button:hover {
+  background-color: #f5c6cb;
+  color: #721c24;
+}
+
+.payment-container.success .success-message {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.payment-container.failed .failed-message {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .success-content {
-    text-align: center;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #c83222; /* اللون الأخضر للنجاح */
-    color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  to {
+    opacity: 1;
   }
-  
-  .success-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .success-message {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    background-color: white;
-    color: #c83222;
-  }
-  
-  .back-button {
-    background-color: white;
-    color: #c83222; /* اللون الأخضر */
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  
-  .back-button:hover {
-    background-color: #edd5d5;
-    color: white;
-  }
-  
+}

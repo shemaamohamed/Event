@@ -118,7 +118,7 @@ const GalleryPageContent = () => {
                                     >
                                         View Album
                                     </button>
-                              {userData &&      <button 
+                              {userData===1 &&      <button 
                                         className="btn btn-danger "
                                         onClick={() => deleteAlbum(album.id)}
                                         style={{

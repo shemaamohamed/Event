@@ -17,6 +17,7 @@ const VisaPage = () => {
   const { userId } = useAuth();
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const { myConferenceId } = useAuth();
+  const [loading, setLoading] = useState(false); // ✅ حالة التحميل
 
   const navigate = useNavigate(); // For navigation later
   const [showVisaForm, setShowVisaForm] = useState(false); // Control the display of the form
@@ -61,22 +62,39 @@ const VisaPage = () => {
   useEffect(() => {
     getConferenceById(); // استدعاء getConferenceById عند تغيير myConferenceId
   }, [myConferenceId]); // Trigger whenever myConferenceId changes
-  const handlePaymentSuccess = (data) => {
-    if (data.state === 'approved') {
-      toast.success('Your payment has been successfully processed!');
-      // توجيه المستخدم إلى صفحة أخرى بعد النجاح
-      navigate('/payment-success');
-    } else {
-      toast.error('Payment failed, please try again.');
+
+  
+  const handlePayment = async () => {
+    const type = "visa"
+    const id = visaData.id
+    try {
+      setLoading(true); // ⏳ تشغيل التحميل
+      const token = localStorage.getItem("token")
+
+      const response = await axios.post(
+        `${BaseUrl}/paypal/create-payment`,
+        {
+          amount: visaData.visa_cost,
+          return_url: `https://eventscons.com/success/${type}/${id}`,
+          cancel_url: `https://eventscons.com/failed`,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const orderID = response.data.id;
+      window.location.href = `https://www.paypal.com/checkoutnow?token=${orderID}`;
+
+      // window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
+    } catch (error) {
+      console.error("❌ خطأ أثناء إنشاء الطلب:", error);
+      console.log(error);
+      
+      alert("حدث خطأ، حاول مرة أخرى.");
+      
+    } finally {
+      setLoading(false); // ✅ إيقاف التحميل
     }
   };
-  
-  const handlePayNow = () => {
-    const transactionId = `visa_${Date.now()}`; 
-    // توجه المستخدم إلى صفحة PayPal لبدء عملية الدفع
-const paymentUrl = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&business=mamoun.khraisha@yahoo.com&amount=${visaData.visa_cost}&currency_code=USD&item_name=VisaPayment&return=${encodeURIComponent(`https://eventscons.com/success`)}&cancel_return=https://eventscons.com/failed`;
-
-    window.location.href = paymentUrl;  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -177,6 +195,25 @@ const paymentUrl = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&bu
   // };
 
   // استخدام useEffect لاستدعاء الدالة عند تحميل المكون
+
+  // const capturePayment = async (orderID) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://127.0.0.1:8000/api/paypal/capture-payment/${orderID}`
+  //     );
+
+  //     if (response.data.status === "COMPLETED") {
+  //       alert("✅ تم الدفع بنجاح!");
+  //     } else {
+  //       alert("⚠️ الدفع لم يكتمل، الحالة: " + response.data.status);
+  //     }
+  //     navigate("/"); // ✅ الرجوع للصفحة الرئيسية بعد التأكيد
+  //   } catch (error) {
+  //     console.error("❌ خطأ في تأكيد الدفع:", error);
+  //     alert("حدث خطأ أثناء معالجة الدفع.");
+  //   }
+  // };
+
   useEffect(() => {
     const fetchData = async () => {
       // await fetchSpeakerData();
@@ -257,48 +294,17 @@ const paymentUrl = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&bu
   //     alert("An error occurred while processing the payment.");
   //   }
   // };
-  const handlePayment = async (visaId) => {
-    const token = localStorage.getItem("token");
-  
-    if (!token) {
-      alert("User not authenticated!");
-      return;
-    }
-  
-    try {
-      const paymentData = {
-        transaction_id: `visa_${Date.now()}`, // ID المخصص لكل عملية دفع
-        payment_method: "PayPal", // طريقة الدفع
-        visa_id: visaId // إرسال معرّف الفيزا للمساعدة في تحديد الدفع
-      };
-  
-      const response = await axios.post(`${BaseUrl}/visa/pay/${visaId}`, paymentData, {
-        headers: {
-          Authorization: `Bearer ${token}`, // تمرير التوكن هنا
-          "Content-Type": "application/json",
-        },
-      });
-  
-      if (response.data.success) {
-        // إذا كانت الاستجابة تحتوي على رابط الدفع من PayPal
-        const approvalUrl = response.data.approvalUrl; // هذا الرابط سيكون في الاستجابة من الـ backend
-        if (approvalUrl) {
-          // إعادة توجيه المستخدم إلى PayPal لإتمام الدفع
-          window.location.href = approvalUrl;
-        } else {
-          alert("Payment failed! No approval URL received.");
-        }
-      } else {
-        alert("Payment failed! Please try again.");
-      }
-    } catch (error) {
-      console.error("Payment error:", error);
-      alert("An error occurred while processing the payment.");
-    }
-  };
+ 
+  // const response = await axios.post(`${BaseUrl}/visa/pay/${visaId}`, paymentData, {
+  //   headers: {
+  //     Authorization: `Bearer ${token}`, // تمرير التوكن هنا
+  //     "Content-Type": "application/json",
+  //   },
   
   return (
     <div className="visa-page-container">
+
+      
       {!visaData &&
         !showVisaForm && ( // Show the question only if there is no data and the form is closed
           <div className="question-container">
@@ -361,83 +367,66 @@ const paymentUrl = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&bu
         </form>
       )}
 
-      {visaData && (
-        <Fragment>
-          <h2 className="title-visa-2">Visa Information</h2>
+{visaData && visaData?.payment_status === "completed" ? (
+  <div className="payment-success">
+    <h2>✅ Payment Successfully Completed!</h2>
+<p>Thank you! You have successfully completed the payment. Your visa application will be processed soon.</p>
 
-          <div className="visa-info">
-            {visaData.arrival_date && (
-              <SimpleLabelValue
-                label="Arrival Date"
-                value={visaData.arrival_date}
-              />
-            )}
-            {visaData.departure_date && (
-              <SimpleLabelValue
-                label="Departure Date"
-                value={visaData.departure_date}
-              />
-            )}
-            <SimpleLabelValue label="Status" value={visaData.status} />
-            <SimpleLabelValue
-              label="Visa Cost (USD)"
-              value={visaData.visa_cost}
-            />
+  </div>
+) : (
+  visaData && (
+    <Fragment>
+      <h2 className="title-visa-2">Visa Information</h2>
 
-            {visaData.updated_at_by_admin && (
-              <SimpleLabelValue
-                label="Last Updated by Admin"
-                value={visaData.updated_at_by_admin}
-              />
-            )}
+      <div className="visa-info">
+        {visaData.arrival_date && (
+          <SimpleLabelValue label="Arrival Date" value={visaData.arrival_date} />
+        )}
+        {visaData.departure_date && (
+          <SimpleLabelValue label="Departure Date" value={visaData.departure_date} />
+        )}
+        <SimpleLabelValue label="Status" value={visaData.status} />
+        <SimpleLabelValue label="Visa Cost (USD)" value={visaData.visa_cost} />
 
-            {visapdf && (
-              <div className="download-link">
-                <a
-                  href={`${backendUrlImages}${visapdf}`}
-                  download
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Download Visa PDF
-                </a>
-              </div>
-            )}
+        {visaData.updated_at_by_admin && (
+          <SimpleLabelValue label="Last Updated by Admin" value={visaData.updated_at_by_admin} />
+        )}
+
+        {visapdf && (
+          <div className="download-link">
+            <a
+              href={`${backendUrlImages}${visapdf}`}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Download Visa PDF
+            </a>
           </div>
-          <div className="actions-section">
-            {/* {visaData.visa_cost !== "0.00" && (
-              <button className="next-button" onClick={() => { handlePayment(visaData.id) }}>
-                Pay
-              </button>
-            )} */}
-            <button
-              className="next-button"
-              onClick={() => {
-                navigate("/flight/form");
-              }}
-            >
-              Next
-            </button>
+        )}
+      </div>
 
-            <button
-              className="next-button"
-              onClick={() => {
-                handleDelete();
-              }}
-            >
-              Delete
-            </button>
-
-            {visaData.visa_cost !== "0.00" && (
-        <button className="next-button" onClick={handlePayNow} >
-          Pay
+      <div className="actions-section">
+        <button className="next-button" onClick={() => navigate("/flight/form")}>
+          Next
         </button>
-      )}
-          </div>
-        </Fragment>
-      )}
+
+        <button className="next-button" onClick={handleDelete}>
+          Delete
+        </button>
+
+        {visaData.visa_cost !== "0.00" && visaData?.status === "approved" && (
+          <button className="next-button" onClick={handlePayment}>
+            Pay
+          </button>
+        )}
+      </div>
+    </Fragment>
+  )
+)}
+
     </div>
   );
-};
+}
 
 export default VisaPage;

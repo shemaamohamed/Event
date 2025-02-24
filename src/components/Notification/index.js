@@ -263,6 +263,10 @@ const NotificationDropdown = () => {
                   notification?.message?.includes("New flight registered by")
                 ) {
                   navigate(`/flights`);
+                } else if (
+                  notification?.message?.includes("The user leen has completed the visa")
+                ) {
+                  navigate(`/view-visas`);
                 }
                 else if (
                   notification?.message?.includes(

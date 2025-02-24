@@ -352,7 +352,7 @@ const App = () => {
               
               <Route path="/successverification" element={<SuccessVerification/>}/>
               <Route path="/failedverification" element={<FailedVerification/>}/>
-              <Route path="/success" element={<SuccessP/>}/>
+              {/* <Route path="/success/:type/:id" element={<SuccessP/>}/> */}
               <Route path="/failed" element={<FailedP/>}/>
                   </>
                   
@@ -841,7 +841,7 @@ const App = () => {
 
                                 <Route path="one/exhibits/:exhibitId" element={<OneExhibit />} />
                                 <Route path="/notification" element={<Notifications/>} />
-      <Route path="/success" element={<SuccessP/>}/>
+      <Route path="/success/:type/:id" element={<SuccessP/>}/>
               <Route path="/failed" element={<FailedP/>}/>
 
 

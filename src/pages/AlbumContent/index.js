@@ -139,6 +139,7 @@ const Album = () => {
                                 src={`${backendUrlImages}/${img}`}
                                 alt={`Image ${index}`}
                                 style={{
+                                  cursor: "pointer",
                                     width: "100%",
                                     objectFit: "contain",
                                     transition: "opacity 0.3s",
@@ -147,7 +148,7 @@ const Album = () => {
                                 onMouseOut={(e) => (e.target.style.opacity = "1")}
                             />
                             
-                            {userData && (
+                            {userData===1 && (
                                 <button
                                     onClick={() => deleteImage(img)}
                                     style={{
@@ -182,7 +183,7 @@ const Album = () => {
             ) : (
                 <p style={{ color: "#777", fontStyle: "italic" }}>No images found.</p>
             )}
-             {isOpen && userData === null && (
+             {isOpen && (userData === null|| userData===0) && (
         <div
           style={{
             position: "fixed",
@@ -217,12 +218,12 @@ const Album = () => {
             onClick={handlePrev}
             sx={{
               position: "absolute",
-              left: "20px",
+              left: "0px",
               color: "white",
               zIndex: 1001,
             }}
           >
-            <ChevronLeft fontSize="large" />
+            <ChevronLeft size={70} />
           </IconButton>
           <img
             src={imagess[currentIndex].img}
@@ -230,20 +231,24 @@ const Album = () => {
             style={{
               maxWidth: "90%",
               maxHeight: "90%",
-              borderRadius: "8px",
             }}
           />
-          <IconButton
-            onClick={handleNext}
-            sx={{
-              position: "absolute",
-              right: "20px",
-              color: "white",
-              zIndex: 1001,
-            }}
-          >
-            <ChevronRight fontSize="large" />
-          </IconButton>
+<IconButton
+  onClick={handleNext}
+  sx={{
+    position: "absolute",
+    right: "0px",
+    color: "white",
+    zIndex: 1100,
+  }}
+>
+  <ChevronRight size={70} /> 
+</IconButton>
+
+
+
+
+
         </div>
       )}
 
