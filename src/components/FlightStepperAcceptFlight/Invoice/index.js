@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import httpService from "../../../common/httpService";
 import toast from "react-hot-toast";
-
+import axios from "axios";
 const Invoice = () => {
   const [invoices, setInvoices] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false); // ✅ حالة التحميل
+
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   // Fetch flight data from localStorage
@@ -23,7 +26,39 @@ const Invoice = () => {
     }
     return trips;
   };
+  const handlePayment = async () => {
+    const type = "flight"
+    const id = invoices[0].id
+    try {
+      setLoading(true); // ⏳ تشغيل التحميل
+      const token = localStorage.getItem("token")
 
+      const response = await axios.post(
+        `${BaseUrl}/paypal/create-payment`,
+        {
+          amount: total,
+          // return_url: `https://eventscons.com/success/${type}/${id}`,
+             return_url: `http://localhost:3000/success/${type}/${id}`,
+
+          cancel_url: `https://eventscons.com/failed`,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const orderID = response.data.id;
+      // window.location.href = `https://www.paypal.com/checkoutnow?token=${orderID}`;
+
+      window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
+    } catch (error) {
+      console.error("❌ خطأ أثناء إنشاء الطلب:", error);
+      console.log(error);
+      
+      alert("حدث خطأ، حاول مرة أخرى.");
+      
+    } finally {
+      setLoading(false); // ✅ إيقاف التحميل
+    }
+  };
   // Fetch invoice data from API
   const getInvoice = async () => {
     const getAuthToken = () => localStorage.getItem("token");
@@ -46,12 +81,19 @@ const Invoice = () => {
       console.log(data.error);
 
       setInvoices(data?.invoices || []);
-    } catch (error) {}
+      setTotal(data.total_sum)
+
+
+    } catch (error) { }
   };
+  console.log(total);
+console.log(invoices);
 
   useEffect(() => {
     getInvoice();
+
   }, []);
+console.log(invoices);
 
   return (
     <div className="invoice">
@@ -88,8 +130,9 @@ const Invoice = () => {
       </div>
 
       <div className="actions-section">
-        <button className="next-button">Pay</button>
-      </div>
+        <button className="next-button" onClick={handlePayment}>
+          Pay
+        </button> </div>
     </div>
   );
 };

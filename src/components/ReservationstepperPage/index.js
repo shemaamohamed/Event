@@ -167,3 +167,8 @@ const ParentComponent = () => (
 );
 
 export default ParentComponent;
+{/* <div className="payment-success">
+<h2>✅ Payment Successfully Completed!</h2>
+<p>Thank you! You have successfully completed the payment. Your visa application will be processed soon.</p>
+
+</div> */}

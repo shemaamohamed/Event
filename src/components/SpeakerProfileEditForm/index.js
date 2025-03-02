@@ -248,12 +248,12 @@ const SpeakerProfileForm = () => {
           </Grid>
 
           <div className="profile-files" style={{ overflow: 'hidden' }}>
-          <ImageUpload
+          {/* <ImageUpload
                 label="Upload Image"
                 inputValue={image}
                 setInputValue={setImage}
                 allowedExtensions={["jpg", "jpeg", "png"]}
-              />
+              /> */}
               <Input className="input-field"
                 label="Bio"
                 placeholder="Bio"

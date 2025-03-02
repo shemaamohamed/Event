@@ -15,7 +15,7 @@ const GalleryPageContent = () => {
     const BaseUrl = process.env.REACT_APP_BASE_URL;
     const navigate = useNavigate();
 
-    const fetchAlbums = async (page = 1) => {
+    const fetchAlbums = async (page = 2) => {
         setLoading(true);
         try {
             const response = await axios.get(`${BaseUrl}/all/album`);
@@ -128,6 +128,18 @@ const GalleryPageContent = () => {
                                         }}
                                     >
                                         Delete Album
+                                    </button>}
+                                    {userData===1 &&      <button 
+                                        className="btn btn-danger "
+                                        onClick={()=>{
+navigate(`/add/img/${album.id}`)
+                                        }}
+                                        style={{
+                                            width:'150px',
+
+                                            backgroundColor:"#9B1321"
+                                        }}
+                                    > Add Images
                                     </button>}
                                 </div>
                             </div>

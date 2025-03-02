@@ -203,6 +203,7 @@ import TravelConsultant from './pages/innerPages/TravelConsultant';
 import Album from './pages/AlbumContent';
 import SuccessP from './components/SuccessP';
 import FailedP from './components/FailedP';
+import AddImagesComponent from './components/AddImage';
 
 
 
@@ -294,6 +295,11 @@ const App = () => {
                 <Route path="/job/list" element={<JobList />} />
                 <Route path="/page/exhibitions" element={<ExhibitionsPage />} />
                 <Route path='/about-us' element={<AboutUs />}></Route>
+
+                <Route path='/add/img/:id' element={<AddImagesComponent />}></Route>
+
+
+                
                                 <Route path='/contact_us' element={<Contact />}></Route>
 {
   isSponsor &&(
@@ -473,7 +479,8 @@ const App = () => {
                                    
 
 
-                                    
+                                    <Route path='/add/img/:id' element={<AddImagesComponent />}></Route>
+
 
   
                                     <Route

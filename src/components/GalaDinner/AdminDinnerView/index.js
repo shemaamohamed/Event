@@ -84,6 +84,14 @@ const SpeakerTable = () => {
 
     },
 
+    {
+      field: "companion_Status",
+      headerName: "Companion status",
+      flex: 1,
+      minWidth: 230,
+      cellClassName: "centered-cell",
+
+    },
 
 
 
@@ -121,6 +129,8 @@ const SpeakerTable = () => {
       conference_id: row.conference_id,
       companion_name: row.companion_name,
       companion_price: row.companion_price,
+      companion_Status: row.status,
+
       actions: row.actions,
       speaker: row.speaker,
     };

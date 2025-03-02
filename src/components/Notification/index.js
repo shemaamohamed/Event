@@ -326,6 +326,13 @@ const NotificationDropdown = () => {
                 }
                 else if (
                   notification?.message?.includes(
+                    "has completed the flight payment"
+                  )
+                ) {
+                  navigate(`/flights`);
+                }
+                else if (
+                  notification?.message?.includes(
                     "New Reservation Added"
                   )
                 ) {
@@ -358,6 +365,13 @@ const NotificationDropdown = () => {
                   )
                 ) {
                   navigate(`/conferences/page`);
+                }
+                else if (
+                  notification?.message?.includes(
+                    "The payment for the room with"
+                  )
+                ) {
+                  navigate(`/reservations`);
                 }
                 else if (
                   notification?.message?.includes(

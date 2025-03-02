@@ -26,6 +26,7 @@ const AirportTransferForm = () => {
   const { userId } = useAuth();
   const [id, setId] = useState(0);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     tripType: "",
@@ -78,7 +79,7 @@ const AirportTransferForm = () => {
 
       // في حال نجاح الطلب، أظهر توست برسالة نجاح
       toast.success("Airport transfer booking has been deleted successfully.");
-    
+
     } catch (error) {
       // في حال حدوث خطأ، أظهر توست برسالة خطأ
       const errorMessage =
@@ -158,12 +159,47 @@ const AirportTransferForm = () => {
           toLocation: data2?.to_location || "",
         });
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
+
   useEffect(() => {
     getBooking();
-  }, []);
+    console.log(id);
 
+  }, []);
+  const handlePayment = async (total) => {
+    const type = "airport"
+    // const id = visaData.id
+    console.log(id, total, type);
+
+    try {
+      setLoading(true); // ⏳ تشغيل التحميل
+      const token = localStorage.getItem("token")
+
+      const response = await axios.post(
+        `${BaseUrl}/paypal/create-payment`,
+        {
+          amount: total,
+          return_url: `http://localhost:3000/success/${type}/${id}`,
+          cancel_url: `http://localhost:3000/failed`,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const orderID = response.data.id;
+      // window.location.href = `https://www.paypal.com/checkoutnow?token=${orderID}`;
+
+      window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
+    } catch (error) {
+      console.error("❌ خطأ أثناء إنشاء الطلب:", error);
+      console.log(error);
+
+      alert("حدث خطأ، حاول مرة أخرى.");
+
+    } finally {
+      setLoading(false); // ✅ إيقاف التحميل
+    }
+  };
   return (
     <div className="airport-transfer-form-section">
       {!bookingData || bookingData.length === 0 || isEdit ? (
@@ -327,11 +363,14 @@ const AirportTransferForm = () => {
                     <SimpleLabelValue
                       label="Status"
 
-                      value={booking.invoice.total_price > 0 ? booking.invoice.status: "approved"}
+                      value={booking.invoice.total_price > 0 ? booking.invoice.status : "approved"}
                     />
-                    {booking.invoice.total_price !== "0.00" ? (
-                      <button className="pay-btn">Pay Now</button>
-                    ) : null}{" "}
+                    {booking.invoice.total_price !== "0.00" && booking.invoice.status !== "approved" && (
+                      <button className="pay-btn" onClick={() => handlePayment(booking.invoice.total_price)}>
+                        Pay Now
+                      </button>
+                    )}
+
                     <button
                       className="pay-btn"
                       onClick={() => {

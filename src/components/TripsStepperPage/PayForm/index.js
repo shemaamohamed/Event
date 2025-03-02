@@ -1,11 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import SimpleLabelValue from "../../SimpleLabelValue";
 import "./style.scss";
 import { useTripsStepper } from "../StepperContext";
+import axios from "axios";
 
-const PayForm = () => {
+const PayForm = ({total , id}) => {
   const { currentStep, completeStep, invoice, setInvoice } = useTripsStepper();
+console.log(invoice);
+const BaseUrl = process.env.REACT_APP_BASE_URL;
+  const [loading, setLoading] = useState(false); // ✅ حالة التحميل
+console.log(total , id);
 
+const handlePayment = async () => {
+  const type = "pTrip"
+ 
+
+  try {
+    setLoading(true); // ⏳ تشغيل التحميل
+    const token = localStorage.getItem("token")
+
+    const response = await axios.post(
+      `${BaseUrl}/paypal/create-payment`,
+      {
+        amount: total,
+        return_url: `http://localhost:3000/success/${type}/${id}`,
+        cancel_url: `http://localhost:3000/failed`,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    const orderID = response.data.id;
+    // window.location.href = `https://www.paypal.com/checkoutnow?token=${orderID}`;
+
+    window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
+  } catch (error) {
+    console.error("❌ خطأ أثناء إنشاء الطلب:", error);
+    console.log(error);
+    
+    alert("حدث خطأ، حاول مرة أخرى.");
+    
+  } finally {
+    setLoading(false); // ✅ إيقاف التحميل
+  }
+};
   return (
     <div className="pay-form-container">
       {invoice.length > 0 ? (
@@ -39,7 +76,7 @@ const PayForm = () => {
         <p>No invoices available.</p>
       )}
       <div className="actions-section">
-        <button className="next-button">Pay Now</button>
+        <button className="next-button" onClick={handlePayment}>Pay Now</button>
       </div>
     </div>
   );

@@ -578,16 +578,16 @@ const TripParticipantsComponent = () => {
                           </Typography>
                         </Grid>
 
-                        <Grid item xs={6}>
+                        {/* <Grid item xs={6}>
                           <Typography variant="body1" fontWeight="bold">
-                            Status:
+                             Status:
                           </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Grid> */}
+                        {/* <Grid item xs={6}>
                           <Typography variant="body1">
                             {companion.invoice?.status || "-"}
                           </Typography>
-                        </Grid>
+                        </Grid> */}
                       </Grid>
                     </Paper>
                   ))

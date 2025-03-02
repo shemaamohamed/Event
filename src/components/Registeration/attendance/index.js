@@ -23,10 +23,44 @@ const RegisterAttendancePage = () => {
   const [price, setPrice] = useState("");
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [loading, setLoading] = useState(false); // ✅ حالة التحميل
+  
 console.log({priceId});
 
+  // const handlePayment = async () => {
+  //   setPaymentStatus(true);
+  // };
+    
   const handlePayment = async () => {
-    setPaymentStatus(true);
+    const type = "att"
+    const id = conferenceId
+    try {
+      setLoading(true); // ⏳ تشغيل التحميل
+      const token = localStorage.getItem("token")
+
+      const response = await axios.post(
+        `${BaseUrl}/paypal2/create-payment2/2`,
+        {
+          amount:price,
+          return_url: `http://localhost:3000/success/${type}/${id}`,
+          cancel_url: `http://localhost:3000/failed`,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const orderID = response.data.id;
+      // window.location.href = `https://www.paypal.com/checkoutnow?token=${orderID}`;
+
+      window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
+    } catch (error) {
+      console.error("❌ خطأ أثناء إنشاء الطلب:", error);
+      console.log(error);
+      
+      alert("حدث خطأ، حاول مرة أخرى.");
+      
+    } finally {
+      setLoading(false); // ✅ إيقاف التحميل
+    }
   };
   function getPrice(conferenceData) {
     // Find the conference with the given ID

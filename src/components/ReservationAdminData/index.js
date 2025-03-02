@@ -19,17 +19,17 @@ const ReservationsComponent = () => {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const TOKEN = localStorage.getItem("token");
-      const [anchorEl, setAnchorEl] = useState(null);
-      const [selectedRow, setSelectedRow] = useState(null);
-      const openMenu = (event, row) => {
-        setAnchorEl(event.currentTarget);
-        setSelectedRow(row);
-      };
-    
-      const closeMenu = () => {
-        setAnchorEl(null);
-        setSelectedRow(null);
-      };
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const openMenu = (event, row) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedRow(row);
+  };
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+    setSelectedRow(null);
+  };
 
 
 
@@ -85,40 +85,54 @@ const ReservationsComponent = () => {
     rooms: reservation.rooms,
     actions: reservation.actions,
   }));
-  const columns=[
-    { field: "name",
-       headerName: "Name",
+  const columns = [
+    {
+      field: "name",
+      headerName: "Name",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell"
-     },
-    { field: "email",
-       headerName: "Email",
-       flex: 1,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      flex: 1,
       minWidth: 230,
-      cellClassName: "centered-cell" },
-    { field: "registration_type",
-       headerName: "Registration Type",
-       flex: 1,
+      cellClassName: "centered-cell"
+    },
+    {
+      field: "registration_type",
+      headerName: "Registration Type",
+      flex: 1,
       minWidth: 230,
-      cellClassName: "centered-cell" },
-    { field: "room_count",
-       headerName: "Room Count",
-        flex: 1,
+      cellClassName: "centered-cell"
+    },
+    {
+      field: "room_count",
+      headerName: "Room Count",
+      flex: 1,
       minWidth: 230,
-      cellClassName: "centered-cell" },
-    { field: "companions_count",
-       headerName: "Companions Count",
-        flex: 1,
+      cellClassName: "centered-cell"
+    },
+    {
+      field: "companions_count",
+      headerName: "Companions Count",
+      flex: 1,
       minWidth: 230,
-      cellClassName: "centered-cell" },
-    { field: "update_deadline", headerName: "Update Deadline", flex: 1,
+      cellClassName: "centered-cell"
+    },
+    {
+      field: "update_deadline", headerName: "Update Deadline", flex: 1,
       minWidth: 230,
-      cellClassName: "centered-cell" },
-    { field: "created_at", headerName: "Created At", flex: 1,
+      cellClassName: "centered-cell"
+    },
+    {
+      field: "created_at", headerName: "Created At", flex: 1,
       minWidth: 230,
-      cellClassName: "centered-cell" },
-    { field: "actions", headerName: "Actions", flex: 1,
+      cellClassName: "centered-cell"
+    },
+    {
+      field: "actions", headerName: "Actions", flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",
       renderCell: (params) => (
@@ -133,7 +147,7 @@ const ReservationsComponent = () => {
           >
             <MenuItem onClick={() => {
               handleViewRooms(params.row.rooms);
-              
+
             }}>
               View Rooms
             </MenuItem>
@@ -146,182 +160,189 @@ const ReservationsComponent = () => {
 
   return (
     <div
-    style={{
-      borderRadius: '8px',
-      width: '100%',
-      maxWidth: '1700px',
-      // height: 'calc(100vh - 80px)',
-      padding: '20px',
-    }}
+      style={{
+        borderRadius: '8px',
+        width: '100%',
+        maxWidth: '1700px',
+        // height: 'calc(100vh - 80px)',
+        padding: '20px',
+      }}
     >
 
       <div className="reservations-component">
-      <Typography
-              variant="h6"
-              sx={{
-                color: '#c62828',
-                fontWeight: 'bold',
-                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-                textAlign: 'center',
-              }}
-            >
-              All Reservations
-            </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            color: '#c62828',
+            fontWeight: 'bold',
+            fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+            textAlign: 'center',
+          }}
+        >
+          All Reservations
+        </Typography>
         <DataGrid
-        rows={rows}
-        columns={columns}
-        getRowId={(row) => row.email}
-        paginationModel={{ page: currentPage - 1, pageSize: 12 }} 
-        onPaginationModelChange={(pagination) => {
-          setCurrentPage(pagination.page + 1); 
-          handlePageChange(pagination.page + 1);
-        }}
-        rowCount={totalPages * 12}
-        pageSizeOptions={[12]}
-        paginationMode="server" 
-        checkboxSelection
-        disableRowSelectionOnClick
-        autoHeight
-        sx={{
-          marginTop: "20px",
-          "& .MuiDataGrid-virtualScroller": {
-            overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
-          },
-        }}
+          rows={rows}
+          columns={columns}
+          getRowId={(row) => row.email}
+          paginationModel={{ page: currentPage - 1, pageSize: 12 }}
+          onPaginationModelChange={(pagination) => {
+            setCurrentPage(pagination.page + 1);
+            handlePageChange(pagination.page + 1);
+          }}
+          rowCount={totalPages * 12}
+          pageSizeOptions={[12]}
+          paginationMode="server"
+          checkboxSelection
+          disableRowSelectionOnClick
+          autoHeight
+          sx={{
+            marginTop: "20px",
+            "& .MuiDataGrid-virtualScroller": {
+              overflow: "hidden", // لإزالة أي تمرير غير مرغوب فيه
+            },
+          }}
         />
 
-      
 
-        <Drawer 
-        open={isDrawerOpen} onClose={() => setDrawerOpen(false)}
+
+        <Drawer
+          open={isDrawerOpen} onClose={() => setDrawerOpen(false)}
           anchor="right"
           sx={{
-            zIndex: (theme) => theme.zIndex.modal + 1, 
-    
+            zIndex: (theme) => theme.zIndex.modal + 1,
+
             '& .MuiDrawer-paper': {
-                zIndex: (theme) => theme.zIndex.modal + 1,
-    
-    
-          width: 
-          {
-            xs: '100%',
-            sm: '50%',
-            md: '50%',
-            lg: '40%',
-            xl: '40%',
-          }, 
-        },
-    
+              zIndex: (theme) => theme.zIndex.modal + 1,
+
+
+              width:
+              {
+                xs: '100%',
+                sm: '50%',
+                md: '50%',
+                lg: '40%',
+                xl: '40%',
+              },
+            },
+
           }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              padding: 2,
+            }}
           >
-                <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      padding: 2,
-                    }}
-                    >
-                      <IconButton onClick={() => setDrawerOpen(false)}>
-                       <CloseRounded /> 
-                      </IconButton>
-                    </div>
-                    <Typography
-        variant="h6"
-        
-        sx={{
-          color: "#c62828",
-          textAlign: "center",
-          backgroundColor: "#f1f1f1",
-          padding: 1,
-          borderRadius: 1,
-          marginBottom: 2,
-        }}
-      
-        gutterBottom
-      >
-                  Room Details
+            <IconButton onClick={() => setDrawerOpen(false)}>
+              <CloseRounded />
+            </IconButton>
+          </div>
+          <Typography
+            variant="h6"
 
-      </Typography>
+            sx={{
+              color: "#c62828",
+              textAlign: "center",
+              backgroundColor: "#f1f1f1",
+              padding: 1,
+              borderRadius: 1,
+              marginBottom: 2,
+            }}
 
-                    <Box sx={{ padding: 2, overflowY: "auto" }}>
-                   
-        
-        {selectedRooms.length > 0 ? (
-          <List>
-            {selectedRooms.map((room, index) => (
-              <Box key={room.id} sx={{ marginBottom: 3 }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" ,          color: "#c62828",
- }} >
-                  Room {index + 1}
-                </Typography>
-                <Box sx={{ padding: 2, border: "1px solid #ddd", borderRadius: 2 }}>
-                  <SimpleLabelValue label="Room Type" value={room.room_type || "-"} />
-                  <SimpleLabelValue label="Occupant Name" value={room.occupant_name || "-"} />
-                  <SimpleLabelValue label="Check-In" value={room.check_in_date || "-"} />
-                  <SimpleLabelValue label="Check-Out" value={room.check_out_date || "-"} />
-                  <SimpleLabelValue label="Total Nights" value={room.total_nights || "-"} />
-               
-                  <SimpleLabelValue label="Early Check In" value={room.early_check_in === 1 ? "YES" : (room.early_check_in === 0 ? "NO" : "-")} />
-<SimpleLabelValue label="Late Check Out" value={room.late_check_out === 1 ? "YES" : (room.late_check_out === 0 ? "NO" : "-")} />
+            gutterBottom
+          >
+            Room Details
 
-               
-               
-                </Box>
-                <Divider sx={{ marginY: 2 }} />
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" ,          color: "#c62828",}}>
-                  Invoices
-                </Typography>
-                {room.reservation_invoices &&
-                room.reservation_invoices.length > 0 ? (
-                  room.reservation_invoices.map((invoice, invoiceIndex) => (
-                    <Box
-                      key={invoiceIndex}
-                      sx={{
-                        padding: 2,
-                        border: "1px solid #ddd",
-                        borderRadius: 2,
-                        marginBottom: 2,
-                      }}
-                    >
-                      <SimpleLabelValue label="Invoice ID" value={invoice.id || "-"} />
-                      <SimpleLabelValue label="Base Price" value={invoice.price || "-"} />
-                      <SimpleLabelValue
-                        label="Additional Price"
-                        value={invoice.additional_price || "-"}
-                      />
-                      <SimpleLabelValue label="Total Price (USD)" value={invoice.total || "-"} />
-                      <SimpleLabelValue label="Status" value={invoice.status || "-"} />
-                      <SimpleLabelValue
-                        label="Confirmation PDF"
-                        value={
-                          invoice.confirmationPDF ? (
-                            <a
-                              href={invoice.confirmationPDF}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              View PDF
-                            </a>
-                          ) : (
-                            "-"
-                          )
-                        }
-                      />
+          </Typography>
+
+          <Box sx={{ padding: 2, overflowY: "auto" }}>
+
+
+            {selectedRooms.length > 0 ? (
+              <List>
+                {selectedRooms.map((room, index) => (
+                  <Box key={room.id} sx={{ marginBottom: 3 }}>
+                    <Typography variant="subtitle1" sx={{
+                      fontWeight: "bold", color: "#c62828",
+                    }} >
+                      Room {index + 1}
+                    </Typography>
+                    <Box sx={{ padding: 2, border: "1px solid #ddd", borderRadius: 2 }}>
+                      <SimpleLabelValue label="Room Type" value={room.room_type || "-"} />
+                      <SimpleLabelValue label="Occupant Name" value={room.occupant_name || "-"} />
+                      <SimpleLabelValue label="Check-In" value={room.check_in_date || "-"} />
+                      <SimpleLabelValue label="Check-Out" value={room.check_out_date || "-"} />
+                      <SimpleLabelValue label="Total Nights" value={room.total_nights || "-"} />
+
+                      <SimpleLabelValue label="Early Check In" value={room.early_check_in === 1 ? "YES" : (room.early_check_in === 0 ? "NO" : "-")} />
+                      <SimpleLabelValue label="Late Check Out" value={room.late_check_out === 1 ? "YES" : (room.late_check_out === 0 ? "NO" : "-")} />
+
+
+
                     </Box>
-                  ))
-                ) : (
-                  <Typography>No invoices available for this room.</Typography>
-                )}
-              </Box>
-            ))}
-          </List>
-        ) : (
-          <Typography>No rooms available for this reservation.</Typography>
-        )}
-      </Box>
+                    <Divider sx={{ marginY: 2 }} />
+                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", color: "#c62828", }}>
+                      Invoices
+                    </Typography>
+                    {room.reservation_invoices &&
+                      room.reservation_invoices.length > 0 ? (
+                      room.reservation_invoices.map((invoice, invoiceIndex) => {
+                       console.log(invoiceIndex);
+                       console.log(room.reservation_invoices );
+                       
+                        return   <Box
+                          key={invoiceIndex}
+                          sx={{
+                            padding: 2,
+                            border: "1px solid #ddd",
+                            borderRadius: 2,
+                            marginBottom: 2,
+                          }}
+                        >
+                          <SimpleLabelValue label="Invoice ID" value={invoice.id || "-"} />
+                          <SimpleLabelValue label="Base Price" value={invoice.price || "-"} />
+                          <SimpleLabelValue
+                            label="Additional Price"
+                            value={invoice.additional_price || "-"}
+                          />
+                          <SimpleLabelValue label="Total Price (USD)" value={invoice.total || "-"} />
+                          {index === 0 && invoice.status && (
+                            <SimpleLabelValue label="Status" value={invoice.status} />
+                          )}
+
+                          <SimpleLabelValue
+                            label="Confirmation PDF"
+                            value={
+                              invoice.confirmationPDF ? (
+                                <a
+                                  href={invoice.confirmationPDF}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  View PDF
+                                </a>
+                              ) : (
+                                "-"
+                              )
+                            }
+                          />
+                        </Box>
+})
+                    ) : (
+                      <Typography>No invoices available for this room.</Typography>
+                    )}
+                  </Box>
+                ))}
+              </List>
+            ) : (
+              <Typography>No rooms available for this reservation.</Typography>
+            )}
+          </Box>
         </Drawer>
 
-     
+
       </div>
     </div>
   );

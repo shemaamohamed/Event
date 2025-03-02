@@ -162,4 +162,45 @@ $shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       }
     }
   }
+  
+}
+.payment-success {
+  background-color: #e0f7fa; /* Light blue background */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 30px;
+  margin-top: 60px;
+}
+
+.payment-success h2 {
+  color: #00796b; /* Dark teal color */
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.payment-message {
+  color: #004d40; /* Slightly darker shade of teal */
+  font-size: 1.2rem;
+  margin-left: 48px;
+}
+
+.payment-failure {
+  background-color: #ffebee; /* Light red background */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.payment-failure h2 {
+  color: #d32f2f; /* Dark red color */
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.payment-failure p {
+  color: #b71c1c; /* Darker red */
+  font-size: 1.2rem;
 }

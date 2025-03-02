@@ -185,9 +185,15 @@ const FlightForm = () => {
   const [availableFlights, setAvailableFlights] = useState([]);
   const [openIsAvailableFlights, setOpenIsAvailableFlights] = useState(false);
   const [flight_id, setFlight_id] = useState(0);
+  const [invoice, SetInvoice] = useState([]);
+  const [ispaid, SetIspaid] = useState([]);
+
   const navigate = useNavigate();
   const [openCompanion, setOpenCompanion] = useState(false);
+ 
 
+  // دالة لاسترجاع تفاصيل الفاتورة باستخدام flightId
+ 
   const getFlightData = () => {
     const token = localStorage.getItem("token");
 
@@ -198,14 +204,40 @@ const FlightForm = () => {
       .then((response) => {
         setData(response.data?.[0]?.flight);
         setFlight_id(response.data?.[0]?.flight?.flight_id);
+        const flight_id=response.data?.[0]?.flight?.flight_id
+     
       })
       .catch((error) => {});
   };
+console.log(flight_id);
+
+
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     getFlightData();
   }, []);
-
+  const getInvoice = async () => {
+    const BaseUrl = process.env.REACT_APP_BASE_URL; // استبدل بـ URL الخاص بالخادم إذا لزم الأمر
+    try {
+      const response = await axios.get(`${BaseUrl}/invoice-flight/${flight_id}`);
+      console.log("Invoice Data:", response.data.invoice_flights[0].status);
+      SetIspaid(response.data.invoice_flights[0].status)
+      SetInvoice(response.data.invoice_flights[0])
+      return response.data; // يمكنك إرجاع البيانات أو تحديث حالة المكون هنا
+    } catch (error) {
+      console.error("Error fetching invoice data:", error);
+      return null; // إرجاع null في حال حدوث خطأ
+    }
+  };
+  getInvoice(flight_id)
   const handleAvailableFlight = (id) => {
     const token = localStorage.getItem("token");
 
@@ -248,7 +280,14 @@ const FlightForm = () => {
     window.open(url, "_blank");
   };
   return (
-    <div 
+   <div>
+       {invoice && ispaid === "approved" ? (
+      <div className="payment-success">
+        <h2>✅ Payment Successfully Completed!</h2>
+    <p >Thank you! You have successfully completed the payment.</p>
+    
+      </div>):
+     (<div 
     style={{
       borderRadius: '8px',
       width: '100%',
@@ -478,7 +517,8 @@ const FlightForm = () => {
           openCompanion={openCompanion}
         />
       )}
-    </div>
+    </div>)}
+   </div>
   );
 };
 

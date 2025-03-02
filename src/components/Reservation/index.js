@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import SimpleLabelValue from "../../components/SimpleLabelValue";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import httpService from "../../common/httpService";
 import "./style.scss";
 import { useAuth } from "../../common/AuthContext";
@@ -168,8 +169,41 @@ const ReservationDetails = ({ setDisabledButton }) => {
 const Reservation = () => {
   const navigate = useNavigate();
   const [disabledBtn, setDisabledButton] = useState(true);
+  const[paid,setPaid]=useState(0)
+  const BaseUrl = process.env.REACT_APP_BASE_URL;
+
+  const getPaidOrNot = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token is missing!");
+        return;
+      }
+  
+      const response = await axios.get(`${BaseUrl}/is-paid`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      console.log("Payment Status:", response.data.is_paid);
+      setPaid(response.data.is_paid);
+    } catch (error) {
+      console.error("Error:", error.response ? error.response.data : error.message);
+    }
+  };
+  useEffect(()=>{
+    getPaidOrNot()
+  },[])
   return (
-    <div className="all-reservation-form">
+  <div>{paid  ? (
+    <div className="payment-success">
+      <h2>✅ Payment Successfully Completed!</h2>
+  <p>Thank you! You have successfully completed the payment.</p>
+  
+    </div>
+  ):(
+      <div className="all-reservation-form">
         <Grid container direction="column" spacing={2}>
       {/* Header Section */}
       <Grid item xs={12} >
@@ -226,8 +260,9 @@ const Reservation = () => {
         setDisabledButton={setDisabledButton}
       />
 
-      <div></div>
-    </div>
+      {/* <div>pay</div> */}
+    </div>)}
+  </div>
   );
 };
 

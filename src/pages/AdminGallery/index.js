@@ -91,7 +91,7 @@ const AdminGallery = () => {
           label="Cover Image"
           inputValue={coverImage}
           setInputValue={setCoverImage}
-          allowedExtensions={["jpg", "jpeg", "png"]}
+          allowedExtensions={["jpg", "jpeg", "png","mp4"]}
           errorMsg={errorMsg}
         />
         {galleryImages.map((_, index) => (

@@ -13,7 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./style.scss";
 import { useTripsStepper } from "../StepperContext";
 
-const InvoiceTripForm = () => {
+const InvoiceTripForm = ({total,setTotal , id,setId}) => {
   const { currentStep, completeStep, invoice, setInvoice } = useTripsStepper();
   const navigate = useNavigate();
   const { tripId } = useParams();
@@ -55,6 +55,9 @@ const InvoiceTripForm = () => {
           return item.participant_id;
         });
         setInvoice(response.data?.invoice);
+        console.log(invoice);
+        setTotal(response.data?.total_price)
+        setId(response.data?.invoice_id)
         saveToLocalStorage("invoiceIds", invoiceIds);
         setTimeout(() => {
           completeStep(currentStep);

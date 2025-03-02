@@ -11,6 +11,9 @@ import { CloseRounded } from "@mui/icons-material";
 
 const AirportTransferBookingsComponent = () => {
   const [bookingsData, setBookingsData] = useState([]);
+  const [invoicesData, setInvoicesData] = useState([]);
+  const[id,setId] = useState([]);
+
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [errorMsg, setErrorMsg] = useState("");
@@ -52,6 +55,24 @@ const AirportTransferBookingsComponent = () => {
           toast.error(error?.message || DEFAULT_ERROR_MESSAGE);
         },
         withToast: true,
+      });
+    } catch (error) {
+      setErrorMsg(DEFAULT_ERROR_MESSAGE);
+      toast.error(DEFAULT_ERROR_MESSAGE);
+    }
+  };
+  const getInvoice = async (id) => {
+    try {
+      await httpService({
+        method: "GET",
+        url: `${BASE_URL}/get/airport/${id}`,
+        
+        headers: { Authorization: `Bearer ${TOKEN}` },
+        onSuccess: (data) => {
+          setInvoicesData(data.bookings || []);
+      
+        },
+   
       });
     } catch (error) {
       setErrorMsg(DEFAULT_ERROR_MESSAGE);
@@ -123,6 +144,8 @@ const AirportTransferBookingsComponent = () => {
           >
             <MenuItem onClick={() => {
               handleViewBookingDetails(params.row);
+getInvoice(params.row.id);
+            
             }}>
               View Details
             </MenuItem>
@@ -345,7 +368,23 @@ const AirportTransferBookingsComponent = () => {
               <Typography variant="body1">
                 {selectedBooking.conference?.title || "-"}
               </Typography>
-            </Grid>
+            </Grid> 
+            {selectedBooking.airport_transfer_invoices[0]?.status === "approved" && (
+  <>
+    <Grid item xs={12} md={6}>
+      <Typography variant="body1" fontWeight="bold">
+        Payment Status:
+      </Typography>
+    </Grid>
+
+    <Grid item xs={12} md={6}>
+      <Typography variant="body1">
+        {selectedBooking.airport_transfer_invoices[0]?.status || "-"}
+      </Typography>
+    </Grid>
+  </>
+)}
+
           </Grid>
         </Paper>
       ) : (

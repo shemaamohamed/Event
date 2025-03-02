@@ -38,6 +38,7 @@ const FlightsWithInvoices = () => {
 
     fetchFlightsData();
   }, []);
+console.log(flightsData);
 
   if (loading) return <p className="loading-message">Loading...</p>;
   if (error) return <p className="error-message">Error: {error}</p>;

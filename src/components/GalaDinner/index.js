@@ -62,7 +62,37 @@ const DinnerDetails = () => {
   useEffect(() => {
     getDinnerInvoice();
   }, []);
+  const handlePayment = async () => {
+    const type = "dinner"
+    const id = dinnerInvoice.id
+    try {
+      setLoading(true); // ⏳ تشغيل التحميل
+      const token = localStorage.getItem("token")
 
+      const response = await axios.post(
+        `${BaseUrl}/paypal/create-payment`,
+        {
+          amount: dinnerInvoice.companion_price ,
+          return_url: `http://localhost:3000/success/${type}/${id}`,
+          cancel_url: `http://localhost:3000/failed`,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const orderID = response.data.id;
+      // window.location.href = `https://www.paypal.com/checkoutnow?token=${orderID}`;
+
+      window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
+    } catch (error) {
+      console.error("❌ خطأ أثناء إنشاء الطلب:", error);
+      console.log(error);
+      
+      alert("حدث خطأ، حاول مرة أخرى.");
+      
+    } finally {
+      setLoading(false); // ✅ إيقاف التحميل
+    }
+  };
 
   const fetchDinnerDetails = async () => {
     const token = localStorage.getItem("token");
@@ -239,6 +269,12 @@ const DinnerDetails = () => {
                     value={dinnerInvoice.companion_name || "-"}
                   />
                 )}
+                  {/* {dinnerInvoice && hasGuest && (
+                  <SimpleLabelValue
+                    label="Companion id"
+                    value={dinnerInvoice.id || "-"}
+                  />
+                )} */}
                 {dinnerInvoice && hasGuest && (
                   <SimpleLabelValue
                     label="Companion Price"
@@ -251,7 +287,7 @@ const DinnerDetails = () => {
                     value={invoice.status}
                   />
                 )}
-                {hasGuest && <button className="pay-now-btn">Pay Now</button>}
+                {hasGuest && <button className="pay-now-btn" onClick={handlePayment}>Pay Now</button>}
                 {invoice && (
                   <button
                     onClick={() => handleDelete()}

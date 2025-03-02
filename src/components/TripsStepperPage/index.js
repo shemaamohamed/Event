@@ -17,7 +17,8 @@ const TripsStepperPageContent = () => {
     useTripsStepper();
   const navigate = useNavigate();
   const getAuthToken = () => localStorage.getItem("token");
-
+const [id,setId]=useState(0)
+const [total,setTotal]=useState("")
   const stepperInfo = [
     { title: "Accommodation Details" },
     { title: "Companion Details" },
@@ -30,8 +31,8 @@ const TripsStepperPageContent = () => {
     <SpeackerTripForm />,
     <ParticipantTripForm />,
     <AdditionalOptionsForm />,
-    <InvoiceTripForm />,
-    <PayForm />,
+    <InvoiceTripForm total={total} setTotal={setTotal} id={id} setId={setId}/>,
+    <PayForm  total={total}  id={id} />,
   ];
   const handleBackClick = () => {
     navigate(-1); // Navigates to the previous page

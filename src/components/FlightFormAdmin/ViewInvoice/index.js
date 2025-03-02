@@ -45,7 +45,7 @@ const ViewInvoice = ({ data }) => {
     <CustomFormWrapper title="Invoice" noActions={false}>
       <h3>Invoice Flights</h3>
       {invoiceFlights.length > 0 ? (
-        invoiceFlights.map((invoice) => (
+        invoiceFlights.map((invoice, index) => (
           <div key={invoice.id} className="all-Invoice">
             <SimpleLabelValue label="Invoice ID" value={invoice.id || "-"} />
             <SimpleLabelValue
@@ -56,8 +56,8 @@ const ViewInvoice = ({ data }) => {
               label="Total Price(USD)"
               value={invoice.total_price || "-"}
             />
-            <SimpleLabelValue label="Status" value={invoice.total_price > 0 ? invoice.status : "approved"} />
-            <SimpleLabelValue
+            {index === 0 && (<SimpleLabelValue label="Status" value={invoice.total_price > 0 ? invoice.status : "approved"} />)
+            }            <SimpleLabelValue
               label="Created At"
               value={moment(invoice.created_at).format("DD-MM-YYYY") || "-"}
             />
@@ -99,7 +99,7 @@ const ViewInvoice = ({ data }) => {
               label="Price (USD)"
               value={acceptedFlight.price || "-"}
             />
-       
+
             <SimpleLabelValue
               label="Flight File"
               value={
