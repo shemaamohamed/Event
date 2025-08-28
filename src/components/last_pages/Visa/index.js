@@ -75,7 +75,7 @@ const VisaPage = () => {
         `${BaseUrl}/paypal/create-payment`,
         {
           amount: visaData.visa_cost,
-          return_url: `https://eventscons.com/success/${type}/${id}`,
+          return_url: `https://eventscons.com/success/${type}/${id}/0`,
           cancel_url: `https://eventscons.com/failed`,
         },
         { headers: { Authorization: `Bearer ${token}` } }

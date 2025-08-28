@@ -204,6 +204,7 @@ import Album from './pages/AlbumContent';
 import SuccessP from './components/SuccessP';
 import FailedP from './components/FailedP';
 import AddImagesComponent from './components/AddImage';
+import PayAtt from './components/payAtt';
 
 
 
@@ -289,6 +290,8 @@ const App = () => {
                 <Route path="/failed" element={<FailedP/>}/>
                 <Route path='/gallery' element={<Gallery />}></Route>
                 <Route path='/album/:id' element={<Album/>}></Route>
+                <Route path="/success/:type/:id/:priceId" element={<SuccessP/>}/>
+                <Route path="/pay/:userId/:conferenceId/:priceId" element={<PayAtt/>}/>
 
                 <Route path='/our_team' element={<Teams />}></Route>
                 <Route path='/our_clients' element={<ClientV1/>}></Route>
@@ -474,6 +477,8 @@ const App = () => {
                                   isLoggedIn && limit&& ( isAdmin ||isAttendance ||isSpeaker ) &&(
                                     <Routes>
 
+<Route path="/pay/:userId/:conferenceId/:priceId" element={<PayAtt/>}/>
+
 
                                     <Route path="/" element={<AdminLayoutBasic/>} >
                                    
@@ -505,7 +510,9 @@ const App = () => {
                                         path="conference/details/:conferenceId"
                                         element={<ConferenceDetails />}
                                       />
-                                                                  <Route path="/certification" element={<Certification />} />
+                                                             {/* <Route path="/pay/:userId/:conferenceId/:priceId" element={<PayAtt/>}/> */}
+
+<Route path="/certification" element={<Certification />} />
 
                                       <Route
                                         path="edit/speaker/data/:conferenceId/:userId"
@@ -680,6 +687,9 @@ const App = () => {
                                         path="sponsor/option/form"
                                         element={<SponsorshipForm />}
                                       />
+                                                      <Route path="/pay/:userId/:conferenceId/:priceId" element={<PayAtt/>}/>
+
+
                                       <Route
                                         path="sponsor/add/table"
                                         element={<SponsorshipTable2 />}
@@ -848,7 +858,7 @@ const App = () => {
 
                                 <Route path="one/exhibits/:exhibitId" element={<OneExhibit />} />
                                 <Route path="/notification" element={<Notifications/>} />
-      <Route path="/success/:type/:id" element={<SuccessP/>}/>
+      <Route path="/success/:type/:id/:priceId" element={<SuccessP/>}/>
               <Route path="/failed" element={<FailedP/>}/>
 
 

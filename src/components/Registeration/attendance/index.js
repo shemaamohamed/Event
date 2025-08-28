@@ -10,8 +10,7 @@ import DialogMessage from "../../DialogMessage";
 const RegisterAttendancePage = () => {
   const navigate = useNavigate();
   const { conferenceId, type ,priceId} = useParams();
-  const [paymentStatus, setPaymentStatus] = useState(false);
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,47 +20,21 @@ const RegisterAttendancePage = () => {
   const [selectedNationality, setSelectedNationality] = useState("");
   const [country, setCountry] = useState("");
   const [price, setPrice] = useState("");
+  const [userId, setUserId] = useState("");
+
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false); // ✅ حالة التحميل
   
-console.log({priceId});
+console.log({price});
 
   // const handlePayment = async () => {
   //   setPaymentStatus(true);
   // };
     
-  const handlePayment = async () => {
-    const type = "att"
-    const id = conferenceId
-    try {
-      setLoading(true); // ⏳ تشغيل التحميل
-      const token = localStorage.getItem("token")
 
-      const response = await axios.post(
-        `${BaseUrl}/paypal2/create-payment2/2`,
-        {
-          amount:price,
-          return_url: `http://localhost:3000/success/${type}/${id}`,
-          cancel_url: `http://localhost:3000/failed`,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
 
-      const orderID = response.data.id;
-      // window.location.href = `https://www.paypal.com/checkoutnow?token=${orderID}`;
 
-      window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
-    } catch (error) {
-      console.error("❌ خطأ أثناء إنشاء الطلب:", error);
-      console.log(error);
-      
-      alert("حدث خطأ، حاول مرة أخرى.");
-      
-    } finally {
-      setLoading(false); // ✅ إيقاف التحميل
-    }
-  };
   function getPrice(conferenceData) {
     // Find the conference with the given ID
     const conference = conferenceData.find((conf) => conf.id == conferenceId);
@@ -87,6 +60,9 @@ console.log(conference?.prices);
 
     return doctorPrice.price;
   }
+
+
+
   const getConference = () => {
     
     const url = `${BaseUrl}/con/upcoming`;
@@ -117,18 +93,34 @@ console.log(conference?.prices);
       formData.append("nationality", selectedNationality);
       formData.append("country_of_residence", country);
       formData.append("conference_id", conferenceId);
-
-      await axios.post(`${BaseUrl}/users/${conferenceId}`, formData, {
+  
+      // استلام الاستجابة وتخزينها في response
+      const response = await axios.post(`${BaseUrl}/users/${conferenceId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      setIsDialogOpen(true)
-      toast.success("Registration successful!");
+  
+      // تخزين userId بعد استلام الاستجابة
+      const userId = response?.data?.user.id;
+  
+      // التحقق من أن userId موجود قبل استخدامه
+      if (userId) {
+        setIsDialogOpen(true);
+        setUserId(userId); // حفظ userId في الحالة
+        console.log(userId);
+  
+        toast.success("Registration successful!");
+        navigate(`/pay/${userId}/${conferenceId}/${priceId}`);
+      } else {
+        toast.error("User ID not found.");
+      }
+  
     } catch (error) {
       toast.error("Registration failed. Please try again.");
     }
   };
+  
   useEffect(() => {
     getConference();
   }, []);
@@ -150,22 +142,7 @@ console.log(conference?.prices);
           setIsDialogOpen(false);
         }}
       />
-      {!paymentStatus ? (
-        <div className="payment-section">
-          <div>Payment Required</div>
-          <div>
-            Please make a payment of ${price} to proceed with the registration.
-          </div>
-          <Button
-            variant="contained"
-            color="error"
-            onClick={handlePayment}
-            disabled={isProcessingPayment}
-          >
-            {isProcessingPayment ? "Processing..." : `Pay $${price}`}
-          </Button>
-        </div>
-      ) : (
+
         <div className="form-section">
           <Typography variant="h4" className="form-title">
             Register
@@ -250,7 +227,7 @@ console.log(conference?.prices);
             </div>
           </Grid>
         </div>
-      )}
+      
     </Container>
   );
 };

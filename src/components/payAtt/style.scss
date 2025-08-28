@@ -1,0 +1,55 @@
+.payment-section {
+    background: linear-gradient(145deg, #ffffff, #f1f1f1); // Modern gradient background
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Soft shadow for depth
+    border-radius: 12px; // Smooth rounded corners
+    padding: 33px; // Comfortable padding for spacing
+    max-width: 550px; // Limit the width for better structure
+    margin: 130px auto; // Center on the page
+    text-align: center; // Center-align all text
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px; // Adequate spacing between child elements
+  
+    div:first-child {
+      font-size: 1.8rem; // Standout font size for the title
+      font-weight: 600; // Semi-bold for emphasis
+      color: #333333; // Neutral dark color
+      // text-transform: uppercase; // Modern uppercase text
+      letter-spacing: 1px; // Slight spacing for a modern touch
+    }
+  
+    div:last-child {
+      font-size: 1.2rem; // Balanced font size for the description
+      color: #666666; // Soft gray for secondary text
+      line-height: 1.6; // Improve readability
+      max-width: 400px; // Restrict text width for neatness
+    }
+  
+    button {
+      padding: 12px 24px; // Comfortable button size
+      font-size: 1.1rem; // Modern font size
+      font-weight: 600; // Bold for emphasis
+      border: none;
+      border-radius: 8px; // Rounded corners for a sleek look
+      background: linear-gradient(145deg,#9B1321 , #cc0000); // Vibrant red gradient
+      color: #ffffff; // White text for contrast
+      cursor: pointer;
+      transition: all 0.3s ease; // Smooth transitions
+  
+      &:hover {
+        background: linear-gradient(145deg, #cc0000, #990000); // Darker red hover effect
+        transform: translateY(-2px); // Subtle hover animation
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); // Elevated hover shadow
+      }
+  
+      &:disabled {
+        background: #e0e0e0; // Muted gray for disabled state
+        cursor: not-allowed;
+        color: #a0a0a0; // Softer text color
+        box-shadow: none; // No shadow for disabled button
+      }
+    }
+  }
+  

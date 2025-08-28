@@ -12,7 +12,7 @@ const SuccessP = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { type, id } = useParams();
+  const { type, id,priceId } = useParams();
   const BaseUrl = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
@@ -46,7 +46,11 @@ if(type == "visa"){
   }, 3000);
 } else if (type === "att") {
   setTimeout(() => {
-    navigate(`/register/attendance/${id}`); 
+    navigate(`/login`); 
+  }, 3000);
+}else if (type === "group") {
+  setTimeout(() => {
+    navigate(`/user/group/trip/participants`); 
   }, 3000);
 }
 }
@@ -94,11 +98,12 @@ if(type == "visa"){
           captureDinnerPayment(id, transaction_id, method);
         }else if (type == "airport"){
           captureAirPayment(id, transaction_id, method);
-        }else if (type == "att"){
-          console.log("hhhhhhhh");
-          
-          // captureAirPayment(id, transaction_id, method);
         }
+
+
+      else if (type == "group"){
+        captureGroupPayment(id, transaction_id, method);
+      }
       } else {
         setPaymentStatus("failed");
         setErrorMessage(response.data.status);
@@ -211,7 +216,6 @@ console.log(type);
 
 
 
-
   const captureVisaPayment = async (id, transaction_id, payment_method) => {
     const token = localStorage.getItem("token");
     try {
@@ -239,6 +243,35 @@ console.log(type);
     try {
       const response = await axios.post(
         `${BaseUrl}/pay/${id}`,
+        {
+          transaction_id: transaction_id,
+          payment_method: payment_method,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      setPaymentStatus("failed");
+      setErrorMessage("حدث خطأ أثناء معالجة الدفع الخاص بـ Visa.");
+    }
+  };
+
+
+
+
+
+
+
+  const captureGroupPayment = async (id, transaction_id, payment_method) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.post(
+        `${BaseUrl}/pay/group/${id}`,
         {
           transaction_id: transaction_id,
           payment_method: payment_method,

@@ -20,6 +20,7 @@ const AttendanceComponent = () => {
   const [conferenceId, setConferenceId] = useState(null);
   const BaseUrl = process.env.REACT_APP_BASE_URL;
   const token = localStorage.getItem("token");
+  const [priceId, setPriceId] = useState(0);
 
   // Fetch attendance data
   const fetchAttendances = async (page = 1) => {
@@ -31,6 +32,8 @@ const AttendanceComponent = () => {
         headers: { Authorization: `Bearer ${token}` },
         onSuccess: (data) => {
           setAttendanceData(data.attendance || []);
+         
+          
           setTotalPages(data?.totalPages || 1);
           setCurrentPage(Number(data?.currentPage) || 1);
         },
@@ -57,12 +60,13 @@ const AttendanceComponent = () => {
     attendee_name: attendance?.user?.name,
     email: attendance?.user?.email,
     conference_title: attendance?.conference?.title,
-    registration_fee: attendance.registration_fee,
+     payment_status: attendance?.user?.invoices?.status || "",
     conference_bag: attendance.includes_conference_bag ? "Yes" : "No",
     conference_badge: attendance.includes_conference_badge ? "Yes" : "No",
     conference_book: attendance.includes_conference_book ? "Yes" : "No",
     certificate: attendance.includes_certificate ? "Yes" : "No",
     lecture_attendance: attendance.includes_lecture_attendance ? "Yes" : "No",
+    
   }));
   const columns = [
     {
@@ -87,8 +91,8 @@ const AttendanceComponent = () => {
       cellClassName: "centered-cell",
     },
     {
-      field: "registration_fee",
-      headerName: "Registration Fee",
+      field: "payment_status",
+      headerName: "Payment_status",
       flex: 1,
       minWidth: 230,
       cellClassName: "centered-cell",

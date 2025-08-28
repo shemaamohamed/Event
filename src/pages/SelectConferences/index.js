@@ -9,6 +9,8 @@ import { backendUrlImages } from "../../constant/config";
 const SelectConferences = () => {
   const [allConferences, setAllConferences] = useState([]);
   const [conferenceName, setConferenceName] = useState("");
+  const [type, setType] = useState("");
+
   const [selectedPriceId, setSelectedPriceId] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();

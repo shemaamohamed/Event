@@ -9,6 +9,7 @@ import axios from "axios";
 import Input from "../../../../CoreComponent/Input";
 import Dialog from "../../../../CoreComponent/Dialog";
 import Select from "../../../../CoreComponent/Select";
+
 import { Button, Grid, Typography } from "@mui/material";
 
 const GroupTripRegistration = ({ availableDates, setIsDialogOpen }) => {
@@ -21,16 +22,56 @@ const GroupTripRegistration = ({ availableDates, setIsDialogOpen }) => {
   }
 
   const dates = convertStringToObjects(availableDates);
+  const [loading, setLoading] = useState(false); // ✅ حالة التحميل
 
   const { id } = useParams();
   const [selectedDate, setSelectedDate] = useState("2024-12-10");
   const [companionsCount, setCompanionsCount] = useState();
   const [totalPrice, setTotalPrice] = useState(null);
+  const [idT, setIdT] = useState(null);
+
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const token = localStorage.getItem("token");
   const BaseUrl = process.env.REACT_APP_BASE_URL;
+
+
+  const handlePayment = async () => {
+    const type = "group"
+    const id = idT
+    try {
+      setLoading(true); // ⏳ تشغيل التحميل
+      const token = localStorage.getItem("token")
+
+      const response = await axios.post(
+        `${BaseUrl}/paypal/create-payment`,
+        {
+          amount: totalPrice,
+          return_url: `https://eventscons.com/success/${type}/${id}/0`,
+          cancel_url: `https://eventscons.com/failed`,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const orderID = response.data.id;
+      window.location.href = `https://www.paypal.com/checkoutnow?token=${orderID}`;
+
+      // window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
+    } catch (error) {
+      console.error("❌ خطأ أثناء إنشاء الطلب:", error);
+      console.log(error);
+      
+      alert("حدث خطأ، حاول مرة أخرى.");
+      
+    } finally {
+      setLoading(false); // ✅ إيقاف التحميل
+    }
+  };
+
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,9 +91,11 @@ const GroupTripRegistration = ({ availableDates, setIsDialogOpen }) => {
       );
 
       setTotalPrice(response.data.participant.total_price);
+      console.log(response.data.participant);
+      setIdT(response.data.participant.id)
       setSubmitted(true);
       toast.success("register successfully!");
-      setIsDialogOpen(false);
+      // setIsDialogOpen(false);
     } catch (error) {
       if (error.response) {
         setError(error.response.data.message || "حدث خطأ في الطلب");
@@ -69,7 +112,12 @@ const GroupTripRegistration = ({ availableDates, setIsDialogOpen }) => {
       {submitted ? (
         <div className="result">
           <h3>Total Price (USD): {totalPrice} $</h3>
+          <button className="next-button" onClick={handlePayment}>
+            Pay
+          </button>
+
         </div>
+      
       ) : (
         <form onSubmit={handleSubmit} className="registration-form">
           <div className="form-group9">

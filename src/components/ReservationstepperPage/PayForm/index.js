@@ -23,8 +23,8 @@ console.log(invoice);
         `${BaseUrl}/paypal/create-payment`,
         {
           amount: invoice.total_invoice,
-          // return_url: `https://eventscons.com/success/${type}/${id}`,
-             return_url: `http://localhost:3000/success/${type}/${id}`,
+          return_url: `https://eventscons.com/success/${type}/${id}/0`,
+            //  return_url: `http://localhost:3000/success/${type}/${id}/0`,
 
           cancel_url: `https://eventscons.com/failed`,
         },
@@ -32,9 +32,9 @@ console.log(invoice);
       );
 
       const orderID = response.data.id;
-      // window.location.href = `https://www.paypal.com/checkoutnow?token=${orderID}`;
+      window.location.href = `https://www.paypal.com/checkoutnow?token=${orderID}`;
 
-      window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
+      // window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${orderID}`;
     } catch (error) {
       console.error("❌ خطأ أثناء إنشاء الطلب:", error);
       console.log(error);

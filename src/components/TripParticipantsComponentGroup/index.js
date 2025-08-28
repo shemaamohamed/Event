@@ -89,6 +89,8 @@ const TripParticipantsComponentGroup = () => {
     selected_date: participant.selected_date,
     companions_count: participant.companions_count,
     total_price: participant.total_price,
+    status: participant.status,
+
     created_at: moment(participant.created_at).format("DD-MM-YYYY HH:MM"),
     updated_at: participant.updated_at,
     actions: participant.actions,
@@ -101,6 +103,8 @@ const TripParticipantsComponentGroup = () => {
     { field: "selected_date", headerName: "Selected Date", flex: 1, minWidth: 200 , cellClassName: "centered-cell" },
     { field: "companions_count", headerName: "Companions Count", flex: 1, minWidth: 200 , cellClassName: "centered-cell"},
     { field: "total_price", headerName: "Total Price (USD)", flex: 1, minWidth: 200 , cellClassName: "centered-cell" },
+    { field: "status", headerName: "Status", flex: 1, minWidth: 200 , cellClassName: "centered-cell" },
+
     { field: "created_at", headerName: "Created At", flex: 1, minWidth: 200 , cellClassName: "centered-cell"},
     { field: "actions", headerName: "Actions", flex: 1, minWidth: 200 , cellClassName: "centered-cell",
       renderCell: (params) => (
